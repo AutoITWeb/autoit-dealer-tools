@@ -126,6 +126,10 @@ class ComposerStaticInitb1949dfbb69b534180500c07d71c2595
             array (
                 0 => __DIR__ . '/..' . '/phpoption/phpoption/src',
             ),
+            'Parsedown' => 
+            array (
+                0 => __DIR__ . '/..' . '/erusev/parsedown',
+            ),
         ),
     );
 

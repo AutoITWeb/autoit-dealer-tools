@@ -4,6 +4,7 @@
 namespace Biltorvet\Utility;
 
 
+use Parsedown;
 use stdClass;
 
 class PrivatePluginUpdater
@@ -35,6 +36,7 @@ class PrivatePluginUpdater
      */
     function __construct( $pluginFile, $gitHubUsername, $gitHubProjectName, $accessToken = '' )
     {
+        set_site_transient('update_plugins', null);
         add_filter( "pre_set_site_transient_update_plugins", array( $this, "setTransitent" ) );
         add_filter( "plugins_api", array( $this, "setPluginInfo" ), 10, 3 );
         add_filter( "upgrader_pre_install", array( $this, "preInstall" ), 10, 3 );
@@ -87,7 +89,7 @@ class PrivatePluginUpdater
         }
 
         // Use only the latest release
-        if ( is_array( $this->githubAPIResult ) )
+        if ( is_array( $this->githubAPIResult ) && !empty($this->githubAPIResult) )
         {
             $this->githubAPIResult = $this->githubAPIResult[0];
         }
@@ -101,7 +103,7 @@ class PrivatePluginUpdater
      */
     public function setTransitent( $transient )
     {
-        if ( empty( $transient->checked  || !isset($transient->checked[$this->slug])) )
+        if (!property_exists($transient, 'checked') || empty( $transient->checked  || !isset($transient->checked[$this->slug])) )
         {
             return $transient;
         }
@@ -109,8 +111,14 @@ class PrivatePluginUpdater
         // Get plugin & GitHub release information
         $this->initPluginData();
         $this->getRepoReleaseInfo();
+        $doUpdate = false;
 
-        $doUpdate = version_compare( $this->githubAPIResult->tag_name, $transient->checked[$this->slug] );
+        var_dump($this->githubAPIResult);
+        var_dump($transient->checked[$this->slug]);
+
+        if (isset($transient->checked[$this->slug])) {
+            $doUpdate = (bool)version_compare( $this->githubAPIResult->tag_name, $transient->checked[$this->slug] );
+        }
 
         if ( $doUpdate )
         {
@@ -159,6 +167,7 @@ class PrivatePluginUpdater
         $response->version = $this->githubAPIResult->tag_name;
         $response->author = $this->pluginData["AuthorName"];
         $response->homepage = $this->pluginData["PluginURI"];
+        $response->name = $this->pluginData["Name"];
 
         // This is our release download zip file
         $downloadLink = $this->githubAPIResult->zipball_url;
@@ -174,7 +183,7 @@ class PrivatePluginUpdater
         $response->download_link = $downloadLink;
 
         // Load Parsedown
-        require_once __DIR__ . DIRECTORY_SEPARATOR . 'Parsedown.php';
+        //require_once __DIR__ . DIRECTORY_SEPARATOR . 'Parsedown.php';
 
         // Create tabs in the lightbox
         $response->sections = array(
