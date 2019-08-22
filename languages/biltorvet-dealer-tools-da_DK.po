@@ -1,0 +1,368 @@
+# Blank WordPress Pot
+# Copyright 2018 Biltorvet A/S
+# This file is distributed under the GNU General Public License v3 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Biltorvet v1.0.0\n"
+"POT-Creation-Date: 2018-07-30 14:15+0200\n"
+"PO-Revision-Date: \n"
+"Language-Team: Your Team <translations@example.com>\n"
+"Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Textdomain-Support: yesX-Generator: Poedit 1.6.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Generator: Poedit 2.2.3\n"
+"Last-Translator: \n"
+"Language: da_DK\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid "Plugin Settings"
+msgstr "Plugin indstillinger"
+
+msgid "Vehicle search"
+msgstr "Bilsøgning"
+
+msgid "Vehicle search results"
+msgstr "Resultat af bilsøgning"
+
+msgid "Biltorvet Settings"
+msgstr "Biltorvet indstillinger"
+
+msgid "No API key specified. Biltorvet plugin functionality is disabled."
+msgstr "Ingen API-nøgle angivet. Biltorvets Plugin er deaktiveret."
+
+msgid "Biltorvet API: not authorized"
+msgstr "Biltorvet API: ikke autoriseret"
+
+msgid "Biltorvet API: method not found"
+msgstr "Biltorvet API: metoden blev ikke fundet"
+
+msgid "Biltorvet API: unexpected response code (%u)"
+msgstr "Biltorvet API: uforudset responskode (%u)"
+
+msgid "Malformed API response"
+msgstr "Uventet API Svar"
+
+msgid ""
+"Biltorvet API returned following error(s):\r\n"
+"%s"
+msgstr ""
+"Biltorvet API returnerede de følgende fejl:\r\n"
+"%s"
+
+msgid "Biltorvet API: Unexpected API error"
+msgstr "Biltorvet API: Ikke-forventet API-fejl"
+
+msgid "Biltorvet API: Response missing"
+msgstr "Biltorvet API: Svar mangler"
+
+msgid "Your API access has been disabled. Please contact a sales representative."
+msgstr "Din API nøgle er blevet deaktiveret. Venligst kontakt Biltorvet Support."
+
+msgid "Vehicle ID Could not be resolved"
+msgstr "Bil-ID kunne ikke blive afgjort "
+
+msgid "Shortcode's CTA type has not been set."
+msgstr "Shortcode’s CTA-type er ikke blevet indsat."
+
+msgid "Shortcode's vehicle property has not been set."
+msgstr "Shortcode’s bil-egenskab er ikke blevet indsat."
+
+msgid "N/A"
+msgstr "Ikke angivet"
+
+msgid "Unrecognized CTA type. Allowed types: %s"
+msgstr "Ukendt CTA-type. Tilladte typer: %s"
+
+msgid "Enter your Biltorvet API key to activate the service. To obtain your own API key, please contact a Biltorvet sales representative."
+msgstr "Indtast din Biltovet API-nøgle for at aktivere denne service. For at få din egen API-nøgle venligst kontakt Biltorvet Support."
+
+msgid "API key"
+msgstr "API-nøgle"
+
+msgid "Contact page to receive leads"
+msgstr "Kontaktside til at modtage leads"
+
+msgid "Vehicle detail template page"
+msgstr "Bildetalje-sideskabelon"
+
+msgid "Search our cars"
+msgstr "Søg blandt vores biler"
+
+msgid "We have %d vehicles in stock"
+msgstr "Vi har %d biler på lager"
+
+msgid "Make"
+msgstr "Mærke"
+
+msgid "Model"
+msgstr "Model"
+
+msgid "Propellant"
+msgstr "Drivmiddel"
+
+msgid "Consumption"
+msgstr "Drivmiddelforbrug"
+
+msgid "Reset"
+msgstr "Nulstil"
+
+msgid "Search"
+msgstr "Søg"
+
+msgid "Your search returned <span class=\"bdt_color\">%d cars</span>"
+msgstr "Din søgning gav <span class=bdt_color>%d resultater</span>"
+
+msgid "New first"
+msgstr "Nyeste først"
+
+msgid "Order by price"
+msgstr "Sorter efter pris"
+
+msgid "Year of the car"
+msgstr "Årgang"
+
+msgid "Mileage"
+msgstr "KM"
+
+msgid "Diesel"
+msgstr "Disel"
+
+msgid "Petrol"
+msgstr "Benzin"
+
+msgid "Electric"
+msgstr "EL"
+
+msgid "Excl. VAT"
+msgstr "Ekskl. moms"
+
+msgid "Automatic"
+msgstr "Automat"
+
+msgid "Variant"
+msgstr "Variant"
+
+msgid "Cash Price"
+msgstr "Kontantpris"
+
+msgid "Book test drive"
+msgstr "Book prøvetur"
+
+msgid "Write us"
+msgstr "Skriv til os"
+
+msgid "Buy this car"
+msgstr "Køb"
+
+msgid "Call us"
+msgstr "Ring til os"
+
+msgid "Contact us"
+msgstr "Kontakt os"
+
+msgid "Let us call you back"
+msgstr "Bliv ringet op"
+
+msgid "Description"
+msgstr "Beskrivelse"
+
+msgid "Equipment"
+msgstr "Udstyr"
+
+msgid "Specifications"
+msgstr "Specifikationer"
+
+msgid "Back"
+msgstr "Tilbage"
+
+msgid "- Select $s -"
+msgstr "- Vælg $s -"
+
+msgid "Unexpected API result: %s"
+msgstr "Uventet API-resultat: %s"
+
+msgid "Showing results %1$d-%2$d"
+msgstr "Viser resultat %1$d-%2$d"
+
+msgid "Default sorting order"
+msgstr "Standard rækkefølge"
+
+msgid "- Select make -"
+msgstr "- Vælg mærke -"
+
+msgid "- Select model -"
+msgstr "- Vælg model -"
+
+msgid "- Select vehicle type -"
+msgstr "- Vælg type -"
+
+msgid "- Select body type -"
+msgstr "- Vælg Karrosseri -"
+
+msgid "- Select propellant -"
+msgstr "- Drivmiddel -"
+
+msgid "- Select min km/l -"
+msgstr "- Vælg min km/l -"
+
+msgid "Show %u vehicles"
+msgstr "Vis %u resultater"
+
+msgid "- Select price range -"
+msgstr "- Vælg prisklasse -"
+
+msgid "Age"
+msgstr "Nyeste"
+
+msgid "Price"
+msgstr "Pris"
+
+msgid "ModelYear"
+msgstr "Årgang"
+
+msgid "Horsepower"
+msgstr "HK"
+
+msgid "Torque"
+msgstr "Moment Nm"
+
+msgid "Displacement"
+msgstr "Motor forskydning"
+
+msgid "FirstRegistrationDate"
+msgstr "1. registrationdato"
+
+msgid "Ascending"
+msgstr "Stigende"
+
+msgid "Descending"
+msgstr "Faldende"
+
+msgid "Send AutoDesktop receipts by e-mail"
+msgstr "Send AutoDesktop leads bekræftelse via email"
+
+msgid "Booking page (with date and time picker) to receive leads"
+msgstr "Booking side (med en date og time picker) til at modtage leads"
+
+msgid "Testdrive"
+msgstr "Prøvetur"
+
+msgid "Primary color"
+msgstr "Primær farve"
+
+msgid "Back to homepage"
+msgstr "Tilbage til hjemmesiden"
+
+msgid "Back to vehicle search page"
+msgstr "Tilbage til listevisning"
+
+msgid "Back to search results"
+msgstr "Tilbage til søgeresultat"
+
+msgid "Vehicle search page"
+msgstr "Bilsøgningside"
+
+msgid "Could not send the lead: %s"
+msgstr "Kunne ikke sende leaden: %s"
+
+msgid "Department"
+msgstr "Afdeling"
+
+msgid "ProductType"
+msgstr "Køretøjtype"
+
+msgid "BodyType"
+msgstr "Karosseri"
+
+msgid "Transmission"
+msgstr "Transmission"
+
+msgid "PropellantType"
+msgstr "Drivmiddel"
+
+msgid "Unknown"
+msgstr "Ukendt"
+
+msgid "DateEdited"
+msgstr "Redigeringsdato"
+
+msgid "EngineDisplacementCcm"
+msgstr "Motorstr."
+
+msgid "TransmissionTypeName"
+msgstr "Transmission"
+
+msgid "TopSpeedKmPerHour"
+msgstr "Tophastighed"
+
+msgid "FirstRegistrationYear"
+msgstr "Førstregistreringsår"
+
+msgid "- Select department -"
+msgstr "- Vælg afdeling -"
+
+msgid "AgeAndState"
+msgstr "Alder og kilometerstand"
+
+msgid "EngineAndPerformance"
+msgstr "Motor og ydelse"
+
+msgid "SecurityAndEconomy"
+msgstr "Sikkerhed og økonomi"
+
+msgid "DimensionsAndParameters"
+msgstr "Rummelighed og mål"
+
+msgid "Finances"
+msgstr "Penge"
+
+msgid "Cash price"
+msgstr "Kontantpris"
+
+msgid "Leasing price (ex. VAT)"
+msgstr "Leasingpris (Ekskl. moms)"
+
+msgid "Exclusive VAT"
+msgstr "Eksklusiv moms"
+
+msgid "Cash price: %s"
+msgstr "Kontantpris: %s"
+
+msgid "Financing price pr. m."
+msgstr "Finanseringspris pr. mnd."
+
+msgid "Leasing price pr. m.: %s (ex. VAT)"
+msgstr "Leasingpris pr. mnd.: %s (ex. VAT)"
+
+msgid "Leasing price pr. m.: %s"
+msgstr "Leasingpris pr. mnd.: %s"
+
+msgid "Leasing price"
+msgstr "Leasingpris"
+
+msgid "Financing price"
+msgstr "Finansieringspris"
+
+msgid "- Order by -"
+msgstr "- Sortér efter -"
+
+msgid "Hide %s vehicles"
+msgstr "Skjul %s køretøjer"
+
+msgid "Hide sold vehicles"
+msgstr "Skjul solgte køretøjer"
+
+msgid "Unrecognized lead type. Allowed types: %s"
+msgstr "Ukendt lead-type. Tilladte typer: %s"
+
+msgid "Selected vehicle: %s"
+msgstr "Valgt køretøj: %s"
+
+msgid "Lead sender: %s"
+msgstr "Leads afsender: %s"
