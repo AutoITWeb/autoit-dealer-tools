@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Biltorvet Dealer Tools
+Plugin Name: AutoIT Dealer Tools
 Plugin URI:  http://www.biltorvet.as/hjemmesider
 Description: Tools providing connection to AutoDesktop, and other Biltorvet services.
 Version:     2.0.0
