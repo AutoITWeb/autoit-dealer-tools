@@ -113,9 +113,6 @@ class PrivatePluginUpdater
         $this->getRepoReleaseInfo();
         $doUpdate = false;
 
-        var_dump($this->githubAPIResult);
-        var_dump($transient->checked[$this->slug]);
-
         if (isset($transient->checked[$this->slug])) {
             $doUpdate = (bool)version_compare( $this->githubAPIResult->tag_name, $transient->checked[$this->slug] );
         }
