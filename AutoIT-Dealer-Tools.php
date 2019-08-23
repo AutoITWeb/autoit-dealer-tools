@@ -41,4 +41,4 @@ new Biltorvet();
 // Include version 2
 require_once(plugin_dir_path( __FILE__ ) . 'v2/biltorvet.php');
 
-$updater = new \Biltorvet\Utility\PrivatePluginUpdater(__FILE__, 'AutoITWeb', 'AutoIT-Dealer-Tools');
+$updater = new \Biltorvet\Utility\PrivatePluginUpdater(__FILE__, 'AutoITWeb', 'autoit-dealer-tools');
