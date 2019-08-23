@@ -36,7 +36,6 @@ class PrivatePluginUpdater
      */
     function __construct( $pluginFile, $gitHubUsername, $gitHubProjectName, $accessToken = '' )
     {
-        set_site_transient('update_plugins', null);
         add_filter( "pre_set_site_transient_update_plugins", array( $this, "setTransitent" ) );
         add_filter( "plugins_api", array( $this, "setPluginInfo" ), 10, 3 );
         add_filter( "upgrader_pre_install", array( $this, "preInstall" ), 10, 3 );
