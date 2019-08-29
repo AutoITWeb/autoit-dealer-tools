@@ -88,6 +88,14 @@ class ApiController
         return $respone;
     }
 
+    /**
+     * @return array|Vehicle
+     * @throws Exception
+     */
+    public function getCompanyProducts() {
+        return $this->requestApi('/products', [], 'products');
+    }
+
 
     /**
      * @param  string $resource
