@@ -10,7 +10,6 @@ use Biltorvet\Controller\TemplateController;
 use Biltorvet\Factory\VehicleLeadFactory;
 use Biltorvet\Helper\DataHelper;
 use Biltorvet\Helper\MailFormatter;
-use Biltorvet\Helper\ProductHelper;
 use Biltorvet\Helper\WordpressHelper;
 use Biltorvet\Model\SearchFilter;
 use Exception;
@@ -34,45 +33,91 @@ class Callbacks
      */
     public function get_vehicles_shortcode(array $atts)
     {
+        $searchFilter = new SearchFilter();
+        $searchFilter->setMakes([$atts['make']]);
 
-        if (ProductHelper::hasAccess('Vehicle Module', $this->apiController->getCompanyProducts())) {
+        // Fetches the wanted make
+        $fetchMake = $this->apiController->getVehicles($searchFilter);
 
-            $searchFilter = new SearchFilter();
-            $searchFilter->setMakes([$atts['make']]);
-
-            if (isset($atts['models'])) {
-                $searchFilter->setModels([$atts['model']]);
-            }
-
-            wp_enqueue_style("bdt_style");
-            return $this->templateController->load(
-                'vehicleCardWrapper.php',
-                [
-                    'vehicles' => $this->apiController->getVehicles($searchFilter),
-                    'basePage' => WordpressHelper::getOptions()['vehiclesearch_page_id']
-                ],
-                true
-            );
+        if (isset($atts['models'])) {
+            $searchFilter->setModels([$atts['model']]);
         }
-    }
+
+        wp_enqueue_style("bdt_style");
+
+        if($fetchMake == null)
+        {
+            return 'Vi har desværre ingen' . ' ' . ($atts['make']) . 'er' . ' ' . 'på lager.';
+        }
+        return $this->templateController->load(
+            'vehicleCardWrapper.php',
+            [
+                'vehicles' => $this->apiController->getVehicles($searchFilter),
+                'basePage' => WordpressHelper::getOptions()['vehiclesearch_page_id']
+            ],
+            true
+        );
+        }
 
     public function get_sold_vehicles_shortcode()
     {
-        if (ProductHelper::hasAccess('Vehicle Module', $this->apiController->getCompanyProducts())) {
-            $searchFilter = new SearchFilter();
+        $searchFilter = new SearchFilter();
 
-            wp_enqueue_style("bdt_style");
+        wp_enqueue_style("bdt_style");
+        return $this->templateController->load(
+            'vehicleCardWrapper.php',
+            [
+                'vehicles' => DataHelper::filterVehiclesByLabel($this->apiController->getVehicles($searchFilter), LABEL_SOLD),
+                'basePage' => WordpressHelper::getOptions()['vehiclesearch_page_id'],
+            ],
+            true
+        );
+
+
+    }
+
+    public function get_featured_vehicles_shortcode()
+    {
+
+        $searchFilter = New SearchFilter();
+
+        // Count amount of vehicless with the "I fokus" label checked
+        $getAllVehicles = DataHelper::filterVehiclesByLabel($this->apiController->getVehicles($searchFilter), LABEL_FEATURED);
+
+        $featuredLabelCount = [];
+
+        foreach($getAllVehicles as $featuredLabel){
+
+            array_push($featuredLabelCount, $featuredLabel);
+        }
+
+        $featuredCount = count($featuredLabelCount);
+
+        wp_enqueue_style("bdt_style");
+
+        if($featuredCount >0) {
             return $this->templateController->load(
-                'vehicleCardWrapper.php',
-                [
-                    'vehicles' => DataHelper::filterVehiclesByLabel($this->apiController->getVehicles($searchFilter),
-                        LABEL_SOLD),
-                    'basePage' => WordpressHelper::getOptions()['vehiclesearch_page_id'],
-                ],
+                'vehicleCardWrapperFeatured.php', [
+                'vehicles' => DataHelper::filterVehiclesByLabel($this->apiController->getVehicles($searchFilter), LABEL_FEATURED),
+                'basePage' => WordpressHelper::getOptions()['vehiclesearch_page_id'],
+            ],
                 true
             );
         }
+        else
+        {
+            return $this->templateController->load(
+                'vehicleCardWrapperFill.php', [
+                'vehicles' => DataHelper::getVehiclePropertiesAssoc($this->apiController->getVehicles($searchFilter)),
+                'basePage' => WordpressHelper::getOptions()['vehiclesearch_page_id'],
+            ],
+                true
+            );
+        }
+
     }
+
+
 
     /**
      * @TODO: Refactor
