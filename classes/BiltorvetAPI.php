@@ -127,6 +127,7 @@
         public function GetFeaturedVehicles($amount)
         {
             return $this->Request('/vehicle/featured', isset($amount) ? array('amount' => intval($amount)) : null);
+
         }
 
         public function GetProducts()

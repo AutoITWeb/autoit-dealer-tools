@@ -32,7 +32,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             add_shortcode( 'bdt_specifications', array($this, 'bdt_shortcode_specifications') );
             add_shortcode( 'bdt_equipment', array($this, 'bdt_shortcode_equipment') );
             add_shortcode( 'bdt_recommendedvehicles', array($this, 'bdt_shortcode_recommendedvehicles') );
-            add_shortcode( 'bdt_featuredvehicles', array($this, 'bdt_shortcode_featuredvehicles') );
+//            add_shortcode( 'bdt_featuredvehicles', array($this, 'bdt_shortcode_featuredvehicles') );
             add_shortcode( 'bdt_slideshow', array($this, 'bdt_shortcode_slideshow') );
             add_shortcode( 'bdt_vehicle_price', array($this, 'bdt_shortcode_vehicleprice') );
             add_shortcode( 'bdt_vehicle_labels', array($this, 'bdt_shortcode_vehiclelabels') );
@@ -408,6 +408,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             return $content;
         }
 
+        // Unused -> New featured vehicles function in v2/src/utility/callbacks.php
         public function bdt_shortcode_featuredvehicles( $atts )
         {
             $atts = shortcode_atts( array(
@@ -426,7 +427,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             } else {
                 return '<!-- Cannot load Biltorvet featured vehicles: no root page (Vehicle search) has been set! -->';
             }
-            
+
             ob_start();
             ?>
             <div class="bdt">
@@ -600,7 +601,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                                 'data-btsettings-variant="' . $variant . '" ' . 
                                 'data-btsettings-mileage="' . $mileage . '" ' .
                                 'data-btsettings-firstRegistrationDate="' . $firstRegistrationDate . '" ' . 
-                                ($sold ? 'data-btsettings-isVehicleSold="true" ' : '') . 
+                                ($sold ? 'data-btsettings-isVehicleSold="true" ' : '') .
                                 (isset($atts['brandingid']) ? 'data-btsettings-brandingId="' . intval($atts['brandingid']) . '" ' : '') .
                                 (isset($atts['hidevehicleprice']) ? 'data-btsettings-hideVehiclePrice="true" ' : '') .
                                 (isset($atts['downpaymentratio']) ?  'data-btsettings-dataDownPayment="' . (intval($atts['downpaymentratio'])*intval($price)) . '" ' : '' ) . 
