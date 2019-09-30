@@ -10,6 +10,7 @@ use Biltorvet\Controller\TemplateController;
 use Biltorvet\Factory\VehicleLeadFactory;
 use Biltorvet\Helper\DataHelper;
 use Biltorvet\Helper\MailFormatter;
+use Biltorvet\Helper\ProductHelper;
 use Biltorvet\Helper\WordpressHelper;
 use Biltorvet\Model\SearchFilter;
 use Exception;
@@ -33,37 +34,44 @@ class Callbacks
      */
     public function get_vehicles_shortcode(array $atts)
     {
-        $searchFilter = new SearchFilter();
-        $searchFilter->setMakes([$atts['make']]);
 
-        if (isset($atts['models'])) {
-            $searchFilter->setModels([$atts['model']]);
+        if (ProductHelper::hasAccess('Vehicle Module', $this->apiController->getCompanyProducts())) {
+
+            $searchFilter = new SearchFilter();
+            $searchFilter->setMakes([$atts['make']]);
+
+            if (isset($atts['models'])) {
+                $searchFilter->setModels([$atts['model']]);
+            }
+
+            wp_enqueue_style("bdt_style");
+            return $this->templateController->load(
+                'vehicleCardWrapper.php',
+                [
+                    'vehicles' => $this->apiController->getVehicles($searchFilter),
+                    'basePage' => WordpressHelper::getOptions()['vehiclesearch_page_id']
+                ],
+                true
+            );
         }
-
-        wp_enqueue_style("bdt_style");
-        return $this->templateController->load(
-            'vehicleCardWrapper.php',
-            [
-            'vehicles' => $this->apiController->getVehicles($searchFilter),
-            'basePage' => WordpressHelper::getOptions()['vehiclesearch_page_id']
-            ],
-            true
-        );
     }
 
     public function get_sold_vehicles_shortcode()
     {
-        $searchFilter = new SearchFilter();
+        if (ProductHelper::hasAccess('Vehicle Module', $this->apiController->getCompanyProducts())) {
+            $searchFilter = new SearchFilter();
 
-        wp_enqueue_style("bdt_style");
-        return $this->templateController->load(
-            'vehicleCardWrapper.php',
-            [
-                'vehicles' => DataHelper::filterVehiclesByLabel($this->apiController->getVehicles($searchFilter), LABEL_SOLD),
-                'basePage' => WordpressHelper::getOptions()['vehiclesearch_page_id'],
-            ],
-            true
-        );
+            wp_enqueue_style("bdt_style");
+            return $this->templateController->load(
+                'vehicleCardWrapper.php',
+                [
+                    'vehicles' => DataHelper::filterVehiclesByLabel($this->apiController->getVehicles($searchFilter),
+                        LABEL_SOLD),
+                    'basePage' => WordpressHelper::getOptions()['vehiclesearch_page_id'],
+                ],
+                true
+            );
+        }
     }
 
     /**

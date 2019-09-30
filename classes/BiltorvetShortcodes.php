@@ -7,7 +7,7 @@ use Biltorvet\Helper\WordpressHelper;
 use Biltorvet\Model\Vehicle;
 
 if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
-    
+
     class BiltorvetShortcodes {
         public $biltorvetAPI;
         public $_options;
@@ -56,7 +56,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 return $e->getMessage();
             }
         }
-        
+
         public function bdt_shortcode_vehicle_search( $atts ){
             wp_enqueue_style("bdt_style");
             wp_enqueue_script("bdt_script");
@@ -116,7 +116,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             return '<div class="bdt"><section class="bt-slideshow bt-slideshow-4to3"><div class="bt-slideshow-skidboard d-none"></div><a href="#" class="bt-slideshow-prev">' .$iconGalleryArrowLeft. '</a><a href="#" class="bt-slideshow-next">' .$iconGalleryArrowRight. '</a><div class="bt-slideshow-viewport">' . $slides . '</div><div class="bt-slideshow-controls"><span class="bt-slideshow-bg"><a href="#" class="bt-slideshow-open-fullscreen">' .$iconGalleryFullscreen. '</a> <a href="#" class="bt-slideshow-pause-video d-none"><span class="bticon bticon-Pause"></span></a> <span><span class="bt-slideshow-current">1</span>/<span class="bt-slideshow-count">' . $slideCount . '</span></span></span></div></section></div>';
         }
 
-        public function bdt_shortcode_vehiclelabels( $atts ) 
+        public function bdt_shortcode_vehiclelabels( $atts )
         {
             if(!isset($this->currentVehicle) || $this->currentVehicle === null)
             {
@@ -368,7 +368,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 return $e->getMessage();
             }
             $bdt_root_url = rtrim($_SERVER['REQUEST_URI'], '/') . '../..'; // take care of trailing slash, that can be disabled or enabled on the server.
-            
+
             ob_start();
             ?>
             <div class="bdt">
@@ -426,7 +426,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             } else {
                 return '<!-- Cannot load Biltorvet featured vehicles: no root page (Vehicle search) has been set! -->';
             }
-            
+
             ob_start();
             ?>
             <div class="bdt">
@@ -501,7 +501,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             } elseif(isset($this->currentVehicle)) {
                 $vehicle = $this->currentVehicle;
             }
-            
+
             if(!isset($vehicle) || $vehicle == null)
             {
                 return __('Vehicle not found', 'biltorvet-dealer-tools');
@@ -593,17 +593,17 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                                 return "<!-- BDT: Santander widget not loaded: firstRegistrationDate not set -->";
                             }
                             $widgetAttributes = $productKeyAttribute . ' ' .
-                                (isset($atts['color']) && trim($atts['color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($atts['color']) . '" ' : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . '" ' : '')) . 
-                                'data-btsettings-price="' . $price . '" ' . 
+                                (isset($atts['color']) && trim($atts['color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($atts['color']) . '" ' : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . '" ' : '')) .
+                                'data-btsettings-price="' . $price . '" ' .
                                 'data-btsettings-make="' . $make . '" ' .
                                 'data-btsettings-model="' . $model . '" ' .
-                                'data-btsettings-variant="' . $variant . '" ' . 
+                                'data-btsettings-variant="' . $variant . '" ' .
                                 'data-btsettings-mileage="' . $mileage . '" ' .
-                                'data-btsettings-firstRegistrationDate="' . $firstRegistrationDate . '" ' . 
-                                ($sold ? 'data-btsettings-isVehicleSold="true" ' : '') . 
+                                'data-btsettings-firstRegistrationDate="' . $firstRegistrationDate . '" ' .
+                                ($sold ? 'data-btsettings-isVehicleSold="true" ' : '') .
                                 (isset($atts['brandingid']) ? 'data-btsettings-brandingId="' . intval($atts['brandingid']) . '" ' : '') .
                                 (isset($atts['hidevehicleprice']) ? 'data-btsettings-hideVehiclePrice="true" ' : '') .
-                                (isset($atts['downpaymentratio']) ?  'data-btsettings-dataDownPayment="' . (intval($atts['downpaymentratio'])*intval($price)) . '" ' : '' ) . 
+                                (isset($atts['downpaymentratio']) ?  'data-btsettings-dataDownPayment="' . (intval($atts['downpaymentratio'])*intval($price)) . '" ' : '' ) .
                                 (isset($atts['paymentterms']) ? 'data-btsettings-paymentTerms="' . intval($atts['paymentterms']) . '" ' : '');
                         }
                     }
@@ -612,14 +612,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     {
                         // https://services.autoit.dk/Demo
                         $widgetAttributes = $productKeyAttribute . ' ' .
-                            (isset($atts['color']) && trim($atts['color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($atts['color']) . '" ' : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . '" ' : '')) . 
-                            (isset($atts['consentcategory']) ?  'data-btsettings-samtykkecategory="' . TextUtils::Sanitize($atts['consentcategory']) . '" ' : '') . 
-                            (isset($atts['requiredconsenttype']) ?  'data-btsettings-requiredsamtykketype="' . TextUtils::Sanitize($atts['requiredconsenttype']) . '" ' : '') . 
-                            (isset($atts['name']) ?  'data-btsettings-name="' . TextUtils::Sanitize($atts['name']) . '" ' : '') . 
-                            (isset($atts['address']) ?  'data-btsettings-address="' . TextUtils::Sanitize($atts['address']) . '" ' : '') . 
-                            (isset($atts['postalcode']) ?  'data-btsettings-postalcode="' . TextUtils::Sanitize($atts['postalcode']) . '" ' : '') . 
-                            (isset($atts['city']) ?  'data-btsettings-city="' . TextUtils::Sanitize($atts['city']) . '" ' : '') . 
-                            (isset($atts['email']) ?  'data-btsettings-email="' . TextUtils::Sanitize($atts['email']) . '" ' : '') . 
+                            (isset($atts['color']) && trim($atts['color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($atts['color']) . '" ' : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . '" ' : '')) .
+                            (isset($atts['consentcategory']) ?  'data-btsettings-samtykkecategory="' . TextUtils::Sanitize($atts['consentcategory']) . '" ' : '') .
+                            (isset($atts['requiredconsenttype']) ?  'data-btsettings-requiredsamtykketype="' . TextUtils::Sanitize($atts['requiredconsenttype']) . '" ' : '') .
+                            (isset($atts['name']) ?  'data-btsettings-name="' . TextUtils::Sanitize($atts['name']) . '" ' : '') .
+                            (isset($atts['address']) ?  'data-btsettings-address="' . TextUtils::Sanitize($atts['address']) . '" ' : '') .
+                            (isset($atts['postalcode']) ?  'data-btsettings-postalcode="' . TextUtils::Sanitize($atts['postalcode']) . '" ' : '') .
+                            (isset($atts['city']) ?  'data-btsettings-city="' . TextUtils::Sanitize($atts['city']) . '" ' : '') .
+                            (isset($atts['email']) ?  'data-btsettings-email="' . TextUtils::Sanitize($atts['email']) . '" ' : '') .
                             (isset($atts['mobilephone']) ?  'data-btsettings-mobilephone="' . TextUtils::Sanitize($atts['mobilephone']) . '" ' : '');
                     }
 
@@ -641,8 +641,8 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                         }
 
                         $widgetAttributes = $productKeyAttribute . ' ' . ' data-btsettings-settingsguid="' . $externalId . '" ' .
-                            (isset($atts['color']) && trim($atts['color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($atts['color']) . '" ' : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . '" ' : '')) . 
-                            (isset($atts['logourl']) ?  'data-btsettings-logourl="' . TextUtils::Sanitize($atts['logourl']) . '" ' : '') . 
+                            (isset($atts['color']) && trim($atts['color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($atts['color']) . '" ' : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . '" ' : '')) .
+                            (isset($atts['logourl']) ?  'data-btsettings-logourl="' . TextUtils::Sanitize($atts['logourl']) . '" ' : '') .
                             (isset($atts['fontcolor']) ?  'data-btsettings-fontcolor="' . TextUtils::Sanitize($atts['fontcolor']) . '" ' : '');
                     }
 
@@ -663,7 +663,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                             return "<!-- guid attribute is currently required for AutoDesktopLeads widget type. -->";
                             continue;
                         }
-                        
+
                         $actiontype = isset($atts['actiontype']) ? TextUtils::Sanitize($atts['actiontype']) : null;
                         if(isset($actiontype) && $actiontype !== '' && !in_array($actiontype, $ActivityType))
                         {
@@ -692,26 +692,26 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                             // $year = $firstRegistrationDate['year'];
                         }
 
-                        $widgetAttributes = $productKeyAttribute . ' ' . ' data-btsettings-guid="' . $externalId . '" ' . 
-                            (isset($atts['color']) && trim($atts['color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($atts['color']) . '" ' : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . '" ' : '')) . 
-                            (isset($actiontype) ?  'data-btsettings-actiontype="' . $actiontype . '" ' : '') . 
-                            (isset($atts['logourl']) ?  'data-btsettings-logourl="' . TextUtils::Sanitize($atts['logourl']) . '" ' : '') . 
-                            (isset($atts['fontcolor']) ?  'data-btsettings-fontcolor="' . TextUtils::Sanitize($atts['fontcolor']) . '" ' : '') . 
-                            (isset($selectedvehicletype) ?  'data-btsettings-selectedvehicletype="' . $selectedvehicletype . '" ' : '') . 
-                            (isset($allowedmakes) ?  'data-btsettings-allowedmakes=\'["' . implode('","', $allowedmakes) . '"]\' ' : '') . 
-                            (isset($filterpersonalmodels) ?  'data-btsettings-filterpersonalmodels=\'["' . implode('","', $filterpersonalmodels) . '"]\' ' : '') . 
-                            (isset($filterbusinessmodels) ?  'data-btsettings-filterbusinessmodels=\'["' . implode('","', $filterbusinessmodels) . '"]\' ' : '') . 
-                            (isset($openingtimes) ?  'data-btsettings-openingtimes=\'' . $openingtimes . '\' ' : '') . 
-                            (isset($selectedmake) ?  'data-btsettings-selectedmake="' . TextUtils::SanitizeText($selectedmake) . '" ' : '') . 
-                            (isset($selectedmodel) ?  'data-btsettings-selectedmodel="' . $selectedmodel . '" ' : '') . 
-                            (isset($atts['vehicletypehide']) ?  'data-btsettings-vehicletypehide="true" ' : '') . 
-                            (isset($atts['makehide']) ?  'data-btsettings-makehide="true" ' : '') . 
-                            (isset($atts['modelhide']) ?  'data-btsettings-modelhide="true" ' : '') . 
+                        $widgetAttributes = $productKeyAttribute . ' ' . ' data-btsettings-guid="' . $externalId . '" ' .
+                            (isset($atts['color']) && trim($atts['color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($atts['color']) . '" ' : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . '" ' : '')) .
+                            (isset($actiontype) ?  'data-btsettings-actiontype="' . $actiontype . '" ' : '') .
+                            (isset($atts['logourl']) ?  'data-btsettings-logourl="' . TextUtils::Sanitize($atts['logourl']) . '" ' : '') .
+                            (isset($atts['fontcolor']) ?  'data-btsettings-fontcolor="' . TextUtils::Sanitize($atts['fontcolor']) . '" ' : '') .
+                            (isset($selectedvehicletype) ?  'data-btsettings-selectedvehicletype="' . $selectedvehicletype . '" ' : '') .
+                            (isset($allowedmakes) ?  'data-btsettings-allowedmakes=\'["' . implode('","', $allowedmakes) . '"]\' ' : '') .
+                            (isset($filterpersonalmodels) ?  'data-btsettings-filterpersonalmodels=\'["' . implode('","', $filterpersonalmodels) . '"]\' ' : '') .
+                            (isset($filterbusinessmodels) ?  'data-btsettings-filterbusinessmodels=\'["' . implode('","', $filterbusinessmodels) . '"]\' ' : '') .
+                            (isset($openingtimes) ?  'data-btsettings-openingtimes=\'' . $openingtimes . '\' ' : '') .
+                            (isset($selectedmake) ?  'data-btsettings-selectedmake="' . TextUtils::SanitizeText($selectedmake) . '" ' : '') .
+                            (isset($selectedmodel) ?  'data-btsettings-selectedmodel="' . $selectedmodel . '" ' : '') .
+                            (isset($atts['vehicletypehide']) ?  'data-btsettings-vehicletypehide="true" ' : '') .
+                            (isset($atts['makehide']) ?  'data-btsettings-makehide="true" ' : '') .
+                            (isset($atts['modelhide']) ?  'data-btsettings-modelhide="true" ' : '') .
                             (isset($atts['title']) ?  'data-btsettings-title="' . TextUtils::SanitizeText($atts['title']) . '" ' : '');
                             (isset($atts['GTMID']) ?  'data-btsettings-GTMID="' . TextUtils::Sanitize($atts['GTMID']) . '" ' : '');
-                            // (isset($variant) ?  'data-btsettings-variant="' . $variant . '" ' : '') . 
-                            // (isset($engineSize) ?  'data-btsettings-enginesize="' . $engineSize . '" ' : '') . 
-                            // (isset($month) ?  'data-btsettings-month="' . $month . '" ' : '') . 
+                            // (isset($variant) ?  'data-btsettings-variant="' . $variant . '" ' : '') .
+                            // (isset($engineSize) ?  'data-btsettings-enginesize="' . $engineSize . '" ' : '') .
+                            // (isset($month) ?  'data-btsettings-month="' . $month . '" ' : '') .
                             // (isset($year) ?  'data-btsettings-year="' . $year . '" ' : '');
                     }
 
