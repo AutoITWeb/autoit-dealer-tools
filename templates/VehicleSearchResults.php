@@ -9,7 +9,7 @@
      * @version     1.0.0
      */
     if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
-    
+
     global $wp;
     $root = dirname(dirname(dirname(plugin_dir_url( __FILE__ ))));
     $currentPage = get_query_var('bdt_page', -1);
@@ -20,7 +20,7 @@
     } else {
         return '<!-- Cannot load Biltorvet vehicle search results: no root page (Vehicle search) has been set! -->';
     }
-    
+
     if($currentPage === -1)
     {
         $_SESSION['bdt_filter'] = null;
@@ -31,7 +31,7 @@
     {
         $bdt_root_url .= $atts['relativepositiontosearch'];
     }
-    
+
     if(!$this->biltorvetAPI)
     {
         die('API not set.');
@@ -75,7 +75,7 @@
 
         $filterObject->Start = $start;
         $filterObject->Limit = $limit;
-        $filterObject->Ascending = true;
+//        $filterObject->Ascending = true;
         $filterObject->HideSoldVehicles = isset($this->_options['hide_sold_vehicles']) && $this->_options['hide_sold_vehicles'] === 'on' ? 'true' : null;
         $filterObject->HideADVehicles = isset($this->_options['hide_ad_vehicles']) && $this->_options['hide_ad_vehicles'] === 'on' ? 'true' : null;
         $filterObject->HideBIVehicles = isset($this->_options['hide_bi_vehicles']) && $this->_options['hide_bi_vehicles'] === 'on' ? 'true' : null;
@@ -98,14 +98,14 @@ use Biltorvet\Model\Vehicle;
                         <?php printf(__('Your search returned <span class="bdt_color">%d cars</span>', 'biltorvet-dealer-tools'), $vehicleFeed->totalResults); ?>
                     </h4>
                     <p class="showingResultsXofY">
-                        <?php 
+                        <?php
                             $start = ($currentPage - 1) * $this->biltorvetAPI->GetVehicleResultsPageLimit();
                             $end = $start + $this->biltorvetAPI->GetVehicleResultsPageLimit();
                             if($end > $vehicleFeed->totalResults)
                             {
                                 $end = $vehicleFeed->totalResults;
                             }
-                            printf(__('Showing results %1$d-%2$d', 'biltorvet-dealer-tools'), ($start +1), $end); 
+                            printf(__('Showing results %1$d-%2$d', 'biltorvet-dealer-tools'), ($start +1), $end);
                         ?>
                     </p>
                 </div>

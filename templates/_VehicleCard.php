@@ -51,7 +51,7 @@
 <div class="bdt"><div class="vehicleCard">
     <?php if(isset($link)) { ?><a href="<?php echo $link; ?>"><?php } ?>
         <span class="vehicleThumb"><img src="<?php echo $vehicle->images[0]; ?>" class="img-responsive"/></span>
-        <?php 
+        <?php
             if(isset($vehicle->labels))
             {
                 $vehiclesold = false;
@@ -83,7 +83,7 @@
             <span class="price bdt_color">
                 <?php echo isset($showPrice) && trim($showPrice) !== '' ? $showPrice : "-"; ?>
             </span>
-            <?php 
+            <?php
                 if($xVat || $leasingBusiness === 'Ja')
                 {
                     ?>
