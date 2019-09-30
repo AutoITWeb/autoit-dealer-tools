@@ -15,33 +15,31 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
         public function __construct($biltorvetAPI, $options)
         {
-            if($options === null)
-            {
-                throw new Exception( __('No options provided.', 'biltorvet-dealer-tools') );
+            if ($options === null) {
+                throw new Exception(__('No options provided.', 'biltorvet-dealer-tools'));
             }
-            if($biltorvetAPI === null)
-            {
-                throw new Exception( __('No Biltorvet API instance provided.', 'biltorvet-dealer-tools') );
+            if ($biltorvetAPI === null) {
+                throw new Exception(__('No Biltorvet API instance provided.', 'biltorvet-dealer-tools'));
             }
             $this->_options = $options;
             $this->biltorvetAPI = $biltorvetAPI;
 
             add_action('parse_query', array(&$this, 'bdt_get_current_vehicle'), 1000);
-            add_shortcode( 'bdt_cta', array($this, 'bdt_shortcode_detail_cta') );
-            add_shortcode( 'bdt_prop', array($this, 'bdt_shortcode_detail_property') );
-            add_shortcode( 'bdt_specifications', array($this, 'bdt_shortcode_specifications') );
-            add_shortcode( 'bdt_equipment', array($this, 'bdt_shortcode_equipment') );
-            add_shortcode( 'bdt_recommendedvehicles', array($this, 'bdt_shortcode_recommendedvehicles') );
-//            add_shortcode( 'bdt_featuredvehicles', array($this, 'bdt_shortcode_featuredvehicles') );
-            add_shortcode( 'bdt_slideshow', array($this, 'bdt_shortcode_slideshow') );
-            add_shortcode( 'bdt_vehicle_price', array($this, 'bdt_shortcode_vehicleprice') );
-            add_shortcode( 'bdt_vehicle_labels', array($this, 'bdt_shortcode_vehiclelabels') );
-            add_shortcode( 'bdt_vehicletotalcount', array($this, 'bdt_shortcode_vehicletotalcount') );
-            add_shortcode( 'bdt_vehicle_search', array($this, 'bdt_shortcode_vehicle_search') );
-            add_shortcode( 'bdt_vehicle_search_results', array($this, 'bdt_shortcode_vehicle_search_results') );
-            add_shortcode( 'bdt_vehicle_card', array($this, 'bdt_shortcode_vehicle_card') );
-            add_shortcode( 'bdt_vehicle_search_backtoresults', array($this, 'bdt_shortcode_vehicle_search_backtoresults') );
-            add_shortcode( 'bdt_widget', array($this, 'bdt_shortcode_widget') );
+            add_shortcode('bdt_cta', array($this, 'bdt_shortcode_detail_cta'));
+            add_shortcode('bdt_prop', array($this, 'bdt_shortcode_detail_property'));
+            add_shortcode('bdt_specifications', array($this, 'bdt_shortcode_specifications'));
+            add_shortcode('bdt_equipment', array($this, 'bdt_shortcode_equipment'));
+            add_shortcode('bdt_recommendedvehicles', array($this, 'bdt_shortcode_recommendedvehicles'));
+            add_shortcode('bdt_featuredvehicles', array($this, 'bdt_shortcode_featuredvehicles'));
+            add_shortcode('bdt_slideshow', array($this, 'bdt_shortcode_slideshow'));
+            add_shortcode('bdt_vehicle_price', array($this, 'bdt_shortcode_vehicleprice'));
+            add_shortcode('bdt_vehicle_labels', array($this, 'bdt_shortcode_vehiclelabels'));
+            add_shortcode('bdt_vehicletotalcount', array($this, 'bdt_shortcode_vehicletotalcount'));
+            add_shortcode('bdt_vehicle_search', array($this, 'bdt_shortcode_vehicle_search'));
+            add_shortcode('bdt_vehicle_search_results', array($this, 'bdt_shortcode_vehicle_search_results'));
+            add_shortcode('bdt_vehicle_card', array($this, 'bdt_shortcode_vehicle_card'));
+            add_shortcode('bdt_vehicle_search_backtoresults', array($this, 'bdt_shortcode_vehicle_search_backtoresults'));
+            add_shortcode('bdt_widget', array($this, 'bdt_shortcode_widget'));
         }
 
         public function bdt_get_current_vehicle()
