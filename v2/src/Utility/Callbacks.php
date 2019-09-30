@@ -81,7 +81,7 @@ class Callbacks
 
         $searchFilter = New SearchFilter();
 
-        // Count amount of vehicless with the "I fokus" label checked
+        // Count amount of vehicless with the "I fokus" label checked.
         $getAllVehicles = DataHelper::filterVehiclesByLabel($this->apiController->getVehicles($searchFilter), LABEL_FEATURED);
 
         $featuredLabelCount = [];
