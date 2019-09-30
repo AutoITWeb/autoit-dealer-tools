@@ -63,6 +63,7 @@ class PluginController
     {
         add_shortcode('bdt_get_vehicles', [$this->callbacks, 'get_vehicles_shortcode']);
         add_shortcode('bdt_get_sold_vehicles', [$this->callbacks, 'get_sold_vehicles_shortcode']);
+        add_shortcode('bdt_featuredvehicles', [$this->callbacks, 'get_featured_vehicles_shortcode']);
     }
 
     /**
