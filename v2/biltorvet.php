@@ -26,11 +26,12 @@ use Biltorvet\Controller\PluginController;
 define( 'PLUGIN_ROOT', plugin_dir_path( __FILE__ ) );
 define('LABEL_SOLD', 5);
 define('LABEL_NEW', 11);
+define('LABEL_FEATURED', 10);
 
 // @TODO: Refactor.
 //  As the data for price calculations are pretty messy we try to map it more logically before working with it.
 define('RELATED_PRICE_PROPERTY_KEYS', [
-        'XVat', // Bruges til eksl momslabel på price
+        'VAT', // Bruges til eksl momslabel på price
         'LeasingBusiness', // bool for om det er erhverv leasing eller ej. skal momsens trækkes fra LeasingMonthlyPayment eller ej. afgør leasing moms label
         'LeasingMonthlyPaymentTotal', // DO NOT USE
         'LeasingMonthlyPaymentVAT', // ONLY moms
