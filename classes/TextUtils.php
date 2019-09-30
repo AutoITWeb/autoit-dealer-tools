@@ -1,6 +1,6 @@
 <?php
     if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
-
+    
     class TextUtils {
         public static function GetSlug($txt)
         {
@@ -106,7 +106,7 @@
                     $_out .= $letter;
                 }
             }
-
+            
             return $_out;
         }
 
@@ -142,7 +142,7 @@
                     array_push($groups, $a->group);
                 }
             }
-
+            
             foreach($groups as $group)
             {
                 $icon = '<span class="bticon bticon-Group' . TextUtils::Sanitize($group) . ' bdt_color"></span>';
@@ -153,7 +153,7 @@
                     {
                         continue;
                     }
-                    if(isset($a->group) && $a->group === $group && $a->id != 'XVat')
+                    if(isset($a->group) && $a->group === $group)
                     {
                         $groupPropertiesContentItems .= '<div class="col-6 col-sm-4 col-lg-3 ' . $a->id . '"><p class="bdt_spec_label">' . $a->publicName . '</p><p class="bdt_spec_value">' . (isset($a->valueFormatted) && $a->valueFormatted != '' ? $a->valueFormatted : $a->value) . '</p></div>';
                     }
@@ -163,7 +163,7 @@
 
                 $content .= '<div class="specificationsGroup">' . ($icon !== null ? '<div class="iconColumn">' . $icon . '</div>' : '' ) . '<div class="contentColumn">' . $groupPropertiesContent . '</div></div>';
             }
-
+            
             return $content;
         }
     }
