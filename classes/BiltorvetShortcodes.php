@@ -30,7 +30,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             add_shortcode('bdt_specifications', array($this, 'bdt_shortcode_specifications'));
             add_shortcode('bdt_equipment', array($this, 'bdt_shortcode_equipment'));
             add_shortcode('bdt_recommendedvehicles', array($this, 'bdt_shortcode_recommendedvehicles'));
-            add_shortcode('bdt_featuredvehicles', array($this, 'bdt_shortcode_featuredvehicles'));
+            add_shortcode('bdt_featuredvehicles', array($this, 'get_featured_vehicles_shortcode'));
             add_shortcode('bdt_slideshow', array($this, 'bdt_shortcode_slideshow'));
             add_shortcode('bdt_vehicle_price', array($this, 'bdt_shortcode_vehicleprice'));
             add_shortcode('bdt_vehicle_labels', array($this, 'bdt_shortcode_vehiclelabels'));
