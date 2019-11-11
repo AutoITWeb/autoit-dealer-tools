@@ -4,25 +4,359 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Biltorvet v1.0.0\n"
-"POT-Creation-Date: 2018-07-30 14:15+0200\n"
-"PO-Revision-Date: \n"
-"Language-Team: Your Team <translations@example.com>\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
+"POT-Creation-Date: 2019-11-06 11:47+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: Your Team <translations@example.com>\n"
+"Language: da_DK\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Textdomain-Support: yesX-Generator: Poedit 1.6.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
+"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;"
+"_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
 "X-Poedit-Basepath: ..\n"
-"X-Generator: Poedit 2.2.3\n"
-"Last-Translator: \n"
-"Language: da_DK\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
+#: ajax/Ajax.php:12 classes/BiltorvetShortcodes.php:22
+#, fuzzy
+#| msgid "Biltorvet API: not authorized"
+msgid "No Biltorvet API instance provided."
+msgstr "Biltorvet API: ikke autoriseret"
+
+#: classes/Biltorvet.php:144
+#, php-format
+msgid "Could not send the lead: %s"
+msgstr "Kunne ikke sende leaden: %s"
+
+#: classes/Biltorvet.php:155 classes/BiltorvetShortcodes.php:214
+#, php-format
+msgid "Unrecognized CTA type. Allowed types: %s"
+msgstr "Ukendt CTA-type. Tilladte typer: %s"
+
+#: classes/Biltorvet.php:221 v2/src/Utility/Callbacks.php:168
+#, php-format
+msgid "Lead sender: %s"
+msgstr "Leads afsender: %s"
+
+#: classes/Biltorvet.php:224 v2/src/Utility/Callbacks.php:166
+#, php-format
+msgid "Selected vehicle: %s"
+msgstr "Valgt køretøj: %s"
+
+#: classes/Biltorvet.php:285
+msgid "No API key specified. Biltorvet plugin functionality is disabled."
+msgstr "Ingen API-nøgle angivet. Biltorvets Plugin er deaktiveret."
+
+#: classes/BiltorvetAPI.php:174
+#, fuzzy, php-format
+#| msgid "Biltorvet API: unexpected response code (%u)"
+msgid "Biltorvet API: can not connect to the server (%u)"
+msgstr "Biltorvet API: uforudset responskode (%u)"
+
+#: classes/BiltorvetAPI.php:183
+msgid "Biltorvet API: not authorized"
+msgstr "Biltorvet API: ikke autoriseret"
+
+#: classes/BiltorvetAPI.php:186
+msgid "Biltorvet API: method not found"
+msgstr "Biltorvet API: metoden blev ikke fundet"
+
+#: classes/BiltorvetAPI.php:189
+#, php-format
+msgid "Biltorvet API: unexpected response code (%u)"
+msgstr "Biltorvet API: uforudset responskode (%u)"
+
+#: classes/BiltorvetAPI.php:199
+msgid "Malformed API response"
+msgstr "Uventet API Svar"
+
+#: classes/BiltorvetAPI.php:206
+#, fuzzy, php-format
+#| msgid ""
+#| "Biltorvet API returned following error(s):\r\n"
+#| "%s"
+msgid "Biltorvet API returned following error(s):\\r\\n%s"
+msgstr ""
+"Biltorvet API returnerede de følgende fejl:\r\n"
+"%s"
+
+#: classes/BiltorvetAPI.php:209
+msgid "Biltorvet API: Unexpected API error"
+msgstr "Biltorvet API: Ikke-forventet API-fejl"
+
+#: classes/BiltorvetAPI.php:215
+msgid "Biltorvet API: Response missing"
+msgstr "Biltorvet API: Svar mangler"
+
+#: classes/BiltorvetShortcodes.php:19
+msgid "No options provided."
+msgstr ""
+
+#: classes/BiltorvetShortcodes.php:88 classes/BiltorvetShortcodes.php:121
+#: classes/BiltorvetShortcodes.php:202 classes/BiltorvetShortcodes.php:268
+#: classes/BiltorvetShortcodes.php:291 classes/BiltorvetShortcodes.php:310
+#: classes/BiltorvetShortcodes.php:340 classes/BiltorvetShortcodes.php:504
+msgid "Vehicle not found"
+msgstr ""
+
+#: classes/BiltorvetShortcodes.php:209
+msgid "Shortcode's CTA type has not been set."
+msgstr "Shortcode’s CTA-type er ikke blevet indsat."
+
+#: classes/BiltorvetShortcodes.php:226
+msgid "Testdrive"
+msgstr "Prøvetur"
+
+#: classes/BiltorvetShortcodes.php:229
+msgid "Write us"
+msgstr "Skriv til os"
+
+#: classes/BiltorvetShortcodes.php:232
+msgid "Buy this car"
+msgstr "Køb"
+
+#: classes/BiltorvetShortcodes.php:235
+msgid "Call us"
+msgstr "Ring til os"
+
+#: classes/BiltorvetShortcodes.php:238
+msgid "Let us call you back"
+msgstr "Bliv ringet op"
+
+#: classes/BiltorvetShortcodes.php:296
+msgid "Shortcode's vehicle property has not been set."
+msgstr "Shortcode’s bil-egenskab er ikke blevet indsat."
+
+#: classes/BiltorvetShortcodes.php:304 classes/BiltorvetShortcodes.php:314
+#: classes/BiltorvetShortcodes.php:350
+msgid "N/A"
+msgstr "Ikke angivet"
+
+#: classes/BiltorvetShortcodes.php:469
+msgid "Back to homepage"
+msgstr "Tilbage til hjemmesiden"
+
+#: classes/BiltorvetShortcodes.php:473 classes/BiltorvetShortcodes.php:477
+msgid "Back to vehicle search page"
+msgstr "Tilbage til listevisning"
+
+#: classes/BiltorvetShortcodes.php:481
+msgid "Back to search results"
+msgstr "Tilbage til søgeresultat"
+
+#: classes/BiltorvetShortcodes.php:522
+msgid "No widget type set."
+msgstr ""
+
+#: classes/BiltorvetShortcodes.php:667
+#, php-format
+msgid "Unrecognized lead type. Allowed types: %s"
+msgstr "Ukendt lead-type. Tilladte typer: %s"
+
+#: classes/TextUtils.php:8
+msgid "Unknown"
+msgstr "Ukendt"
+
+#: classes/TextUtils.php:114 templates/_VehicleCard.php:114
+#: v2/templates/partials/_vehicleCard.php:61
+msgid "Mileage"
+msgstr "KM"
+
+#: classes/TextUtils.php:114 templates/VehicleSearch.php:112
+msgid "Price"
+msgstr "Pris"
+
+#: includes/PluginSettings.php:21
+msgid "No Options specified"
+msgstr ""
+
+#: includes/PluginSettings.php:38 includes/PluginSettings.php:54
+#: includes/Settings.php:28 includes/Settings.php:45
+msgid "Biltorvet Settings"
+msgstr "Biltorvet indstillinger"
+
+#: includes/PluginSettings.php:79 includes/Settings.php:70
 msgid "Plugin Settings"
 msgstr "Plugin indstillinger"
+
+#: includes/PluginSettings.php:86 includes/Settings.php:77
+msgid "API key"
+msgstr "API-nøgle"
+
+#: includes/PluginSettings.php:94
+msgid "Primary color"
+msgstr "Primær farve"
+
+#: includes/PluginSettings.php:102 includes/PluginSettings.php:110
+#, php-format
+msgid "Hide %s vehicles"
+msgstr "Skjul %s køretøjer"
+
+#: includes/PluginSettings.php:118
+msgid "Hide sold vehicles"
+msgstr "Skjul solgte køretøjer"
+
+#: includes/PluginSettings.php:126 includes/Settings.php:85
+msgid "Contact page to receive leads"
+msgstr "Kontaktside til at modtage leads"
+
+#: includes/PluginSettings.php:134
+msgid "Booking page (with date and time picker) to receive leads"
+msgstr "Booking side (med en date og time picker) til at modtage leads"
+
+#: includes/PluginSettings.php:142
+msgid "Vehicle search page"
+msgstr "Bilsøgningside"
+
+#: includes/PluginSettings.php:158 includes/Settings.php:93
+msgid "Vehicle detail template page"
+msgstr "Bildetalje-sideskabelon"
+
+#: includes/PluginSettings.php:166
+#, fuzzy
+#| msgid "Default sorting order"
+msgid "Default sorting"
+msgstr "Standard rækkefølge"
+
+#: includes/PluginSettings.php:174
+msgid "Order by ascending (Default is descending) "
+msgstr ""
+
+#: includes/PluginSettings.php:182
+msgid "Send AutoDesktop receipts by e-mail"
+msgstr "Send AutoDesktop leads bekræftelse via email"
+
+#: includes/PluginSettings.php:190
+msgid "Do not show leasing prices on vehicle cards"
+msgstr ""
+
+#: includes/PluginSettings.php:198
+msgid "Do not show financing prices on vehicle cards"
+msgstr ""
+
+#: includes/PluginSettings.php:206
+msgid "Do not show leasing prices on vehicle details"
+msgstr ""
+
+#: includes/PluginSettings.php:214
+msgid "Do not show financing prices on vehicle details"
+msgstr ""
+
+#: includes/PluginSettings.php:287 includes/Settings.php:105
+msgid ""
+"Enter your Biltorvet API key to activate the service. To obtain your own API "
+"key, please contact a Biltorvet sales representative."
+msgstr ""
+"Indtast din Biltovet API-nøgle for at aktivere denne service. For at få din "
+"egen API-nøgle venligst kontakt Biltorvet Support."
+
+#: templates/VehicleSearch.php:72
+msgid "- Select department -"
+msgstr "- Vælg afdeling -"
+
+#: templates/VehicleSearch.php:79
+msgid "- Select make -"
+msgstr "- Vælg mærke -"
+
+#: templates/VehicleSearch.php:85
+msgid "- Select model -"
+msgstr "- Vælg model -"
+
+#: templates/VehicleSearch.php:92
+msgid "- Select vehicle type -"
+msgstr "- Vælg type -"
+
+#: templates/VehicleSearch.php:99
+msgid "- Select body type -"
+msgstr "- Vælg Karrosseri -"
+
+#: templates/VehicleSearch.php:106
+msgid "- Select propellant -"
+msgstr "- Brændstof -"
+
+#: templates/VehicleSearch.php:120
+msgid "Consumption"
+msgstr "Brændstofforbrug"
+
+#: templates/VehicleSearch.php:127
+#, php-format
+msgid "Show %u vehicles"
+msgstr "Vis %u resultater"
+
+#: templates/VehicleSearch.php:128
+msgid "Reset"
+msgstr "Nulstil"
+
+#: templates/VehicleSearchResults.php:100
+#, php-format
+msgid "Your search returned <span class=\"bdt_color\">%d cars</span>"
+msgstr "Din søgning gav <span class=bdt_color>%d resultater</span>"
+
+#: templates/VehicleSearchResults.php:110
+#, php-format
+msgid "Showing results %1$d-%2$d"
+msgstr "Viser resultat %1$d-%2$d"
+
+#: templates/VehicleSearchResults.php:119
+msgid "- Order by -"
+msgstr "- Sortér efter -"
+
+#: templates/VehicleSearchResults.php:134
+msgid "Ascending"
+msgstr "Stigende"
+
+#: templates/VehicleSearchResults.php:135
+msgid "Descending"
+msgstr "Faldende"
+
+#: templates/_VehicleCard.php:36 v2/src/Controller/PriceController.php:132
+msgid "Leasing price"
+msgstr "Leasingpris"
+
+#: templates/_VehicleCard.php:41 v2/src/Controller/PriceController.php:126
+msgid "Financing price"
+msgstr "Finansieringspris"
+
+#: templates/_VehicleCard.php:92 v2/src/Controller/PriceController.php:137
+#: v2/src/Controller/PriceController.php:209
+msgid "Excl. VAT"
+msgstr "Ekskl. moms"
+
+#: templates/_VehicleCard.php:110 v2/templates/partials/_vehicleCard.php:57
+msgid "Year of the car"
+msgstr "Modelår"
+
+#: templates/_VehicleCard.php:118 v2/templates/partials/_vehicleCard.php:65
+msgid "Propellant"
+msgstr "Drivmiddel"
+
+#: v2/src/Controller/PriceController.php:130
+msgid "Leasing price (ex. VAT)"
+msgstr "Leasingpris (Ekskl. moms)"
+
+#: v2/src/Controller/PriceController.php:198
+msgid "Financing price pr. m."
+msgstr "Finanseringspris pr. mnd."
+
+#: v2/src/Controller/PriceController.php:202
+#, fuzzy
+#| msgid "Leasing price pr. m.: %s (ex. VAT)"
+msgid "Leasing price pr. m. (ex. VAT)"
+msgstr "Leasingpris pr. mnd.: %s (ex. VAT)"
+
+#: v2/src/Controller/PriceController.php:204
+msgid "Leasing price pr. m."
+msgstr "Leasingpris pr. mnd.: %s"
+
+#: v2/src/Controller/PriceController.php:211
+msgid "Cash price"
+msgstr "Kontantpris"
 
 msgid "Vehicle search"
 msgstr "Bilsøgning"
@@ -30,66 +364,13 @@ msgstr "Bilsøgning"
 msgid "Vehicle search results"
 msgstr "Resultat af bilsøgning"
 
-msgid "Biltorvet Settings"
-msgstr "Biltorvet indstillinger"
-
-msgid "No API key specified. Biltorvet plugin functionality is disabled."
-msgstr "Ingen API-nøgle angivet. Biltorvets Plugin er deaktiveret."
-
-msgid "Biltorvet API: not authorized"
-msgstr "Biltorvet API: ikke autoriseret"
-
-msgid "Biltorvet API: method not found"
-msgstr "Biltorvet API: metoden blev ikke fundet"
-
-msgid "Biltorvet API: unexpected response code (%u)"
-msgstr "Biltorvet API: uforudset responskode (%u)"
-
-msgid "Malformed API response"
-msgstr "Uventet API Svar"
-
 msgid ""
-"Biltorvet API returned following error(s):\r\n"
-"%s"
+"Your API access has been disabled. Please contact a sales representative."
 msgstr ""
-"Biltorvet API returnerede de følgende fejl:\r\n"
-"%s"
-
-msgid "Biltorvet API: Unexpected API error"
-msgstr "Biltorvet API: Ikke-forventet API-fejl"
-
-msgid "Biltorvet API: Response missing"
-msgstr "Biltorvet API: Svar mangler"
-
-msgid "Your API access has been disabled. Please contact a sales representative."
-msgstr "Din API nøgle er blevet deaktiveret. Venligst kontakt Biltorvet Support."
+"Din API nøgle er blevet deaktiveret. Venligst kontakt Biltorvet Support."
 
 msgid "Vehicle ID Could not be resolved"
 msgstr "Bil-ID kunne ikke blive afgjort "
-
-msgid "Shortcode's CTA type has not been set."
-msgstr "Shortcode’s CTA-type er ikke blevet indsat."
-
-msgid "Shortcode's vehicle property has not been set."
-msgstr "Shortcode’s bil-egenskab er ikke blevet indsat."
-
-msgid "N/A"
-msgstr "Ikke angivet"
-
-msgid "Unrecognized CTA type. Allowed types: %s"
-msgstr "Ukendt CTA-type. Tilladte typer: %s"
-
-msgid "Enter your Biltorvet API key to activate the service. To obtain your own API key, please contact a Biltorvet sales representative."
-msgstr "Indtast din Biltovet API-nøgle for at aktivere denne service. For at få din egen API-nøgle venligst kontakt Biltorvet Support."
-
-msgid "API key"
-msgstr "API-nøgle"
-
-msgid "Contact page to receive leads"
-msgstr "Kontaktside til at modtage leads"
-
-msgid "Vehicle detail template page"
-msgstr "Bildetalje-sideskabelon"
 
 msgid "Search our cars"
 msgstr "Søg blandt vores biler"
@@ -103,32 +384,14 @@ msgstr "Mærke"
 msgid "Model"
 msgstr "Model"
 
-msgid "Propellant"
-msgstr "Drivmiddel"
-
-msgid "Consumption"
-msgstr "Drivmiddelforbrug"
-
-msgid "Reset"
-msgstr "Nulstil"
-
 msgid "Search"
 msgstr "Søg"
-
-msgid "Your search returned <span class=\"bdt_color\">%d cars</span>"
-msgstr "Din søgning gav <span class=bdt_color>%d resultater</span>"
 
 msgid "New first"
 msgstr "Nyeste først"
 
 msgid "Order by price"
 msgstr "Sorter efter pris"
-
-msgid "Year of the car"
-msgstr "Årgang"
-
-msgid "Mileage"
-msgstr "KM"
 
 msgid "Diesel"
 msgstr "Disel"
@@ -138,9 +401,6 @@ msgstr "Benzin"
 
 msgid "Electric"
 msgstr "EL"
-
-msgid "Excl. VAT"
-msgstr "Ekskl. moms"
 
 msgid "Automatic"
 msgstr "Automat"
@@ -154,20 +414,8 @@ msgstr "Kontantpris"
 msgid "Book test drive"
 msgstr "Book prøvetur"
 
-msgid "Write us"
-msgstr "Skriv til os"
-
-msgid "Buy this car"
-msgstr "Køb"
-
-msgid "Call us"
-msgstr "Ring til os"
-
 msgid "Contact us"
 msgstr "Kontakt os"
-
-msgid "Let us call you back"
-msgstr "Bliv ringet op"
 
 msgid "Description"
 msgstr "Beskrivelse"
@@ -187,41 +435,14 @@ msgstr "- Vælg $s -"
 msgid "Unexpected API result: %s"
 msgstr "Uventet API-resultat: %s"
 
-msgid "Showing results %1$d-%2$d"
-msgstr "Viser resultat %1$d-%2$d"
-
-msgid "Default sorting order"
-msgstr "Standard rækkefølge"
-
-msgid "- Select make -"
-msgstr "- Vælg mærke -"
-
-msgid "- Select model -"
-msgstr "- Vælg model -"
-
-msgid "- Select vehicle type -"
-msgstr "- Vælg type -"
-
-msgid "- Select body type -"
-msgstr "- Vælg Karrosseri -"
-
-msgid "- Select propellant -"
-msgstr "- Drivmiddel -"
-
 msgid "- Select min km/l -"
 msgstr "- Vælg min km/l -"
-
-msgid "Show %u vehicles"
-msgstr "Vis %u resultater"
 
 msgid "- Select price range -"
 msgstr "- Vælg prisklasse -"
 
 msgid "Age"
 msgstr "Nyeste"
-
-msgid "Price"
-msgstr "Pris"
 
 msgid "ModelYear"
 msgstr "Årgang"
@@ -236,40 +457,7 @@ msgid "Displacement"
 msgstr "Motor forskydning"
 
 msgid "FirstRegistrationDate"
-msgstr "1. registrationdato"
-
-msgid "Ascending"
-msgstr "Stigende"
-
-msgid "Descending"
-msgstr "Faldende"
-
-msgid "Send AutoDesktop receipts by e-mail"
-msgstr "Send AutoDesktop leads bekræftelse via email"
-
-msgid "Booking page (with date and time picker) to receive leads"
-msgstr "Booking side (med en date og time picker) til at modtage leads"
-
-msgid "Testdrive"
-msgstr "Prøvetur"
-
-msgid "Primary color"
-msgstr "Primær farve"
-
-msgid "Back to homepage"
-msgstr "Tilbage til hjemmesiden"
-
-msgid "Back to vehicle search page"
-msgstr "Tilbage til listevisning"
-
-msgid "Back to search results"
-msgstr "Tilbage til søgeresultat"
-
-msgid "Vehicle search page"
-msgstr "Bilsøgningside"
-
-msgid "Could not send the lead: %s"
-msgstr "Kunne ikke sende leaden: %s"
+msgstr "Første indregistreringsdato"
 
 msgid "Department"
 msgstr "Afdeling"
@@ -286,11 +474,8 @@ msgstr "Transmission"
 msgid "PropellantType"
 msgstr "Drivmiddel"
 
-msgid "Unknown"
-msgstr "Ukendt"
-
 msgid "DateEdited"
-msgstr "Redigeringsdato"
+msgstr "Nyeste  biler"
 
 msgid "EngineDisplacementCcm"
 msgstr "Motorstr."
@@ -302,10 +487,7 @@ msgid "TopSpeedKmPerHour"
 msgstr "Tophastighed"
 
 msgid "FirstRegistrationYear"
-msgstr "Førstregistreringsår"
-
-msgid "- Select department -"
-msgstr "- Vælg afdeling -"
+msgstr "Første indregistrerings år"
 
 msgid "AgeAndState"
 msgstr "Alder og kilometerstand"
@@ -322,47 +504,8 @@ msgstr "Rummelighed og mål"
 msgid "Finances"
 msgstr "Penge"
 
-msgid "Cash price"
-msgstr "Kontantpris"
-
-msgid "Leasing price (ex. VAT)"
-msgstr "Leasingpris (Ekskl. moms)"
-
 msgid "Exclusive VAT"
 msgstr "Eksklusiv moms"
 
 msgid "Cash price: %s"
 msgstr "Kontantpris: %s"
-
-msgid "Financing price pr. m."
-msgstr "Finanseringspris pr. mnd."
-
-msgid "Leasing price pr. m.: %s (ex. VAT)"
-msgstr "Leasingpris pr. mnd.: %s (ex. VAT)"
-
-msgid "Leasing price pr. m.: %s"
-msgstr "Leasingpris pr. mnd.: %s"
-
-msgid "Leasing price"
-msgstr "Leasingpris"
-
-msgid "Financing price"
-msgstr "Finansieringspris"
-
-msgid "- Order by -"
-msgstr "- Sortér efter -"
-
-msgid "Hide %s vehicles"
-msgstr "Skjul %s køretøjer"
-
-msgid "Hide sold vehicles"
-msgstr "Skjul solgte køretøjer"
-
-msgid "Unrecognized lead type. Allowed types: %s"
-msgstr "Ukendt lead-type. Tilladte typer: %s"
-
-msgid "Selected vehicle: %s"
-msgstr "Valgt køretøj: %s"
-
-msgid "Lead sender: %s"
-msgstr "Leads afsender: %s"

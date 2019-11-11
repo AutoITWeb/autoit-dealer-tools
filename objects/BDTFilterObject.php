@@ -6,6 +6,7 @@
         public $Propellants;
         public $Makes;
         public $Models;
+        public $MakesAndModels;
         public $BodyTypes;
         public $ProductTypes;
         public $PriceMin;

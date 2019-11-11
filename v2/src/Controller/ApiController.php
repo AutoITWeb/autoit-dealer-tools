@@ -51,21 +51,34 @@ class ApiController
 
     public function getVehicles($filter)
     {
-        return $this->requestApi('vehicle', ['filter' => json_encode($filter)]);
+        try {
+            return $this->requestApi('vehicle', ['filter' => json_encode($filter)]);
+        } catch (Exception $e) {
+        }
     }
 
+    /**
+     * @param string $vehicleId
+     * @return array|Vehicle
+     */
     public function getVehicleDetails(string $vehicleId)
     {
-        return $this->requestApi(
-            'vehicle/detail/' . filter_var($vehicleId, FILTER_SANITIZE_STRING),
-            [],
-            'vehicleDetail'
-        );
+        try {
+            return $this->requestApi(
+                'vehicle/detail/' . filter_var($vehicleId, FILTER_SANITIZE_STRING),
+                [],
+                'vehicleDetail'
+            );
+        } catch (Exception $e) {
+        }
     }
 
     public function getOrderByValues()
     {
-        return $this->requestApi('/vehicle/orderbyvalues', [], 'orderbyValues');
+        try {
+            return $this->requestApi('/vehicle/orderbyvalues', [], 'orderbyValues');
+        } catch (Exception $e) {
+        }
     }
 
     /**
@@ -112,6 +125,7 @@ class ApiController
         string $request_method = "GET"
     ) {
         try {
+            /** @var TYPE_NAME $response_type */
             return $this->handleResponse(
                 $this->client->request(
                     $request_method,

@@ -27,6 +27,13 @@ define( 'PLUGIN_ROOT', plugin_dir_path( __FILE__ ) );
 define('LABEL_SOLD', 5);
 define('LABEL_NEW', 11);
 define('LABEL_FEATURED', 10);
+define('LABEL_LEASING', 12);
+define('LABEL_WAREHOUSESALE', 26);
+define('LABEL_FLEXLEASING', 198);
+define('LABEL_EXPORT', 382);
+define('LABEL_UPCOMING', 4);
+define('LABEL_RENTAL', 2);
+define('LABEL_COMMISION', 27);
 
 // @TODO: Refactor.
 //  As the data for price calculations are pretty messy we try to map it more logically before working with it.
