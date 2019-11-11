@@ -42,7 +42,6 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             add_shortcode('bdt_widget', array($this, 'bdt_shortcode_widget'));
         }
 
-
         public function bdt_get_current_vehicle()
         {
             try{
