@@ -69,13 +69,15 @@
             }
         }
 
+
+
         if ($filterObject->OrderBy === null && isset($this->_options['default_sorting_value'])) {
             $filterObject->OrderBy = $this->_options['default_sorting_value'];
         }
 
         $filterObject->Start = $start;
         $filterObject->Limit = $limit;
-//        $filterObject->Ascending = true;
+        $filterObject->Ascending = isset($this->_options['bdt_asc_sorting_value']) && $this->_options['bdt_asc_sorting_value'] === 'on' ? 'true' : null;
         $filterObject->HideSoldVehicles = isset($this->_options['hide_sold_vehicles']) && $this->_options['hide_sold_vehicles'] === 'on' ? 'true' : null;
         $filterObject->HideADVehicles = isset($this->_options['hide_ad_vehicles']) && $this->_options['hide_ad_vehicles'] === 'on' ? 'true' : null;
         $filterObject->HideBIVehicles = isset($this->_options['hide_bi_vehicles']) && $this->_options['hide_bi_vehicles'] === 'on' ? 'true' : null;
@@ -111,6 +113,7 @@ use Biltorvet\Model\Vehicle;
                 </div>
                 <div class="col-sm-4 searchFilter">
                     <div class="row">
+                        <div class="col">
                         <div class="col">
                             <select name="orderBy">
                                 <option value=""><?php _e('- Order by -', 'biltorvet-dealer-tools'); ?></option>

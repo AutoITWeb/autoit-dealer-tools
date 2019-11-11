@@ -13,6 +13,8 @@ use Biltorvet\Helper\MailFormatter;
 use Biltorvet\Helper\WordpressHelper;
 use Biltorvet\Model\SearchFilter;
 use Exception;
+use TextUtils;
+
 
 class Callbacks
 {
@@ -34,21 +36,29 @@ class Callbacks
     public function get_vehicles_shortcode(array $atts)
     {
         $searchFilter = new SearchFilter();
-        $searchFilter->setMakes([$atts['make']]);
 
+        if(!isset($atts['make']))
+        {
+            return 'Please set make.';
+        }
+
+        $searchFilter->setMakes([ucfirst($atts['make'])]);
         // Fetches the wanted make
         $fetchMake = $this->apiController->getVehicles($searchFilter);
 
-        if (isset($atts['models'])) {
-            $searchFilter->setModels([$atts['model']]);
+        if($fetchMake == null)
+        {
+            return 'Vi har desværre ingen' . ' ' . (ucfirst($atts['make'])) . 'er' . ' ' . 'på lager.';
+        }
+
+        if (isset($atts['model'])) {
+            $searchFilter->setModels([ucfirst($atts['model'])]);
+        }
+        if (isset($atts['propellant'])){
+            $searchFilter->setPropellants([ucfirst($atts['propellant'])]);
         }
 
         wp_enqueue_style("bdt_style");
-
-        if($fetchMake == null)
-        {
-            return 'Vi har desværre ingen' . ' ' . ($atts['make']) . 'er' . ' ' . 'på lager.';
-        }
         return $this->templateController->load(
             'vehicleCardWrapper.php',
             [
@@ -59,29 +69,47 @@ class Callbacks
         );
         }
 
-    public function get_sold_vehicles_shortcode()
+    public function get_vehicles_by_status_code_shortcode($atts)
     {
         $searchFilter = new SearchFilter();
+
+        if(!isset($atts['status']))
+        {
+            return 'Please set a status.' . '<br><br>' . 'Check the documentation for valid status codes.';
+        }
+
+        $SetStatusCode = ucfirst($atts['status']);
+
+        switch ($SetStatusCode) {
+            case 'Sold': $label = 5; break;
+            case 'New': $label = 11; break;
+            case 'Leasing': $label = 12; break;
+            case 'Warehousesale' : $label = 26; break;
+            case 'Flexleasing' : $label = 198; break;
+            case 'Export' : $label = 382; break;
+            case 'Upcoming' : $label = 4; break;
+            case 'Rental' : $label = 2; break;
+            case 'Commission' : $label = 27; break;
+        }
 
         wp_enqueue_style("bdt_style");
         return $this->templateController->load(
             'vehicleCardWrapper.php',
             [
-                'vehicles' => DataHelper::filterVehiclesByLabel($this->apiController->getVehicles($searchFilter), LABEL_SOLD),
+                'vehicles' => DataHelper::filterVehiclesByLabel($this->apiController->getVehicles($searchFilter), $label),
                 'basePage' => WordpressHelper::getOptions()['vehiclesearch_page_id'],
             ],
             true
         );
-
-
     }
+
 
     public function get_featured_vehicles_shortcode()
     {
 
         $searchFilter = New SearchFilter();
 
-        // Count amount of vehicless with the "I fokus" label checked.
+        // Count amount of vehicles with the "I fokus" label checked.
         $getAllVehicles = DataHelper::filterVehiclesByLabel($this->apiController->getVehicles($searchFilter), LABEL_FEATURED);
 
         $featuredLabelCount = [];
@@ -116,8 +144,6 @@ class Callbacks
         }
 
     }
-
-
 
     /**
      * @TODO: Refactor

@@ -67,6 +67,7 @@
                         $vehiclenew = $label->value;
                     }
                 }
+
                 if($vehiclesold)
                 {
                     ?><span class="vehicleLabel sold"><?php echo $vehiclesold; ?></span><?php

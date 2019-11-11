@@ -42,6 +42,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             add_shortcode('bdt_widget', array($this, 'bdt_shortcode_widget'));
         }
 
+
         public function bdt_get_current_vehicle()
         {
             try{
@@ -139,24 +140,22 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 $badgeType = 'badge-primary';
                 switch($label->key)
                 {
-                    // sold
-                    case 5:
-                        $badgeType = 'badge-danger';
-                    break;
-                    // new
-                    case 11:
-                    // campaign
-                    case 122:
-                        $badgeType = 'badge-success';
-                    break;
-                    // reserved
-                    case 6:
-                        $badgeType = 'badge-warning';
-                    break;
-                    // leasing
-                    case 12:
-                        $badgeType = 'badge-info';
-                    break;
+                    // "Solgt"
+                    case 5: $badgeType = 'badge-danger'; break;
+                    // "Nyhed"
+                    case 11: $badgeType = 'badge-success'; break;
+                    // "Leasing"
+                    case 12: $badgeType = 'badge-info'; break;
+                    // "Eksport"
+                    case 382: $badgeType = 'badge-warning'; break;
+                    // "Uden afgift"
+                    case 359: $badgeType = 'badge-dark'; break;
+                    // "Udlejning"
+                    case 2: $badgeType = 'badge-purple'; break;
+                    // "Lagersalg"
+                    case 26: $badgeType = 'badge-secondary'; break;
+                    // "I fokus"
+                    case 10: $badgeType = 'badge-orange'; break;
                 }
                 $labels .= '<span class="badge ' . $badgeType. ' mr-2 mb-1">' . $label->value . '</span>';
             }
@@ -317,22 +316,22 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             }
             $properties = $this->currentVehicle->properties;
             // hide ekskl. moms for some kinds of vehicles
-            if($this->currentVehicle->type === 'Motorcykel')
-            {
-                $exclMomsPropIndex = -1;
-                for($i = 0; $i < count($properties); $i++)
-                {
-                    if($properties[$i]->id === 'XVat')
-                    {
-                        $exclMomsPropIndex = $i;
-                        break;
-                    }
-                }
-                if($exclMomsPropIndex !== -1)
-                {
-                    array_splice($properties, $exclMomsPropIndex, 1);
-                }
-            }
+//            if($this->currentVehicle->type === 'Motorcykel')
+//            {
+//                $exclMomsPropIndex = -1;
+//                for($i = 0; $i < count($properties); $i++)
+//                {
+//                    if($properties[$i]->id === 'XVat')
+//                    {
+//                        $exclMomsPropIndex = $i;
+//                        break;
+//                    }
+//                }
+//                if($exclMomsPropIndex !== -1)
+//                {
+//                    array_splice($properties, $exclMomsPropIndex, 1);
+//                }
+//            }
             return '<div class="bdt">'.TextUtils::GenerateSpecificationsTable($properties).'</div>';
         }
 
