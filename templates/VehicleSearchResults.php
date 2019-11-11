@@ -129,8 +129,8 @@ use Biltorvet\Model\Vehicle;
                         </div>
                         <div class="col">
                             <select name="ascDesc">
-                                <option value="asc"<?php echo $filterObject->Ascending === 'true' ? ' selected="selected"': '';  ?>><?php _e('Ascending', 'biltorvet-dealer-tools'); ?></option>
-                                <option value="desc"<?php echo $filterObject->Ascending !== 'true' ? ' selected="selected"': '';  ?>><?php _e('Descending', 'biltorvet-dealer-tools'); ?></option>
+                                <option value="asc"<?php echo $filterObject->Ascending === 'true' ? ' selected="selected"' : '';  ?>><?php _e('Ascending', 'biltorvet-dealer-tools'); ?></option>
+                                <option value="desc"<?php echo $filterObject->Ascending !== 'true' ? ' selected="selected"' : '';  ?>><?php _e('Descending', 'biltorvet-dealer-tools'); ?></option>
                             </select>
                         </div>
                     </div>
