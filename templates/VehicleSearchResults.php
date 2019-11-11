@@ -75,7 +75,11 @@
         $filterObject->Start = $start;
         $filterObject->Limit = $limit;
 
-        ($filterObject->Ascending = isset($this->_options['bdt_asc_sorting_value']) && $this->_options['bdt_asc_sorting_value'] === 'on' ? 'true' : null);
+//        if ($filterObject->Ascending === null && isset($this->_options['bdt_asc_sorting_value'])) {
+//            $filterObject->Ascending = $this->_options['bdt_asc_sorting_value'];
+//        }
+
+//        ($filterObject->Ascending = isset($this->_options['bdt_asc_sorting_value']) && $this->_options['bdt_asc_sorting_value'] === 'on' ? 'true' : null);
 
         $filterObject->HideSoldVehicles = isset($this->_options['hide_sold_vehicles']) && $this->_options['hide_sold_vehicles'] === 'on' ? 'true' : null;
         $filterObject->HideADVehicles = isset($this->_options['hide_ad_vehicles']) && $this->_options['hide_ad_vehicles'] === 'on' ? 'true' : null;
@@ -129,8 +133,8 @@ use Biltorvet\Model\Vehicle;
                         </div>
                         <div class="col">
                             <select name="ascDesc">
-                                <option value="asc"<?php echo $filterObject->Ascending === 'true' ? ' selected="selected"': '';  ?>><?php _e('Ascending', 'biltorvet-dealer-tools'); ?></option>
-                                <option value="desc"<?php echo $filterObject->Ascending !== 'true' ? ' selected="selected"': '';  ?>><?php _e('Descending', 'biltorvet-dealer-tools'); ?></option>
+                                <option value="asc"<?php echo $filterObject->Ascending === 'true' ? ' selected="selected"' : '';  ?>><?php _e('Ascending', 'biltorvet-dealer-tools'); ?></option>
+                                <option value="desc"<?php echo $filterObject->Ascending !== 'true' ? ' selected="selected"' : '';  ?>><?php _e('Descending', 'biltorvet-dealer-tools'); ?></option>
                             </select>
                         </div>
                     </div>
