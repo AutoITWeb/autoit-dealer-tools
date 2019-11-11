@@ -169,13 +169,13 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt_settings_section'
             );
 
-            add_settings_field(
-                'bdt_asc_sorting_value',
-                __('Order by ascending (Default is descending) ', 'biltorvet-dealer-tools' ),
-                array( $this, 'ascending_value_callback' ),
-                'bdt-settings',
-                'bdt_settings_section'
-            );
+//            add_settings_field(
+//                'bdt_asc_sorting_value',
+//                __('Ascending order ', 'biltorvet-dealer-tools' ),
+//                array( $this, 'ascending_value_callback' ),
+//                'bdt-settings',
+//                'bdt_settings_section'
+//            );
 
             add_settings_field(
                 'adt_email_receipt',
@@ -242,13 +242,29 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             echo $HTML;
         }
 
-        public function ascending_value_callback()
-        {
-            printf(
-                '<input type="checkbox" id="bdt_options" value="on" name="bdt_options[bdt_asc_sorting_value]"%s />',
-                isset( $this->options['bdt_asc_sorting_value'] ) && $this->options['bdt_asc_sorting_value'] === 'on' ? ' checked="checked"' : ''
-            );
-        }
+//        public function ascending_value_callback()
+//        {
+//            $orderby = ['true', 'false'];
+//
+//            $HTML = '<select id="bdt_options" value="on" name="bdt_options[bdt_asc_sorting_value]"/>';
+////            $HTML .= '<option value="-1">None</option>';
+//
+//            foreach ($orderby as $order) {
+//                $selected = isset( $this->options['dbdt_asc_sorting_value']) && $this->options['bdt_asc_sorting_value'] == $order;
+//                $HTML .= '<option value="' . $order . '"';
+//                $HTML .= $selected ? 'selected="selected"' : '';
+//                $HTML .= '>' . $order . '</option>';
+//            }
+//
+//            $HTML .= '</select>';
+//
+//            echo $HTML;
+//
+////            printf(
+////                '<input type="checkbox" id="bdt_options" value="on" name="bdt_options[bdt_asc_sorting_value]"%s />',
+////                isset( $this->options['bdt_asc_sorting_value'] ) && $this->options['bdt_asc_sorting_value'] === 'on' ? ' checked="checked"' : ''
+////            );
+//        }
 
         public function bdt_hide_financing_prices_details_callback()
         {
