@@ -344,7 +344,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 // publicName of "Price" changed to show "ink. devcost"
                 if($prop->id === 'Price')
                 {
-                    $prop->publicName = "Pris (ink. leveringsomkostning)";
+                    $prop->publicName = "Pris (ink. leveringsomkostninger)";
                 }
             }
 
