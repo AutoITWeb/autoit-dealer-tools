@@ -255,6 +255,13 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 $root = get_permalink($bdt_contact_page_id);
             }
 
+            if(($atts['type']) === 'Contact')
+            {
+                if($this->currentVehicle->company->phone != null) {
+                    return (isset($style) ? $style : '') . '<a id="'. $id .'" href="tel:' . $this->currentVehicle->company->phone . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+                }
+            }
+
             return (isset($style) ? $style : '') . '<a id="'. $id .'" href="'. $root . '?'. http_build_query(array('bdt_actiontype' => $atts['type'], 'bdt_vehicle_id' => $this->currentVehicle->documentId)) . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
         }
 
@@ -314,23 +321,33 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 return __('N/A', 'biltorvet-dealer-tools');
             }
             $properties = $this->currentVehicle->properties;
-            // hide ekskl. moms for some kinds of vehicles
-//            if($this->currentVehicle->type === 'Motorcykel')
-//            {
-//                $exclMomsPropIndex = -1;
-//                for($i = 0; $i < count($properties); $i++)
-//                {
-//                    if($properties[$i]->id === 'XVat')
-//                    {
-//                        $exclMomsPropIndex = $i;
-//                        break;
-//                    }
-//                }
-//                if($exclMomsPropIndex !== -1)
-//                {
-//                    array_splice($properties, $exclMomsPropIndex, 1);
-//                }
-//            }
+
+            $exclMomsPropIndex = -1;
+
+            for($i = 0; $i < count($properties); $i++)
+            {
+                if($properties[$i]->id === 'VAT')
+                {
+                    $exclMomsPropIndex = $i;
+                    break;
+                }
+            }
+
+            if($exclMomsPropIndex !== -1)
+            {
+                array_splice($properties, $exclMomsPropIndex, 1);
+            }
+
+            foreach($properties as $prop)
+            {
+                // TODO: Refactor - Change the publicName in the API
+                // publicName of "Price" changed to show "ink. devcost"
+                if($prop->id === 'Price')
+                {
+                    $prop->publicName = "Pris (ink. leveringomkostning)";
+                }
+            }
+
             return '<div class="bdt">'.TextUtils::GenerateSpecificationsTable($properties).'</div>';
         }
 
@@ -530,13 +547,21 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             } catch(Exception $e) {
                 return $e->getMessage();
             }
-            wp_enqueue_script("bdt_widgetconnector");
-            foreach($products as $product)
+
+            $santanderWidgets = [];
+
+            foreach ($products as $product)
+            {
+                if($product->name == "Santander")
+                {
+                    array_push($santanderWidgets, $product);
+                }
+            }
+
+            foreach ($products as $product)
             {
                 if($product->type === 'Widget' && $product->name === TextUtils::Sanitize($atts['type']))
                 {
-                    $productKeyAttribute = 'data-btcontentid="' . $product->key . '"';
-
                     // https://santander.autoit.dk/demo.html
                     if($product->name == "Santander")
                     {
@@ -544,84 +569,95 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                         {
                             return "<!-- BDT: Santander widget not loaded: no valid vehicle found -->";
                         }
-                        if(in_array(intval($this->currentVehicle->company->id), $product->companyIds, false))
+
+                        foreach ($santanderWidgets as $santander)
                         {
-                            $make = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'makeName', true);
-                            $model = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'model', true);
-                            $price = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'Price', true);
-                            $variant = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'variant', true);
-                            $mileage = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'Mileage', true);
-                            $firstRegistrationDate = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'FirstRegistrationDate', true);
-                            $sold = false;
-                            foreach($this->currentVehicle->labels as $label)
+                            if(in_array(intval($this->currentVehicle->company->id), $santander->companyIds, true))
                             {
-                                if($label->key === 5)
+                                $productKeyAttribute = 'data-btcontentid="' . $santander->key . '"';
+
+                                $make = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'makeName', true);
+                                $model = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'model', true);
+                                $price = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'Price', true);
+                                $variant = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'variant', true);
+                                $mileage = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'Mileage', true);
+                                $firstRegistrationDate = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'FirstRegistrationDate', true);
+                                $sold = false;
+                                foreach($this->currentVehicle->labels as $label)
                                 {
-                                    $sold = true;
-                                    break;
+                                    if($label->key === 5)
+                                    {
+                                        $sold = true;
+                                        break;
+                                    }
                                 }
+                                if(!isset($price))
+                                {
+                                    return "<!-- BDT: Santander widget not loaded: price not set -->";
+                                }
+                                if(intval($price) < 50000)
+                                {
+                                    return "<!-- BDT: Santander widget not loaded: price too low (below 50000dkk) -->";
+                                }
+                                if(!isset($make))
+                                {
+                                    return "<!-- BDT: Santander widget not loaded: make not set -->";
+                                }
+                                if(!isset($model))
+                                {
+                                    return "<!-- BDT: Santander widget not loaded: model not set -->";
+                                }
+                                if(!isset($variant))
+                                {
+                                    return "<!-- BDT: Santander widget not loaded: variant not set -->";
+                                }
+                                if(!isset($mileage))
+                                {
+                                    return "<!-- BDT: Santander widget not loaded: mileage not set -->";
+                                }
+                                if(!isset($firstRegistrationDate))
+                                {
+                                    return "<!-- BDT: Santander widget not loaded: firstRegistrationDate not set -->";
+                                }
+                                $widgetAttributes = $productKeyAttribute . ' ' .
+                                    (isset($atts['color']) && trim($atts['color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($atts['color']) . '" ' : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . '" ' : '')) .
+                                    'data-btsettings-price="' . $price . '" ' .
+                                    'data-btsettings-make="' . $make . '" ' .
+                                    'data-btsettings-model="' . $model . '" ' .
+                                    'data-btsettings-variant="' . $variant . '" ' .
+                                    'data-btsettings-mileage="' . $mileage . '" ' .
+                                    'data-btsettings-firstRegistrationDate="' . $firstRegistrationDate . '" ' .
+                                    ($sold ? 'data-btsettings-isVehicleSold="true" ' : '') .
+                                    (isset($atts['brandingid']) ? 'data-btsettings-brandingId="' . intval($atts['brandingid']) . '" ' : '') .
+                                    (isset($atts['hidevehicleprice']) ? 'data-btsettings-hideVehiclePrice="true" ' : '') .
+                                    (isset($atts['downpaymentratio']) ?  'data-btsettings-dataDownPayment="' . (intval($atts['downpaymentratio'])*intval($price)) . '" ' : '' ) .
+                                    (isset($atts['paymentterms']) ? 'data-btsettings-paymentTerms="' . intval($atts['paymentterms']) . '" ' : '');
                             }
-                            if(!isset($price))
-                            {
-                                return "<!-- BDT: Santander widget not loaded: price not set -->";
-                            }
-                            if(intval($price) < 50000)
-                            {
-                                return "<!-- BDT: Santander widget not loaded: price too low (below 50000dkk) -->";
-                            }
-                            if(!isset($make))
-                            {
-                                return "<!-- BDT: Santander widget not loaded: make not set -->";
-                            }
-                            if(!isset($model))
-                            {
-                                return "<!-- BDT: Santander widget not loaded: model not set -->";
-                            }
-                            if(!isset($variant))
-                            {
-                                return "<!-- BDT: Santander widget not loaded: variant not set -->";
-                            }
-                            if(!isset($mileage))
-                            {
-                                return "<!-- BDT: Santander widget not loaded: mileage not set -->";
-                            }
-                            if(!isset($firstRegistrationDate))
-                            {
-                                return "<!-- BDT: Santander widget not loaded: firstRegistrationDate not set -->";
-                            }
-                            $widgetAttributes = $productKeyAttribute . ' ' .
-                                (isset($atts['color']) && trim($atts['color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($atts['color']) . '" ' : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . '" ' : '')) . 
-                                'data-btsettings-price="' . $price . '" ' . 
-                                'data-btsettings-make="' . $make . '" ' .
-                                'data-btsettings-model="' . $model . '" ' .
-                                'data-btsettings-variant="' . $variant . '" ' . 
-                                'data-btsettings-mileage="' . $mileage . '" ' .
-                                'data-btsettings-firstRegistrationDate="' . $firstRegistrationDate . '" ' . 
-                                ($sold ? 'data-btsettings-isVehicleSold="true" ' : '') .
-                                (isset($atts['brandingid']) ? 'data-btsettings-brandingId="' . intval($atts['brandingid']) . '" ' : '') .
-                                (isset($atts['hidevehicleprice']) ? 'data-btsettings-hideVehiclePrice="true" ' : '') .
-                                (isset($atts['downpaymentratio']) ?  'data-btsettings-dataDownPayment="' . (intval($atts['downpaymentratio'])*intval($price)) . '" ' : '' ) . 
-                                (isset($atts['paymentterms']) ? 'data-btsettings-paymentTerms="' . intval($atts['paymentterms']) . '" ' : '');
+
                         }
                     }
 
                     if($product->name == "Consent")
                     {
+                        $productKeyAttribute = 'data-btcontentid="' . $product->key . '"';
+
                         // https://services.autoit.dk/Demo
                         $widgetAttributes = $productKeyAttribute . ' ' .
-                            (isset($atts['color']) && trim($atts['color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($atts['color']) . '" ' : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . '" ' : '')) . 
-                            (isset($atts['consentcategory']) ?  'data-btsettings-samtykkecategory="' . TextUtils::Sanitize($atts['consentcategory']) . '" ' : '') . 
-                            (isset($atts['requiredconsenttype']) ?  'data-btsettings-requiredsamtykketype="' . TextUtils::Sanitize($atts['requiredconsenttype']) . '" ' : '') . 
-                            (isset($atts['name']) ?  'data-btsettings-name="' . TextUtils::Sanitize($atts['name']) . '" ' : '') . 
-                            (isset($atts['address']) ?  'data-btsettings-address="' . TextUtils::Sanitize($atts['address']) . '" ' : '') . 
-                            (isset($atts['postalcode']) ?  'data-btsettings-postalcode="' . TextUtils::Sanitize($atts['postalcode']) . '" ' : '') . 
-                            (isset($atts['city']) ?  'data-btsettings-city="' . TextUtils::Sanitize($atts['city']) . '" ' : '') . 
-                            (isset($atts['email']) ?  'data-btsettings-email="' . TextUtils::Sanitize($atts['email']) . '" ' : '') . 
+                            (isset($atts['color']) && trim($atts['color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($atts['color']) . '" ' : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . '" ' : '')) .
+                            (isset($atts['consentcategory']) ?  'data-btsettings-samtykkecategory="' . TextUtils::Sanitize($atts['consentcategory']) . '" ' : '') .
+                            (isset($atts['requiredconsenttype']) ?  'data-btsettings-requiredsamtykketype="' . TextUtils::Sanitize($atts['requiredconsenttype']) . '" ' : '') .
+                            (isset($atts['name']) ?  'data-btsettings-name="' . TextUtils::Sanitize($atts['name']) . '" ' : '') .
+                            (isset($atts['address']) ?  'data-btsettings-address="' . TextUtils::Sanitize($atts['address']) . '" ' : '') .
+                            (isset($atts['postalcode']) ?  'data-btsettings-postalcode="' . TextUtils::Sanitize($atts['postalcode']) . '" ' : '') .
+                            (isset($atts['city']) ?  'data-btsettings-city="' . TextUtils::Sanitize($atts['city']) . '" ' : '') .
+                            (isset($atts['email']) ?  'data-btsettings-email="' . TextUtils::Sanitize($atts['email']) . '" ' : '') .
                             (isset($atts['mobilephone']) ?  'data-btsettings-mobilephone="' . TextUtils::Sanitize($atts['mobilephone']) . '" ' : '');
                     }
 
                     if($product->name == "ExchangePrice")
                     {
+                        $productKeyAttribute = 'data-btcontentid="' . $product->key . '"';
+
                         // https://services.autoit.dk/?type=VehicleAppraisal&contentId=f7ff6274-1794-4c15-ba4a-27ebc1399bdd&contentData=3a2c05e5-51ac-4fb2-917a-217761f08fd0
                         $externalId = null;
                         if(isset($product->instances) && isset($product->instances[0]))
@@ -638,13 +674,15 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                         }
 
                         $widgetAttributes = $productKeyAttribute . ' ' . ' data-btsettings-settingsguid="' . $externalId . '" ' .
-                            (isset($atts['color']) && trim($atts['color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($atts['color']) . '" ' : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . '" ' : '')) . 
-                            (isset($atts['logourl']) ?  'data-btsettings-logourl="' . TextUtils::Sanitize($atts['logourl']) . '" ' : '') . 
+                            (isset($atts['color']) && trim($atts['color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($atts['color']) . '" ' : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . '" ' : '')) .
+                            (isset($atts['logourl']) ?  'data-btsettings-logourl="' . TextUtils::Sanitize($atts['logourl']) . '" ' : '') .
                             (isset($atts['fontcolor']) ?  'data-btsettings-fontcolor="' . TextUtils::Sanitize($atts['fontcolor']) . '" ' : '');
                     }
 
                     if($product->name == "AutoDesktopLeads")
                     {
+                        $productKeyAttribute = 'data-btcontentid="' . $product->key . '"';
+
                         // http://services.autoit.dk/?type=AutoDesktopLeads&contentId=371096a5-69c6-4c4b-9df9-4863959cebb9&btSettingsSettingsGuid=12c9310a-751b-4dfe-b9c8-04a7f0b85743
                         $externalId = null;
                         // if(isset($product->instances) && isset($product->instances[0]))
@@ -660,7 +698,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                             return "<!-- guid attribute is currently required for AutoDesktopLeads widget type. -->";
                             continue;
                         }
-                        
+
                         $actiontype = isset($atts['actiontype']) ? TextUtils::Sanitize($atts['actiontype']) : null;
                         if(isset($actiontype) && $actiontype !== '' && !in_array($actiontype, $ActivityType))
                         {
@@ -689,32 +727,32 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                             // $year = $firstRegistrationDate['year'];
                         }
 
-                        $widgetAttributes = $productKeyAttribute . ' ' . ' data-btsettings-guid="' . $externalId . '" ' . 
-                            (isset($atts['color']) && trim($atts['color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($atts['color']) . '" ' : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . '" ' : '')) . 
-                            (isset($actiontype) ?  'data-btsettings-actiontype="' . $actiontype . '" ' : '') . 
-                            (isset($atts['logourl']) ?  'data-btsettings-logourl="' . TextUtils::Sanitize($atts['logourl']) . '" ' : '') . 
-                            (isset($atts['fontcolor']) ?  'data-btsettings-fontcolor="' . TextUtils::Sanitize($atts['fontcolor']) . '" ' : '') . 
-                            (isset($selectedvehicletype) ?  'data-btsettings-selectedvehicletype="' . $selectedvehicletype . '" ' : '') . 
-                            (isset($allowedmakes) ?  'data-btsettings-allowedmakes=\'["' . implode('","', $allowedmakes) . '"]\' ' : '') . 
-                            (isset($filterpersonalmodels) ?  'data-btsettings-filterpersonalmodels=\'["' . implode('","', $filterpersonalmodels) . '"]\' ' : '') . 
-                            (isset($filterbusinessmodels) ?  'data-btsettings-filterbusinessmodels=\'["' . implode('","', $filterbusinessmodels) . '"]\' ' : '') . 
-                            (isset($openingtimes) ?  'data-btsettings-openingtimes=\'' . $openingtimes . '\' ' : '') . 
-                            (isset($selectedmake) ?  'data-btsettings-selectedmake="' . TextUtils::SanitizeText($selectedmake) . '" ' : '') . 
-                            (isset($selectedmodel) ?  'data-btsettings-selectedmodel="' . $selectedmodel . '" ' : '') . 
-                            (isset($atts['vehicletypehide']) ?  'data-btsettings-vehicletypehide="true" ' : '') . 
-                            (isset($atts['makehide']) ?  'data-btsettings-makehide="true" ' : '') . 
-                            (isset($atts['modelhide']) ?  'data-btsettings-modelhide="true" ' : '') . 
+                        $widgetAttributes = $productKeyAttribute . ' ' . ' data-btsettings-guid="' . $externalId . '" ' .
+                            (isset($atts['color']) && trim($atts['color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($atts['color']) . '" ' : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . '" ' : '')) .
+                            (isset($actiontype) ?  'data-btsettings-actiontype="' . $actiontype . '" ' : '') .
+                            (isset($atts['logourl']) ?  'data-btsettings-logourl="' . TextUtils::Sanitize($atts['logourl']) . '" ' : '') .
+                            (isset($atts['fontcolor']) ?  'data-btsettings-fontcolor="' . TextUtils::Sanitize($atts['fontcolor']) . '" ' : '') .
+                            (isset($selectedvehicletype) ?  'data-btsettings-selectedvehicletype="' . $selectedvehicletype . '" ' : '') .
+                            (isset($allowedmakes) ?  'data-btsettings-allowedmakes=\'["' . implode('","', $allowedmakes) . '"]\' ' : '') .
+                            (isset($filterpersonalmodels) ?  'data-btsettings-filterpersonalmodels=\'["' . implode('","', $filterpersonalmodels) . '"]\' ' : '') .
+                            (isset($filterbusinessmodels) ?  'data-btsettings-filterbusinessmodels=\'["' . implode('","', $filterbusinessmodels) . '"]\' ' : '') .
+                            (isset($openingtimes) ?  'data-btsettings-openingtimes=\'' . $openingtimes . '\' ' : '') .
+                            (isset($selectedmake) ?  'data-btsettings-selectedmake="' . TextUtils::SanitizeText($selectedmake) . '" ' : '') .
+                            (isset($selectedmodel) ?  'data-btsettings-selectedmodel="' . $selectedmodel . '" ' : '') .
+                            (isset($atts['vehicletypehide']) ?  'data-btsettings-vehicletypehide="true" ' : '') .
+                            (isset($atts['makehide']) ?  'data-btsettings-makehide="true" ' : '') .
+                            (isset($atts['modelhide']) ?  'data-btsettings-modelhide="true" ' : '') .
                             (isset($atts['title']) ?  'data-btsettings-title="' . TextUtils::SanitizeText($atts['title']) . '" ' : '');
                             (isset($atts['GTMID']) ?  'data-btsettings-GTMID="' . TextUtils::Sanitize($atts['GTMID']) . '" ' : '');
-                            // (isset($variant) ?  'data-btsettings-variant="' . $variant . '" ' : '') . 
-                            // (isset($engineSize) ?  'data-btsettings-enginesize="' . $engineSize . '" ' : '') . 
-                            // (isset($month) ?  'data-btsettings-month="' . $month . '" ' : '') . 
+                            // (isset($variant) ?  'data-btsettings-variant="' . $variant . '" ' : '') .
+                            // (isset($engineSize) ?  'data-btsettings-enginesize="' . $engineSize . '" ' : '') .
+                            // (isset($month) ?  'data-btsettings-month="' . $month . '" ' : '') .
                             // (isset($year) ?  'data-btsettings-year="' . $year . '" ' : '');
                     }
 
                     if(!isset($widgetAttributes))
                     {
-                        return "<!-- BDT: Widget of type " . TextUtils::Sanitize($atts['type']) . " not found. -->";
+                        return "<!-- BDT: Widget of type " . TextUtils::Sanitize($atts['type']) . " not found... -->" . $product->key;
                     }
 
                     if(isset($content) && $content !== null && trim($content) !== '')
