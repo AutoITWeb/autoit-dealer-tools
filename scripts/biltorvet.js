@@ -28,6 +28,15 @@ function Biltorvet($) {
         BrandNew: null // Bool
     };
 
+    var root_url = "";
+
+    var frontpageSearch = document.getElementById("frontpage_vehicle_search");
+
+    if(frontpageSearch)
+    {
+        var root_url = document.getElementById("root_url").textContent;
+    }
+
     if(vehicleSearch.length > 0 && vehicleSearch.data('makeids'))
     {
         makesFilter = [];
@@ -337,12 +346,23 @@ function Biltorvet($) {
             urlPathElements[2] = 1;
         }
 
+        if(frontpageSearch)
+        {
+            urlPathElements[1] = root_url
+            urlPathElements[2] = 1;
+        }
+
         for (var i = 1; i < urlPathElements.length; i++ ) {
             if (urlPathElements[i] !== null) {
                 urlstring += '/' + urlPathElements[i];
             }
-
         }
+
+        if(frontpageSearch)
+        {
+            urlstring = urlstring.substr(1);
+        }
+
         return urlstring;
     }
 
@@ -443,7 +463,7 @@ function FormatPrice(x, suffix)
 
 jQuery(function($) {
     var bdt = new Biltorvet($);
-    
+
     $(document)
         .on('change', '.bdtSlider', function(e){
             var min = e.value.newValue[0];
@@ -461,13 +481,13 @@ jQuery(function($) {
             {
                 max = '';
             }
-            
+
             $(this).closest('.bdtSliderContainer')
                 .find('.bdtSliderMinVal')
-                    .text(min)
+                .text(min)
                 .end()
                 .find('.bdtSliderMaxVal')
-                    .text(max);
+                .text(max);
         })
         .on('slideStop', '.bdtSlider', function(e){
             // var min = e.value[0];
