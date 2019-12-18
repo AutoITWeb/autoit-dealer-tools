@@ -126,6 +126,7 @@
                 <div class="col-sm-4 text-center text-sm-right">
                     <button type="button" data-labelpattern="<?php _e('Show %u vehicles', 'biltorvet-dealer-tools'); ?>" class="et_pb_button search bdt_bgcolor"><?php printf(__('Show %u vehicles', 'biltorvet-dealer-tools'), do_shortcode('[bdt_vehicletotalcount]')); ?></button>
                     <button type="button" class="reset bdt_color mt-4 mt-sm-2"><?php _e('Reset', 'biltorvet-dealer-tools'); ?></button>
+
                 </div>
             </div>
             <div class="lds-ring"><div></div><div></div><div></div><div></div></div>

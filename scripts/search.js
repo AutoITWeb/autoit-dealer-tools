@@ -58,9 +58,13 @@ jQuery(function ($) {
 
                         _vehicleSearch.find('.search').text(_vehicleSearch.find('.search').data('labelpattern').replace('%u', $('.vehicle_search_results').attr('data-totalResults')));
 
-                        $('html, body').animate({
-                            scrollTop: $('.vehicle_search_results').offset().top-150
-                        }, 500);
+                        var frontpageSearch = document.getElementById("frontpage_vehicle_search");
+
+                        if(frontpageSearch == null) {
+                            $('html, body').animate({
+                                scrollTop: $('.vehicle_search_results').offset().top - 150
+                            }, 500);
+                        }
                     }
 
                 });

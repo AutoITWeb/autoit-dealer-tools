@@ -36,6 +36,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             add_shortcode('bdt_vehicle_labels', array($this, 'bdt_shortcode_vehiclelabels'));
             add_shortcode('bdt_vehicletotalcount', array($this, 'bdt_shortcode_vehicletotalcount'));
             add_shortcode('bdt_vehicle_search', array($this, 'bdt_shortcode_vehicle_search'));
+            add_shortcode('bdt_vehicle_search_frontpage', array($this, 'bdt_shortcode_vehicle_search_frontpage'));
             add_shortcode('bdt_vehicle_search_results', array($this, 'bdt_shortcode_vehicle_search_results'));
             add_shortcode('bdt_vehicle_card', array($this, 'bdt_shortcode_vehicle_card'));
             add_shortcode('bdt_vehicle_search_backtoresults', array($this, 'bdt_shortcode_vehicle_search_backtoresults'));
@@ -61,6 +62,17 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             wp_enqueue_script("search_script");
             ob_start();
             require Biltorvet::bdt_get_template("VehicleSearch.php");
+            $contents = ob_get_contents();
+            ob_end_clean();
+            return $contents;
+        }
+
+        public function bdt_shortcode_vehicle_search_frontpage( $atts ){
+            wp_enqueue_style("bdt_style");
+            wp_enqueue_script("bdt_script");
+            wp_enqueue_script("search_script");
+            ob_start();
+            require Biltorvet::bdt_get_template("VehicleSearchFrontPage.php");
             $contents = ob_get_contents();
             ob_end_clean();
             return $contents;
@@ -218,6 +230,8 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             {
                 $customColor = TextUtils::SanitizeHTMLColor($atts['color']);
             }
+
+
 
             if($content == null)
             {
