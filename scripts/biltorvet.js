@@ -3,6 +3,9 @@
 function Biltorvet($) {
     var vehicleSearch = $(document).find('.bdt .vehicle_search');
     var vehicleSearchResults = $(document).find('.bdt .vehicle_search_results');
+    var root_url = "";
+    var frontpageSearch = document.getElementById("frontpage_vehicle_search");
+    var frontpageSearchButton = document.getElementById("vehicle_search_frontpage_button");
     var searchFilterOptionsXHR = null;
     var loadingAnimation = vehicleSearch.find('.lds-ring');
     var makesFilter = null;
@@ -28,13 +31,9 @@ function Biltorvet($) {
         BrandNew: null // Bool
     };
 
-    var root_url = "";
-
-    var frontpageSearch = document.getElementById("frontpage_vehicle_search");
-
     if(frontpageSearch)
     {
-        var root_url = document.getElementById("root_url").textContent;
+        root_url = document.getElementById("root_url").textContent;
     }
 
     if(vehicleSearch.length > 0 && vehicleSearch.data('makeids'))
@@ -185,7 +184,16 @@ function Biltorvet($) {
                         vehicleSearch.find('select[name=productType]').removeAttr('disabled');
                     }
 
-                    vehicleSearch.find('.search').text(vehicleSearch.find('.search').data('labelpattern').replace('%u', response.totalResults));
+                    // The frontpage search doesn't respect language settings - refactoring needed
+                    if(frontpageSearch)
+                    {
+                        frontpageSearchButton.setAttribute("data-labelpattern", "Vis " + response.totalResults + " resultater");
+                        frontpageSearchButton.innerText = "Vis " + response.totalResults + " resultater";
+                    }
+                    else
+                    {
+                        vehicleSearch.find('.search').text(vehicleSearch.find('.search').data('labelpattern').replace('%u', response.totalResults));
+                    }
 
                     if(consumptionRangeSlider !== null)
                     {
