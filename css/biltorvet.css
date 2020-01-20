@@ -5465,6 +5465,11 @@ a.bdt .badge-dark.focus {
     font-size: .8em
 }
 
+.bdt_price_small_cashprice_vehicle_card {
+    font-size: .6em;
+    text-align: center;
+}
+
 .bdt_price_big {
     font-size: 2rem
 }

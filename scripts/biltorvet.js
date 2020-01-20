@@ -353,7 +353,13 @@ function Biltorvet($) {
         if (urlPathElements[2] === "") {
             urlPathElements[2] = 1;
         }
+        // Make sure pagination is set to 1 when setting new filters1
+        else if (urlPathElements[2] != ""){
 
+            urlPathElements[2] = 1;
+        }
+
+        // Specialcase - Frontpage seach / mini search
         if(frontpageSearch)
         {
             urlPathElements[1] = root_url
