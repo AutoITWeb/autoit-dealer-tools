@@ -51,10 +51,13 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     <span class="priceLabel bdt_color">
                         <?= $priceController->getCardLabel() ?>
                     </span>
+                    <span class="bdt_price_small_cashprice_vehicle_card">
+                        <?= $priceController->showCashPriceFinance() ?>
+                    </span>
                     <span class="row">
                         <span class="col-4">
-                            <span class="vehicleParamValue"><?= $vehicleProperties['ModelYear']->getValue() ? $vehicleProperties['ModelYear']->getValue() : '-'; ?></span>
-                            <span class="vehicleParamLabel"><?php _e('Year of the car', 'biltorvet-dealer-tools'); ?></span>
+                            <span class="vehicleParamValue"><?= $vehicleProperties['ModelYear']->getValue() ? $vehicleProperties['ModelYear']->getValue() : '-'; ?> <?= $vehicleProperties['FirstRegYear']->getValue() ? " / " . $vehicleProperties['FirstRegYear']->getValue() : ''; ?></span>
+                            <span class="vehicleParamLabel"><?php _e('ModelYear', 'biltorvet-dealer-tools'); ?></span>
                         </span>
                         <span class="col-4">
                             <span class="vehicleParamValue"><?= $vehicleProperties['Mileage']->getValueFormatted() ? $vehicleProperties['Mileage']->getValueFormatted() : '-'; ?></span>

@@ -246,7 +246,12 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                         $content = '<span class="bticon bticon-BuyCar"></span><br>' . __('Buy this car', 'biltorvet-dealer-tools');
                     break;
                     case 'Contact':
-                        $content = '<span class="bticon bticon-CallUs"></span><br>' . __('Call us', 'biltorvet-dealer-tools');
+                        if($this->currentVehicle->company->phone != null) {
+                            $content = '<span class="bticon bticon-CallUs"></span><br>' . $this->currentVehicle->company->phone;
+                        }
+                        else {
+                            $content = '<span class="bticon bticon-CallUs"></span><br>' . __('Call us', 'biltorvet-dealer-tools');
+                        }
                     break;
                     case 'PhoneCall':
                         $content = '<span class="bticon bticon-CallBack"></span><br>' . __('Let us call you back', 'biltorvet-dealer-tools');
