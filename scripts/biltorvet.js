@@ -324,7 +324,8 @@ function Biltorvet($) {
             }
         }
 
-        window.history.pushState(null, null, filterUrlPath);
+        // issues with "+" decoding in browsers - temp. solution is to replace "+" signs in the urlpath with "%2b"
+        window.history.pushState(null, null, filterUrlPath.replace("+", "%2B"));
 
         return callback();
     }
@@ -353,7 +354,7 @@ function Biltorvet($) {
         if (urlPathElements[2] === "") {
             urlPathElements[2] = 1;
         }
-        // Make sure pagination is set to 1 when setting new filters1
+        // Make sure pagination is set to 1 when setting new filters
         else if (urlPathElements[2] != ""){
 
             urlPathElements[2] = 1;
