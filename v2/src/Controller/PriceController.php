@@ -92,7 +92,7 @@ class PriceController
                 $this->prioritizedPriceType = 'leasing';
                 if ($this->price->getIsBusinessLeasing()) {
                     return $this->formatValue(
-                        $this->price->getLeasingPriceValue() - $this->price->getLeasingVatValue()
+                        $this->price->getLeasingPriceValue()
                     ) . $this->monthlyPostFix;
                 } else {
                     return $this->formatValue($this->price->getLeasingPriceValue()) . $this->monthlyPostFix;

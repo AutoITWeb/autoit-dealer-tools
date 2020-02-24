@@ -5234,7 +5234,7 @@ a.bdt .badge-dark.focus {
 }
 
 .bdt .vehicleCard .vehicleParamValue {
-    font-size: 1em;
+    font-size: 0.95em;
     color: #000;
     text-align: center
 }

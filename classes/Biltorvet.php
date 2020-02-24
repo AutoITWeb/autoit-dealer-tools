@@ -28,7 +28,7 @@ class Biltorvet
         add_filter('wp_title', array(&$this, 'bdt_title'), 1000);
         add_action('wp_head', array(&$this, 'bdt_meta_tags'), 1000);
         add_action('post_updated', array(&$this, 'bdt_post_updated'), 1000);
-        
+
         $this->_options = get_option('bdt_options');
         if ($this->_options['api_key'] === null || trim($this->_options['api_key']) === '') {
             add_action('admin_notices', array(&$this, 'bdt_error_noapikey'));
