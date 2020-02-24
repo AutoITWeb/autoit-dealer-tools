@@ -56,7 +56,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     </span>
                     <span class="row">
                         <span class="col-4">
-                            <span class="vehicleParamValue"><?= $vehicleProperties['ModelYear']->getValue() ? $vehicleProperties['ModelYear']->getValue() : '-'; ?> <?= $vehicleProperties['FirstRegYear']->getValue() ? " / " . $vehicleProperties['FirstRegYear']->getValue() : ''; ?></span>
+                            <span class="vehicleParamValue"><?= $vehicleProperties['ModelYear']->getValue() ? $vehicleProperties['ModelYear']->getValue() : '-'; ?><?= $vehicleProperties['FirstRegYear']->getValue() ? " / " . $vehicleProperties['FirstRegYear']->getValue() : ''; ?></span>
                             <span class="vehicleParamLabel"><?php _e('ModelYear', 'biltorvet-dealer-tools'); ?></span>
                         </span>
                         <span class="col-4">
