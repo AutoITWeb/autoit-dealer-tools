@@ -69,13 +69,13 @@ class PriceController
 
         $this->price = PriceFactory::create($vehicle);
         $this->hideFinancingCards =
-            WordpressHelper::getOption('bdt_hide_financing_prices_card') == 'on' ? true : false;
+            WordpressHelper::getOption(2,'bdt_hide_financing_prices_card') == 'on' ? true : false;
         $this->hideFinancingDetails =
-            WordpressHelper::getOption('bdt_hide_financing_prices_details') == 'on' ? true : false;
+            WordpressHelper::getOption(3,'bdt_hide_financing_prices_details') == 'on' ? true : false;
         $this->hideLeasingCards =
-            WordpressHelper::getOption('bdt_hide_leasing_prices_card') == 'on' ? true : false;
+            WordpressHelper::getOption(2,'bdt_hide_leasing_prices_card') == 'on' ? true : false;
         $this->hideLeasingDetails =
-            WordpressHelper::getOption('bdt_hide_leasing_prices_details') == 'on' ? true : false;
+            WordpressHelper::getOption(3,'bdt_hide_leasing_prices_details') == 'on' ? true : false;
     }
 
     /**

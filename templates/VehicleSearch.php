@@ -41,6 +41,62 @@
             }
             $filterObject->HideSoldVehicles = 'true';
         }
+        if(isset($this->_options_2['hide_leasing_vehicles']) && $this->_options_2['hide_leasing_vehicles'] === 'on')
+        {
+            if($filterObject === null)
+            {
+                $filterObject = new BDTFilterObject();
+            }
+            $filterObject->HideLeasingVehicles = 'true';
+        }
+        if(isset($this->_options_2['hide_flexleasing_vehicles']) && $this->_options_2['hide_flexleasing_vehicles'] === 'on')
+        {
+            if($filterObject === null)
+            {
+                $filterObject = new BDTFilterObject();
+            }
+            $filterObject->HideFlexLeasingVehicles = 'true';
+        }
+        if(isset($this->_options_2['hide_warehousesale_vehicles']) && $this->_options_2['hide_warehousesale_vehicles'] === 'on')
+        {
+            if($filterObject === null)
+            {
+                $filterObject = new BDTFilterObject();
+            }
+            $filterObject->HideWarehousesaleVehicles = 'true';
+        }
+        if(isset($this->_options_2['hide_export_vehicles']) && $this->_options_2['hide_export_vehicles'] === 'on')
+        {
+            if($filterObject === null)
+            {
+                $filterObject = new BDTFilterObject();
+            }
+            $filterObject->HideExportVehicles = 'true';
+        }
+        if(isset($this->_options_2['hide_upcoming_vehicles']) && $this->_options_2['hide_upcoming_vehicles'] === 'on')
+        {
+            if($filterObject === null)
+            {
+                $filterObject = new BDTFilterObject();
+            }
+            $filterObject->HideUpcomingVehicles = 'true';
+        }
+        if(isset($this->_options_2['hide_rental_vehicles']) && $this->_options_2['hide_rental_vehicles'] === 'on')
+        {
+            if($filterObject === null)
+            {
+                $filterObject = new BDTFilterObject();
+            }
+            $filterObject->HideRentalVehicles = 'true';
+        }
+        if(isset($this->_options_2['hide_commission_vehicle']) && $this->_options_2['hide_commission_vehicle'] === 'on')
+        {
+            if($filterObject === null)
+            {
+                $filterObject = new BDTFilterObject();
+            }
+            $filterObject->HideCommissionVehicles = 'true';
+        }
         if(isset($this->_options['hide_ad_vehicles']) && $this->_options['hide_ad_vehicles'] === 'on')
         {
             if($filterObject === null)

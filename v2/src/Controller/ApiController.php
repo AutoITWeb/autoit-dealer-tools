@@ -46,7 +46,7 @@ class ApiController
     {
         $this->client = new Client();
         $this->serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
-        $this->apiKey = WordpressHelper::getApiKey();
+        $this->apiKey = WordpressHelper::getApiKey(1);
     }
 
     public function getVehicles($filter)
@@ -92,7 +92,7 @@ class ApiController
             'autodesktop/sendlead',
             [
             'leadInput' => DataHelper::createLeadObject($lead),
-            'emailReciept' => WordpressHelper::getOption('adt_email_receipt') === 'ja'
+            'emailReciept' => WordpressHelper::getOption(1,'adt_email_receipt') === 'ja'
             ],
             'sendLead',
             'POST'
