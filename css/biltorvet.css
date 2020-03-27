@@ -654,7 +654,149 @@ body .bdt select {
     }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1024px) {
+    .bdt .col-lg {
+        flex-basis: 0;
+        flex-grow: 1;
+        max-width: 100%
+    }
+    .bdt .col-lg-auto {
+        flex: 0 0 auto;
+        width: auto;
+        max-width: 100%
+    }
+    .bdt .col-lg-1 {
+        flex: 0 0 8.33333%;
+        max-width: 8.33333%
+    }
+    .bdt .col-lg-2 {
+        flex: 0 0 16.66667%;
+        max-width: 16.66667%
+    }
+    .bdt .col-lg-3 {
+        flex: 0 0 25%;
+        max-width: 25%
+    }
+    .bdt .col-lg-4 {
+        flex: 0 0 50%;
+        max-width: 50%
+    }
+    .bdt .col-lg-5 {
+        flex: 0 0 41.66667%;
+        max-width: 41.66667%
+    }
+    .bdt .col-lg-6 {
+        flex: 0 0 50%;
+        max-width: 50%
+    }
+    .bdt .col-lg-7 {
+        flex: 0 0 58.33333%;
+        max-width: 58.33333%
+    }
+    .bdt .col-lg-8 {
+        flex: 0 0 66.66667%;
+        max-width: 66.66667%
+    }
+    .bdt .col-lg-9 {
+        flex: 0 0 75%;
+        max-width: 75%
+    }
+    .bdt .col-lg-10 {
+        flex: 0 0 83.33333%;
+        max-width: 83.33333%
+    }
+    .bdt .col-lg-11 {
+        flex: 0 0 91.66667%;
+        max-width: 91.66667%
+    }
+    .bdt .col-lg-12 {
+        flex: 0 0 100%;
+        max-width: 100%
+    }
+    .bdt .order-lg-first {
+        order: -1
+    }
+    .bdt .order-lg-last {
+        order: 13
+    }
+    .bdt .order-lg-0 {
+        order: 0
+    }
+    .bdt .order-lg-1 {
+        order: 1
+    }
+    .bdt .order-lg-2 {
+        order: 2
+    }
+    .bdt .order-lg-3 {
+        order: 3
+    }
+    .bdt .order-lg-4 {
+        order: 4
+    }
+    .bdt .order-lg-5 {
+        order: 5
+    }
+    .bdt .order-lg-6 {
+        order: 6
+    }
+    .bdt .order-lg-7 {
+        order: 7
+    }
+    .bdt .order-lg-8 {
+        order: 8
+    }
+    .bdt .order-lg-9 {
+        order: 9
+    }
+    .bdt .order-lg-10 {
+        order: 10
+    }
+    .bdt .order-lg-11 {
+        order: 11
+    }
+    .bdt .order-lg-12 {
+        order: 12
+    }
+    .bdt .offset-lg-0 {
+        margin-left: 0
+    }
+    .bdt .offset-lg-1 {
+        margin-left: 8.33333%
+    }
+    .bdt .offset-lg-2 {
+        margin-left: 16.66667%
+    }
+    .bdt .offset-lg-3 {
+        margin-left: 25%
+    }
+    .bdt .offset-lg-4 {
+        margin-left: 33.33333%
+    }
+    .bdt .offset-lg-5 {
+        margin-left: 41.66667%
+    }
+    .bdt .offset-lg-6 {
+        margin-left: 50%
+    }
+    .bdt .offset-lg-7 {
+        margin-left: 58.33333%
+    }
+    .bdt .offset-lg-8 {
+        margin-left: 66.66667%
+    }
+    .bdt .offset-lg-9 {
+        margin-left: 75%
+    }
+    .bdt .offset-lg-10 {
+        margin-left: 83.33333%
+    }
+    .bdt .offset-lg-11 {
+        margin-left: 91.66667%
+    }
+}
+
+@media (min-width: 1200px) {
     .bdt .col-lg {
         flex-basis: 0;
         flex-grow: 1;
@@ -794,9 +936,6 @@ body .bdt select {
     .bdt .offset-lg-11 {
         margin-left: 91.66667%
     }
-}
-
-@media (min-width: 1200px) {
     .bdt .col-xl {
         flex-basis: 0;
         flex-grow: 1;
@@ -5529,6 +5668,12 @@ a.bdt .badge-dark.focus {
     padding: 0 0 10px 0 !important
 }
 
+.bdt_sharethis {
+    display: inline;
+    margin-left:5px;
+    float: right;
+}
+
 @media print {
     .bdt .bdt_slideshow .bdt_viewport img {
         display: none
@@ -5564,6 +5709,3 @@ a.bdt .badge-dark.focus {
         display: none !important
     }
 }
-
-
-/*# sourceMappingURL=biltorvet.css.map */

@@ -15,32 +15,38 @@ class WordpressHelper
     /**
      * @return array
      */
-    public static function getOptions() : array
+    public static function getOptions(int $options_number) : array
     {
-
-        return get_option('bdt_options') ?? [];
+        if($options_number == 2)
+        {
+            return get_option('bdt_options_2') ?? [];
+        }
+        else if ($options_number == 3)
+        {
+            return get_option('bdt_options_3') ?? [];
+        }
+        else {
+            return get_option('bdt_options') ?? [];
+       }
     }
 
     /**
      * @param string $key
      * @return string
      */
-    public static function getOption(string $key) : string
+    public static function getOption(int $options_number, string $key) : string
     {
-
-        $options = self::getOptions();
-
+        $options = self::getOptions($options_number);
 
         return array_key_exists($key, $options) ? $options[$key] : '';
     }
-
     /**
      * @return string
      */
     public static function getApiKey() : string
     {
 
-        $options = self::getOptions();
+        $options = self::getOptions(1);
 
         if (array_key_exists('api_key', $options) && $options['api_key']) {
             return $options['api_key'];

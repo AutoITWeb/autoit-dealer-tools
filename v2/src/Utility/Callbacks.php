@@ -63,7 +63,7 @@ class Callbacks
             'vehicleCardWrapper.php',
             [
                 'vehicles' => $this->apiController->getVehicles($searchFilter),
-                'basePage' => WordpressHelper::getOptions()['vehiclesearch_page_id']
+                'basePage' => WordpressHelper::getOptions(1)['vehiclesearch_page_id']
             ],
             true
         );
@@ -97,52 +97,10 @@ class Callbacks
             'vehicleCardWrapper.php',
             [
                 'vehicles' => DataHelper::filterVehiclesByLabel($this->apiController->getVehicles($searchFilter), $label),
-                'basePage' => WordpressHelper::getOptions()['vehiclesearch_page_id'],
+                'basePage' => WordpressHelper::getOptions(1)['vehiclesearch_page_id'],
             ],
             true
         );
-    }
-
-
-    public function get_featured_vehicles_shortcode()
-    {
-
-        $searchFilter = New SearchFilter();
-
-        // Count amount of vehicles with the "I fokus" label checked.
-        $getAllVehicles = DataHelper::filterVehiclesByLabel($this->apiController->getVehicles($searchFilter), LABEL_FEATURED);
-
-        $featuredLabelCount = [];
-
-        foreach($getAllVehicles as $featuredLabel){
-
-            array_push($featuredLabelCount, $featuredLabel);
-        }
-
-        $featuredCount = count($featuredLabelCount);
-
-        wp_enqueue_style("bdt_style");
-
-        if($featuredCount >0) {
-            return $this->templateController->load(
-                'vehicleCardWrapperFeatured.php', [
-                'vehicles' => DataHelper::filterVehiclesByLabel($this->apiController->getVehicles($searchFilter), LABEL_FEATURED),
-                'basePage' => WordpressHelper::getOptions()['vehiclesearch_page_id'],
-            ],
-                true
-            );
-        }
-        else
-        {
-            return $this->templateController->load(
-                'vehicleCardWrapperFill.php', [
-                'vehicles' => DataHelper::getVehiclePropertiesAssoc($this->apiController->getVehicles($searchFilter)),
-                'basePage' => WordpressHelper::getOptions()['vehiclesearch_page_id'],
-            ],
-                true
-            );
-        }
-
     }
 
     /**

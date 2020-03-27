@@ -23,7 +23,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
 ?>
 
-<div class="col-sm-6 col-md-4">
+<div class="col-sm-6 col-md-6 col-lg-4">
     <div class="bdt">
         <div class="vehicleCard">
             <a href="<?= get_permalink($basePage) . $vehicle->getUri() ?>">
@@ -56,7 +56,17 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     </span>
                     <span class="row">
                         <span class="col-4">
-                            <span class="vehicleParamValue"><?= $vehicleProperties['ModelYear']->getValue() ? $vehicleProperties['ModelYear']->getValue() : '-'; ?><?= $vehicleProperties['FirstRegYear']->getValue() ? " / " . $vehicleProperties['FirstRegYear']->getValue() : ''; ?></span>
+                            <span class="vehicleParamValue">
+
+                                <?php if ($vehicleProperties['ModelYear']->getValue() == $vehicleProperties['FirstRegYear']->getValue()) : ?>
+                                    <?= $vehicleProperties['ModelYear']->getValue() ? $vehicleProperties['ModelYear']->getValue() : '-'; ?>
+                                <?php endif; ?>
+
+                                <?php if ($vehicleProperties['ModelYear']->getValue() != $vehicleProperties['FirstRegYear']->getValue()) : ?>
+                                    <?= $vehicleProperties['ModelYear']->getValue() ? $vehicleProperties['ModelYear']->getValue() : '-'; ?><?= $vehicleProperties['FirstRegYear']->getValue() ? " / " . $vehicleProperties['FirstRegYear']->getValue() : ''; ?>
+                                <?php endif; ?>
+
+                            </span>
                             <span class="vehicleParamLabel"><?php _e('ModelYear', 'biltorvet-dealer-tools'); ?></span>
                         </span>
                         <span class="col-4">
