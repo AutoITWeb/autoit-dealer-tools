@@ -34,6 +34,7 @@ define('LABEL_EXPORT', 382);
 define('LABEL_UPCOMING', 4);
 define('LABEL_RENTAL', 2);
 define('LABEL_COMMISION', 27);
+define('LABEL_ENGROS', 9);
 
 // @TODO: Refactor.
 //  As the data for price calculations are pretty messy we try to map it more logically before working with it.

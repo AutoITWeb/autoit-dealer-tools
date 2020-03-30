@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Biltorvet v1.0.0\n"
-"POT-Creation-Date: 2020-03-17 11:27+0100\n"
+"POT-Creation-Date: 2018-07-30 14:15+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Frederik Bendixen <fb@biltorvet.dk>\n"
 "Language-Team: Biltorvet Web <accounts@biltorvet.dk>\n"
@@ -16,349 +16,342 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Textdomain-Support: yesX-Generator: Poedit 1.6.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;esc_attr_e;"
-"esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_x:1,2c;_n:1,2;"
-"_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
-"X-Poedit-Basepath: ../../../../../AutoITMaster/wp-content/plugins/autoit-"
-"dealer-tools\n"
+"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;"
+"_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
+"X-Poedit-Basepath: ..\n"
 "Language: en_US\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.1.1\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: ajax/Ajax.php:14 classes/BiltorvetShortcodes.php:23
-msgid "No Biltorvet API instance provided."
+msgid "Plugin Settings"
 msgstr ""
 
-#: classes/Biltorvet.php:149
-#, php-format
-msgid "Could not send the lead: %s"
+msgid "Vehicle search"
 msgstr ""
 
-#: classes/Biltorvet.php:160 classes/BiltorvetShortcodes.php:228
-#, php-format
-msgid "Unrecognized CTA type. Allowed types: %s"
+msgid "Vehicle search results"
 msgstr ""
 
-#: classes/Biltorvet.php:226 v2/src/Utility/Callbacks.php:168
-#, php-format
-msgid "Lead sender: %s"
+msgid "Biltorvet Settings"
 msgstr ""
 
-#: classes/Biltorvet.php:229 v2/src/Utility/Callbacks.php:166
-#, php-format
-msgid "Selected vehicle: %s"
-msgstr ""
-
-#: classes/Biltorvet.php:290
 msgid "No API key specified. Biltorvet plugin functionality is disabled."
 msgstr ""
 
-#: classes/BiltorvetAPI.php:174
-#, php-format
-msgid "Biltorvet API: can not connect to the server (%u)"
-msgstr ""
-
-#: classes/BiltorvetAPI.php:183
 msgid "Biltorvet API: not authorized"
 msgstr ""
 
-#: classes/BiltorvetAPI.php:186
 msgid "Biltorvet API: method not found"
 msgstr ""
 
-#: classes/BiltorvetAPI.php:189
-#, php-format
 msgid "Biltorvet API: unexpected response code (%u)"
 msgstr ""
 
-#: classes/BiltorvetAPI.php:199
 msgid "Malformed API response"
 msgstr ""
 
-#: classes/BiltorvetAPI.php:206
-#, php-format
-msgid "Biltorvet API returned following error(s):\\r\\n%s"
+msgid "Biltorvet API returned following error(s):\r\n%s"
 msgstr ""
 
-#: classes/BiltorvetAPI.php:209
 msgid "Biltorvet API: Unexpected API error"
 msgstr ""
 
-#: classes/BiltorvetAPI.php:215
 msgid "Biltorvet API: Response missing"
 msgstr ""
 
-#: classes/BiltorvetShortcodes.php:20
-msgid "No options provided."
+msgid "Your API access has been disabled. Please contact a sales representative."
 msgstr ""
 
-#: classes/BiltorvetShortcodes.php:102 classes/BiltorvetShortcodes.php:135
-#: classes/BiltorvetShortcodes.php:216 classes/BiltorvetShortcodes.php:294
-#: classes/BiltorvetShortcodes.php:317 classes/BiltorvetShortcodes.php:336
-#: classes/BiltorvetShortcodes.php:377 classes/BiltorvetShortcodes.php:541
-msgid "Vehicle not found"
+msgid "Vehicle ID Could not be resolved"
 msgstr ""
 
-#: classes/BiltorvetShortcodes.php:223
 msgid "Shortcode's CTA type has not been set."
 msgstr ""
 
-#: classes/BiltorvetShortcodes.php:240
-msgid "Testdrive"
-msgstr ""
-
-#: classes/BiltorvetShortcodes.php:243
-msgid "Write us"
-msgstr ""
-
-#: classes/BiltorvetShortcodes.php:246
-msgid "Buy this car"
-msgstr ""
-
-#: classes/BiltorvetShortcodes.php:253
-msgid "Call us"
-msgstr ""
-
-#: classes/BiltorvetShortcodes.php:257
-msgid "Let us call you back"
-msgstr ""
-
-#: classes/BiltorvetShortcodes.php:322
 msgid "Shortcode's vehicle property has not been set."
 msgstr ""
 
-#: classes/BiltorvetShortcodes.php:330 classes/BiltorvetShortcodes.php:340
-#: classes/BiltorvetShortcodes.php:387
 msgid "N/A"
 msgstr ""
 
-#: classes/BiltorvetShortcodes.php:506
-msgid "Back to homepage"
+msgid "Unrecognized CTA type. Allowed types: %s"
 msgstr ""
 
-#: classes/BiltorvetShortcodes.php:510 classes/BiltorvetShortcodes.php:514
-msgid "Back to vehicle search page"
+msgid ""
+"Enter your Biltorvet API key to activate the service. To obtain your own API "
+"key, please contact a Biltorvet sales representative."
 msgstr ""
 
-#: classes/BiltorvetShortcodes.php:518
-msgid "Back to search results"
-msgstr ""
-
-#: classes/BiltorvetShortcodes.php:559
-msgid "No widget type set."
-msgstr ""
-
-#: classes/BiltorvetShortcodes.php:725
-#, php-format
-msgid "Unrecognized lead type. Allowed types: %s"
-msgstr ""
-
-#: classes/TextUtils.php:8
-msgid "Unknown"
-msgstr ""
-
-#: classes/TextUtils.php:114 templates/_VehicleCard.php:114
-#: v2/templates/partials/_vehicleCard.php:64
-msgid "Mileage"
-msgstr ""
-
-#: classes/TextUtils.php:114 templates/VehicleSearch.php:112
-#: templates/VehicleSearchFrontPage.php:103
-msgid "Price"
-msgstr ""
-
-#: includes/PluginSettings.php:23
-msgid "No Options specified"
-msgstr ""
-
-#: includes/PluginSettings.php:42 includes/PluginSettings.php:64
-msgid "AutoIT Settings"
-msgstr ""
-
-#: includes/PluginSettings.php:72 includes/PluginSettings.php:111
-msgid "General Settings"
-msgstr ""
-
-#: includes/PluginSettings.php:73 includes/PluginSettings.php:118
-msgid "Search result settings"
-msgstr ""
-
-#: includes/PluginSettings.php:74 includes/PluginSettings.php:125
-msgid "Vehicle details settings"
-msgstr ""
-
-#: includes/PluginSettings.php:146
 msgid "API key"
 msgstr ""
 
-#: includes/PluginSettings.php:154
-msgid "Primary color"
-msgstr ""
-
-#: includes/PluginSettings.php:162 includes/PluginSettings.php:170
-#, php-format
-msgid "Hide %s vehicles"
-msgstr ""
-
-#: includes/PluginSettings.php:178
 msgid "Contact page to receive leads"
 msgstr ""
 
-#: includes/PluginSettings.php:186
-msgid "Booking page (with date and time picker) to receive leads"
-msgstr ""
-
-#: includes/PluginSettings.php:194
-msgid "Vehicle search page"
-msgstr ""
-
-#: includes/PluginSettings.php:202
 msgid "Vehicle detail template page"
 msgstr ""
 
-#: includes/PluginSettings.php:210
-msgid "Default sorting"
+msgid "Search our cars"
 msgstr ""
 
-#: includes/PluginSettings.php:218
-msgid "Send AutoDesktop receipts by e-mail"
+msgid "We have %d vehicles in stock"
 msgstr ""
 
-#: includes/PluginSettings.php:226
-msgid "Do not show leasing prices on vehicle cards"
+msgid "Make"
 msgstr ""
 
-#: includes/PluginSettings.php:234
-msgid "Do not show financing prices on vehicle cards"
+msgid "Model"
 msgstr ""
 
-#: includes/PluginSettings.php:242
-msgid "Do not show leasing prices on vehicle details"
-msgstr ""
-
-#: includes/PluginSettings.php:250
-msgid "Do not show financing prices on vehicle details"
-msgstr ""
-
-#: includes/PluginSettings.php:267
-msgid "Hide sold vehicles"
-msgstr ""
-
-#: includes/PluginSettings.php:285
-msgid ""
-"Enter your AutoIT API key to activate the service. To obtain your own API "
-"key, please contact an AutoIt sales representative."
-msgstr ""
-
-#: includes/PluginSettings.php:290
-msgid "Customize the vehicle search page."
-msgstr ""
-
-#: includes/PluginSettings.php:295
-msgid "Customize the vehicle details page."
-msgstr ""
-
-#: templates/VehicleSearch.php:72 templates/VehicleSearchFrontPage.php:65
-msgid "- Select department -"
-msgstr ""
-
-#: templates/VehicleSearch.php:79 templates/VehicleSearchFrontPage.php:71
-msgid "- Select make -"
-msgstr ""
-
-#: templates/VehicleSearch.php:85 templates/VehicleSearchFrontPage.php:76
-msgid "- Select model -"
-msgstr ""
-
-#: templates/VehicleSearch.php:92 templates/VehicleSearchFrontPage.php:83
-msgid "- Select vehicle type -"
-msgstr ""
-
-#: templates/VehicleSearch.php:99 templates/VehicleSearchFrontPage.php:90
-msgid "- Select body type -"
-msgstr ""
-
-#: templates/VehicleSearch.php:106 templates/VehicleSearchFrontPage.php:97
-msgid "- Select propellant -"
-msgstr ""
-
-#: templates/VehicleSearch.php:120 templates/VehicleSearchFrontPage.php:111
-msgid "Consumption"
-msgstr ""
-
-#: templates/VehicleSearch.php:127 templates/VehicleSearchFrontPage.php:118
-#, php-format
-msgid "Show %u vehicles"
-msgstr ""
-
-#: templates/VehicleSearch.php:128 templates/VehicleSearchFrontPage.php:119
-msgid "Reset"
-msgstr ""
-
-#: templates/VehicleSearchResults.php:103
-#, php-format
-msgid "Your search returned <span class=\"bdt_color\">%d cars</span>"
-msgstr ""
-
-#: templates/VehicleSearchResults.php:113
-#, php-format
-msgid "Showing results %1$d-%2$d"
-msgstr ""
-
-#: templates/VehicleSearchResults.php:121
-msgid "- Order by -"
-msgstr ""
-
-#: templates/VehicleSearchResults.php:136
-msgid "Ascending"
-msgstr ""
-
-#: templates/VehicleSearchResults.php:137
-msgid "Descending"
-msgstr ""
-
-#: templates/_VehicleCard.php:36 v2/src/Controller/PriceController.php:153
-msgid "Leasing price"
-msgstr ""
-
-#: templates/_VehicleCard.php:41 v2/src/Controller/PriceController.php:147
-msgid "Financing price"
-msgstr ""
-
-#: templates/_VehicleCard.php:92 v2/src/Controller/PriceController.php:158
-#: v2/src/Controller/PriceController.php:230
-msgid "Excl. VAT"
-msgstr ""
-
-#: templates/_VehicleCard.php:110
-msgid "Year of the car"
-msgstr ""
-
-#: templates/_VehicleCard.php:118 v2/templates/partials/_vehicleCard.php:68
 msgid "Propellant"
 msgstr ""
 
-#: v2/src/Controller/PriceController.php:120
-#: v2/src/Controller/PriceController.php:232
+msgid "Consumption"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid "Your search returned <span class="bdt_color">%d cars</span>"
+msgstr ""
+
+msgid "New first"
+msgstr ""
+
+msgid "Order by price"
+msgstr ""
+
+msgid "Year of the car"
+msgstr ""
+
+msgid "Mileage"
+msgstr ""
+
+msgid "Diesel"
+msgstr ""
+
+msgid "Petrol"
+msgstr ""
+
+msgid "Electric"
+msgstr ""
+
+msgid "Excl. VAT"
+msgstr ""
+
+msgid "Automatic"
+msgstr ""
+
+msgid "Variant"
+msgstr ""
+
+msgid "Cash Price"
+msgstr ""
+
+msgid "Book test drive"
+msgstr ""
+
+msgid "Write us"
+msgstr ""
+
+msgid "Buy this car"
+msgstr ""
+
+msgid "Call us"
+msgstr ""
+
+msgid "Contact us"
+msgstr ""
+
+msgid "Let us call you back"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Equipment"
+msgstr ""
+
+msgid "Specifications"
+msgstr ""
+
+msgid "Back"
+msgstr "Tilbage"
+
+msgid "- Select $s -"
+msgstr ""
+
+msgid "Unexpected API result: %s"
+msgstr ""
+
+msgid "Showing results %1$d-%2$d"
+msgstr ""
+
+msgid "Default sorting order"
+msgstr ""
+
+msgid "- Select make -"
+msgstr ""
+
+msgid "- Select model -"
+msgstr ""
+
+msgid "- Select vehicle type -"
+msgstr ""
+
+msgid "- Select body type -"
+msgstr ""
+
+msgid "- Select propellant -"
+msgstr ""
+
+msgid "- Select min km/l -"
+msgstr ""
+
+msgid "Show %u vehicles"
+msgstr ""
+
+msgid "- Select price range -"
+msgstr ""
+
+msgid "Age"
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "ModelYear"
+msgstr ""
+
+msgid "Horsepower"
+msgstr ""
+
+msgid "Torque"
+msgstr ""
+
+msgid "Displacement"
+msgstr ""
+
+msgid "FirstRegistrationDate"
+msgstr ""
+
+msgid "Ascending"
+msgstr ""
+
+msgid "Descending"
+msgstr ""
+
+msgid "Send AutoDesktop receipts by e-mail"
+msgstr ""
+
+msgid "Booking page (with date and time picker) to receive leads"
+msgstr ""
+
+msgid "Testdrive"
+msgstr ""
+
+msgid "Primary color"
+msgstr ""
+
+msgid "Back to homepage"
+msgstr ""
+
+msgid "Back to vehicle search page"
+msgstr ""
+
+msgid "Back to search results"
+msgstr ""
+
+msgid "Vehicle search page"
+msgstr ""
+
+msgid "Could not send the lead: %s"
+msgstr ""
+
+msgid "Department"
+msgstr ""
+
+msgid "ProductType"
+msgstr "Product Type"
+
+msgid "BodyType"
+msgstr "Body Type"
+
+msgid "Transmission"
+msgstr ""
+
+msgid "PropellantType"
+msgstr "Propellant Type"
+
+msgid "Unknown"
+msgstr ""
+
+msgid "DateEdited"
+msgstr "Date"
+
+msgid "EngineDisplacementCcm"
+msgstr "Engine Displacement"
+
+msgid "TransmissionTypeName"
+msgstr "Transmission"
+
+msgid "TopSpeedKmPerHour"
+msgstr "Top Speed"
+
+msgid "FirstRegistrationYear"
+msgstr "First Registration Year"
+
+msgid "- Select department -"
+msgstr ""
+
+msgid "AgeAndState"
+msgstr "Age and state"
+
+msgid "EngineAndPerformance"
+msgstr "Engine and performance"
+
+msgid "SecurityAndEconomy"
+msgstr "Security and economy"
+
+msgid "DimensionsAndParameters"
+msgstr "Dimensions and parameters"
+
+msgid "Finances"
+msgstr "Finances"
+
 msgid "Cash price"
 msgstr ""
 
-#: v2/src/Controller/PriceController.php:151
 msgid "Leasing price (ex. VAT)"
 msgstr ""
 
-#: v2/src/Controller/PriceController.php:219
+msgid "Cash price: %s"
+msgstr ""
+
 msgid "Financing price pr. m."
 msgstr ""
 
-#: v2/src/Controller/PriceController.php:223
-msgid "Leasing price pr. m. (ex. VAT)"
+msgid "Leasing price pr. m.: %s (ex. VAT)"
 msgstr ""
 
-#: v2/src/Controller/PriceController.php:225
-msgid "Leasing price pr. m."
+msgid "Leasing price pr. m.: %s"
 msgstr ""
 
-#: v2/templates/partials/_vehicleCard.php:60
-msgid "ModelYear"
+msgid "Leasing price"
+msgstr ""
+
+msgid "Financing price"
+msgstr ""
+
+msgid "- Order by -"
+msgstr ""
+
+msgid "Hide sold vehicles"
+msgstr ""
+
+msgid "Unrecognized lead type. Allowed types: %s"
 msgstr ""
