@@ -65,6 +65,8 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             $model = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'model', true);
             $company = $this->currentVehicle->company->name;
 
+            $company = str_replace("&", "og", $company);
+
             $array = array($make, $model, $company);
 
             $subject = vsprintf(__('Take a look at this %s %s from %s', 'biltorvet-dealer-tools'), $array);
