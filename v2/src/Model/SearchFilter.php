@@ -112,6 +112,11 @@ class SearchFilter
     /**
      * @var boolean
      */
+    public $HideWholesaleVehicles; // Bool
+
+    /**
+     * @var boolean
+     */
     public $HideADVehicles; // Bool
 
     /**
@@ -509,6 +514,24 @@ class SearchFilter
     public function setHideUpcomingVehicles(bool $HideUpcomingVehicles): SearchFilter
     {
         $this->HideUpcomingVehicles = $HideUpcomingVehicles;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideWholesaleVehicles(): bool
+    {
+        return $this->HideWholesaleVehicles;
+    }
+
+    /**
+     * @param  bool $HideWholesaleVehicles
+     * @return SearchFilter
+     */
+    public function setHideWholesaleVehicles(bool $HideWholesaleVehicles): SearchFilter
+    {
+        $this->HideWholesaleVehicles = $HideWholesaleVehicles;
         return $this;
     }
 

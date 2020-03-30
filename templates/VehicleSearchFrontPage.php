@@ -90,6 +90,14 @@ try{
         }
         $filterObject->HideCommissionVehicles = 'true';
     }
+    if(isset($this->_options_2['hide_wholesale_vehicle']) && $this->_options_2['hide_wholesale_vehicle'] === 'on')
+    {
+        if($filterObject === null)
+        {
+            $filterObject = new BDTFilterObject();
+        }
+        $filterObject->HideWholesaleVehicles = 'true';
+    }
     if(isset($this->_options['hide_ad_vehicles']) && $this->_options['hide_ad_vehicles'] === 'on')
     {
         if($filterObject === null)

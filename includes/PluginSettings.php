@@ -258,7 +258,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
             add_settings_field(
                 'hide_leasing_vehicles',
-                __( 'Hide vehicles with status "Leasing"', 'biltorvet-dealer-tools' ),
+                __( 'Hide vehicles with status Leasing', 'biltorvet-dealer-tools' ),
                 array( $this, 'bdt_hide_leasing_vehicles_callback' ), // Callback
                 'bdt-settings-group-2', // Page
                 'bdt_settings_section_2' // Section
@@ -266,14 +266,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
             add_settings_field(
                 'hide_flexleasing_vehicles',
-                __( 'Hide vehicles with status "Flexleasing"', 'biltorvet-dealer-tools' ),
+                __( 'Hide vehicles with status Flexleasing', 'biltorvet-dealer-tools' ),
                 array( $this, 'bdt_hide_flexleasing_vehicles_callback' ), // Callback
                 'bdt-settings-group-2', // Page
                 'bdt_settings_section_2' // Section
             );
             add_settings_field(
                 'hide_warehousesale_vehicles',
-                __( 'Hide vehicles with status "Warehousesale"', 'biltorvet-dealer-tools' ),
+                __( 'Hide vehicles with status Warehousesale', 'biltorvet-dealer-tools' ),
                 array( $this, 'bdt_hide_warehousesale_vehicles_callback' ), // Callback
                 'bdt-settings-group-2', // Page
                 'bdt_settings_section_2' // Section
@@ -281,23 +281,15 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
             add_settings_field(
                 'hide_export_vehicles',
-                __( 'Hide vehicles with status "Export"', 'biltorvet-dealer-tools' ),
+                __( 'Hide vehicles with status Export', 'biltorvet-dealer-tools' ),
                 array( $this, 'bdt_hide_export_vehicles_callback' ), // Callback
                 'bdt-settings-group-2', // Page
                 'bdt_settings_section_2' // Section
             );
 
             add_settings_field(
-                'hide_upcoming_vehicles',
-                __( 'Hide vehicles with status "Upcoming"', 'biltorvet-dealer-tools' ),
-                array( $this, 'bdt_hide_upcoming_vehicles_callback' ), // Callback
-                'bdt-settings-group-2', // Page
-                'bdt_settings_section_2' // Section
-            );
-
-            add_settings_field(
                 'hide_rental_vehicles',
-                __( 'Hide vehicles with status "Rental"', 'biltorvet-dealer-tools' ),
+                __( 'Hide vehicles with status Rental', 'biltorvet-dealer-tools' ),
                 array( $this, 'bdt_hide_rental_vehicles_callback' ), // Callback
                 'bdt-settings-group-2', // Page
                 'bdt_settings_section_2' // Section
@@ -305,8 +297,24 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
             add_settings_field(
                 'hide_commission_vehicles',
-                __( 'Hide vehicles with status "Commission"', 'biltorvet-dealer-tools' ),
+                __( 'Hide vehicles with status Commission', 'biltorvet-dealer-tools' ),
                 array( $this, 'bdt_hide_commission_vehicles_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
+                'hide_upcoming_vehicles',
+                __( 'Hide vehicles with status Upcoming', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_hide_upcoming_vehicles_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
+                'hide_wholesale_vehicles',
+                __( 'Hide vehicles with status Wholesale', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_hide_wholesale_vehicles_callback' ), // Callback
                 'bdt-settings-group-2', // Page
                 'bdt_settings_section_2' // Section
             );
@@ -550,6 +558,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             printf(
                 '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[hide_commission_vehicles]"%s />',
                 isset( $this->options_2['hide_commission_vehicles'] ) && $this->options_2['hide_commission_vehicles'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_hide_wholesale_vehicles_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[hide_wholesale_vehicles]"%s />',
+                isset( $this->options_2['hide_wholesale_vehicles'] ) && $this->options_2['hide_wholesale_vehicles'] === 'on' ? ' checked="checked"' : ''
             );
         }
 

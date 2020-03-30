@@ -90,6 +90,7 @@ class Callbacks
             case 'Upcoming' : $label = 4; break;
             case 'Rental' : $label = 2; break;
             case 'Commission' : $label = 27; break;
+            case 'Wholesale' : $label = 9; break;
         }
 
         wp_enqueue_style("bdt_style");

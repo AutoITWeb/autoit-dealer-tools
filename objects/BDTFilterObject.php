@@ -24,6 +24,7 @@
         public $HideRentalVehicles; // Bool
         public $HideCommissionVehicles; // Bool
         public $HideUpcomingVehicles; // Bool
+        public $HideWholesaleVehicles; // Bool
         public $HideADVehicles; // Bool
         public $HideBIVehicles; // Bool
         public $Ascending; // Bool
