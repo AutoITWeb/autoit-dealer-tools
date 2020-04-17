@@ -31,51 +31,24 @@ This server is located in Denmark and is thereby liable to the Danish law. This 
 You can find our privacy policy at https://www.biltorvet.as/media/1389/privatlivspolitik-biltorvet-as.pdf
 
 ## Changelog
-See readme.txt (which is used for the WordPress plugin repository), to see the latest changes.
+See the release tab in this repository to see the latest changes.
 
-# AutoIT dealer tools version 2
+# Installing and using the plugin
+Last version of the plugin using the Wordpress SVN was 1.0.22. The following versions are updated using Github. It's very important to follow the installation guide closely in order to make the plugin work.
 
-*This is an attempt on rewriting the original AutoIT dealer tools plugin codebase, 
-for easier maintenance and further development of features.
-The idea of the new codebase is to utilize modern OOP principles managed by the Composer package manager.*
+Find the plugin in the wordpress repository - Search for Biltorvet Dealer Tools last (v. 1.0.22)
+Install and activate the plugine
+Create wordpress landingpages for the following:
+A page for the Car search and Result list
+A page for the car detail
+A page for the form to book testdrive or send purchase request
+A page for the general car specific requests.
+Head over to the settings page of the plugin:
 
-**Enviroment requirements**
-- PHP 7.2 (7.3 Recommended)
-- Apache2 (nginx should work)
-- Xdebug 2.7.1
-- Composer
-- CLI (cmdr for windows is advisable)
+Fill out the api-key that has been provided by Biltorvet A/S.
+Choose you primary color. This will be used on multiple places when the shortcodes are being printed ud.
+Configure the rest of the settings.
 
-**Running**
 
-Create a .env file with the correct api endpoint. (see .example.env)
 
-Activate the plugin in Wordpress and everything should work.
-Remember to run `$ composer update`, to update dependencies.
-
-**Testing**
-
-*Most of the code is tested and further development SHOULD have a min of 80% code coverage*
-
-- Run all tests with a pretty output in console
-
-`$ phpunit --testdox`
-
-- Create code coverage report (path argument defined MUST exist)
-
-`$ phpunit --coverage-html tests/reports`
-
-**Coding standards**
-
-PSR-2 guidelines MUST be respected when editing and or adding new code. 
-
-Automatic testing and fixing of these guidelines can be run with the following commands:
-
-Dry run. Gives a list of syntax issues.
-
-`$ composer run phpcs`
-
-Tries to fix syntax issues automatically. (Do not fix everything, and code must be tested after using this command.)
-
-`$ composer run phpcs-fix` 
 
