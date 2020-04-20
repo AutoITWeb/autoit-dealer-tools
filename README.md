@@ -369,20 +369,18 @@ How the search, result and detailspage can be build.
 When using the plugin it's important to notice that the searchpage and resultlist won't work optiomal unless the landingpage used for the shortcodes is placed in the root of the domain.  
 <br>
 Example 1: __demo1.biltorvet.as/brugte-biler__ - Everything will work justfine.  
-
 Example 2: __demo1.biltorvet.as/out-new-homepage/brugte-biler__ - Filtering options, pagination and such won't work as it should.  
-
+<br>
 Be sure to remember this when creating a website using this plugin.  
 <br>
 __Share links with predefined searchfilters__  
 The URL are build to make it easy to share pages with predefined searchfilters. The url build like this:  
 __/1/make/model__   
-
+<br>
 
 The first paramater is the pagination number, the second parameter is the make of the vehicle and the third parameter is the model of the vehicle.  
 <br>
 Example 1: __/1/audi/__ - Will show the searchpage with all the Audi's for sale  
-
 Example 2: __/1/audi/a5__ - Will show the searchpage with all the Audi A5's for sale  
 
 
