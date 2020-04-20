@@ -88,25 +88,27 @@ __bdt_vehicle_card__
 Print out a vehicle "card" - a box with short informations about the vehicle. This is equal to one search result item from the vehicle search results.  
 Attributes:
 * vehicle - specifies the vehicle ID. If omitted, it will look for bdt_vehicle_id URL parameter.  
-
+<br><br>
 __Vehicle detail shortcodes__  
 These will work only on a vehicle detail template page.  
 
-bdt_cta
-This will generate a CTA button, with a link to the contact page or booking page with parameters that facilitate the leads functionality. It can be
-opened and content inserted will become wrapped in a link element.
+__bdt_cta__  
+This will generate a CTA button, with a link to the contact page or booking page with parameters that facilitate the leads functionality. It can be opened and content inserted will become wrapped in a link element.  
 Attributes:
-color - hexadeximal color with a hash, or a color name that colors the CTA text and icon. If omitted, the CTA takes on the primary color.
+* color - hexadeximal color with a hash, or a color name that colors the CTA text and icon. If omitted, the CTA takes on the primary color.  
+<br>
 Attributes:
-type - one of the five following types:
-TestDrive - book test drive
-PhoneCall - call me back
-Purchase - buy the car
-Email - send email
-Contact - general contact
-Example 1: [bdt_cta type="TestDrive"]
-Example 2: [bdt_cta type="TestDrive"] This content will be shown instead of the icon and predefind text.[/bdt_cta]
-bdt_prop
+* type - one of the five following types:
+  * TestDrive - book test drive
+  * PhoneCall - call me back
+  * Purchase - buy the car
+  * Email - send email
+  * Contact - general contact  
+  
+Example 1: __[bdt_cta type="TestDrive"]__  
+Example 2: __[bdt_cta type="TestDrive"]__ This content will be shown instead of the icon and predefind text.[/bdt_cta]  
+<br>
+__bdt_prop__  
 Fetch a property of a car - currently needs to be the danish caption. These are directly matched from the database, so this list may be
 incomplete/obsolete.
 Attributes:
