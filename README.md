@@ -286,7 +286,23 @@ If this example it's shown how AutoIT builds the mentioned pages their clients.
 
 ![detailspage](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-details-old-2.png)  
 
-![detailspage](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-details-old-3.png)  
+![detailspage](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-details-old-3.png)<br><br>
+
+### Setup your forms to send leads to AutoDesktop  
+To be able to send leads to AutoDesktop you need to create forms on the pages that you have specified on the settingspage of the AutoIt plugin.  
+
+![forms](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-adt-leads-1.png)  
+
+To be able to send leads when the forms get submitted, you need to set the ID’ to the specific inputs fields.
+Se example below to see an example with the Contact Form 7 plugin.  
+
+![contactform7](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-adt-leads-2-contactform7.png)  
+
+To show a car-card next to the form, as showed below, use this shortcode: [bdt_vehicle_card]  
+
+![contactform](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-adt-leads-3.png)  
+
+__NB The vehicle-card will only be visible, when a client comes directly from a vehicle detailspage.__
 
 
 
