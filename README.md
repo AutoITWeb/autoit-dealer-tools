@@ -273,10 +273,9 @@ __bdt_vehicle_price__
 Shows intelligently the "most attractive" price of a vehicle - i.e. financing or leasing if available, or the cash price as fallback.  
 
 __bdt_sharethis__  
-Shows icons for Facebook-sharing, sharing by mail and printing.  
+Shows icons for Facebook-sharing, sharing by mail and printing.<br><br>
 
-
-__Building the Car search / resultlist page and vehicle detailspage__  
+### Building the Car search / resultlist page and vehicle detailspage  
 If this example it's shown how AutoIT builds the mentioned pages their clients.  
 
 <br>__Car search / resultlist__  
