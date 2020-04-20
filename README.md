@@ -223,7 +223,7 @@ Shows intelligently the "most attractive" price of a vehicle - i.e. financing or
 These shortcodes can be used to create landingpages with specific cars  
 
 __bdt_get_vehicles__  
-List the of a specific make (model and propellant)  
+Creates a list of cars from a specific make  
 Required attribute:  
 * __make__  
 
@@ -236,9 +236,33 @@ Example 1: __[bdt_get_vehicles make="Audi"]__ - lists all cars with the make "Au
 
 Example 2: __[bdt_get_vehicles make="Audi" model="A5"]__ - lists all cars with the make "Audi" and model "A5".  
 
-Example 2: __[bdt_get_vehicles make="Audi" model="A5" propellant="diesel"]__ - lists all cars with the make "Audi" and model "A5" that uses diesel as propellant.
+Example 2: __[bdt_get_vehicles make="Audi" model="A5" propellant="diesel"]__ - lists all cars with the make "Audi", model "A5" and uses diesel as propellant.
 
+__bdt_get_vehicles_by_status_code__  
+Creates a list of cars from status codes set in AutoDesktop (In order to use this shortcodes the dealer has to list cars using AutoDesktop. BilInfo cars are currentlu not supported as it's a specific field set in AutoDesktop).  
+Required attribute:  
+* __status__  
+The following status codes are currently supported:  
+* __Sold__ - Shows all cars with the label "Solgt".  
+* __New__ - Shows all cars with the label "Nyhed".  
+* __Leasing__ - Shows all cars with the label "Leasing".  
+* __Warehousesale__ - Shows all cars with the label "Lagersalg".  
+* __Flexleasing__ - Shows all cars with the label "Flexleasing".  
+* __Export__ - Shows all cars with the label "Eksport".  
+* __Upcoming__ - Shows all cars with the label "På vej ind".  
+* __Rental__ - Shows all cars with the label "Udlejning".  
+* __Commision__ - Shows all cars with the label "Kommision".  
+* __Wholesale__ - Shows all cars with the label "Engros".  
 
+__bdt_get_vehicles_by_type__  
+Creates a list of cars from their type.  
+Required attribute:  
+* __type__  
+The following types are currently supported:  
+* __Car__ - Shows all vehicles of the type "Car".
+* __Van__ - Shows all vehicles of the type "Van".
+* __Motorcycle__ - Shows all vehicles of the type "Motorcycle".
+* __Truck__ - Shows all vehicles of the type "Truck".
 
 
 
