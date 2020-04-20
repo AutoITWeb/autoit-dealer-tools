@@ -54,7 +54,7 @@ Head over to the settings page of the plugin:
 Head back to the plugin menu and update the plugin to the latest version (If no updates are shown try installing WP_Control and run the plugin update cron event).
 When updated to the newest version, the plugin settings are now shown in the dashboard menu and not as a submenu to settings:
 
-Save settings in all three tabs (if not the plugin might throw errors).
+__Save the settings in all three tabs (if not the plugin might throw errors).__
 
 ## Shortcodes
 You are now ready to place the shorcodes on the landingpages
