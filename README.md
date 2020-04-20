@@ -181,30 +181,42 @@ Properties:
 
 <br>__bdt_specifications__  
   
-Print out a table of the specifications.
-[bdt_prop p="description"]
-Print out the car description.
-bdt_equipment
-Print out a table of equipment
-bdt_recommendedcars bdt_recommendedvehicles (changed in 1.0.7)
-Print out three recommended unsold vehicles, related to the current vehicle.
-bdt_featuredvehicles (added in 1.0.7)
-Shows a list of vehicles that had been marked as "In focus" in AutoDesktop. This allows sold cars to show until removed from the index.
-bdt_slideshow
-Print out a slideshow of current vehicle's images.
-bdt_vehicle_labels
+Print out a table of the specifications.  
+
+__[bdt_prop p="description"]__  
+Print out the car description.  
+
+__bdt_equipment__  
+Print out a table of equipment  
+
+__bdt_recommendedvehicles__ 
+Print out three recommended unsold vehicles, related to the current vehicle.  
+
+__bdt_featuredvehicles__ 
+Shows a list of vehicles that had been marked as "In focus" in AutoDesktop. This allows sold cars to show until removed from the index.  
+
+__bdt_slideshow__  
+Print out a slideshow of current vehicle's images.  
+
+__bdt_vehicle_labels__  
 Print out a list of labels asociated with the given car. Labels come in predefined colors, that can be overwritten with CSS in your child theme:
-.bdt .badge-primary - used as default label color,
-.bdt .badge-danger - used for sold label,
-.bdt .badge-success - sued for new label,
-.bdt .badge-warning - used for reserved label,
-.bdt .badge-info - used for leasing label
-Attributes:
-allowed="new,sold" - comma separated list of labels that are allowed to be shown. Use this if there are too many labels available, and
-you don't necessarily want to show them all. If ommited, all labels will be returned.
-bdt_vehicle_search_backtoresults
-Prints out a "smart" back button, that returns you to the vehicle search results if available, or car search if not.
-bdt_vehicle_price
+* .bdt .badge-primary - used as default label color,
+* .bdt .badge-danger - used for sold label,
+* .bdt .badge-success - used for new label,
+* .bdt .badge-warning - used for reserved label,
+* .bdt .badge-info - used for leasing label  
+* .bdt .badge-orange - used for "I fokus" label  
+* .bdt .badge-secondary - used for "Lagersalg" label  
+* .bdt .badge-dark - used for "Uden afgift" label  
+* .bdt .badge-purple - used for "Udlejning" label  
+
+Attributes:  
+__allowed="new,sold"__ - comma separated list of labels that are allowed to be shown. Use this if there are too many labels available, and you don't necessarily want to show them all. If ommited, all labels will be returned.  
+
+__bdt_vehicle_search_backtoresults__  
+Prints out a "smart" back button, that returns you to the vehicle search results if available, or car search if not.  
+
+__bdt_vehicle_price__  
 Shows intelligently the "most attractive" price of a vehicle - i.e. financing or leasing if available, or the cash price as fallback.
 Examples of the three possible scenarios:
 
