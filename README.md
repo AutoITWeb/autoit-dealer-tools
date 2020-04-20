@@ -48,11 +48,11 @@ Create wordpress landingpages for the following:
 Head over to the settings page of the plugin:
 
 * Fill out the api-key that has been provided by AutoIT A/S.
-* Choose you primary color (This will be used on multiple places)
+* Choose you primary color (This will be used in multiple places)
 * Configure the rest of the settings if needed.
 
 Head back to the plugin menu and update the plugin to the latest version (If no updates are shown try installing WP_Control and run the plugin update cron event).
-When installed the plugin settings are now shown in the dashboard menu and not as a submenu to settings:
+When updated to the newest version, the plugin settings are now shown in the dashboard menu and not as a submenu to settings:
 
 Save settings in all three tabs (if not the plugin might throw errors).
 
