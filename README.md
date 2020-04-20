@@ -50,7 +50,8 @@ Head over to the settings page of the plugin:
 
 * Fill out the api-key that has been provided by AutoIT A/S.
 * Choose you primary color (This will be used in multiple places)
-* Configure the rest of the settings if needed.
+* Configure the rest of the settings if needed.  
+![Old settings](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-biltorvet-settings-old-view.png)
 
 Head back to the plugin menu and update the plugin to the latest version (If no updates are shown try installing WP_Control and run the plugin update cron event).
 When updated to the newest version, the plugin settings are now shown in the dashboard menu and not as a submenu to settings:  
