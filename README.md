@@ -116,9 +116,9 @@ incomplete/obsolete.
 
 Attributes:  
 
-* p - see the list below.  
-* nona="-" - text to show when no match was found. If omitted, returns "Ikke angivet".  
-* raw="true" - returns the unformated value. Useful in cases where the value needs to be further processed or used.  
+* __p__ - see the list below.  
+* __nona="-"__ - text to show when no match was found. If omitted, returns "Ikke angivet".  
+* __raw="true"__ - returns the unformated value. Useful in cases where the value needs to be further processed or used.  
 
 Example: __[bdt_prop p="0-100"]__ 
 
@@ -179,7 +179,7 @@ Properties:
 * FinancingDownpayment,
 * FinancingDownpaymentInPercent  
 
-__bdt_specifications__  
+<br>__bdt_specifications__  
   
 Print out a table of the specifications.
 [bdt_prop p="description"]
