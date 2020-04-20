@@ -96,10 +96,10 @@ __bdt_cta__
 This will generate a CTA button, with a link to the contact page or booking page with parameters that facilitate the leads functionality. It can be opened and content inserted will become wrapped in a link element.  
 
 Attributes:
-* color - hexadeximal color with a hash, or a color name that colors the CTA text and icon. If omitted, the CTA takes on the primary color.  
+* __color__ - hexadeximal color with a hash, or a color name that colors the CTA text and icon. If omitted, the CTA takes on the primary color.  
 
 Attributes:  
-* type - one of the five following types:
+* __type__ - one of the five following types:
   * TestDrive - book test drive
   * PhoneCall - call me back
   * Purchase - buy the car
@@ -112,69 +112,75 @@ Example 2: __[bdt_cta type="TestDrive"]__ This content will be shown instead of 
 <br>
 __bdt_prop__  
 Fetch a property of a car - currently needs to be the danish caption. These are directly matched from the database, so this list may be
-incomplete/obsolete.
-Attributes:
-p - see the list below.
-nona="-" - text to show when no match was found. If omitted, returns "Ikke angivet".
-raw="true" - returns the unformated value. Useful in cases where the value needs to be further processed or used.
-Example: [bdt_prop p="0-100"]
-Properties:
-BodyType,
-Mileage,
-ModelYear,
-Price,
-XVat - Without VAT(MOMS) Ja/Nej,
-Acceleration,
-FirstRegistrationDate,
-AirbagCount,
-CylinderCount,
-DoorCount,
-GearCount,
-GearType,
-SeatCount,
-AnnualOwnerTax,
-PropellantType,
-Width,
-Color,
-Height,
-Kmx1l - kilometers per liter,
-Whx1km,
-Length,
-DeliveryCost,
-MaxTorque,
-MaxHorsepower,
-EngineSize,
-RegistrationNumber,
-VIN,
-LastChangedDate,
-TopSpeed,
-TotalWeight,
-TankCapacity,
-AllowedTrailerWeightWithBrakes,
-AllowedTrailerWeightWithoutBrakes,
-DealersReferenceNumber,
-EquipmentItem - A general type for all equipment. Equipment is not mapped, i.e. you cannot fetch a particular equipment item.
-LeasingDeal,
-LeasingBusiness,
-LeasingFirstPayment,
-LeasingFirstPaymentVAT,
-LeasingRunTime,
-LeasingMonthlyPayment,
-LeasingMonthlyPaymentVAT,
-LeasingRemainingValue,
-FinancingAnnualLoanFeesInPercents,
-FinancingAnnualDebitorInterest,
-FinancingFixedInterest,
-FinancingMonthlyPrice,
-FinancingLoanTransfer,
-FinancingRunTime,
-FinancingInterestRate,
-FinancingTotalCreditFees,
-FinancingTotalFeesToPay,
-FinancingTotalSetupFees,
-FinancingDownpayment,
-FinancingDownpaymentInPercent
-bdt_specifications
+incomplete/obsolete.  
+
+Attributes:  
+
+* p - see the list below.  
+* nona="-" - text to show when no match was found. If omitted, returns "Ikke angivet".  
+* raw="true" - returns the unformated value. Useful in cases where the value needs to be further processed or used.  
+
+Example: __[bdt_prop p="0-100"]__ 
+
+Properties:  
+* BodyType,
+* Mileage,
+* ModelYear,
+* Price,
+* XVat - Without VAT(MOMS) Ja/Nej,
+* Acceleration,
+* FirstRegistrationDate,
+* AirbagCount,
+* CylinderCount,
+* DoorCount,
+* GearCount,
+* GearType,
+* SeatCount,
+* AnnualOwnerTax,
+* PropellantType,
+* Width,
+* Color,
+* Height,
+* Kmx1l - kilometers per liter,
+* Whx1km,
+* Length,
+* DeliveryCost,
+* MaxTorque,
+* MaxHorsepower,
+* EngineSize,
+* RegistrationNumber,
+* VIN,
+* LastChangedDate,
+* TopSpeed,
+* TotalWeight,
+* TankCapacity,
+* AllowedTrailerWeightWithBrakes,
+* AllowedTrailerWeightWithoutBrakes,
+* DealersReferenceNumber,
+* EquipmentItem - A general type for all equipment. Equipment is not mapped, i.e. you cannot fetch a particular equipment item.
+* LeasingDeal,
+* LeasingBusiness,
+* LeasingFirstPayment,
+* LeasingFirstPaymentVAT,
+* LeasingRunTime,
+* LeasingMonthlyPayment,
+* LeasingMonthlyPaymentVAT,
+* LeasingRemainingValue,
+* FinancingAnnualLoanFeesInPercents,
+* FinancingAnnualDebitorInterest,
+* FinancingFixedInterest,
+* FinancingMonthlyPrice,
+* FinancingLoanTransfer,
+* FinancingRunTime,
+* FinancingInterestRate,
+* FinancingTotalCreditFees,
+* FinancingTotalFeesToPay,
+* FinancingTotalSetupFees,
+* FinancingDownpayment,
+* FinancingDownpaymentInPercent
+
+  __bdt_specifications__  
+  
 Print out a table of the specifications.
 [bdt_prop p="description"]
 Print out the car description.
