@@ -45,7 +45,7 @@ Create a wordpress landingpages for the following:
 * A page for the form to book testdrive 
 * A page for the form to send purchase request
 
-Head over to the settings page of the plugin:
+Head over to the settings page of the plugin:  
 ![Old settings](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-biltorvet-settings-old.png)
 
 * Fill out the api-key that has been provided by AutoIT A/S.
