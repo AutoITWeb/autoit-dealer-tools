@@ -72,7 +72,7 @@ A shortcode is delimited by square brackets, for example __[bdt_cta type="TestDr
 <br><br>
 __Examples of building the searchpage / resultlist and vehicledetailspage are shown at the end of this section__<br><br>
 
-###### Global shortcodes  
+### Global shortcodes  
 These shortcodes should work anywhere in WordPress.  
 <br><br>
 __bdt_vehicletotalcount__  
@@ -90,9 +90,58 @@ Specialized search for use on the frontpage (or any other landingpage that is no
 __bdt_vehicle_card__  
 Print out a vehicle "card" - a box with short informations about the vehicle. This is equal to one search result item from the vehicle search results.  
 Attributes:
-* vehicle - specifies the vehicle ID. If omitted, it will look for bdt_vehicle_id URL parameter.
+* vehicle - specifies the vehicle ID. If omitted, it will look for bdt_vehicle_id URL parameter.  
 
-<br> ###### Vehicle detail shortcodes  
+__bdt_get_vehicles__  
+Creates a list of cars from a specific make  
+Required attribute:  
+* __make__  
+
+Optional attributes:  
+* __model__  
+* __propellant__  
+
+
+Example 1: __[bdt_get_vehicles make="Audi"]__ - lists all cars with the make "Audi".  
+
+Example 2: __[bdt_get_vehicles make="Audi" model="A5"]__ - lists all cars with the make "Audi" and model "A5".  
+
+Example 3: __[bdt_get_vehicles make="Audi" model="A5" propellant="diesel"]__ - lists all cars with the make "Audi", model "A5" and uses diesel as propellant.
+
+__bdt_get_vehicles_by_status_code__  
+Creates a list of cars from status codes set in AutoDesktop (In order to use this shortcodes the dealer has to list cars using AutoDesktop. BilInfo cars are currently not supported as it's specific fields set in AutoDesktop).  
+<br>Required attribute:  
+* __status__
+
+<br>The following status codes are currently supported:  
+* __Sold__ - Shows all cars with the label "Solgt".  
+* __New__ - Shows all cars with the label "Nyhed".  
+* __Leasing__ - Shows all cars with the label "Leasing".  
+* __Warehousesale__ - Shows all cars with the label "Lagersalg".  
+* __Flexleasing__ - Shows all cars with the label "Flexleasing".  
+* __Export__ - Shows all cars with the label "Eksport".  
+* __Upcoming__ - Shows all cars with the label "På vej ind".  
+* __Rental__ - Shows all cars with the label "Udlejning".  
+* __Commision__ - Shows all cars with the label "Kommision".  
+* __Wholesale__ - Shows all cars with the label "Kun engros".  
+
+Example 1: __[bdt_get_vehicles_by_status_code status="Sold"]__ - lists all cars marked as "Solgt".  
+
+__bdt_get_vehicles_by_type__  
+Creates a list of cars from their type.  
+<br>Required attribute:  
+* __type__
+
+<br>The following types are currently supported:  
+* __Car__ - Shows all vehicles of the type "Car".
+* __Van__ - Shows all vehicles of the type "Van".
+* __Motorcycle__ - Shows all vehicles of the type "Motorcycle".
+* __Truck__ - Shows all vehicles of the type "Truck".  
+
+
+Example 1: __[bdt_get_vehicles_by_type type="Car"]__ - lists all vehicles with the type "Personbil".  
+
+<br> ### Vehicle detail shortcodes  
 These will work only on a vehicle detail template page.  
 
 __bdt_cta__  
@@ -225,58 +274,6 @@ Shows intelligently the "most attractive" price of a vehicle - i.e. financing or
 
 __bdt_sharethis__  
 Shows icons for Facebook-sharing, sharing by mail and printing.  
-
-<br>__Special shortcodes__  
-These shortcodes can be used to create landingpages with specific cars  
-
-__bdt_get_vehicles__  
-Creates a list of cars from a specific make  
-Required attribute:  
-* __make__  
-
-Optional attributes:  
-* __model__  
-* __propellant__  
-
-
-Example 1: __[bdt_get_vehicles make="Audi"]__ - lists all cars with the make "Audi".  
-
-Example 2: __[bdt_get_vehicles make="Audi" model="A5"]__ - lists all cars with the make "Audi" and model "A5".  
-
-Example 3: __[bdt_get_vehicles make="Audi" model="A5" propellant="diesel"]__ - lists all cars with the make "Audi", model "A5" and uses diesel as propellant.
-
-__bdt_get_vehicles_by_status_code__  
-Creates a list of cars from status codes set in AutoDesktop (In order to use this shortcodes the dealer has to list cars using AutoDesktop. BilInfo cars are currently not supported as it's specific fields set in AutoDesktop).  
-<br>Required attribute:  
-* __status__
-
-<br>The following status codes are currently supported:  
-* __Sold__ - Shows all cars with the label "Solgt".  
-* __New__ - Shows all cars with the label "Nyhed".  
-* __Leasing__ - Shows all cars with the label "Leasing".  
-* __Warehousesale__ - Shows all cars with the label "Lagersalg".  
-* __Flexleasing__ - Shows all cars with the label "Flexleasing".  
-* __Export__ - Shows all cars with the label "Eksport".  
-* __Upcoming__ - Shows all cars with the label "På vej ind".  
-* __Rental__ - Shows all cars with the label "Udlejning".  
-* __Commision__ - Shows all cars with the label "Kommision".  
-* __Wholesale__ - Shows all cars with the label "Kun engros".  
-
-Example 1: __[bdt_get_vehicles_by_status_code status="Sold"]__ - lists all cars marked as "Solgt".  
-
-__bdt_get_vehicles_by_type__  
-Creates a list of cars from their type.  
-<br>Required attribute:  
-* __type__
-
-<br>The following types are currently supported:  
-* __Car__ - Shows all vehicles of the type "Car".
-* __Van__ - Shows all vehicles of the type "Van".
-* __Motorcycle__ - Shows all vehicles of the type "Motorcycle".
-* __Truck__ - Shows all vehicles of the type "Truck".  
-
-
-Example 1: __[bdt_get_vehicles_by_type type="Car"]__ - lists all vehicles with the type "Personbil".  
 
 
 __Building the Car search / resultlist page and vehicle detailspage__  
