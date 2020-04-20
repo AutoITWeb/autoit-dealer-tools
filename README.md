@@ -40,7 +40,7 @@ Find the plugin in the wordpress repository - Search for Biltorvet Dealer Tools 
 Install and activate the plugin
 
 Create wordpress landingpages for the following:
-* A page for the Car search and Result list
+* A page for the car search and result list
 * A page for the car detail
 * A page for the form to book testdrive 
 * A page for the form to send purchase request
