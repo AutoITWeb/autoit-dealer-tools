@@ -240,9 +240,9 @@ Example 2: __[bdt_get_vehicles make="Audi" model="A5" propellant="diesel"]__ - l
 
 __bdt_get_vehicles_by_status_code__  
 Creates a list of cars from status codes set in AutoDesktop (In order to use this shortcodes the dealer has to list cars using AutoDesktop. BilInfo cars are currentlu not supported as it's a specific field set in AutoDesktop).  
-Required attribute:  
+<br>Required attribute:  
 * __status__  
-The following status codes are currently supported:  
+<br>The following status codes are currently supported:  
 * __Sold__ - Shows all cars with the label "Solgt".  
 * __New__ - Shows all cars with the label "Nyhed".  
 * __Leasing__ - Shows all cars with the label "Leasing".  
@@ -256,9 +256,10 @@ The following status codes are currently supported:
 
 __bdt_get_vehicles_by_type__  
 Creates a list of cars from their type.  
-Required attribute:  
-* __type__  
-The following types are currently supported:  
+<br>Required attribute:  
+* __type__
+
+<br>The following types are currently supported:  
 * __Car__ - Shows all vehicles of the type "Car".
 * __Van__ - Shows all vehicles of the type "Van".
 * __Motorcycle__ - Shows all vehicles of the type "Motorcycle".
