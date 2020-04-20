@@ -68,7 +68,7 @@ __Save the settings in all three tabs (if not the plugin might throw errors).__
 You are now ready to place the shorcodes on the landingpages  
 
 A shortcode is a piece of syntax that can be inserted anywhere in the WordPress text editor, and will then be processed into some kind of functionality. You can imagine shortcodes as building blocks you can move around. Shortcodes have optionally attributes, that change their output.  
-A shortcode is delimited by square brackets, for example [bdt_cta type="TestDrive"]  
+A shortcode is delimited by square brackets, for example __[bdt_cta type="TestDrive"]__  
 <br><br>
 __Examples of building the searchpage / resultlist and vehicledetailspage are shown at the end of this section__<br><br>
 
@@ -87,9 +87,11 @@ Print out the search results - list of cars.
 __bdt_vehicle_card__  
 Print out a vehicle "card" - a box with short informations about the vehicle. This is equal to one search result item from the vehicle search results.  
 Attributes:
-vehicle - specifies the vehicle ID. If omitted, it will look for bdt_vehicle_id URL parameter.
-Vehicle detail shortcodes
-These will work only on a vehicle detail template page.
+* vehicle - specifies the vehicle ID. If omitted, it will look for bdt_vehicle_id URL parameter.  
+
+__Vehicle detail shortcodes__  
+These will work only on a vehicle detail template page.  
+
 bdt_cta
 This will generate a CTA button, with a link to the contact page or booking page with parameters that facilitate the leads functionality. It can be
 opened and content inserted will become wrapped in a link element.
