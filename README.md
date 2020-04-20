@@ -5,7 +5,7 @@ Adds Vehicle search, Vehicle list and Vehicle Detail Page.
 **Features**
 
 * Integration to AutoDesktop
-* Search in the dealers cars
+* Car search
 * Show car-data
 * Send leads to AutoDesktop
 
