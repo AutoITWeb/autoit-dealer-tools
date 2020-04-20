@@ -329,16 +329,30 @@ __Santander:__
 * brandingid - some dealers have a specific branding.  
 
 __AutoDesktopLeads:__
-* vehicletype - preselect the vehicle type (not implemented yet)
-* vehicletypehide - hide the vehicle type selection
-* make - set the preselected make (not implemented yet)
-* makehide - hide the make selection
-* model - set the preselected model (not implemented yet)
-* modelhide - hide the model selection
-* variant - set the preselected variant (not implemented yet)
-* enginesize - set the preselected engine size (not implemeted yet)
-* month - set the preselected month (not implemented yet)
-* year - set the preselected year (not implemented yet)  
+* title - Main title of the widget, before action is selected. If action is preselected with actiontype parameter (see below), this step will be skipped.
+* color - Main color of the widget.
+* fontcolor - Main font color of the widget.
+* logourl - logo to be used.,
+* vehicletype - preselect the vehicle type
+* vehicletypehide - true or false
+* selectedvehicletype - Personbil or Varebil
+* actiontype - TestDrive, OfferNewCar or Contact
+* make - set the preselected make
+* makehide - true or false
+* selectedmake - make to be preselected.
+* allowedmakes - a JSON object with a list of makes that are allowed. It filters out all other makes, if this attribute is specified. Example: ["Ford","VW","Aston Martin"]
+* model - set the preselected model
+* modelhide - true or false
+* variant - set the preselected variant
+* varianthide - true or false
+* openingtimes - an array of days with opening times ranges. Nees to be put in with single quotes - it's a JSON object. Example value: {"0
+":[null,null],"1":[{"b":900,"e":1200},{"b":1230,"e":1700}],"2":[{"b":900,"e":1200},{"b":1230,"e":1700}],"3":[{"b":900,"e":1200},{"b":1230,"e":17
+00}],"4":[{"b":900,"e":1200},{"b":1230,"e":1700}],"5":[{"b":900,"e":1200},{"b":1230,"e":1700}],"6":[{"b":1000,"e":1700},null]}
+* filterpersonalmodels - a JSON object of personal models to be filtered out. If omitted, all personal models will appear. Example: ["500C"
+,"Cherokee"]
+* filterbusinessmodels - a JSON object of business models to be filtered out. If omitted, all business models will appear. Example: ["500L
+"]  
+
 
 __Consent:__
 * consentcategory - samtykke category,
@@ -351,7 +365,7 @@ __Consent:__
 * mobilephone - pre-filled mobile phone of the person giving samtykke<br><br>
 
 
-### Building the Car search / resultlist page and vehicle detailspage  
+### Building the searchpage / resultlist page and vehicle detailspage  
 How the search, result and detailspage can be build.
 
 <br>__Car search / resultlist__  
