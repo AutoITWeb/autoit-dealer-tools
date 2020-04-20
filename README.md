@@ -88,7 +88,7 @@ __bdt_vehicle_card__
 Print out a vehicle "card" - a box with short informations about the vehicle. This is equal to one search result item from the vehicle search results.  
 Attributes:
 * vehicle - specifies the vehicle ID. If omitted, it will look for bdt_vehicle_id URL parameter.
-<br><br>
+
 __Vehicle detail shortcodes__  
 These will work only on a vehicle detail template page.  
 
