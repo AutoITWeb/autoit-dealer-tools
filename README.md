@@ -39,13 +39,14 @@ Last version of the plugin using the Wordpress SVN was 1.0.22. The following ver
 Find the plugin in the wordpress repository - Search for Biltorvet Dealer Tools last (v. 1.0.22)
 Install and activate the plugin
 
-Create wordpress landingpages for the following:
+Create a wordpress landingpages for the following:
 * A page for the car search and result list
 * A page for the car detail
 * A page for the form to book testdrive 
 * A page for the form to send purchase request
 
 Head over to the settings page of the plugin:
+![Old settings](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-biltorvet-settings-old.png)
 
 * Fill out the api-key that has been provided by AutoIT A/S.
 * Choose you primary color (This will be used in multiple places)
