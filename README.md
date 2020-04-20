@@ -109,7 +109,7 @@ Attributes:
 Example 1: __[bdt_cta type="TestDrive"]__  
 Example 2: __[bdt_cta type="TestDrive"]__ This content will be shown instead of the icon and predefind text.[/bdt_cta]  
 
-<br>
+
 __bdt_prop__  
 Fetch a property of a car - currently needs to be the danish caption. These are directly matched from the database, so this list may be
 incomplete/obsolete.  
@@ -177,9 +177,9 @@ Properties:
 * FinancingTotalFeesToPay,
 * FinancingTotalSetupFees,
 * FinancingDownpayment,
-* FinancingDownpaymentInPercent
+* FinancingDownpaymentInPercent  
 
-  __bdt_specifications__  
+__bdt_specifications__  
   
 Print out a table of the specifications.
 [bdt_prop p="description"]
