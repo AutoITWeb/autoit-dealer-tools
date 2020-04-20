@@ -242,6 +242,7 @@ __bdt_get_vehicles_by_status_code__
 Creates a list of cars from status codes set in AutoDesktop (In order to use this shortcodes the dealer has to list cars using AutoDesktop. BilInfo cars are currentlu not supported as it's a specific field set in AutoDesktop).  
 <br>Required attribute:  
 * __status__
+
 <br>The following status codes are currently supported:  
 * __Sold__ - Shows all cars with the label "Solgt".  
 * __New__ - Shows all cars with the label "Nyhed".  
