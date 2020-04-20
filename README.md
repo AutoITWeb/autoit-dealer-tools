@@ -84,6 +84,9 @@ Print out the vehicle search filter.
 __bdt_vehicle_search_results__  
 Print out the search results - list of cars.  
 
+__bdt_vehicle_search_frontpage__  
+Specialized search for use on the frontpage (or any other landingpage that is not the main search and result page)  
+
 __bdt_vehicle_card__  
 Print out a vehicle "card" - a box with short informations about the vehicle. This is equal to one search result item from the vehicle search results.  
 Attributes:
@@ -219,6 +222,9 @@ Prints out a "smart" back button, that returns you to the vehicle search results
 __bdt_vehicle_price__  
 Shows intelligently the "most attractive" price of a vehicle - i.e. financing or leasing if available, or the cash price as fallback.  
 
+__bdt_sharethis__  
+Shows icons for Facebook-sharing, sharing by mail and printing.  
+
 <br>__Special shortcode__  
 These shortcodes can be used to create landingpages with specific cars  
 
@@ -239,7 +245,7 @@ Example 2: __[bdt_get_vehicles make="Audi" model="A5"]__ - lists all cars with t
 Example 3: __[bdt_get_vehicles make="Audi" model="A5" propellant="diesel"]__ - lists all cars with the make "Audi", model "A5" and uses diesel as propellant.
 
 __bdt_get_vehicles_by_status_code__  
-Creates a list of cars from status codes set in AutoDesktop (In order to use this shortcodes the dealer has to list cars using AutoDesktop. BilInfo cars are currentlu not supported as it's a specific field set in AutoDesktop).  
+Creates a list of cars from status codes set in AutoDesktop (In order to use this shortcodes the dealer has to list cars using AutoDesktop. BilInfo cars are currently not supported as it's specific fields set in AutoDesktop).  
 <br>Required attribute:  
 * __status__
 
@@ -253,7 +259,7 @@ Creates a list of cars from status codes set in AutoDesktop (In order to use thi
 * __Upcoming__ - Shows all cars with the label "På vej ind".  
 * __Rental__ - Shows all cars with the label "Udlejning".  
 * __Commision__ - Shows all cars with the label "Kommision".  
-* __Wholesale__ - Shows all cars with the label "Engros".  
+* __Wholesale__ - Shows all cars with the label "Kun engros".  
 
 Example 1: __[bdt_get_vehicles_by_status_code status="Sold"]__ - lists all cars marked as "Solgt".  
 
