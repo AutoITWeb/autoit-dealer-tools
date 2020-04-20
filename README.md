@@ -42,8 +42,8 @@ Install and activate the plugin
 Create wordpress landingpages for the following:
 * A page for the Car search and Result list
 * A page for the car detail
-* A page for the form to book testdrive or send purchase request
-* A page for the general car specific requests.
+* A page for the form to book testdrive 
+* A page for the form to send purchase request
 
 Head over to the settings page of the plugin:
 
