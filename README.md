@@ -60,7 +60,8 @@ When updated to the newest version, the plugin settings are now shown in the das
 
 ![New settings](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-autoit-settings-new.png)
 
-__Save the settings in all three tabs (if not the plugin might throw errors).__
+__Save the settings in all three tabs (if not the plugin might throw errors).__  
+![New settings](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-autoit-settings-view.png)
 
 ## Shortcodes
 You are now ready to place the shorcodes on the landingpages
