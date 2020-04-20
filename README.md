@@ -139,8 +139,7 @@ Creates a list of cars from their type.
 * __Truck__ - Shows all vehicles of the type "Truck".  
 
 
-Example 1: __[bdt_get_vehicles_by_type type="Car"]__ - lists all vehicles with the type "Personbil".
-
+Example 1: __[bdt_get_vehicles_by_type type="Car"]__ - lists all vehicles with the type "Personbil".<br><br>
 
 ### Vehicle detail shortcodes  
 These will work only on a vehicle detail template page.  
