@@ -275,19 +275,6 @@ Shows intelligently the "most attractive" price of a vehicle - i.e. financing or
 __bdt_sharethis__  
 Shows icons for Facebook-sharing, sharing by mail and printing.<br><br>
 
-### Building the Car search / resultlist page and vehicle detailspage  
-If this example it's shown how AutoIT builds the mentioned pages their clients.  
-
-<br>__Car search / resultlist__  
-![search page](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-search-and-result-page-old-1.png)  
-
-<br>__Vehicle detailspage__  
-![detailspage](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-details-old-1.png)  
-
-![detailspage](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-details-old-2.png)  
-
-![detailspage](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-details-old-3.png)<br><br>
-
 ### Setup your forms to send leads to AutoDesktop  
 To be able to send leads to AutoDesktop you need to create forms on the pages that you have specified on the settingspage of the AutoIt plugin.  
 
@@ -361,7 +348,21 @@ __Consent:__
 * postalcode - pre-filled postal code of the person giving samtykke,
 * city - pre-filled city of the person giving samtykke,
 * email - pre-filled email of the person giving samtykke,
-* mobilephone - pre-filled mobile phone of the person giving samtykke
+* mobilephone - pre-filled mobile phone of the person giving samtykke<br><br>
+
+
+### Building the Car search / resultlist page and vehicle detailspage  
+If this example it's shown how AutoIT builds the mentioned pages their clients.  
+
+<br>__Car search / resultlist__  
+![search page](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-search-and-result-page-old-1.png)  
+
+<br>__Vehicle detailspage__  
+![detailspage](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-details-old-1.png)  
+
+![detailspage](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-details-old-2.png)  
+
+![detailspage](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-details-old-3.png)<br><br>
 
 
 
