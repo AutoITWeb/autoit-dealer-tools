@@ -65,8 +65,136 @@ __Save the settings in all three tabs (if not the plugin might throw errors).__
 ![New settings](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-autoit-settings-view.png)
 
 ## Shortcodes
-You are now ready to place the shorcodes on the landingpages
+You are now ready to place the shorcodes on the landingpages  
 
+A shortcode is a piece of syntax that can be inserted anywhere in the WordPress text editor, and will then be processed into some kind of functionality. You can imagine shortcodes as building blocks you can move around. Shortcodes have optionally attributes, that change their output.  
+A shortcode is delimited by square brackets, for example [bdt_cta type="TestDrive"]  
+
+__Examples on how to build the searchpage / resultlist and vehicledetailspage are shown at the end of this section__
+
+__Global shortcodes__  
+These shortcodes should work anywhere in WordPress.  
+
+__bdt_vehicletotalcount__  
+shows a total count of vehicles for the current dealer.  
+
+__bdt_vehicle_search__  
+Print out the vehicle search filter.  
+
+__bdt_vehicle_search_results__  
+Print out the search results - list of cars.  
+
+bdt_vehicle_card
+Print out a vehicle "card" - a box with short informations about the vehicle. This is equal to one search result item from the vehicle search results.
+Attributes:
+vehicle - specifies the vehicle ID. If omitted, it will look for bdt_vehicle_id URL parameter.
+Vehicle detail shortcodes
+These will work only on a vehicle detail template page.
+bdt_cta
+This will generate a CTA button, with a link to the contact page or booking page with parameters that facilitate the leads functionality. It can be
+opened and content inserted will become wrapped in a link element.
+Attributes:
+color - hexadeximal color with a hash, or a color name that colors the CTA text and icon. If omitted, the CTA takes on the primary color.
+Attributes:
+type - one of the five following types:
+TestDrive - book test drive
+PhoneCall - call me back
+Purchase - buy the car
+Email - send email
+Contact - general contact
+Example 1: [bdt_cta type="TestDrive"]
+Example 2: [bdt_cta type="TestDrive"] This content will be shown instead of the icon and predefind text.[/bdt_cta]
+bdt_prop
+Fetch a property of a car - currently needs to be the danish caption. These are directly matched from the database, so this list may be
+incomplete/obsolete.
+Attributes:
+p - see the list below.
+nona="-" - text to show when no match was found. If omitted, returns "Ikke angivet".
+raw="true" - returns the unformated value. Useful in cases where the value needs to be further processed or used.
+Example: [bdt_prop p="0-100"]
+Properties:
+BodyType,
+Mileage,
+ModelYear,
+Price,
+XVat - Without VAT(MOMS) Ja/Nej,
+Acceleration,
+FirstRegistrationDate,
+AirbagCount,
+CylinderCount,
+DoorCount,
+GearCount,
+GearType,
+SeatCount,
+AnnualOwnerTax,
+PropellantType,
+Width,
+Color,
+Height,
+Kmx1l - kilometers per liter,
+Whx1km,
+Length,
+DeliveryCost,
+MaxTorque,
+MaxHorsepower,
+EngineSize,
+RegistrationNumber,
+VIN,
+LastChangedDate,
+TopSpeed,
+TotalWeight,
+TankCapacity,
+AllowedTrailerWeightWithBrakes,
+AllowedTrailerWeightWithoutBrakes,
+DealersReferenceNumber,
+EquipmentItem - A general type for all equipment. Equipment is not mapped, i.e. you cannot fetch a particular equipment item.
+LeasingDeal,
+LeasingBusiness,
+LeasingFirstPayment,
+LeasingFirstPaymentVAT,
+LeasingRunTime,
+LeasingMonthlyPayment,
+LeasingMonthlyPaymentVAT,
+LeasingRemainingValue,
+FinancingAnnualLoanFeesInPercents,
+FinancingAnnualDebitorInterest,
+FinancingFixedInterest,
+FinancingMonthlyPrice,
+FinancingLoanTransfer,
+FinancingRunTime,
+FinancingInterestRate,
+FinancingTotalCreditFees,
+FinancingTotalFeesToPay,
+FinancingTotalSetupFees,
+FinancingDownpayment,
+FinancingDownpaymentInPercent
+bdt_specifications
+Print out a table of the specifications.
+[bdt_prop p="description"]
+Print out the car description.
+bdt_equipment
+Print out a table of equipment
+bdt_recommendedcars bdt_recommendedvehicles (changed in 1.0.7)
+Print out three recommended unsold vehicles, related to the current vehicle.
+bdt_featuredvehicles (added in 1.0.7)
+Shows a list of vehicles that had been marked as "In focus" in AutoDesktop. This allows sold cars to show until removed from the index.
+bdt_slideshow
+Print out a slideshow of current vehicle's images.
+bdt_vehicle_labels
+Print out a list of labels asociated with the given car. Labels come in predefined colors, that can be overwritten with CSS in your child theme:
+.bdt .badge-primary - used as default label color,
+.bdt .badge-danger - used for sold label,
+.bdt .badge-success - sued for new label,
+.bdt .badge-warning - used for reserved label,
+.bdt .badge-info - used for leasing label
+Attributes:
+allowed="new,sold" - comma separated list of labels that are allowed to be shown. Use this if there are too many labels available, and
+you don't necessarily want to show them all. If ommited, all labels will be returned.
+bdt_vehicle_search_backtoresults
+Prints out a "smart" back button, that returns you to the vehicle search results if available, or car search if not.
+bdt_vehicle_price
+Shows intelligently the "most attractive" price of a vehicle - i.e. financing or leasing if available, or the cash price as fallback.
+Examples of the three possible scenarios:
 
 
 
