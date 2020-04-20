@@ -97,7 +97,7 @@ This will generate a CTA button, with a link to the contact page or booking page
 Attributes:
 * color - hexadeximal color with a hash, or a color name that colors the CTA text and icon. If omitted, the CTA takes on the primary color.  
 <br>
-Attributes:
+Attributes:  
 * type - one of the five following types:
   * TestDrive - book test drive
   * PhoneCall - call me back
