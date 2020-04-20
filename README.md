@@ -72,7 +72,7 @@ A shortcode is delimited by square brackets, for example __[bdt_cta type="TestDr
 <br><br>
 __Examples of building the searchpage / resultlist and vehicledetailspage are shown at the end of this section__<br><br>
 
-__Global shortcodes__  
+######Global shortcodes  
 These shortcodes should work anywhere in WordPress.  
 <br><br>
 __bdt_vehicletotalcount__  
@@ -92,7 +92,7 @@ Print out a vehicle "card" - a box with short informations about the vehicle. Th
 Attributes:
 * vehicle - specifies the vehicle ID. If omitted, it will look for bdt_vehicle_id URL parameter.
 
-<br> __Vehicle detail shortcodes__  
+<br> ######Vehicle detail shortcodes  
 These will work only on a vehicle detail template page.  
 
 __bdt_cta__  
