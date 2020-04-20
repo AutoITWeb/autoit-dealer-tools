@@ -226,13 +226,16 @@ __bdt_get_vehicles__
 List the of a specific make (model and propellant)  
 Required attribute:  
 * __make__  
+
 Optional attributes:  
 * __model__  
 * __propellant__  
 
 
-Example 1: __[bdt_get_vehicles make="Audi"]__ - lists all cars with the make "Audi"  .
-Example 2: __[bdt_get_vehicles make="Audi" model="A5"]__ - lists all cars with the make "Audi" and model "A5".
+Example 1: __[bdt_get_vehicles make="Audi"]__ - lists all cars with the make "Audi".  
+
+Example 2: __[bdt_get_vehicles make="Audi" model="A5"]__ - lists all cars with the make "Audi" and model "A5".  
+
 Example 2: __[bdt_get_vehicles make="Audi" model="A5" propellant="diesel"]__ - lists all cars with the make "Audi" and model "A5" that uses diesel as propellant.
 
 
