@@ -225,7 +225,7 @@ Shows intelligently the "most attractive" price of a vehicle - i.e. financing or
 __bdt_sharethis__  
 Shows icons for Facebook-sharing, sharing by mail and printing.  
 
-<br>__Special shortcode__  
+<br>__Special shortcodes__  
 These shortcodes can be used to create landingpages with specific cars  
 
 __bdt_get_vehicles__  
@@ -276,6 +276,15 @@ Creates a list of cars from their type.
 
 
 Example 1: __[bdt_get_vehicles_by_type type="Car"]__ - lists all vehicles with the type "Personbil".  
+
+
+__Building the Car search / resultlist page and cardetailspage__  
+If this example it's shown how AutoIT builds the mentioned pages their clients.  
+
+![search page](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-search-and-result-page-old.png)  
+
+![detailspage](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-details-old-1.png)  
+
 
 
 
