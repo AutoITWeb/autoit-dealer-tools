@@ -352,7 +352,7 @@ __Consent:__
 
 
 ### Building the Car search / resultlist page and vehicle detailspage  
-If this example it's shown how AutoIT builds the mentioned pages their clients.  
+How the search, result and detailspage can be build.
 
 <br>__Car search / resultlist__  
 ![search page](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-search-and-result-page-old-1.png)  
@@ -363,6 +363,29 @@ If this example it's shown how AutoIT builds the mentioned pages their clients.
 ![detailspage](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-details-old-2.png)  
 
 ![detailspage](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-details-old-3.png)<br><br>
+
+
+### Searchpage and resultlist  
+When using the plugin it's important to notice that the searchpage and resultlist won't work optiomal unless the landingpage used for the shortcodes is placed in the root of the domain.  
+
+Example 1: demo1.biltorvet.as/brugte-biler - Everything will work justfine.  
+
+Example 2: demo1.biltorvet.as/out-new-homepage/brugte-biler - Filtering options, pagination and such won't work as it should.  
+
+Be sure to remember this when creating a website using this plugin.  
+
+__Share links with predefined searchfilters__  
+The URL are build to make it easy to share pages with predefined searchfilters. The url build like this:  
+__/1/make/model__   
+
+
+The first paramater is the pagination number, the second parameter is the make of the vehicle and the third parameter is the model of the vehicle.  
+
+Example 1: /1/audi/ - Will show the searchpage with all the Audi's for sale  
+
+Example 2: /1/audi/a5 - Will show the searchpage with all the Audi A5's for sale  
+
+
 
 
 
