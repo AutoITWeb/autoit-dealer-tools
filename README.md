@@ -69,12 +69,12 @@ You are now ready to place the shorcodes on the landingpages
 
 A shortcode is a piece of syntax that can be inserted anywhere in the WordPress text editor, and will then be processed into some kind of functionality. You can imagine shortcodes as building blocks you can move around. Shortcodes have optionally attributes, that change their output.  
 A shortcode is delimited by square brackets, for example [bdt_cta type="TestDrive"]  
-<br>
+<br><br>
 __Examples on how to build the searchpage / resultlist and vehicledetailspage are shown at the end of this section__<br><br>
 
 __Global shortcodes__  
 These shortcodes should work anywhere in WordPress.  
-<br>
+<br><br>
 __bdt_vehicletotalcount__  
 shows a total count of vehicles for the current dealer.  
 
@@ -84,8 +84,8 @@ Print out the vehicle search filter.
 __bdt_vehicle_search_results__  
 Print out the search results - list of cars.  
 
-bdt_vehicle_card
-Print out a vehicle "card" - a box with short informations about the vehicle. This is equal to one search result item from the vehicle search results.
+__bdt_vehicle_card__  
+Print out a vehicle "card" - a box with short informations about the vehicle. This is equal to one search result item from the vehicle search results.  
 Attributes:
 vehicle - specifies the vehicle ID. If omitted, it will look for bdt_vehicle_id URL parameter.
 Vehicle detail shortcodes
