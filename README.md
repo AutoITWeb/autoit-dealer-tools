@@ -302,9 +302,66 @@ To show a car-card next to the form, as showed below, use this shortcode: [bdt_v
 
 ![contactform](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-adt-leads-3.png)  
 
-__NB The vehicle-card will only be visible, when a client comes directly from a vehicle detailspage.__
+__NB The vehicle-card will only be visible, when a client comes directly from a vehicle detailspage.__<br><br>
+
+### Widgets  
+__[bdt_widget]__
+Required attribute:  
+* __type__  
+
+Supported widget-types:  
+* Consent - Samtykke widget
+* AutoDesktopLeads - Currently only Book Prøvetur is supported
+* Santander - Santander widget. WORKS ONLY IN VEHICLE DETAIL PAGE.  
 
 
+The widgets should work without any additional parameters, as the usual clientID parameter is resolved automatically by association to the companyId associated with the current API key. Widgets can be used anywhere in your WordPRess installation, except for Santander widget that can only be used on a vehicle detail page, because it requires some inputs about a vehicle to be displayed.  
+
+The [bdt_widget] shortcode can be opened in order to insert some content and put a link on it. In such case, the widget won'd be embedded; but when the link is clicked, a new window opens with a widget inside.
+In case that your desired widget type doesn't show up, make sure that it had been activated for your company - contact Biltorvet A/S support to get a widget activated for your API key. Additionaly, you may want to reuse a specific widget ID instead of relying on automatic resolve. For that, use externalid attribute, for example [bdt_widget externalid="XXXXXX-XXXX-XXXX-XXXXXX"].  
+
+__Widget attributes__  
+All widgets have following common attributes, that you can use to tweak their appearance for your particullar instance:  
+
+* color - sets the primary theme color for the given widget.
+* logourl - sets the URL for the logo to be displayed inside.
+* fontcolor - sets the primary theme color for the font inside.
+* fontfamily - sets the google font to be loaded for the whole widget. (not implemented yet)  
+
+Example 1: [bdt_widget type="Santander" color="#ff0000"]<br><br>
+
+![widget](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-widget.png)<br><br>
+
+
+
+__Widget type specific attributes__  
+Some widgets allow you to specific attributes.  
+
+__Santander:__  
+* hideVehiclePrice="true" - hides the vehicle price in the widget, which is useful in the vehicle detail page, where there's probably price in some other place already.  
+* brandingid - some dealers have a specific branding.  
+
+__AutoDesktopLeads:__
+* vehicletype - preselect the vehicle type (not implemented yet)
+* vehicletypehide - hide the vehicle type selection
+* make - set the preselected make (not implemented yet)
+* makehide - hide the make selection
+* model - set the preselected model (not implemented yet)
+* modelhide - hide the model selection
+* variant - set the preselected variant (not implemented yet)
+* enginesize - set the preselected engine size (not implemeted yet)
+* month - set the preselected month (not implemented yet)
+* year - set the preselected year (not implemented yet)  
+
+__Consent:__
+* consentcategory - samtykke category,
+* requiredconsenttype - required samtykke channel: BySMS, ByEmail or Both,
+* name - pre-filled name of the person giving samtykke,
+* address - pre-filled address of the person giving samtykke,
+* postalcode - pre-filled postal code of the person giving samtykke,
+* city - pre-filled city of the person giving samtykke,
+* email - pre-filled email of the person giving samtykke,
+* mobilephone - pre-filled mobile phone of the person giving samtykke
 
 
 
