@@ -125,7 +125,8 @@ Attributes:
 
 Example: __[bdt_prop p="0-100"]__ 
 
-Properties:  
+Properties: 
+* Company,  
 * BodyType,
 * Mileage,
 * ModelYear,
