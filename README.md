@@ -236,12 +236,12 @@ Example 1: __[bdt_get_vehicles make="Audi"]__ - lists all cars with the make "Au
 
 Example 2: __[bdt_get_vehicles make="Audi" model="A5"]__ - lists all cars with the make "Audi" and model "A5".  
 
-Example 2: __[bdt_get_vehicles make="Audi" model="A5" propellant="diesel"]__ - lists all cars with the make "Audi", model "A5" and uses diesel as propellant.
+Example 3: __[bdt_get_vehicles make="Audi" model="A5" propellant="diesel"]__ - lists all cars with the make "Audi", model "A5" and uses diesel as propellant.
 
 __bdt_get_vehicles_by_status_code__  
 Creates a list of cars from status codes set in AutoDesktop (In order to use this shortcodes the dealer has to list cars using AutoDesktop. BilInfo cars are currentlu not supported as it's a specific field set in AutoDesktop).  
 <br>Required attribute:  
-* __status__  
+* __status__
 <br>The following status codes are currently supported:  
 * __Sold__ - Shows all cars with the label "Solgt".  
 * __New__ - Shows all cars with the label "Nyhed".  
@@ -254,6 +254,8 @@ Creates a list of cars from status codes set in AutoDesktop (In order to use thi
 * __Commision__ - Shows all cars with the label "Kommision".  
 * __Wholesale__ - Shows all cars with the label "Engros".  
 
+Example 1: __[bdt_get_vehicles_by_status_code status="Sold"]__ - lists all cars marked as "Solgt".  
+
 __bdt_get_vehicles_by_type__  
 Creates a list of cars from their type.  
 <br>Required attribute:  
@@ -263,7 +265,10 @@ Creates a list of cars from their type.
 * __Car__ - Shows all vehicles of the type "Car".
 * __Van__ - Shows all vehicles of the type "Van".
 * __Motorcycle__ - Shows all vehicles of the type "Motorcycle".
-* __Truck__ - Shows all vehicles of the type "Truck".
+* __Truck__ - Shows all vehicles of the type "Truck".  
+
+
+Example 1: __[bdt_get_vehicles_by_type type="Car"]__ - lists all vehicles with the type "Personbil".  
 
 
 
