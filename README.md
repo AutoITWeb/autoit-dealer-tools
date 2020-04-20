@@ -46,15 +46,18 @@ Create a wordpress landingpages for the following:
 * A page for the form to send purchase request
 
 Head over to the settings page of the plugin:  
+
 ![Old settings](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-biltorvet-settings-old.png)
 
 * Fill out the api-key that has been provided by AutoIT A/S.
 * Choose you primary color (This will be used in multiple places)
 * Configure the rest of the settings if needed.  
+
 ![Old settings](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-biltorvet-settings-old-view.png)
 
 Head back to the plugin menu and update the plugin to the latest version (If no updates are shown try installing WP_Control and run the plugin update cron event).
 When updated to the newest version, the plugin settings are now shown in the dashboard menu and not as a submenu to settings:  
+
 ![New settings](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-autoit-settings-new.png)
 
 __Save the settings in all three tabs (if not the plugin might throw errors).__
