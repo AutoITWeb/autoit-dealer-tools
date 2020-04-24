@@ -92,6 +92,10 @@ Print out a vehicle "card" - a box with short informations about the vehicle. Th
 Attributes:
 * vehicle - specifies the vehicle ID. If omitted, it will look for bdt_vehicle_id URL parameter.  
 
+
+__bdt_featuredvehicles__ 
+Shows a list of vehicles that had been marked as "In focus" in AutoDesktop. This allows sold cars to show until removed from the index.  
+
 __bdt_get_vehicles__  
 Creates a list of cars from a specific make  
 Required attribute:  
@@ -244,9 +248,6 @@ Print out a table of equipment
 
 __bdt_recommendedvehicles__ 
 Print out three recommended unsold vehicles, related to the current vehicle.  
-
-__bdt_featuredvehicles__ 
-Shows a list of vehicles that had been marked as "In focus" in AutoDesktop. This allows sold cars to show until removed from the index.  
 
 __bdt_slideshow__  
 Print out a slideshow of current vehicle's images.  
