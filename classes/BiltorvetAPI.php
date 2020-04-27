@@ -2,8 +2,8 @@
     if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
     
     class BiltorvetAPI {
-        private $endpoint = 'https://api-v1.autoit.dk';
-        //private $endpoint = 'http://localhost:56454';
+        //private $endpoint = 'https://api-v1.autoit.dk';
+        private $endpoint = 'http://localhost:53871';
         private $apiKey;
         private $vehicleResultsPageLimit = 30;
         private $errLogFile;
@@ -119,15 +119,16 @@
             }
         }
 
-        public function GetRecommendedVehicles($vehicleId, $amount)
+        public function GetRecommendedVehicles($amount)
         {
             return $this->Request('/vehicle/recommended' . (isset($vehicleId) && $vehicleId !== null ? '/' . TextUtils::Sanitize($vehicleId) : ''), isset($amount) ? array('amount' => intval($amount)) : null);
         }
 
-        public function GetFeaturedVehicles($amount)
+        public function GetFeaturedVehicles($amount, $vehicleType)
         {
-            return $this->Request('/vehicle/featured', isset($amount) ? array('amount' => intval($amount)) : null);
+            $return =  $this->Request('/vehicle/featured', isset($amount) ? array('amount' => intval($amount), 'vehicleType' => $vehicleType) : null);
 
+            return $return;
         }
 
         public function GetProducts()
@@ -135,7 +136,7 @@
             return $this->Request('/products');
         }
 
-        private function Request($method, $query = null, $requestType = 'GET')
+        public function Request($method, $query = null, $requestType = 'GET')
         {
             $requestStart = microtime(true);
             try{
@@ -166,9 +167,10 @@
                         }
                     }
                     $body = curl_exec($ch);
+
                     $curl_errno = curl_errno($ch);
                     $curl_error = curl_error($ch);
-                    
+
                     if($curl_errno > 0)
                     {
                         throw new Exception(sprintf( __('Biltorvet API: can not connect to the server (%u)', 'biltorvet-dealer-tools'), intval($curl_errno)));
@@ -216,10 +218,10 @@
                     }
 
                     $data = $response->result;
-                    if($requestType === 'GET')
-                    {
-                        set_transient( $transientName, $data, 3*60 ); // 3 minutes caching
-                    }
+//                    if($requestType === 'GET')
+//                    {
+//                        set_transient( $transientName, $data, 3*60 ); // 3 minutes caching
+//                    }
                 }
 
                 return $data;

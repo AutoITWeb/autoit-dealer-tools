@@ -25,6 +25,11 @@
         public $HideCommissionVehicles; // Bool
         public $HideUpcomingVehicles; // Bool
         public $HideWholesaleVehicles; // Bool
+        public $HideByTypeCar; // Bool
+        public $HideByTypeVan; // Bool
+        public $HideByTypeMotorcycle; // Bool
+        public $HideByTypeTruck; // Bool
+        public $HideByTypeBus; // Bool
         public $HideADVehicles; // Bool
         public $HideBIVehicles; // Bool
         public $Ascending; // Bool

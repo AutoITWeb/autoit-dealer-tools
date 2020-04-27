@@ -239,10 +239,11 @@ class Biltorvet
 
         public function bdt_register_scripts()
         {
+            wp_register_script('jquery', 'https://code.jquery.com/jquery-3.5.0.js', null, '3.5.0');
             wp_register_script( 'bootstrap_slider', plugins_url('scripts/bootstrap-slider.min.js',  dirname(__FILE__) ) , array('jquery'), '1.0.1', true );
             wp_register_script( 'bdt_vimeo', 'https://player.vimeo.com/api/player.js', null, '1.0.0', true );
             wp_register_script( 'hammerjs', 'https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js', null, '2.0.8', true );
-            wp_register_script( 'bt_slideshow', 'https://source.autoit.dk/slideshow/v1.0.5/slideshow.min.js', array('hammerjs', 'jquery', 'bdt_vimeo'), '1.0.2', true );
+            wp_register_script( 'bt_slideshow', 'https://source.autoit.dk/slideshow/v1.0.2/slideshow.min.js', array('hammerjs', 'jquery', 'bdt_vimeo'), '1.0.2', true );
             wp_register_script( 'bdt_script', plugins_url('scripts/biltorvet.min.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
             wp_localize_script( 'bdt_script', 'ajax_config', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
             wp_register_script( 'search_script', plugins_url('scripts/search.js',  dirname(__FILE__) ) , array('jquery'), '1.0.0', true );

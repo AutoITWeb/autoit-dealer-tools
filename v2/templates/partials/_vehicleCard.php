@@ -45,15 +45,9 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 </span>
                 <span class="vehicleDescription">
                     <span class="vehicleTitle"><?= $vehicle->getMakeName() .' '. $vehicle->getModel() .' '. $vehicle->getVariant() ?></span>
-                    <span class="price bdt_color">
-                        <?= $priceController->getCardPrioritizedPrice() ?>
-                    </span>
-                    <span class="priceLabel bdt_color">
-                        <?= $priceController->getCardLabel() ?>
-                    </span>
-                    <span class="bdt_price_small_cashprice_vehicle_card">
-                        <?= $priceController->showCashPriceFinance() ?>
-                    </span>
+                    <span class="price bdt_color"><?= $priceController->getCardPrioritizedPrice() ?></span>
+                    <span class="priceLabel bdt_color"><?= $priceController->getCardLabel() ?></span>
+                    <span class="bdt_price_small_cashprice_vehicle_card"><?= $priceController->showCashPriceFinance() ?></span>
                     <span class="row">
                         <span class="col-4">
                             <span class="vehicleParamValue">

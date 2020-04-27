@@ -320,6 +320,46 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
 
             add_settings_field(
+                'hide_typecar_vehicles',
+                __( 'Hide vehicles with type Car', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_hide_typecar_vehicles_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
+                'hide_typevan_vehicles',
+                __( 'Hide vehicles with type Van', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_hide_typevan_vehicles_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
+                'hide_typemotorcycle_vehicles',
+                __( 'Hide vehicles with type Motorcycle', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_hide_typemotorcycle_vehicles_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
+                'hide_typetruck_vehicles',
+                __( 'Hide vehicles with type Truck', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_hide_typetruck_vehicles_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
+                'hide_typebus_vehicles',
+                __( 'Hide vehicles with type Bus', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_hide_typebus_vehicles_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
                 'bdt_hide_leasing_prices_cards',
                 __( 'Do not show leasing prices on vehicle cards', 'biltorvet-dealer-tools' ),
                 array( $this, 'bdt_hide_leasing_prices_card_callback' ),
@@ -334,7 +374,6 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt-settings-group-2', // Page
                 'bdt_settings_section_2' // Section
             );
-
         }
 
         /**
@@ -446,6 +485,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
         /**
          * Options_2 : "Brugtbilsliste (Bilsøgning)" tab
          */
+
         public function bdt_hide_ad_vehicles_callback()
         {
             printf(
@@ -566,6 +606,46 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             printf(
                 '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[hide_wholesale_vehicles]"%s />',
                 isset( $this->options_2['hide_wholesale_vehicles'] ) && $this->options_2['hide_wholesale_vehicles'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_hide_typecar_vehicles_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[hide_typecar_vehicles]"%s />',
+                isset( $this->options_2['hide_typecar_vehicles'] ) && $this->options_2['hide_typecar_vehicles'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_hide_typevan_vehicles_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[hide_typevan_vehicles]"%s />',
+                isset( $this->options_2['hide_typevan_vehicles'] ) && $this->options_2['hide_typevan_vehicles'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_hide_typemotorcycle_vehicles_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[hide_typemotorcycle_vehicles]"%s />',
+                isset( $this->options_2['hide_typemotorcycle_vehicles'] ) && $this->options_2['hide_typemotorcycle_vehicles'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_hide_typetruck_vehicles_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[hide_typetruck_vehicles]"%s />',
+                isset( $this->options_2['hide_typetruck_vehicles'] ) && $this->options_2['hide_typetruck_vehicles'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_hide_typebus_vehicles_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[hide_typebus_vehicles]"%s />',
+                isset( $this->options_2['hide_typebus_vehicles'] ) && $this->options_2['hide_typebus_vehicles'] === 'on' ? ' checked="checked"' : ''
             );
         }
 

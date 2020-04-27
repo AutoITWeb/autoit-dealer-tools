@@ -98,6 +98,46 @@ try{
         }
         $filterObject->HideWholesaleVehicles = 'true';
     }
+    if(isset($this->_options_2['hide_typecar_vehicles']) && $this->_options_2['hide_typecar_vehicles'] === 'on')
+    {
+        if($filterObject === null)
+        {
+            $filterObject = new BDTFilterObject();
+        }
+        $filterObject->HideByTypeCar = 'true';
+    }
+    if(isset($this->_options_2['hide_typevan_vehicles']) && $this->_options_2['hide_typevan_vehicles'] === 'on')
+    {
+        if($filterObject === null)
+        {
+            $filterObject = new BDTFilterObject();
+        }
+        $filterObject->HideByTypeVan = 'true';
+    }
+    if(isset($this->_options_2['hide_typemotorcycle_vehicles']) && $this->_options_2['hide_typemotorcycle_vehicles'] === 'on')
+    {
+        if($filterObject === null)
+        {
+            $filterObject = new BDTFilterObject();
+        }
+        $filterObject->HideByTypeMotorcycle = 'true';
+    }
+    if(isset($this->_options_2['hide_typetruck_vehicles']) && $this->_options_2['hide_typetruck_vehicles'] === 'on')
+    {
+        if($filterObject === null)
+        {
+            $filterObject = new BDTFilterObject();
+        }
+        $filterObject->HideByTypeTruck = 'true';
+    }
+    if(isset($this->_options_2['hide_typebus_vehicles']) && $this->_options_2['hide_typebus_vehicles'] === 'on')
+    {
+        if($filterObject === null)
+        {
+            $filterObject = new BDTFilterObject();
+        }
+        $filterObject->HideByTypeBus = 'true';
+    }
     if(isset($this->_options['hide_ad_vehicles']) && $this->_options['hide_ad_vehicles'] === 'on')
     {
         if($filterObject === null)

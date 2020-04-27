@@ -36,21 +36,21 @@ function Biltorvet($) {
         root_url = document.getElementById("root_url").textContent;
     }
 
-    if(vehicleSearch.length > 0 && vehicleSearch.data('makeids'))
-    {
-        makesFilter = [];
-        var mIds = vehicleSearch.data('makeids');
-        if(!isNaN(mIds))
-        {
-            makesFilter.push(mIds   );
-        } else {
-            for(var i in mIds.split(','))
-            {
-                makesFilter.push(parseInt(mIds.split(',')[i]));
-            }
-        }
-        emptyFilter = { MakeIds: makesFilter };
-    }
+    // if(vehicleSearch.length > 0 && vehicleSearch.data('makeids'))
+    // {
+    //     makesFilter = [];
+    //     var mIds = vehicleSearch.data('makeids');
+    //     if(!isNaN(mIds))
+    //     {
+    //         makesFilter.push(mIds   );
+    //     } else {
+    //         for(var i in mIds.split(','))
+    //         {
+    //             makesFilter.push(parseInt(mIds.split(',')[i]));
+    //         }
+    //     }
+    //     emptyFilter = { MakeIds: makesFilter };
+    // }
 
     this.Init = function() {
         // There can be a situation, namely with AVADA themes, where there's another .slider bound to the jQuery object. IF that's the case, we'll switch to an alternative namespace.
@@ -128,10 +128,10 @@ function Biltorvet($) {
                     var makes = '';
                     for(var i in response.makes)
                     {
-                        if(makesFilter !== null && makesFilter.indexOf(response.makes[i].id) === -1)
-                        {
-                            continue;
-                        }
+                        // if(makesFilter !== null && makesFilter.indexOf(response.makes[i].id) === -1)
+                        // {
+                        //     continue;
+                        // }
                         makes += '<option value="' + response.makes[i].name + '">' + response.makes[i].name + '</option>';
                     }
                     vehicleSearch.find('select[name=make]').find('option:not(:first-child)').remove().end().append(makes);
