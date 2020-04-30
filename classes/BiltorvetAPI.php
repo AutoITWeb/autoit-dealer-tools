@@ -2,8 +2,8 @@
     if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
     
     class BiltorvetAPI {
-        //private $endpoint = 'https://api-v1.autoit.dk';
-        private $endpoint = 'http://localhost:53871';
+        private $endpoint = 'https://api-v1.autoit.dk';
+//        private $endpoint = 'http://localhost:53871';
         private $apiKey;
         private $vehicleResultsPageLimit = 30;
         private $errLogFile;
@@ -119,7 +119,7 @@
             }
         }
 
-        public function GetRecommendedVehicles($amount)
+        public function GetRecommendedVehicles($vehicleId, $amount)
         {
             return $this->Request('/vehicle/recommended' . (isset($vehicleId) && $vehicleId !== null ? '/' . TextUtils::Sanitize($vehicleId) : ''), isset($amount) ? array('amount' => intval($amount)) : null);
         }
@@ -136,7 +136,7 @@
             return $this->Request('/products');
         }
 
-        public function Request($method, $query = null, $requestType = 'GET')
+        private function Request($method, $query = null, $requestType = 'GET')
         {
             $requestStart = microtime(true);
             try{

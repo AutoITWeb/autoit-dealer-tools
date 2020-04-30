@@ -131,7 +131,8 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 $slideCount += count($this->currentVehicle->videos);
                 foreach($this->currentVehicle->videos as $video)
                 {
-                    $slides .= '<div class="bt-slideshow-video' . ($i == 0 ? ' bt-slideshow-active' : '') . '" data-vimeo-background="1" data-vimeo-id="' . $video->vimeoId . '" data-vimeo-width="640" id="bdt' . $video->vimeoId . '"><a class="bt-slideshow-play"><span class="bticon bticon-Play"></span></a></div>';
+//                    $slides .= '<div class="bt-slideshow-video' . ($i == 0 ? ' bt-slideshow-active' : '') . '" data-vimeo-background="0" data-vimeo-id="' . $video->vimeoId . '" data-vimeo-width="640" id="bdt' . $video->vimeoId . '"><a class="bt-slideshow-play"><span class="bticon bticon-Play"></span></a></div>';
+                    $slides =  '<div class="bt-slideshow-video' . ($i == 0 ? ' bt-slideshow-active' : '') . '" >' . '<div class="bt-videoplaceholder" id="bdt' . $video->vimeoId . '" data-vimeo-id="' . $video->vimeoId . '" data-vimeo-autopause="0" data-vimeo-background="0" data-vimeo-autoplay="1" data-vimeo-loop="1" data-vimeo-muted="1" data-vimeo-width="640"></div><a class="bt-slideshow-playpause"><span class="bt-slideshow-centericon"><span class="bticon bticon-Play"></span></span></a></div>';
                     $i++;
                 }
             }
@@ -143,7 +144,8 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             $iconGalleryArrowLeft = '<span class="bticon bticon-GalleryArrowLeft"></span>';
             $iconGalleryArrowRight = '<span class="bticon bticon-GalleryArrowRight"></span>';
             $iconGalleryFullscreen = '<span class="bticon bticon-GalleryFullscreen"></span>';
-            return '<div class="bdt"><section class="bt-slideshow bt-slideshow-4to3"><div class="bt-slideshow-skidboard d-none"></div><a href="#" class="bt-slideshow-prev">' .$iconGalleryArrowLeft. '</a><a href="#" class="bt-slideshow-next">' .$iconGalleryArrowRight. '</a><div class="bt-slideshow-viewport">' . $slides . '</div><div class="bt-slideshow-controls"><span class="bt-slideshow-bg"><a href="#" class="bt-slideshow-open-fullscreen">' .$iconGalleryFullscreen. '</a> <a href="#" class="bt-slideshow-pause-video d-none"><span class="bticon bticon-Pause"></span></a> <span><span class="bt-slideshow-current">1</span>/<span class="bt-slideshow-count">' . $slideCount . '</span></span></span></div></section></div>';
+
+            return '<div class="bdt"><section class="bt-slideshow bt-slideshow-4to3"><div class="bt-slideshow-skidboard d-none"></div><a href="#" class="bt-slideshow-prev">' .$iconGalleryArrowLeft. '</a><a href="#" class="bt-slideshow-next">' .$iconGalleryArrowRight. '</a><div class="bt-slideshow-viewport">' . $slides . '</div><div class="bt-slideshow-controls"><span class="bt-slideshow-bg"><a href="#" class="bt-slideshow-open-fullscreen">' .$iconGalleryFullscreen. '<a href="#" class="bt-slideshow-pause-video"><span class="bticon bticon-Pause"></span></a><span><span class="bt-slideshow-current">1</span>/<span class="bt-slideshow-count">' . $slideCount . '</span></span></span></div></section></div>';
         }
 
         public function bdt_shortcode_vehiclelabels( $atts ) 

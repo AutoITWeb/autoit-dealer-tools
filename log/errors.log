@@ -1306,3 +1306,363 @@ URL: http://localhost:53871/vehicle/recommended
 2020-04-27 12:12:39 (Request took 0.013530969619751s)\r\nBiltorvet API: method not found
 URL: http://localhost:53871/vehicle/recommended
 
+2020-04-27 12:44:04 (Request took 0.027643918991089s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-27 12:44:08 (Request took 0.013498067855835s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-27 13:02:26 (Request took 0.014872074127197s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-27 13:40:38 (Request took 0.063733100891113s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-27 13:41:15 (Request took 0.014887094497681s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-27 13:42:28 (Request took 0.013595104217529s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-27 14:48:14 (Request took 0.01496696472168s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-27 14:48:42 (Request took 0.014598846435547s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 07:14:56 (Request took 3.2054030895233s)\r\nBiltorvet API: can not connect to the server (7)
+URL: http://localhost:53871/vehicle/count
+
+2020-04-28 07:15:00 (Request took 3.2056701183319s)\r\nBiltorvet API: can not connect to the server (7)
+URL: http://localhost:53871/vehicle/filteroptions
+
+2020-04-28 07:16:34 (Request took 10.001709938049s)\r\nBiltorvet API: can not connect to the server (28)
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-28 07:16:42 (Request took 0.02007794380188s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 07:24:21 (Request took 0.017196893692017s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 07:26:04 (Request took 0.014847993850708s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 07:28:07 (Request took 0.015810966491699s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 07:33:44 (Request took 0.019103050231934s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 07:33:50 (Request took 0.018877029418945s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 07:36:07 (Request took 0.017675161361694s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 07:39:10 (Request took 0.01772403717041s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 07:39:40 (Request took 0.015455961227417s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 07:42:43 (Request took 0.029121875762939s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 07:52:18 (Request took 0.013615846633911s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 07:53:25 (Request took 0.017554044723511s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 07:54:05 (Request took 0.01589298248291s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 07:54:53 (Request took 0.022692918777466s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 08:07:45 (Request took 0.026710987091064s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 09:50:42 (Request took 0.017690896987915s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 10:13:41 (Request took 0.015998125076294s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 10:14:33 (Request took 0.019566059112549s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 10:14:39 (Request took 0.015768051147461s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 10:19:04 (Request took 0.064793109893799s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 10:19:16 (Request took 0.031107902526855s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 10:27:31 (Request took 0.015422105789185s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 10:28:16 (Request took 0.01592493057251s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 10:34:50 (Request took 0.015744924545288s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 10:40:17 (Request took 0.01788592338562s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 10:41:01 (Request took 0.02859902381897s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 10:41:23 (Request took 0.016896963119507s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 10:43:12 (Request took 0.018993139266968s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 10:46:09 (Request took 0.016678810119629s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 10:51:21 (Request took 0.0155930519104s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 10:59:50 (Request took 0.02433705329895s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 11:01:00 (Request took 0.020359039306641s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 12:15:55 (Request took 0.016995906829834s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 12:16:29 (Request took 0.018846035003662s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 12:16:47 (Request took 0.033524036407471s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 12:17:07 (Request took 0.026287078857422s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 12:18:51 (Request took 0.015643119812012s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 12:21:34 (Request took 0.022804975509644s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 12:22:03 (Request took 0.048715829849243s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 12:22:19 (Request took 0.014255046844482s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 12:22:29 (Request took 0.01670503616333s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-28 16:57:13 (Request took 10.003288984299s)\r\nBiltorvet API: can not connect to the server (28)
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-28 16:57:23 (Request took 10.001699924469s)\r\nBiltorvet API: can not connect to the server (28)
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-28 16:57:33 (Request took 10.002032995224s)\r\nBiltorvet API: can not connect to the server (28)
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-28 16:57:43 (Request took 10.001280069351s)\r\nBiltorvet API: can not connect to the server (28)
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-28 16:57:52 (Request took 9.3223469257355s)\r\nBiltorvet API: unexpected response code (500)
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-28 16:57:53 (Request took 0.59516286849976s)\r\nBiltorvet API: unexpected response code (500)
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 06:27:46 (Request took 2.2077739238739s)\r\nBiltorvet API: can not connect to the server (7)
+URL: http://localhost:53871/vehicle/count
+
+2020-04-29 06:27:49 (Request took 3.2046978473663s)\r\nBiltorvet API: can not connect to the server (7)
+URL: http://localhost:53871/vehicle/filteroptions
+
+2020-04-29 06:35:25 (Request took 3.2044279575348s)\r\nBiltorvet API: can not connect to the server (7)
+URL: http://localhost:53871/vehicle/count
+
+2020-04-29 06:35:28 (Request took 3.2043650150299s)\r\nBiltorvet API: can not connect to the server (7)
+URL: http://localhost:53871/vehicle/filteroptions
+
+2020-04-29 06:37:17 (Request took 10.001973867416s)\r\nBiltorvet API: can not connect to the server (28)
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 06:37:22 (Request took 0.024233102798462s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 06:38:03 (Request took 0.013309001922607s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 06:38:21 (Request took 0.011925935745239s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 06:39:06 (Request took 0.025312900543213s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 06:39:18 (Request took 0.023196935653687s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 06:39:30 (Request took 0.039808034896851s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 06:40:16 (Request took 0.013015985488892s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 06:50:21 (Request took 0.014657020568848s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 06:50:32 (Request took 0.015197038650513s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 06:54:58 (Request took 0.024065017700195s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 06:58:17 (Request took 0.022936105728149s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 06:58:28 (Request took 0.015967130661011s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 07:36:08 (Request took 0.015496969223022s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 07:36:11 (Request took 0.016987085342407s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 07:36:25 (Request took 0.014204025268555s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 07:47:22 (Request took 0.062267065048218s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 07:47:35 (Request took 0.023494958877563s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 07:55:18 (Request took 0.078900098800659s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 07:55:21 (Request took 0.014182090759277s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 07:57:09 (Request took 0.059324979782104s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 07:57:13 (Request took 0.015948057174683s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 08:24:15 (Request took 0.01590895652771s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 08:24:20 (Request took 0.014365196228027s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 08:27:01 (Request took 0.064729928970337s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 08:27:04 (Request took 0.014246940612793s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 08:30:06 (Request took 0.078636169433594s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 08:30:15 (Request took 0.015998840332031s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 08:31:47 (Request took 0.059266090393066s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 08:31:51 (Request took 0.013234853744507s)\r\nBiltorvet API: method not found
+URL: http://localhost:53871/vehicle/recommended
+
+2020-04-29 17:30:38 (Request took 0.28018188476562s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 17:30:38 (Request took 0.14578890800476s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 17:30:39 (Request took 0.085704803466797s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 17:30:39 (Request took 0.1033251285553s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 17:30:39 (Request took 0.093697071075439s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 17:30:39 (Request took 0.09453821182251s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 17:30:41 (Request took 0.18744993209839s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/recommended/AD2018549
+
+2020-04-29 17:30:41 (Request took 0.12361097335815s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 17:30:41 (Request took 0.097651958465576s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 17:30:44 (Request took 0.10277390480042s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 17:30:44 (Request took 0.094942092895508s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 17:30:44 (Request took 0.088453054428101s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 17:30:45 (Request took 0.085363149642944s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 17:30:45 (Request took 0.10068202018738s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 17:30:45 (Request took 0.088531970977783s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 17:30:46 (Request took 0.086805105209351s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/recommended/AD2018549
+
+2020-04-29 17:30:46 (Request took 0.087594985961914s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 17:30:46 (Request took 0.092419862747192s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 18:58:55 (Request took 10.002292156219s)\r\nBiltorvet API: can not connect to the server (28)
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 18:59:05 (Request took 10.001024961472s)\r\nBiltorvet API: can not connect to the server (28)
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 18:59:16 (Request took 10.001766204834s)\r\nBiltorvet API: can not connect to the server (28)
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 18:59:26 (Request took 10.001583099365s)\r\nBiltorvet API: can not connect to the server (28)
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 18:59:36 (Request took 10.001083135605s)\r\nBiltorvet API: can not connect to the server (28)
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 18:59:46 (Request took 10.001127958298s)\r\nBiltorvet API: can not connect to the server (28)
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 18:59:49 (Request took 1.2236831188202s)\r\nBiltorvet API: can not connect to the server (56)
+URL: http://localhost:53871/vehicle/recommended/AD2018549
+
+2020-04-29 18:59:52 (Request took 3.2037498950958s)\r\nBiltorvet API: can not connect to the server (7)
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-29 18:59:55 (Request took 3.2433199882507s)\r\nBiltorvet API: can not connect to the server (7)
+URL: http://localhost:53871/vehicle/detail/AD2018549
+
+2020-04-30 07:08:34 (Request took 10.015570878983s)\r\nBiltorvet API: can not connect to the server (28)
+URL: http://localhost:53871/vehicle/count
+
