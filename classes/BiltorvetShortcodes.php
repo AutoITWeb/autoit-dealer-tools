@@ -72,7 +72,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             $subject = vsprintf(__('Take a look at this %s %s from %s', 'biltorvet-dealer-tools'), $array);
             $body = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
-            return '<a href="http://www.facebook.com/sharer.php?u=' . $body . '" onclick="window.open(this.href, \'facebookwindow\',\'left=20,top=20,width=600,height=700,toolbar=0,resizable=1\'); return false;"><img src="http://wp01.biltorvet.as/plugin/facebook.svg" class="bdt_sharethis" height="30" width="30" /></a><a href="mailto:indsæt_email_adresse@her.dk?subject=' . $subject . '&body=' . $body . '"><img src="http://wp01.biltorvet.as/plugin/email.svg" class="bdt_sharethis" height="30" width="30" /></a><a href="#" onclick="window.print();"><img src="http://wp01.biltorvet.as/plugin/print.svg" class="bdt_sharethis" height="30" width="30" /></a>';
+            return '<a href="http://www.facebook.com/sharer.php?u=' . $body . '" onclick="window.open(this.href, \'facebookwindow\',\'left=20,top=20,width=600,height=700,toolbar=0,resizable=1\'); return false;"><img src="https://www.autoit.dk/media/autoit-dealer-tools/facebook.svg" class="bdt_sharethis" height="30" width="30" /></a><a href="mailto:indsæt_email_adresse@her.dk?subject=' . $subject . '&body=' . $body . '"><img src="https://www.autoit.dk/media/autoit-dealer-tools/email.svg" class="bdt_sharethis" height="30" width="30" /></a><a href="#" onclick="window.print();"><img src="https://www.autoit.dk/media/autoit-dealer-tools/print.svg" class="bdt_sharethis" height="30" width="30" /></a>';
 
         }
         
