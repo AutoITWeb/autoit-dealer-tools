@@ -94,7 +94,7 @@ class PriceController
                     return $this->formatValue(
                         $this->price->getLeasingPriceValue()
                     ) . $this->monthlyPostFix;
-                } else {
+                } else if($this->price->getIsPrivateLeasing()) {
                     return $this->formatValue($this->price->getLeasingPriceValue()) . $this->monthlyPostFix;
                 }
             } else {
@@ -149,7 +149,7 @@ class PriceController
             case 'leasing':
                 if ($this->price->getIsBusinessLeasing()) {
                     return __('Leasing price (ex. VAT)', 'biltorvet-dealer-tools');
-                } else {
+                } else if($this->price->getIsPrivateLeasing()) {
                     return __('Leasing price', 'biltorvet-dealer-tools');
                 }
                 break;
@@ -208,6 +208,7 @@ class PriceController
             }
         }
 
+
         return $prices ?? [0 => ['label' => '', 'price' => '-']];
     }
 
@@ -221,7 +222,7 @@ class PriceController
             case 'leasing':
                 if ($this->price->getIsBusinessLeasing()) {
                     return __('Leasing price pr. m. (ex. VAT)', 'biltorvet-dealer-tools');
-                } else {
+                } else if ($this->price->getIsPrivateLeasing()) {
                     return __('Leasing price pr. m.', 'biltorvet-dealer-tools');
                 }
                 break;

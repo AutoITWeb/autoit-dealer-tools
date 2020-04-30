@@ -41,7 +41,8 @@ define('LABEL_ENGROS', 9);
 define('RELATED_PRICE_PROPERTY_KEYS', [
         'VAT', // Bruges til eksl momslabel på price
         'LeasingBusiness', // bool for om det er erhverv leasing eller ej. skal momsens trækkes fra LeasingMonthlyPayment eller ej. afgør leasing moms label
-        'LeasingMonthlyPaymentTotal', // DO NOT USE
+        'LeasingPrivate',
+        'LeasingMonthlyPaymentTotal', // Used for Leasing Private
         'LeasingMonthlyPaymentVAT', // ONLY moms
         'LeasingMonthlyPayment', // Use this for leasing price. HVIS LeasingBusiness == true leasing price er LeasingMonthlyPayment - LeasingMonthlyPaymentVAT
         'Price', // Vare type V inkl moms, v+ er ekskl moms bliver beregenet i API

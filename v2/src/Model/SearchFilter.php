@@ -117,6 +117,31 @@ class SearchFilter
     /**
      * @var boolean
      */
+    public $HideByTypeCar; // Bool
+
+    /**
+     * @var boolean
+     */
+    public $HideByTypeVan; // Bool
+
+    /**
+     * @var boolean
+     */
+    public $HideByTypeMotorcycle; // Bool
+
+    /**
+     * @var boolean
+     */
+    public $HideByTypeTruck; // Bool
+
+    /**
+     * @var boolean
+     */
+    public $HideByTypeBus; // Bool
+
+    /**
+     * @var boolean
+     */
     public $HideADVehicles; // Bool
 
     /**
@@ -532,6 +557,96 @@ class SearchFilter
     public function setHideWholesaleVehicles(bool $HideWholesaleVehicles): SearchFilter
     {
         $this->HideWholesaleVehicles = $HideWholesaleVehicles;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideByTypeCar(): bool
+    {
+        return $this->HideByTypeCar;
+    }
+
+    /**
+     * @param  bool $HideByTypeCar
+     * @return SearchFilter
+     */
+    public function setHideByTypeCar(bool $HideByTypeCar): SearchFilter
+    {
+        $this->HideByTypeCar = $HideByTypeCar;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideByTypeVan(): bool
+    {
+        return $this->HideByTypeVan;
+    }
+
+    /**
+     * @param  bool $HideByTypeVan
+     * @return SearchFilter
+     */
+    public function setHideByTypeVan(bool $HideByTypeVan): SearchFilter
+    {
+        $this->HideByTypeVan = $HideByTypeVan;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideByTypeMotorcycle(): bool
+    {
+        return $this->HideByTypeMotorcycle;
+    }
+
+    /**
+     * @param  bool $HideByTypeMotorcycle
+     * @return SearchFilter
+     */
+    public function setHideByTypeMotorcycle(bool $HideByTypeMotorcycle): SearchFilter
+    {
+        $this->HideByTypeMotorcycle = $HideByTypeMotorcycle;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideByTypeTruck(): bool
+    {
+        return $this->HideByTypeTruck;
+    }
+
+    /**
+     * @param  bool $HideByTypeTruck
+     * @return SearchFilter
+     */
+    public function setHideByTypeTruck(bool $HideByTypeTruck): SearchFilter
+    {
+        $this->HideByTypeTruck = $HideByTypeTruck;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideByTypeBus(): bool
+    {
+        return $this->HideByTypeBus;
+    }
+
+    /**
+     * @param  bool $HideByTypeBus
+     * @return SearchFilter
+     */
+    public function setHideByTypeBus(bool $HideByTypeBus): SearchFilter
+    {
+        $this->HideByTypeBus = $HideByTypeBus;
         return $this;
     }
 

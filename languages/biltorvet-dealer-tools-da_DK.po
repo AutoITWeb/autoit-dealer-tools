@@ -237,11 +237,11 @@ msgstr "Skjul finansierings priser (bilkort)"
 
 #: includes/PluginSettings.php:206
 msgid "Do not show leasing prices on vehicle details"
-msgstr "Skjul leasing priser (Bilsøgning)"
+msgstr "Skjul leasing priser (Detaljeside)"
 
 #: includes/PluginSettings.php:214
 msgid "Do not show financing prices on vehicle details"
-msgstr "Skjul finansierings priser (bilsøgning)"
+msgstr "Skjul finansierings priser (Detaljeside)"
 
 #: includes/PluginSettings.php:287 includes/Settings.php:105
 msgid "Enter your AutoIT API key to activate the service. To obtain your own API key, please contact a AutoIT sales representative."
@@ -336,7 +336,7 @@ msgstr "Finanseringspris pr. mnd."
 
 #: v2/src/Controller/PriceController.php:202
 msgid "Leasing price pr. m. (ex. VAT)"
-msgstr "Leasingpris pr. mnd.: (ekskl. moms)"
+msgstr "Leasingpris pr. md.: (ekskl. moms)"
 
 #: v2/src/Controller/PriceController.php:204
 msgid "Leasing price pr. m."
@@ -529,6 +529,21 @@ msgstr "Skjul køretøjer med status koden 'Kommission"
 msgid "Hide vehicles with status Wholesale"
 msgstr "Skjul køretøjer med status koden Kun engros"
 
+msgid "Hide vehicles with type Car"
+msgstr "Skjul køretøjstypen Personbil"
+
+msgid "Hide vehicles with type Van"
+msgstr "Skjul køretøjstypen Varevogn"
+
+msgid "Hide vehicles with type Motorcycle"
+msgstr "Skjul køretøjstypen Motorcykel"
+
+msgid "Hide vehicles with type Truck"
+msgstr "Skjul køretøjstypen Lastbil"
+
+msgid "Hide vehicles with type Bus"
+msgstr "Skjul køretøjstypen Bus"
+
 msgid "Enter your AutoIT API key to activate the service. To obtain your own API key, please contact an AutoIt sales representative."
 msgstr "Indtast din AutoIT API nøgle for at aktivere plugin'et."
 
@@ -537,3 +552,9 @@ msgstr "Indstillinger for bilsøgningen"
 
 msgid "Customize the vehicle details page."
 msgstr "Indstillinger for bildetalesiden"
+
+msgid "Take a look at this %s %s from %s"
+msgstr "Se denne %s %s fra %s"
+
+msgid "Incl. delivery costs"
+msgstr "Inkl. leveringsomkostninger"

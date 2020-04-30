@@ -13,6 +13,7 @@
     try {
         $cashPrice = $this->biltorvetAPI->GetPropertyValue($vehicle, 'price');
         $leasingMonthlyPayment = $this->biltorvetAPI->GetPropertyValue($vehicle, 'LeasingMonthlyPayment');
+        $leasingMonthlyPaymentTotal = $this->biltorvetAPI->GetPropertyValue($vehicle, 'LeasingMonthlyPaymentTotal');
         $leasingMonthlyPaymentRaw = $this->biltorvetAPI->GetPropertyValue($vehicle, 'LeasingMonthlyPayment', true);
         $leasingMonthlyPaymentVAT = $this->biltorvetAPI->GetPropertyValue($vehicle, 'LeasingMonthlyPaymentVAT');
         $financingMonthlyPayment = $this->biltorvetAPI->GetPropertyValue($vehicle, 'FinancingMonthlyPrice');

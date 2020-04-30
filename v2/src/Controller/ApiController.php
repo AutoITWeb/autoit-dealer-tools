@@ -121,7 +121,7 @@ class ApiController
     public function requestApi(
         string $resource,
         array $params = [],
-        $response_type = 'vehicles',
+        string $response_type = 'vehicles',
         string $request_method = "GET"
     ) {
         try {
