@@ -96,6 +96,8 @@ class PriceController
                     ) . $this->monthlyPostFix;
                 } else if($this->price->getIsPrivateLeasing()) {
                     return $this->formatValue($this->price->getLeasingPriceValue()) . $this->monthlyPostFix;
+                } else {
+                    return $this->formatValue($this->price->getLeasingPriceValue()) . $this->monthlyPostFix;
                 }
             } else {
                 if ($this->price->getPriceValue()) {
@@ -151,6 +153,8 @@ class PriceController
                     return __('Leasing price (ex. VAT)', 'biltorvet-dealer-tools');
                 } else if($this->price->getIsPrivateLeasing()) {
                     return __('Leasing price', 'biltorvet-dealer-tools');
+                } else {
+                return __('Leasing price', 'biltorvet-dealer-tools');
                 }
                 break;
             default:
@@ -223,6 +227,8 @@ class PriceController
                 if ($this->price->getIsBusinessLeasing()) {
                     return __('Leasing price pr. m. (ex. VAT)', 'biltorvet-dealer-tools');
                 } else if ($this->price->getIsPrivateLeasing()) {
+                    return __('Leasing price pr. m.', 'biltorvet-dealer-tools');
+                } else {
                     return __('Leasing price pr. m.', 'biltorvet-dealer-tools');
                 }
                 break;
