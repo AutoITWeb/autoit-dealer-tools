@@ -1708,3 +1708,30 @@ URL: http://localhost:53871/vehicle/count
 2020-04-30 11:03:10 (Request took 1.3816769123077s)\r\nBiltorvet API: unexpected response code (500)
 URL: http://localhost:53871/vehicle/filteroptions
 
+2020-04-30 13:33:26 (Request took 0.050426006317139s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/BI1738076974
+
+2020-04-30 13:33:26 (Request took 0.030364990234375s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/BI1738076974
+
+2020-04-30 13:33:26 (Request took 0.031082153320312s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/BI1738076974
+
+2020-04-30 13:33:26 (Request took 0.020699024200439s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/BI1738076974
+
+2020-04-30 13:33:26 (Request took 0.018460035324097s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/BI1738076974
+
+2020-04-30 13:33:27 (Request took 0.029255867004395s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/BI1738076974
+
+2020-04-30 13:33:28 (Request took 0.074932098388672s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/recommended/BI1738076974
+
+2020-04-30 13:33:28 (Request took 0.022270917892456s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/BI1738076974
+
+2020-04-30 13:33:28 (Request took 0.019189834594727s)\r\nBiltorvet API returned following error(s):\r\nRequested vehicle not found
+URL: http://localhost:53871/vehicle/detail/BI1738076974
+

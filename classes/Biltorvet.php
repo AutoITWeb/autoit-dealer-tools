@@ -251,7 +251,7 @@ class Biltorvet
             wp_register_script( 'search_script', plugins_url('scripts/search.js',  dirname(__FILE__) ) , array('jquery'), '1.0.0', true );
             wp_localize_script( 'search_script', 'ajax_config', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 
-            wp_register_script( 'bdt_widgetconnector', 'https://services.autoit.dk/Embed.js', null, '1.0.0', true);
+            wp_enqueue_script( 'bdt_widgetconnector', 'https://services.autoit.dk/Embed.js', null, '1.0.0', true);
         }
 
         public function bdt_register_styles()
