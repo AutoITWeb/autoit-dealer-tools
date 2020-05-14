@@ -113,13 +113,25 @@ class PriceController
     /**
      * @return string
      */
-    public function showCashPriceFinance()
+    public function showCashPriceFinanceAndLeasing()
     {
         if (!$this->hideFinancingCards && $this->price->getFinancingValue()) {
-
-            if($this->prioritizedPriceType = 'financing' && $this->formatValue($this->price->getPriceValue()) != null)
+            if($this->prioritizedPriceType = 'financing' && $this->price->getPriceValue() != null)
             {
                 return _e('Cash price', 'biltorvet-dealer-tools') . ': ' . $this->formatValue($this->price->getPriceValue());
+            }
+            else {
+                return "<br>";
+            }
+        }
+        else if (!$this->hideLeasingCards && $this->price->getLeasingPriceValue()) {
+            if($this->prioritizedPriceType = 'leasing' && $this->price->getIsPrivateLeasing() && $this->price->getPriceValue() != null)
+            {
+                return _e('Cash price', 'biltorvet-dealer-tools') . ': ' . $this->formatValue($this->price->getPriceValue());
+            }
+            else if($this->prioritizedPriceType = 'leasing' && $this->price->getIsBusinessLeasing() && $this->price->getPriceValue() != null && $this->vehicle->getType() === 'Varebil')
+            {
+                return _e('Cash price', 'biltorvet-dealer-tools') . ' (' . __('Excl. VAT', 'biltorvet-dealer-tools') . ')' . ': ' . $this->formatValue($this->price->getPriceValue());
             }
             else {
                 return "<br>";

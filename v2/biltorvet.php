@@ -36,6 +36,10 @@ define('LABEL_RENTAL', 2);
 define('LABEL_COMMISION', 27);
 define('LABEL_ENGROS', 9);
 
+// Special label for Thybo Biler
+define('LABEL_BUS', 416);
+
+
 // @TODO: Refactor.
 //  As the data for price calculations are pretty messy we try to map it more logically before working with it.
 define('RELATED_PRICE_PROPERTY_KEYS', [

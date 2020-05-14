@@ -131,8 +131,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 $slideCount += count($this->currentVehicle->videos);
                 foreach($this->currentVehicle->videos as $video)
                 {
-//                    $slides .= '<div class="bt-slideshow-video' . ($i == 0 ? ' bt-slideshow-active' : '') . '" data-vimeo-background="0" data-vimeo-id="' . $video->vimeoId . '" data-vimeo-width="640" id="bdt' . $video->vimeoId . '"><a class="bt-slideshow-play"><span class="bticon bticon-Play"></span></a></div>';
-                    $slides =  '<div class="bt-slideshow-video' . ($i == 0 ? ' bt-slideshow-active' : '') . '" >' . '<div class="bt-videoplaceholder" id="bdt' . $video->vimeoId . '" data-vimeo-id="' . $video->vimeoId . '" data-vimeo-autopause="0" data-vimeo-background="0" data-vimeo-autoplay="1" data-vimeo-loop="1" data-vimeo-muted="1" data-vimeo-width="640"></div><a class="bt-slideshow-playpause"><span class="bt-slideshow-centericon"><span class="bticon bticon-Play"></span></span></a></div>';
+                    $slides .= '<div class="bt-slideshow-video' . ($i == 0 ? ' bt-slideshow-active' : '') . '" >' . '<div class="bt-videoplaceholder" data-vimeo-background="0" data-vimeo-autoplay="0" data-vimeo-loop="0" data-vimeo-muted="0" data-vimeo-id="https://vimeo.com/' . $video->vimeoId . '" id="bdt' . $video->vimeoId . '"></div><a class="bt-slideshow-playpause"><span class="bt-slideshow-centericon"><span class="bticon bticon-Play"></span></span></a></div>';
                     $i++;
                 }
             }
