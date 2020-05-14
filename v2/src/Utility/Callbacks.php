@@ -57,6 +57,9 @@ class Callbacks
         if (isset($atts['propellant'])){
             $searchFilter->setPropellants([ucfirst($atts['propellant'])]);
         }
+        if(isset($atts['companyid'])) {
+            $searchFilter->setCompanyIds([ucfirst($atts['companyid'])]);
+        }
 
         wp_enqueue_style("bdt_style");
         return $this->templateController->load(
@@ -91,6 +94,7 @@ class Callbacks
             case 'Rental' : $label = 2; break;
             case 'Commission' : $label = 27; break;
             case 'Wholesale' : $label = 9; break;
+            case "Bus" : $label = 416; break;
         }
 
         wp_enqueue_style("bdt_style");

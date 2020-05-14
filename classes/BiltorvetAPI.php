@@ -169,7 +169,6 @@
                     $body = curl_exec($ch);
 
                     $curl_errno = curl_errno($ch);
-                    $curl_error = curl_error($ch);
 
                     if($curl_errno > 0)
                     {
