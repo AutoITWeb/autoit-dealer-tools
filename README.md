@@ -17,7 +17,7 @@ Developed by [AutoIT A/S](https://biltorvet.as)
 
 ## Other Notes
 ### License
-Good news, this plugin is free for everyone! But to be able to shown your own cars from AutoDesktop you must contact AutoIT Support, 
+To be able to shown your own cars from AutoDesktop you must contact AutoIT Support, 
 so we can create your personal API Key.
 
 
