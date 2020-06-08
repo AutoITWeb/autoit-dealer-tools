@@ -1,5 +1,8 @@
 # AutoIT Dealer Tools
 
+**For versions 2.x.x PHP 7.2 is required!**
+<br><br>
+
 Adds Vehicle search, Vehicle list and Vehicle Detail Page.
 
 **Features**
