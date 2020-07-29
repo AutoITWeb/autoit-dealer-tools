@@ -163,7 +163,7 @@
 
                 $content .= '<div class="specificationsGroup">' . ($icon !== null ? '<div class="iconColumn">' . $icon . '</div>' : '' ) . '<div class="contentColumn">' . $groupPropertiesContent . '</div></div>';
             }
-            
+
             return $content;
         }
     }

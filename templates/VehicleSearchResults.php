@@ -68,8 +68,8 @@
                 $filterObject->Models = [sanitize_text_field(urldecode($urlFilterModel))];
             }
         }
-        if ($filterObject->OrderBy === null && isset($this->_options['default_sorting_value'])) {
-            $filterObject->OrderBy = $this->_options['default_sorting_value'];
+        if ($filterObject->OrderBy === null && isset($this->_options_2['default_sorting_value'])) {
+            $filterObject->OrderBy = $this->_options_2['default_sorting_value'];
         }
 
         $filterObject->Start = $start;
@@ -78,12 +78,26 @@
 //        if ($filterObject->Ascending === null && isset($this->_options['bdt_asc_sorting_value'])) {
 //            $filterObject->Ascending = $this->_options['bdt_asc_sorting_value'];
 //        }
-
+//
 //        ($filterObject->Ascending = isset($this->_options['bdt_asc_sorting_value']) && $this->_options['bdt_asc_sorting_value'] === 'on' ? 'true' : null);
 
-        $filterObject->HideSoldVehicles = isset($this->_options['hide_sold_vehicles']) && $this->_options['hide_sold_vehicles'] === 'on' ? 'true' : null;
-        $filterObject->HideADVehicles = isset($this->_options['hide_ad_vehicles']) && $this->_options['hide_ad_vehicles'] === 'on' ? 'true' : null;
-        $filterObject->HideBIVehicles = isset($this->_options['hide_bi_vehicles']) && $this->_options['hide_bi_vehicles'] === 'on' ? 'true' : null;
+        $filterObject->HideSoldVehicles = isset($this->_options_2['hide_sold_vehicles']) && $this->_options_2['hide_sold_vehicles'] === 'on' ? 'true' : null;
+        $filterObject->HideLeasingVehicles = isset($this->_options_2['hide_leasing_vehicles']) && $this->_options_2['hide_leasing_vehicles'] === 'on' ? 'true' : null;
+        $filterObject->HideFlexLeasingVehicles = isset($this->_options_2['hide_flexleasing_vehicles']) && $this->_options_2['hide_flexleasing_vehicles'] === 'on' ? 'true' : null;
+        $filterObject->HideWarehousesaleVehicles = isset($this->_options_2['hide_flexleasing_vehicles']) && $this->_options_2['hide_flexleasing_vehicles'] === 'on' ? 'true' : null;
+        $filterObject->HideRentalVehicles = isset($this->_options_2['hide_rental_vehicles']) && $this->_options_2['hide_rental_vehicles'] === 'on' ? 'true' : null;
+        $filterObject->HideUpcomingVehicles = isset($this->_options_2['hide_upcoming_vehicles']) && $this->_options_2['hide_upcoming_vehicles'] === 'on' ? 'true' : null;
+        $filterObject->HideWholesaleVehicles = isset($this->_options_2['hide_wholesale_vehicles']) && $this->_options_2['hide_wholesale_vehicles'] === 'on' ? 'true' : null;
+        $filterObject->HideCommissionVehicles = isset($this->_options_2['hide_commission_vehicles']) && $this->_options_2['hide_commission_vehicles'] === 'on' ? 'true' : null;
+        $filterObject->HideExportVehicles = isset($this->_options_2['hide_export_vehicles']) && $this->_options_2['hide_export_vehicles'] === 'on' ? 'true' : null;
+        $filterObject->HideByTypeCar = isset($this->_options_2['hide_typecar_vehicles']) && $this->_options_2['hide_typecar_vehicles'] === 'on' ? 'true' : null;
+        $filterObject->HideByTypeVan = isset($this->_options_2['hide_typevan_vehicles']) && $this->_options_2['hide_typevan_vehicles'] === 'on' ? 'true' : null;
+        $filterObject->HideByTypeMotorcycle = isset($this->_options_2['hide_typemotorcycle_vehicles']) && $this->_options_2['hide_typemotorcycle_vehicles'] === 'on' ? 'true' : null;
+        $filterObject->HideByTypeTruck = isset($this->_options_2['hide_typetruck_vehicles']) && $this->_options_2['hide_typetruck_vehicles'] === 'on' ? 'true' : null;
+        $filterObject->HideByTypeBus = isset($this->_options_2['hide_typebus_vehicles']) && $this->_options_2['hide_typebus_vehicles'] === 'on' ? 'true' : null;
+        $filterObject->HideBrandNewVehicles = isset($this->_options_2['hide_brandnew_vehicles']) && $this->_options_2['hide_brandnew_vehicles'] === 'on' ? 'true' : null;
+        $filterObject->HideADVehicles = isset($this->_options_2['hide_ad_vehicles']) && $this->_options_2['hide_ad_vehicles'] === 'on' ? 'true' : null;
+        $filterObject->HideBIVehicles = isset($this->_options_2['hide_bi_vehicles']) && $this->_options_2['hide_bi_vehicles'] === 'on' ? 'true' : null;
         $vehicleFeed = $this->biltorvetAPI->GetVehicles($filterObject);
         $orderByValues = $this->biltorvetAPI->GetOrderByValues();
     } catch(Exception $e) {
@@ -124,7 +138,7 @@ use Biltorvet\Model\Vehicle;
                                     <option value="<?php echo $orderBy; ?>"
                                         <?php if (isset($filterObject->OrderBy) && $filterObject->OrderBy == $orderBy) : ?>
                                             selected="selected"
-                                        <?php elseif (isset($this->_options['default_sorting_value']) && $this->_options['default_sorting_value'] == $orderBy) : ?>
+                                        <?php elseif (isset($this->_options_2['default_sorting_value']) && $this->_options_2['default_sorting_value'] == $orderBy) : ?>
                                             selected="selected"
                                         <?php endif; ?>
                                     ><?= _e($orderBy, 'biltorvet-dealer-tools'); ?></option>
@@ -133,8 +147,8 @@ use Biltorvet\Model\Vehicle;
                         </div>
                         <div class="col">
                             <select name="ascDesc">
-                                <option value="asc"<?php echo $filterObject->Ascending === 'true' ? ' selected="selected"' : '';  ?>><?php _e('Ascending', 'biltorvet-dealer-tools'); ?></option>
                                 <option value="desc"<?php echo $filterObject->Ascending !== 'true' ? ' selected="selected"' : '';  ?>><?php _e('Descending', 'biltorvet-dealer-tools'); ?></option>
+                                <option value="asc"<?php echo $filterObject->Ascending === 'true' ? ' selected="selected"' : '';  ?>><?php _e('Ascending', 'biltorvet-dealer-tools'); ?></option>
                             </select>
                         </div>
                     </div>

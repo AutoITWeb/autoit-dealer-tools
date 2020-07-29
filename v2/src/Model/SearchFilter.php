@@ -33,6 +33,10 @@ class SearchFilter
      * @var string[]
      */
     public $ProductTypes;
+    /**
+     * @var string[]
+     */
+    public $NewUsed;
 
     /**
      * @var int
@@ -73,6 +77,71 @@ class SearchFilter
      * @var boolean
      */
     public $HideSoldVehicles; // Bool
+
+    /**
+     * @var boolean
+     */
+    public $HideLeasingVehicles; // Bool
+
+    /**
+     * @var boolean
+     */
+    public $HideFlexLeasingVehicles; // Bool
+
+    /**
+     * @var boolean
+     */
+    public $HideWarehousesaleVehicles; // Bool
+
+    /**
+     * @var boolean
+     */
+    public $HideExportVehicles; // Bool
+
+    /**
+     * @var boolean
+     */
+    public $HideRentalVehicles; // Bool
+
+    /**
+     * @var boolean
+     */
+    public $HideCommissionVehicles; // Bool
+
+    /**
+     * @var boolean
+     */
+    public $HideUpcomingVehicles; // Bool
+
+    /**
+     * @var boolean
+     */
+    public $HideWholesaleVehicles; // Bool
+
+    /**
+     * @var boolean
+     */
+    public $HideByTypeCar; // Bool
+
+    /**
+     * @var boolean
+     */
+    public $HideByTypeVan; // Bool
+
+    /**
+     * @var boolean
+     */
+    public $HideByTypeMotorcycle; // Bool
+
+    /**
+     * @var boolean
+     */
+    public $HideByTypeTruck; // Bool
+
+    /**
+     * @var boolean
+     */
+    public $HideByTypeBus; // Bool
 
     /**
      * @var boolean
@@ -204,6 +273,24 @@ class SearchFilter
     public function setProductTypes(array $ProductTypes): SearchFilter
     {
         $this->ProductTypes = $ProductTypes;
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getNewUsed(): array
+    {
+        return $this->NewUsed;
+    }
+
+    /**
+     * @param  string[] $ProductTypes
+     * @return SearchFilter
+     */
+    public function setNewUsed(array $NewUsed): SearchFilter
+    {
+        $this->NewUsed = $NewUsed;
         return $this;
     }
 
@@ -348,6 +435,240 @@ class SearchFilter
     public function setHideSoldVehicles(bool $HideSoldVehicles): SearchFilter
     {
         $this->HideSoldVehicles = $HideSoldVehicles;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideLeasingVehicles(): bool
+    {
+        return $this->HideLeasingVehicles;
+    }
+
+    /**
+     * @param  bool $HideLeasingVehicles
+     * @return SearchFilter
+     */
+    public function setHideLeasingVehicles(bool $HideLeasingVehicles): SearchFilter
+    {
+        $this->HideLeasingVehicles = $HideLeasingVehicles;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideFlexLeasingVehicles(): bool
+    {
+        return $this->HideFlexLeasingVehicles;
+    }
+
+    /**
+     * @param  bool $HideFlexLeasingVehicles
+     * @return SearchFilter
+     */
+    public function setHideFlexLeasingVehicles(bool $HideFlexLeasingVehicles): SearchFilter
+    {
+        $this->HideFlexLeasingVehicles = $HideFlexLeasingVehicles;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideWarehousesaleVehicles(): bool
+    {
+        return $this->HideWarehousesaleVehicles;
+    }
+
+    /**
+     * @param  bool $HideWarehousesaleVehicles
+     * @return SearchFilter
+     */
+    public function setHideWarehousesaleVehicles(bool $HideWarehousesaleVehicles): SearchFilter
+    {
+        $this->HideWarehousesaleVehicles = $HideWarehousesaleVehicles;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideExportVehicles(): bool
+    {
+        return $this->HideExportVehicles;
+    }
+
+    /**
+     * @param  bool $HideExportVehicles
+     * @return SearchFilter
+     */
+    public function setHideExportVehicles(bool $HideExportVehicles): SearchFilter
+    {
+        $this->HideExportVehicles = $HideExportVehicles;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideRentalVehicles(): bool
+    {
+        return $this->HideRentalVehicles;
+    }
+
+    /**
+     * @param  bool $HideRentalVehicles
+     * @return SearchFilter
+     */
+    public function setHideRentalVehicles(bool $HideRentalVehicles): SearchFilter
+    {
+        $this->HideRentalVehicles = $HideRentalVehicles;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideCommissionVehicles(): bool
+    {
+        return $this->HideCommissionVehicles;
+    }
+
+    /**
+     * @param  bool $HideCommissionVehicles
+     * @return SearchFilter
+     */
+    public function setHideCommissionVehicles(bool $HideCommissionVehicles): SearchFilter
+    {
+        $this->HideCommissionVehicles = $HideCommissionVehicles;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideUpcomingVehicles(): bool
+    {
+        return $this->HideUpcomingVehicles;
+    }
+
+    /**
+     * @param  bool $HideUpcomingVehicles
+     * @return SearchFilter
+     */
+    public function setHideUpcomingVehicles(bool $HideUpcomingVehicles): SearchFilter
+    {
+        $this->HideUpcomingVehicles = $HideUpcomingVehicles;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideWholesaleVehicles(): bool
+    {
+        return $this->HideWholesaleVehicles;
+    }
+
+    /**
+     * @param  bool $HideWholesaleVehicles
+     * @return SearchFilter
+     */
+    public function setHideWholesaleVehicles(bool $HideWholesaleVehicles): SearchFilter
+    {
+        $this->HideWholesaleVehicles = $HideWholesaleVehicles;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideByTypeCar(): bool
+    {
+        return $this->HideByTypeCar;
+    }
+
+    /**
+     * @param  bool $HideByTypeCar
+     * @return SearchFilter
+     */
+    public function setHideByTypeCar(bool $HideByTypeCar): SearchFilter
+    {
+        $this->HideByTypeCar = $HideByTypeCar;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideByTypeVan(): bool
+    {
+        return $this->HideByTypeVan;
+    }
+
+    /**
+     * @param  bool $HideByTypeVan
+     * @return SearchFilter
+     */
+    public function setHideByTypeVan(bool $HideByTypeVan): SearchFilter
+    {
+        $this->HideByTypeVan = $HideByTypeVan;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideByTypeMotorcycle(): bool
+    {
+        return $this->HideByTypeMotorcycle;
+    }
+
+    /**
+     * @param  bool $HideByTypeMotorcycle
+     * @return SearchFilter
+     */
+    public function setHideByTypeMotorcycle(bool $HideByTypeMotorcycle): SearchFilter
+    {
+        $this->HideByTypeMotorcycle = $HideByTypeMotorcycle;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideByTypeTruck(): bool
+    {
+        return $this->HideByTypeTruck;
+    }
+
+    /**
+     * @param  bool $HideByTypeTruck
+     * @return SearchFilter
+     */
+    public function setHideByTypeTruck(bool $HideByTypeTruck): SearchFilter
+    {
+        $this->HideByTypeTruck = $HideByTypeTruck;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideByTypeBus(): bool
+    {
+        return $this->HideByTypeBus;
+    }
+
+    /**
+     * @param  bool $HideByTypeBus
+     * @return SearchFilter
+     */
+    public function setHideByTypeBus(bool $HideByTypeBus): SearchFilter
+    {
+        $this->HideByTypeBus = $HideByTypeBus;
         return $this;
     }
 

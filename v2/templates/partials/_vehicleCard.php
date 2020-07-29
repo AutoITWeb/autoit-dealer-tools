@@ -23,40 +23,46 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
 ?>
 
-<div class="col-sm-6 col-md-4">
+<div class="col-sm-6 col-md-6 col-lg-4">
     <div class="bdt">
         <div class="vehicleCard">
             <a href="<?= get_permalink($basePage) . $vehicle->getUri() ?>">
                 <span class="vehicleThumb">
                     <img src="<?= $vehicle->getImages()[0] ?>" class="img-responsive" />
                     <?php if ($vehicle->getLabels()) : ?>
-                    <?php foreach ($vehicle->getLabels() as $label) : ?>
 
-                        <?php if ($label->getKey() === LABEL_SOLD) : ?>
-                            <span class="vehicleLabel sold"><?= $label->getValue(); ?></span>
-                        <?php endif; ?>
+                        <?php foreach ($vehicle->getLabels() as $label) : ?>
 
-                        <?php if ($label->getKey() === LABEL_NEW) : ?>
-                            <span class="vehicleLabel new"><?= $label->getValue(); ?></span>
-                        <?php endif; ?>
+                            <?php if ($label->getKey() === LABEL_SOLD) : ?>
+                                <span class="vehicleLabel sold"><?= $label->getValue(); ?></span>
+                            <?php endif; ?>
 
-                    <?php endforeach; ?>
+                            <?php if ($label->getKey() === LABEL_NEW) : ?>
+                                <span class="vehicleLabel new"><?= $label->getValue(); ?></span>
+                            <?php endif; ?>
+
+                        <?php endforeach; ?>
+
                     <?php endif; ?>
                 </span>
                 <span class="vehicleDescription">
                     <span class="vehicleTitle"><?= $vehicle->getMakeName() .' '. $vehicle->getModel() .' '. $vehicle->getVariant() ?></span>
-                    <span class="price bdt_color">
-                        <?= $priceController->getCardPrioritizedPrice() ?>
-                    </span>
-                    <span class="priceLabel bdt_color">
-                        <?= $priceController->getCardLabel() ?>
-                    </span>
-                    <span class="bdt_price_small_cashprice_vehicle_card">
-                        <?= $priceController->showCashPriceFinance() ?>
-                    </span>
+                    <span class="price bdt_color"><?= $priceController->getCardPrioritizedPrice() ?></span>
+                    <span class="priceLabel bdt_color"><?= $priceController->getCardLabel() ?></span>
+                    <span class="bdt_price_small_cashprice_vehicle_card"><?= $priceController->showCashPriceFinanceAndLeasing() ?></span>
                     <span class="row">
                         <span class="col-4">
-                            <span class="vehicleParamValue"><?= $vehicleProperties['ModelYear']->getValue() ? $vehicleProperties['ModelYear']->getValue() : '-'; ?><?= $vehicleProperties['FirstRegYear']->getValue() ? " / " . $vehicleProperties['FirstRegYear']->getValue() : ''; ?></span>
+                            <span class="vehicleParamValue">
+
+                                <?php if ($vehicleProperties['ModelYear']->getValue() == $vehicleProperties['FirstRegYear']->getValue()) : ?>
+                                    <?= $vehicleProperties['ModelYear']->getValue() ? $vehicleProperties['ModelYear']->getValue() : '-'; ?>
+                                <?php endif; ?>
+
+                                <?php if ($vehicleProperties['ModelYear']->getValue() != $vehicleProperties['FirstRegYear']->getValue()) : ?>
+                                    <?= $vehicleProperties['ModelYear']->getValue() ? $vehicleProperties['ModelYear']->getValue() : '-'; ?><?= $vehicleProperties['FirstRegYear']->getValue() ? " / " . $vehicleProperties['FirstRegYear']->getValue() : ''; ?>
+                                <?php endif; ?>
+
+                            </span>
                             <span class="vehicleParamLabel"><?php _e('ModelYear', 'biltorvet-dealer-tools'); ?></span>
                         </span>
                         <span class="col-4">

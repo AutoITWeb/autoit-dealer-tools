@@ -11,9 +11,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
     class BiltorvetShortcodes {
         public $biltorvetAPI;
         public $_options;
+        public $_options_2;
         public $currentVehicle;
 
-        public function __construct($biltorvetAPI, $options)
+        public function __construct($biltorvetAPI, $options, $options_2)
         {
             if ($options === null) {
                 throw new Exception(__('No options provided.', 'biltorvet-dealer-tools'));
@@ -22,6 +23,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 throw new Exception(__('No Biltorvet API instance provided.', 'biltorvet-dealer-tools'));
             }
             $this->_options = $options;
+            $this->_options_2 = $options_2;
             $this->biltorvetAPI = $biltorvetAPI;
 
             add_action('parse_query', array(&$this, 'bdt_get_current_vehicle'), 1000);
@@ -30,7 +32,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             add_shortcode('bdt_specifications', array($this, 'bdt_shortcode_specifications'));
             add_shortcode('bdt_equipment', array($this, 'bdt_shortcode_equipment'));
             add_shortcode('bdt_recommendedvehicles', array($this, 'bdt_shortcode_recommendedvehicles'));
-//            add_shortcode('bdt_featuredvehicles', array($this, 'bdt_shortcode_featuredvehicles'));
+            add_shortcode('bdt_featuredvehicles', array($this, 'bdt_shortcode_featuredvehicles'));
             add_shortcode('bdt_slideshow', array($this, 'bdt_shortcode_slideshow'));
             add_shortcode('bdt_vehicle_price', array($this, 'bdt_shortcode_vehicleprice'));
             add_shortcode('bdt_vehicle_labels', array($this, 'bdt_shortcode_vehiclelabels'));
@@ -41,6 +43,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             add_shortcode('bdt_vehicle_card', array($this, 'bdt_shortcode_vehicle_card'));
             add_shortcode('bdt_vehicle_search_backtoresults', array($this, 'bdt_shortcode_vehicle_search_backtoresults'));
             add_shortcode('bdt_widget', array($this, 'bdt_shortcode_widget'));
+            add_shortcode('bdt_sharethis', array($this, 'bdt_shortcode_sharethis'));
         }
 
         public function bdt_get_current_vehicle()
@@ -54,6 +57,23 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             } catch(Exception $e) {
                 return $e->getMessage();
             }
+        }
+
+        public function bdt_shortcode_sharethis() {
+
+            $make = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'makeName', true);
+            $model = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'model', true);
+            $company = $this->currentVehicle->company->name;
+
+            $company = str_replace("&", "og", $company);
+
+            $array = array($make, $model, $company);
+
+            $subject = vsprintf(__('Take a look at this %s %s from %s', 'biltorvet-dealer-tools'), $array);
+            $body = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+            return '<a href="http://www.facebook.com/sharer.php?u=' . $body . '" onclick="window.open(this.href, \'facebookwindow\',\'left=20,top=20,width=600,height=700,toolbar=0,resizable=1\'); return false;"><img src="https://www.autoit.dk/media/autoit-dealer-tools/facebook.svg" class="bdt_sharethis" height="30" width="30" /></a><a href="mailto:indsæt_email_adresse@her.dk?subject=' . $subject . '&body=' . $body . '"><img src="https://www.autoit.dk/media/autoit-dealer-tools/email.svg" class="bdt_sharethis" height="30" width="30" /></a><a href="#" onclick="window.print();"><img src="https://www.autoit.dk/media/autoit-dealer-tools/print.svg" class="bdt_sharethis" height="30" width="30" /></a>';
+
         }
         
         public function bdt_shortcode_vehicle_search( $atts ){
@@ -111,7 +131,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 $slideCount += count($this->currentVehicle->videos);
                 foreach($this->currentVehicle->videos as $video)
                 {
-                    $slides .= '<div class="bt-slideshow-video' . ($i == 0 ? ' bt-slideshow-active' : '') . '" data-vimeo-background="1" data-vimeo-id="' . $video->vimeoId . '" data-vimeo-width="640" id="bdt' . $video->vimeoId . '"><a class="bt-slideshow-play"><span class="bticon bticon-Play"></span></a></div>';
+                    $slides .= '<div class="bt-slideshow-video' . ($i == 0 ? ' bt-slideshow-active' : '') . '" >' . '<div class="bt-videoplaceholder" data-vimeo-background="0" data-vimeo-autoplay="0" data-vimeo-loop="0" data-vimeo-muted="0" data-vimeo-id="https://vimeo.com/' . $video->vimeoId . '" id="bdt' . $video->vimeoId . '"></div><a class="bt-slideshow-playpause"><span class="bt-slideshow-centericon"><span class="bticon bticon-Play"></span></span></a></div>';
                     $i++;
                 }
             }
@@ -123,7 +143,8 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             $iconGalleryArrowLeft = '<span class="bticon bticon-GalleryArrowLeft"></span>';
             $iconGalleryArrowRight = '<span class="bticon bticon-GalleryArrowRight"></span>';
             $iconGalleryFullscreen = '<span class="bticon bticon-GalleryFullscreen"></span>';
-            return '<div class="bdt"><section class="bt-slideshow bt-slideshow-4to3"><div class="bt-slideshow-skidboard d-none"></div><a href="#" class="bt-slideshow-prev">' .$iconGalleryArrowLeft. '</a><a href="#" class="bt-slideshow-next">' .$iconGalleryArrowRight. '</a><div class="bt-slideshow-viewport">' . $slides . '</div><div class="bt-slideshow-controls"><span class="bt-slideshow-bg"><a href="#" class="bt-slideshow-open-fullscreen">' .$iconGalleryFullscreen. '</a> <a href="#" class="bt-slideshow-pause-video d-none"><span class="bticon bticon-Pause"></span></a> <span><span class="bt-slideshow-current">1</span>/<span class="bt-slideshow-count">' . $slideCount . '</span></span></span></div></section></div>';
+
+            return '<div class="bdt"><section class="bt-slideshow bt-slideshow-4to3"><div class="bt-slideshow-skidboard d-none"></div><a href="#" class="bt-slideshow-prev">' .$iconGalleryArrowLeft. '</a><a href="#" class="bt-slideshow-next">' .$iconGalleryArrowRight. '</a><div class="bt-slideshow-viewport">' . $slides . '</div><div class="bt-slideshow-controls"><span class="bt-slideshow-bg"><a href="#" class="bt-slideshow-open-fullscreen">' .$iconGalleryFullscreen. '<a href="#" class="bt-slideshow-pause-video"><span class="bticon bticon-Pause"></span></a><span><span class="bt-slideshow-current">1</span>/<span class="bt-slideshow-count">' . $slideCount . '</span></span></span></div></section></div>';
         }
 
         public function bdt_shortcode_vehiclelabels( $atts ) 
@@ -177,7 +198,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
         {
             try {
                 $filterObject = null;
-                if(isset($this->_options['hide_sold_vehicles']) && $this->_options['hide_sold_vehicles'] === 'on')
+                if(isset($this->_options_2['hide_sold_vehicles']) && $this->_options_2['hide_sold_vehicles'] === 'on')
                 {
                     if($filterObject === null)
                     {
@@ -185,7 +206,119 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     }
                     $filterObject->HideSoldVehicles = 'true';
                 }
-                if(isset($this->_options['hide_ad_vehicles']) && $this->_options['hide_ad_vehicles'] === 'on')
+                if(isset($this->_options_2['hide_leasing_vehicles']) && $this->_options_2['hide_leasing_vehicles'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideLeasingVehicles = 'true';
+                }
+                if(isset($this->_options_2['hide_flexleasing_vehicles']) && $this->_options_2['hide_flexleasing_vehicles'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideFlexLeasingVehicles = 'true';
+                }
+                if(isset($this->_options_2['hide_warehousesale_vehicles']) && $this->_options_2['hide_warehousesale_vehicles'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideWarehousesaleVehicles = 'true';
+                }
+                if(isset($this->_options_2['hide_export_vehicles']) && $this->_options_2['hide_export_vehicles'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideExportVehicles = 'true';
+                }
+                if(isset($this->_options_2['hide_upcoming_vehicles']) && $this->_options_2['hide_upcoming_vehicles'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideUpcomingVehicles = 'true';
+                }
+                if(isset($this->_options_2['hide_rental_vehicles']) && $this->_options_2['hide_rental_vehicles'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideRentalVehicles = 'true';
+                }
+                if(isset($this->_options_2['hide_commission_vehicle']) && $this->_options_2['hide_commission_vehicle'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideCommissionVehicles = 'true';
+                }
+                if(isset($this->_options_2['hide_wholesale_vehicles']) && $this->_options_2['hide_wholesale_vehicles'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideWholesaleVehicles = 'true';
+                }
+                if(isset($this->_options_2['hide_typecar_vehicles']) && $this->_options_2['hide_typecar_vehicles'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideByTypeCar = 'true';
+                }
+                if(isset($this->_options_2['hide_typevan_vehicles']) && $this->_options_2['hide_typevan_vehicles'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideByTypeVan = 'true';
+                }
+                if(isset($this->_options_2['hide_typemotorcycle_vehicles']) && $this->_options_2['hide_typemotorcycle_vehicles'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideByTypeMotorcycle = 'true';
+                }
+                if(isset($this->_options_2['hide_typetruck_vehicles']) && $this->_options_2['hide_typetruck_vehicles'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideByTypeTruck = 'true';
+                }
+                if(isset($this->_options_2['hide_typebus_vehicles']) && $this->_options_2['hide_typebus_vehicles'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideByTypeBus = 'true';
+                }
+                if(isset($this->_options_2['hide_brandnew_vehicles']) && $this->_options_2['hide_brandnew_vehicles'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideBrandNewVehicles = 'true';
+                }
+                if(isset($this->_options_2['hide_ad_vehicles']) && $this->_options_2['hide_ad_vehicles'] === 'on')
                 {
                     if($filterObject === null)
                     {
@@ -193,7 +326,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     }
                     $filterObject->HideADVehicles = 'true';
                 }
-                if(isset($this->_options['hide_bi_vehicles']) && $this->_options['hide_bi_vehicles'] === 'on')
+                if(isset($this->_options_2['hide_bi_vehicles']) && $this->_options_2['hide_bi_vehicles'] === 'on')
                 {
                     if($filterObject === null)
                     {
@@ -230,8 +363,6 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             {
                 $customColor = TextUtils::SanitizeHTMLColor($atts['color']);
             }
-
-
 
             if($content == null)
             {
@@ -302,7 +433,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     $showPrice = '<span class="bdt_price_mainLabel">' . $price['label'] . '</span>';
                     $showPrice .= '<br/><big class="bdt_price_big">' . $price['price'] . '</big>';
                 } else {
-                    $showPrice .= '<br/><span class="bdt_price_small">' . $price['label'] . ': ' . $price['price'] . '</span>';
+                    if(preg_match("/{$price['label']}/i", "Kontantpris"))
+                    {
+                    $showPrice .= '<br/><span class="bdt_price_small">' . $price['label'] . ': ' . $price['price'] . '<br/>' . '('.  __('Incl. delivery costs', 'biltorvet-dealer-tools') . ')' . '</span>';
+                    }
+                    else
+                    {
+                        $showPrice .= '<br/><span class="bdt_price_small">' . $price['label'] . ': ' . $price['price'] . '</span>';
+                    }
                 }
                     $i++;
             }
@@ -441,15 +579,18 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             return $content;
         }
 
-        // Unused -> New featured vehicles function in v2/src/utility/callbacks.php
         public function bdt_shortcode_featuredvehicles( $atts )
         {
             $atts = shortcode_atts( array(
-                'show' => 3
-            ), $atts, 'bdt_featuredvehicles' );
+                'show' => 3,
+                'type' => null
+            ), $atts, 'bdt_featuredvehicles');
+
+            $amount = esc_attr($atts['show']);
+            $vehicleType = esc_attr($atts['type']);
 
             try{
-                $vehicleFeed = $this->biltorvetAPI->GetFeaturedVehicles(intval($atts['show']));
+                $vehicleFeed = $this->biltorvetAPI->GetFeaturedVehicles($amount, $vehicleType);
             } catch(Exception $e) {
                 return $e->getMessage();
             }

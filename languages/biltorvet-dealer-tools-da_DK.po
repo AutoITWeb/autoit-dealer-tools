@@ -16,18 +16,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Textdomain-Support: yesX-Generator: Poedit 1.6.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;"
-"_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
+"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;"
+"_nx_noop:4c,1,2;_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
 "X-Poedit-Basepath: ..\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: ajax/Ajax.php:12 classes/BiltorvetShortcodes.php:22
 #, fuzzy
 #| msgid "Biltorvet API: not authorized"
-msgid "No Biltorvet API instance provided."
-msgstr "Biltorvet API: ikke autoriseret"
+msgid "No AutoIT API instance provided."
+msgstr "AutoIT API: ikke autoriseret"
 
 #: classes/Biltorvet.php:144
 #, php-format
@@ -50,27 +49,27 @@ msgid "Selected vehicle: %s"
 msgstr "Valgt køretøj: %s"
 
 #: classes/Biltorvet.php:285
-msgid "No API key specified. Biltorvet plugin functionality is disabled."
-msgstr "Ingen API-nøgle angivet. Biltorvets Plugin er deaktiveret."
+msgid "No API key specified. AutoIT plugin functionality is disabled."
+msgstr "Ingen API-nøgle angivet. AutoITs Plugin er deaktiveret."
 
 #: classes/BiltorvetAPI.php:174
 #, fuzzy, php-format
 #| msgid "Biltorvet API: unexpected response code (%u)"
-msgid "Biltorvet API: can not connect to the server (%u)"
-msgstr "Biltorvet API: uforudset responskode (%u)"
+msgid "AutoIT API: can not connect to the server (%u)"
+msgstr "AutoIT API: uforudset responskode (%u)"
 
 #: classes/BiltorvetAPI.php:183
-msgid "Biltorvet API: not authorized"
-msgstr "Biltorvet API: ikke autoriseret"
+msgid "AutoIT API: not authorized"
+msgstr "AutoIT API: ikke autoriseret"
 
 #: classes/BiltorvetAPI.php:186
-msgid "Biltorvet API: method not found"
-msgstr "Biltorvet API: metoden blev ikke fundet"
+msgid "AutoIT API: method not found"
+msgstr "AutoIT API: metoden blev ikke fundet"
 
 #: classes/BiltorvetAPI.php:189
 #, php-format
-msgid "Biltorvet API: unexpected response code (%u)"
-msgstr "Biltorvet API: uforudset responskode (%u)"
+msgid "AutoIT API: unexpected response code (%u)"
+msgstr "AutoIT API: uforudset responskode (%u)"
 
 #: classes/BiltorvetAPI.php:199
 msgid "Malformed API response"
@@ -81,26 +80,25 @@ msgstr "Uventet API Svar"
 #| msgid ""
 #| "Biltorvet API returned following error(s):\r\n"
 #| "%s"
-msgid "Biltorvet API returned following error(s):\\r\\n%s"
+msgid "AutoIT API returned following error(s):\\r\\n%s"
 msgstr ""
-"Biltorvet API returnerede de følgende fejl:\r\n"
+"AutoIT API returnerede de følgende fejl:\r\n"
 "%s"
 
 #: classes/BiltorvetAPI.php:209
-msgid "Biltorvet API: Unexpected API error"
-msgstr "Biltorvet API: Ikke-forventet API-fejl"
+msgid "AutoIT API: Unexpected API error"
+msgstr "AutoIT API: Ikke-forventet API-fejl"
 
 #: classes/BiltorvetAPI.php:215
-msgid "Biltorvet API: Response missing"
-msgstr "Biltorvet API: Svar mangler"
+msgid "AutoIT API: Response missing"
+msgstr "AutoIT API: Svar mangler"
 
 #: classes/BiltorvetShortcodes.php:19
 msgid "No options provided."
 msgstr ""
 
-#: classes/BiltorvetShortcodes.php:88 classes/BiltorvetShortcodes.php:121
-#: classes/BiltorvetShortcodes.php:202 classes/BiltorvetShortcodes.php:268
-#: classes/BiltorvetShortcodes.php:291 classes/BiltorvetShortcodes.php:310
+#: classes/BiltorvetShortcodes.php:88 classes/BiltorvetShortcodes.php:121 classes/BiltorvetShortcodes.php:202
+#: classes/BiltorvetShortcodes.php:268 classes/BiltorvetShortcodes.php:291 classes/BiltorvetShortcodes.php:310
 #: classes/BiltorvetShortcodes.php:340 classes/BiltorvetShortcodes.php:504
 msgid "Vehicle not found"
 msgstr ""
@@ -133,8 +131,7 @@ msgstr "Bliv ringet op"
 msgid "Shortcode's vehicle property has not been set."
 msgstr "Shortcode’s bil-egenskab er ikke blevet indsat."
 
-#: classes/BiltorvetShortcodes.php:304 classes/BiltorvetShortcodes.php:314
-#: classes/BiltorvetShortcodes.php:350
+#: classes/BiltorvetShortcodes.php:304 classes/BiltorvetShortcodes.php:314 classes/BiltorvetShortcodes.php:350
 msgid "N/A"
 msgstr "Ikke angivet"
 
@@ -163,8 +160,7 @@ msgstr "Ukendt lead-type. Tilladte typer: %s"
 msgid "Unknown"
 msgstr "Ukendt"
 
-#: classes/TextUtils.php:114 templates/_VehicleCard.php:114
-#: v2/templates/partials/_vehicleCard.php:61
+#: classes/TextUtils.php:114 templates/_VehicleCard.php:114 v2/templates/partials/_vehicleCard.php:61
 msgid "Mileage"
 msgstr "KM"
 
@@ -176,10 +172,9 @@ msgstr "Pris"
 msgid "No Options specified"
 msgstr ""
 
-#: includes/PluginSettings.php:38 includes/PluginSettings.php:54
-#: includes/Settings.php:28 includes/Settings.php:45
-msgid "Biltorvet Settings"
-msgstr "Biltorvet indstillinger"
+#: includes/PluginSettings.php:38 includes/PluginSettings.php:54 includes/Settings.php:28 includes/Settings.php:45
+msgid "AutoIT Settings"
+msgstr "AutoIT indstillinger"
 
 #: includes/PluginSettings.php:79 includes/Settings.php:70
 msgid "Plugin Settings"
@@ -208,7 +203,7 @@ msgstr "Kontaktside til at modtage leads"
 
 #: includes/PluginSettings.php:134
 msgid "Booking page (with date and time picker) to receive leads"
-msgstr "Booking side (med en date og time picker) til at modtage leads"
+msgstr "Booking side til at modtage leads"
 
 #: includes/PluginSettings.php:142
 msgid "Vehicle search page"
@@ -234,27 +229,23 @@ msgstr "Send AutoDesktop leads bekræftelse via email"
 
 #: includes/PluginSettings.php:190
 msgid "Do not show leasing prices on vehicle cards"
-msgstr ""
+msgstr "Skjul leasing priser (bilkort)"
 
 #: includes/PluginSettings.php:198
 msgid "Do not show financing prices on vehicle cards"
-msgstr ""
+msgstr "Skjul finansierings priser (bilkort)"
 
 #: includes/PluginSettings.php:206
 msgid "Do not show leasing prices on vehicle details"
-msgstr ""
+msgstr "Skjul leasing priser (Detaljeside)"
 
 #: includes/PluginSettings.php:214
 msgid "Do not show financing prices on vehicle details"
-msgstr ""
+msgstr "Skjul finansierings priser (Detaljeside)"
 
 #: includes/PluginSettings.php:287 includes/Settings.php:105
-msgid ""
-"Enter your Biltorvet API key to activate the service. To obtain your own API "
-"key, please contact a Biltorvet sales representative."
-msgstr ""
-"Indtast din Biltovet API-nøgle for at aktivere denne service. For at få din "
-"egen API-nøgle venligst kontakt Biltorvet Support."
+msgid "Enter your AutoIT API key to activate the service. To obtain your own API key, please contact a AutoIT sales representative."
+msgstr "Indtast din AutoIT API-nøgle for at aktivere denne service. For at få din egen API-nøgle venligst kontakt AutoIT Support."
 
 #: templates/VehicleSearch.php:72
 msgid "- Select department -"
@@ -279,6 +270,9 @@ msgstr "- Vælg Karrosseri -"
 #: templates/VehicleSearch.php:106
 msgid "- Select propellant -"
 msgstr "- Brændstof -"
+
+msgid "- Select vehicle state -"
+msgstr "- Vælg stand -"
 
 #: templates/VehicleSearch.php:120
 msgid "Consumption"
@@ -323,8 +317,7 @@ msgstr "Leasingpris"
 msgid "Financing price"
 msgstr "Finansieringspris"
 
-#: templates/_VehicleCard.php:92 v2/src/Controller/PriceController.php:137
-#: v2/src/Controller/PriceController.php:209
+#: templates/_VehicleCard.php:92 v2/src/Controller/PriceController.php:137 v2/src/Controller/PriceController.php:209
 msgid "Excl. VAT"
 msgstr "Ekskl. moms"
 
@@ -346,11 +339,11 @@ msgstr "Finanseringspris pr. mnd."
 
 #: v2/src/Controller/PriceController.php:202
 msgid "Leasing price pr. m. (ex. VAT)"
-msgstr "Leasingpris pr. mnd.: (ekskl. moms)"
+msgstr "Leasingpris pr. md.: (ekskl. moms)"
 
 #: v2/src/Controller/PriceController.php:204
 msgid "Leasing price pr. m."
-msgstr "Leasingpris pr. mnd.: %s"
+msgstr "Leasingpris pr. mnd.: "
 
 #: v2/src/Controller/PriceController.php:211
 msgid "Cash price"
@@ -362,10 +355,8 @@ msgstr "Bilsøgning"
 msgid "Vehicle search results"
 msgstr "Resultat af bilsøgning"
 
-msgid ""
-"Your API access has been disabled. Please contact a sales representative."
-msgstr ""
-"Din API nøgle er blevet deaktiveret. Venligst kontakt Biltorvet Support."
+msgid "Your API access has been disabled. Please contact a sales representative."
+msgstr "Din API nøgle er blevet deaktiveret. Venligst kontakt Biltorvet Support."
 
 msgid "Vehicle ID Could not be resolved"
 msgstr "Bil-ID kunne ikke blive afgjort "
@@ -507,3 +498,69 @@ msgstr "Eksklusiv moms"
 
 msgid "Cash price: %s"
 msgstr "Kontantpris: %s"
+
+msgid "General Settings"
+msgstr "Generelle indstillinger"
+
+msgid "Search result settings"
+msgstr "Indstillinger for bilsøgning"
+
+msgid "Vehicle details settings"
+msgstr "Indstillinger for bildetaljeside"
+
+msgid "Hide vehicles with status Leasing"
+msgstr "Skjul køretøjer med status koden Leasing"
+
+msgid "Hide vehicles with status Flexleasing"
+msgstr "Skjul køretøjer med status koden Flexleasing"
+
+msgid "Hide vehicles with status Warehousesale"
+msgstr "Skjul køretøjer med status koden Lagersalg"
+
+msgid "Hide vehicles with status Export"
+msgstr "Skjul køretøjer med status koden Eksport"
+
+msgid "Hide vehicles with status Upcoming"
+msgstr "Skjul køretøjer med status koden På vej ind"
+
+msgid "Hide vehicles with status Rental"
+msgstr "Skjul køretøjer med status koden Udlejning"
+
+msgid "Hide vehicles with status Commission"
+msgstr "Skjul køretøjer med status koden 'Kommission"
+
+msgid "Hide vehicles with status Wholesale"
+msgstr "Skjul køretøjer med status koden Kun engros"
+
+msgid "Hide vehicles with type Car"
+msgstr "Skjul køretøjstypen Personbil"
+
+msgid "Hide vehicles with type Van"
+msgstr "Skjul køretøjstypen Varevogn"
+
+msgid "Hide vehicles with type Motorcycle"
+msgstr "Skjul køretøjstypen Motorcykel"
+
+msgid "Hide vehicles with type Truck"
+msgstr "Skjul køretøjstypen Lastbil"
+
+msgid "Hide vehicles with type Bus"
+msgstr "Skjul køretøjstypen Bus"
+
+msgid "Hide brandnew vehicles"
+msgstr "Skjul fabriksnye køretøjer"
+
+msgid "Enter your AutoIT API key to activate the service. To obtain your own API key, please contact an AutoIt sales representative."
+msgstr "Indtast din AutoIT API nøgle for at aktivere plugin'et."
+
+msgid "Customize the vehicle search page."
+msgstr "Indstillinger for bilsøgningen"
+
+msgid "Customize the vehicle details page."
+msgstr "Indstillinger for bildetalesiden"
+
+msgid "Take a look at this %s %s from %s"
+msgstr "Se denne %s %s fra %s"
+
+msgid "Incl. delivery costs"
+msgstr "Inkl. leveringsomkostninger"

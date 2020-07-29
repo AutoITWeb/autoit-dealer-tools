@@ -41,6 +41,13 @@ class Price
     private $isBusinessLeasing;
 
     /**
+     * Derived from LeasingPrivate.
+     *
+     * @var boolean|null
+     */
+    private $isPrivateLeasing;
+
+    /**
      * Derived from XVat.
      *
      * @var boolean|null
@@ -140,6 +147,24 @@ class Price
     /**
      * @return bool|null
      */
+    public function getIsPrivateLeasing(): ?bool
+    {
+        return $this->isPrivateLeasing;
+    }
+
+    /**
+     * @param bool|null $isPrivateLeasing
+     * @return Price
+     */
+    public function setIsPrivateLeasing(?bool $isPrivateLeasing): Price
+    {
+        $this->isPrivateLeasing = $isPrivateLeasing;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
     public function getIsBusinessPrice(): ?bool
     {
         return $this->isBusinessPrice;
@@ -154,4 +179,6 @@ class Price
         $this->isBusinessPrice = $isBusinessPrice;
         return $this;
     }
+
+
 }

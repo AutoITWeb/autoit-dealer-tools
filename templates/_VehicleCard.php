@@ -13,6 +13,7 @@
     try {
         $cashPrice = $this->biltorvetAPI->GetPropertyValue($vehicle, 'price');
         $leasingMonthlyPayment = $this->biltorvetAPI->GetPropertyValue($vehicle, 'LeasingMonthlyPayment');
+        $leasingMonthlyPaymentTotal = $this->biltorvetAPI->GetPropertyValue($vehicle, 'LeasingMonthlyPaymentTotal');
         $leasingMonthlyPaymentRaw = $this->biltorvetAPI->GetPropertyValue($vehicle, 'LeasingMonthlyPayment', true);
         $leasingMonthlyPaymentVAT = $this->biltorvetAPI->GetPropertyValue($vehicle, 'LeasingMonthlyPaymentVAT');
         $financingMonthlyPayment = $this->biltorvetAPI->GetPropertyValue($vehicle, 'FinancingMonthlyPrice');
@@ -56,6 +57,7 @@
             {
                 $vehiclesold = false;
                 $vehiclenew = false;
+                $vehicleNewCar = false;
                 foreach($vehicle->labels as $label)
                 {
                     if($label->key == 5)
@@ -66,6 +68,10 @@
                     {
                         $vehiclenew = $label->value;
                     }
+                    if($label->key == 99999)
+                    {
+                        $vehicleNewCar = $label->value;
+                    }
                 }
 
                 if($vehiclesold)
@@ -74,6 +80,11 @@
                 } elseif($vehiclenew)
                 {
                     ?><span class="vehicleLabel new"><?php echo $vehiclenew; ?></span><?php
+                }
+
+                if($vehicleNewCar)
+                {
+                    ?><span class="vehicleLabel2 NewVehicle"><?php echo $vehiclenew; ?></span><?php
                 }
             }
         ?>

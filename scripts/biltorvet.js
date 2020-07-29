@@ -20,6 +20,7 @@ function Biltorvet($) {
         Models: null,
         BodyTypes: null,
         ProductTypes: null,
+        VehicleStates: null,
         PriceMin: null,
         PriceMax: null,
         ConsumptionMin: null,
@@ -36,21 +37,21 @@ function Biltorvet($) {
         root_url = document.getElementById("root_url").textContent;
     }
 
-    if(vehicleSearch.length > 0 && vehicleSearch.data('makeids'))
-    {
-        makesFilter = [];
-        var mIds = vehicleSearch.data('makeids');
-        if(!isNaN(mIds))
-        {
-            makesFilter.push(mIds   );
-        } else {
-            for(var i in mIds.split(','))
-            {
-                makesFilter.push(parseInt(mIds.split(',')[i]));
-            }
-        }
-        emptyFilter = { MakeIds: makesFilter };
-    }
+    // if(vehicleSearch.length > 0 && vehicleSearch.data('makeids'))
+    // {
+    //     makesFilter = [];
+    //     var mIds = vehicleSearch.data('makeids');
+    //     if(!isNaN(mIds))
+    //     {
+    //         makesFilter.push(mIds   );
+    //     } else {
+    //         for(var i in mIds.split(','))
+    //         {
+    //             makesFilter.push(parseInt(mIds.split(',')[i]));
+    //         }
+    //     }
+    //     emptyFilter = { MakeIds: makesFilter };
+    // }
 
     this.Init = function() {
         // There can be a situation, namely with AVADA themes, where there's another .slider bound to the jQuery object. IF that's the case, we'll switch to an alternative namespace.
@@ -128,10 +129,10 @@ function Biltorvet($) {
                     var makes = '';
                     for(var i in response.makes)
                     {
-                        if(makesFilter !== null && makesFilter.indexOf(response.makes[i].id) === -1)
-                        {
-                            continue;
-                        }
+                        // if(makesFilter !== null && makesFilter.indexOf(response.makes[i].id) === -1)
+                        // {
+                        //     continue;
+                        // }
                         makes += '<option value="' + response.makes[i].name + '">' + response.makes[i].name + '</option>';
                     }
                     vehicleSearch.find('select[name=make]').find('option:not(:first-child)').remove().end().append(makes);
@@ -171,6 +172,17 @@ function Biltorvet($) {
                     if(bodyTypes !== '')
                     {
                         vehicleSearch.find('select[name=bodyType]').removeAttr('disabled');
+                    }
+
+                    var vehicleStates = '';
+                    for(var i in response.vehicleStates)
+                    {
+                        vehicleStates += '<option value="' + response.vehicleStates[i].name + '">' + response.vehicleStates[i].name + '</option>';
+                    }
+                    vehicleSearch.find('select[name=vehicleState]').find('option:not(:first-child)').remove().end().append(vehicleStates);
+                    if(vehicleStates !== '')
+                    {
+                        vehicleSearch.find('select[name=vehicleState]').removeAttr('disabled');
                     }
 
                     var productTypes = '';
@@ -239,6 +251,10 @@ function Biltorvet($) {
                         if(response.values.productTypes && response.values.productTypes[0])
                         {
                             vehicleSearch.find('select[name=productType] option[value="' + response.values.productTypes[0] + '"]').prop('selected', true);
+                        }
+                        if(response.values.vehicleStates && response.values.vehicleStates[0])
+                        {
+                            vehicleSearch.find('select[name=vehicleState] option[value="' + response.values.vehicleStates[0] + '"]').prop('selected', true);
                         }
                     }
                 },
@@ -441,6 +457,7 @@ function Biltorvet($) {
             Models: vehicleSearch.find('select[name=model]').val() === '' ? null : [vehicleSearch.find('select[name=model]').val()],
             BodyTypes: vehicleSearch.find('select[name=bodyType]').val() === '' ? null : [vehicleSearch.find('select[name=bodyType]').val()],
             ProductTypes: vehicleSearch.find('select[name=productType]').val() === '' ? null : [vehicleSearch.find('select[name=productType]').val()],
+            VehicleStates: vehicleSearch.find('select[name=vehicleState]').val() === '' ? null : [vehicleSearch.find('select[name=vehicleState]').val()],
             PriceMin: priceRangeSlider !== null ? (priceRangeSlider.data('slider').getAttribute('min') !== priceMin ? priceMin : null) : null,
             PriceMax: priceRangeSlider !== null ? (priceRangeSlider.data('slider').getAttribute('max') !== priceMax ? priceMax : null) : null,
             ConsumptionMin: consumptionRangeSlider !== null ? (consumptionRangeSlider.data('slider').getAttribute('min') !== consumptionMin ? consumptionMin : null) : null,

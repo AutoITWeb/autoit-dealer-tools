@@ -34,13 +34,20 @@ define('LABEL_EXPORT', 382);
 define('LABEL_UPCOMING', 4);
 define('LABEL_RENTAL', 2);
 define('LABEL_COMMISION', 27);
+define('LABEL_ENGROS', 9);
+define('LABEL_NEWCAR', 99999);
+
+// Special label for Thybo Biler
+define('LABEL_BUS', 416);
+
 
 // @TODO: Refactor.
 //  As the data for price calculations are pretty messy we try to map it more logically before working with it.
 define('RELATED_PRICE_PROPERTY_KEYS', [
         'VAT', // Bruges til eksl momslabel på price
         'LeasingBusiness', // bool for om det er erhverv leasing eller ej. skal momsens trækkes fra LeasingMonthlyPayment eller ej. afgør leasing moms label
-        'LeasingMonthlyPaymentTotal', // DO NOT USE
+        'LeasingPrivate',
+        'LeasingMonthlyPaymentTotal', // Used for Leasing Private
         'LeasingMonthlyPaymentVAT', // ONLY moms
         'LeasingMonthlyPayment', // Use this for leasing price. HVIS LeasingBusiness == true leasing price er LeasingMonthlyPayment - LeasingMonthlyPaymentVAT
         'Price', // Vare type V inkl moms, v+ er ekskl moms bliver beregenet i API

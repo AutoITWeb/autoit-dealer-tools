@@ -44,7 +44,6 @@ class DataHelper
      */
     public static function filterVehiclesByLabel(array $vehicles, int $labelId) : array
     {
-
         $filteredVehicles = [];
 
         foreach ($vehicles as $vehicle) {
@@ -59,13 +58,59 @@ class DataHelper
     }
 
     /**
+     * @param  Vehicle[] $vehicles
+     * @param  int       $typeId
+     * @param  bool       $brandNew
+     * @return Vehicle[]
+     */
+    public static function filterVehiclesByTypeAndState(array $vehicles, int $typeId, bool $brandNew) : array
+    {
+        $filteredVehicles = [];
+
+        if ($brandNew == null){
+            foreach ($vehicles as $vehicle) {
+                if ($vehicle->getTypeId() === $typeId) {
+                    $filteredVehicles[] = $vehicle;
+                }
+            }
+
+        return $filteredVehicles;
+        }
+
+        foreach ($vehicles as $vehicle) {
+                if ($vehicle->getTypeId() === $typeId && $vehicle->getBrandNew() === $brandNew) {
+                    $filteredVehicles[] = $vehicle;
+            }
+        }
+
+        return $filteredVehicles;
+    }
+
+    /**
+     * @param  Vehicle[] $vehicles
+     * @param  int       $typeId
+     * @return Vehicle[]
+     */
+    public static function filterVehiclesByType(array $vehicles, int $typeId) : array
+    {
+        $filteredVehicles = [];
+
+        foreach ($vehicles as $vehicle) {
+            if ($vehicle->getTypeId() === $typeId) {
+                $filteredVehicles[] = $vehicle;
+            }
+        }
+
+        return $filteredVehicles;
+    }
+
+    /**
      * @param  ApiResponse $response
      * @return Vehicle[]
      * @throws Exception
      */
     public static function getVehiclesFromApiResponse(ApiResponse $response) : array
     {
-
         /**
 *
          *

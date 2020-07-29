@@ -37,25 +37,26 @@ class Callbacks
     {
         $searchFilter = new SearchFilter();
 
-        if(!isset($atts['make']))
-        {
-            return 'Please set make.';
+        if(isset($atts['make'])){
+            $searchFilter->setMakes([ucfirst($atts['make'])]);
         }
-
-        $searchFilter->setMakes([ucfirst($atts['make'])]);
-        // Fetches the wanted make
-        $fetchMake = $this->apiController->getVehicles($searchFilter);
-
-        if($fetchMake == null)
-        {
-            return 'Vi har desværre ingen' . ' ' . (ucfirst($atts['make'])) . 'er' . ' ' . 'på lager.';
-        }
-
         if (isset($atts['model'])) {
             $searchFilter->setModels([ucfirst($atts['model'])]);
         }
         if (isset($atts['propellant'])){
             $searchFilter->setPropellants([ucfirst($atts['propellant'])]);
+        }
+        if(isset($atts['companyid'])) {
+            $searchFilter->setCompanyIds([ucfirst($atts['companyid'])]);
+        }
+
+        $option = get_option('bdt_options');
+        $vehicleSearchPageId = $option['vehiclesearch_page_id'];
+
+        // Error: No Cars
+        if(count($this->apiController->getVehicles($searchFilter)) == null)
+        {
+            return 'Vi har solgt alle biler af denne type' . '<br><br>' . 'Se alle vores biler ' . '<a href="' . get_site_url() . '/' . get_page_uri($page = $vehicleSearchPageId) . '">her</a>';
         }
 
         wp_enqueue_style("bdt_style");
@@ -63,11 +64,11 @@ class Callbacks
             'vehicleCardWrapper.php',
             [
                 'vehicles' => $this->apiController->getVehicles($searchFilter),
-                'basePage' => WordpressHelper::getOptions()['vehiclesearch_page_id']
+                'basePage' => WordpressHelper::getOptions(1)['vehiclesearch_page_id']
             ],
             true
         );
-        }
+    }
 
     public function get_vehicles_by_status_code_shortcode($atts)
     {
@@ -75,12 +76,19 @@ class Callbacks
 
         if(!isset($atts['status']))
         {
-            return 'Please set a status.' . '<br><br>' . 'Check the documentation for valid status codes.';
+            return 'No status code set - Please set a valid status code.' . '<br><br>' . 'Check the documentation for valid status codes.';
         }
 
-        $SetStatusCode = ucfirst($atts['status']);
+        $setStatusCode = ucfirst($atts['status']);
 
-        switch ($SetStatusCode) {
+        $validStatusCodes = array("Sold", "New", "Leasing", "Warehousesale", "Flexleasing", "Export", "Upcoming", "Rental", "Commission", "Wholesale", "Bus", "NewCar");
+
+        if(!in_array($setStatusCode, $validStatusCodes))
+        {
+            return '<b>"' . $setStatusCode . '"</b>' . ' is not a valid status code - Please set a valid status code.' . '<br><br>' . 'Check the documentation for valid status codes.';
+        }
+
+        switch ($setStatusCode) {
             case 'Sold': $label = 5; break;
             case 'New': $label = 11; break;
             case 'Leasing': $label = 12; break;
@@ -90,6 +98,9 @@ class Callbacks
             case 'Upcoming' : $label = 4; break;
             case 'Rental' : $label = 2; break;
             case 'Commission' : $label = 27; break;
+            case 'Wholesale' : $label = 9; break;
+            case "Bus" : $label = 416; break;
+            case "NewCar" : $label = 99999; break;
         }
 
         wp_enqueue_style("bdt_style");
@@ -97,52 +108,75 @@ class Callbacks
             'vehicleCardWrapper.php',
             [
                 'vehicles' => DataHelper::filterVehiclesByLabel($this->apiController->getVehicles($searchFilter), $label),
-                'basePage' => WordpressHelper::getOptions()['vehiclesearch_page_id'],
+                'basePage' => WordpressHelper::getOptions(1)['vehiclesearch_page_id'],
             ],
             true
         );
     }
 
-
-    public function get_featured_vehicles_shortcode()
+    public function get_vehicles_by_type_shortcode(array $atts)
     {
+        $searchFilter = new SearchFilter();
 
-        $searchFilter = New SearchFilter();
-
-        // Count amount of vehicles with the "I fokus" label checked.
-        $getAllVehicles = DataHelper::filterVehiclesByLabel($this->apiController->getVehicles($searchFilter), LABEL_FEATURED);
-
-        $featuredLabelCount = [];
-
-        foreach($getAllVehicles as $featuredLabel){
-
-            array_push($featuredLabelCount, $featuredLabel);
+        // Error: No type set
+        if(!isset($atts['type']))
+        {
+            return 'Please set a type.' . '<br><br>' . 'Check the documentation for valid types.';
         }
 
-        $featuredCount = count($featuredLabelCount);
+        $setType = ucfirst($atts['type']);
+
+        $validTypes = array("Car", "Van", "Motorcycle", "Truck");
+
+        // Error: Invalid type set
+        if(!in_array($setType, $validTypes)){
+
+            return '<b>"' . $setType . '"</b>' . ' is not a valid type - Please set a valid type.' . '<br><br>' . 'Check the documentation for valid types.';
+        }
+
+        switch ($setType) {
+            case 'Car': $typeId = 1; break;
+            case 'Van': $typeId = 2; break;
+            case 'Motorcycle': $typeId = 7; break;
+            case 'Truck' : $typeId = 4; break;
+        }
+
+        if(isset($atts['state'])){
+
+            $setState = ucfirst($atts['state']);
+
+            $validStates = array("BrandNew", "Used");
+
+            switch ( ($setState)) {
+                case 'BrandNew' : $brandNew = true; break;
+                case 'Used' : $brandNew = false; break;
+            }
+
+            if (!in_Array($setState, $validStates))
+            {
+                return '<b>"' . $setState . '"</b>' . ' is not a valid state - Please set a valid state.' . '<br><br>' . 'Check the documentation for valid states.';
+            }
+
+            wp_enqueue_style("bdt_style");
+            return $this->templateController->load(
+                'vehicleCardWrapper.php',
+                [
+                    'vehicles' => DataHelper::filterVehiclesByTypeAndState($this->apiController->getVehicles($searchFilter), $typeId, $brandNew),
+                    'basePage' => WordpressHelper::getOptions(1)['vehiclesearch_page_id'],
+                ],
+                true
+            );
+        }
 
         wp_enqueue_style("bdt_style");
-
-        if($featuredCount >0) {
-            return $this->templateController->load(
-                'vehicleCardWrapperFeatured.php', [
-                'vehicles' => DataHelper::filterVehiclesByLabel($this->apiController->getVehicles($searchFilter), LABEL_FEATURED),
-                'basePage' => WordpressHelper::getOptions()['vehiclesearch_page_id'],
+        return $this->templateController->load(
+            'vehicleCardWrapper.php',
+            [
+                'vehicles' => DataHelper::filterVehiclesByType($this->apiController->getVehicles($searchFilter), $typeId),
+                'basePage' => WordpressHelper::getOptions(1)['vehiclesearch_page_id'],
             ],
-                true
-            );
-        }
-        else
-        {
-            return $this->templateController->load(
-                'vehicleCardWrapperFill.php', [
-                'vehicles' => DataHelper::getVehiclePropertiesAssoc($this->apiController->getVehicles($searchFilter)),
-                'basePage' => WordpressHelper::getOptions()['vehiclesearch_page_id'],
-            ],
-                true
-            );
-        }
-
+            true
+        );
     }
 
     /**
