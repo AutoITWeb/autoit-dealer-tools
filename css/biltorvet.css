@@ -5389,7 +5389,19 @@ a.bdt .badge-dark.focus {
     padding: 3px 15px;
     position: absolute;
     left: 0;
-    top: 20px;
+    top: 10px;
+    font-size: .7rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15)
+}
+
+.bdt .vehicleCard .vehicleLabel2 {
+    color: #fff;
+    padding: 3px 15px;
+    position: absolute;
+    left: 0;
+    top: 50px;
     font-size: .7rem;
     text-transform: uppercase;
     font-weight: 700;
@@ -5402,6 +5414,14 @@ a.bdt .badge-dark.focus {
 
 .bdt .vehicleCard .vehicleLabel.sold {
     background-color: #dc3545
+}
+
+.bdt .vehicleCard .vehicleLabel.NewCar {
+     background-color: #4B0082
+ }
+
+.bdt .vehicleCard .vehicleLabel2.NewCar {
+    background-color: #4B0082
 }
 
 .bdt .vehicle_search select,

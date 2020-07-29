@@ -6,6 +6,7 @@ jQuery(function ($) {
         Models: null,
         BodyTypes: null,
         ProductTypes: null,
+        VehicleStates: null,
         PriceMin: null,
         PriceMax: null,
         ConsumptionMin: null,

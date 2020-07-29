@@ -13,6 +13,7 @@
         public $PriceMax;
         public $ConsumptionMin;
         public $ConsumptionMax;
+        public $VehicleStates;
         public $Start;
         public $Limit;
         public $OrderBy;
@@ -30,6 +31,7 @@
         public $HideByTypeMotorcycle; // Bool
         public $HideByTypeTruck; // Bool
         public $HideByTypeBus; // Bool
+        public $HideBrandNewVehicles; // Bool
         public $HideADVehicles; // Bool
         public $HideBIVehicles; // Bool
         public $Ascending; // Bool

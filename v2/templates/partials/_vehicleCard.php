@@ -30,17 +30,19 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 <span class="vehicleThumb">
                     <img src="<?= $vehicle->getImages()[0] ?>" class="img-responsive" />
                     <?php if ($vehicle->getLabels()) : ?>
-                    <?php foreach ($vehicle->getLabels() as $label) : ?>
 
-                        <?php if ($label->getKey() === LABEL_SOLD) : ?>
-                            <span class="vehicleLabel sold"><?= $label->getValue(); ?></span>
-                        <?php endif; ?>
+                        <?php foreach ($vehicle->getLabels() as $label) : ?>
 
-                        <?php if ($label->getKey() === LABEL_NEW) : ?>
-                            <span class="vehicleLabel new"><?= $label->getValue(); ?></span>
-                        <?php endif; ?>
+                            <?php if ($label->getKey() === LABEL_SOLD) : ?>
+                                <span class="vehicleLabel sold"><?= $label->getValue(); ?></span>
+                            <?php endif; ?>
 
-                    <?php endforeach; ?>
+                            <?php if ($label->getKey() === LABEL_NEW) : ?>
+                                <span class="vehicleLabel new"><?= $label->getValue(); ?></span>
+                            <?php endif; ?>
+
+                        <?php endforeach; ?>
+
                     <?php endif; ?>
                 </span>
                 <span class="vehicleDescription">

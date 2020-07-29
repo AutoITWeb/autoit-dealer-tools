@@ -145,6 +145,14 @@
             }
             $filterObject->HideByTypeBus = 'true';
         }
+        if(isset($this->_options_2['hide_brandnew_vehicles']) && $this->_options_2['hide_brandnew_vehicles'] === 'on')
+        {
+            if($filterObject === null)
+            {
+                $filterObject = new BDTFilterObject();
+            }
+            $filterObject->HideBrandNewVehicles = 'true';
+        }
         if(isset($this->_options['hide_ad_vehicles']) && $this->_options['hide_ad_vehicles'] === 'on')
         {
             if($filterObject === null)
@@ -165,7 +173,7 @@
     } catch(Exception $e) {
         die($e->getMessage());
     }
-    
+
     ?>
     <div class="bdt">
         <div class="vehicle_search"<?php echo $makeIds !== null ? ' data-makeids="'.$makeIds.'"' : '';  ?>>
@@ -177,6 +185,14 @@
                         </select>
                     </div>
                 <?php } ?>
+
+                <?php if(count($initialFilterOptions->companies) > 1 || count($initialFilterOptions->vehicleStates) >= 2): ?>
+                    <div class="col-sm-4 mb-1 mb-sm-3">
+                        <select name="vehicleState">
+                            <option value=""><?php _e('- Select vehicle state -', 'biltorvet-dealer-tools'); ?></option>
+                        </select>
+                    </div>
+                <?php endif; ?>
 
                 <?php if(count($initialFilterOptions->companies) > 1 || count($initialFilterOptions->makes) > 1): ?>
                 <div class="col-sm-4 mb-1 mb-sm-3">
@@ -216,6 +232,8 @@
                     </div>
                 <?php } ?>
 
+            </div>
+            <div class="row justify-content-between">
                 <div class="col-sm-4 mt-3 mt-sm-0 mb-3">
                     <div class="bdtSliderContainer">
                         <label for="priceRange" class="float-left"><?php _e('Price', 'biltorvet-dealer-tools'); ?></label>

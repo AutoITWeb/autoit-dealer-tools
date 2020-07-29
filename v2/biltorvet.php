@@ -35,6 +35,7 @@ define('LABEL_UPCOMING', 4);
 define('LABEL_RENTAL', 2);
 define('LABEL_COMMISION', 27);
 define('LABEL_ENGROS', 9);
+define('LABEL_NEWCAR', 99999);
 
 // Special label for Thybo Biler
 define('LABEL_BUS', 416);

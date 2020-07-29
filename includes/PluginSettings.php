@@ -360,6 +360,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
 
             add_settings_field(
+                'hide_brandnew_vehicles',
+                __( 'Hide brandnew vehicles', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_hide_brandnew_vehicles_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
                 'bdt_hide_leasing_prices_cards',
                 __( 'Do not show leasing prices on vehicle cards', 'biltorvet-dealer-tools' ),
                 array( $this, 'bdt_hide_leasing_prices_card_callback' ),
@@ -646,6 +654,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             printf(
                 '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[hide_typebus_vehicles]"%s />',
                 isset( $this->options_2['hide_typebus_vehicles'] ) && $this->options_2['hide_typebus_vehicles'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_hide_brandnew_vehicles_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[hide_brandnew_vehicles]"%s />',
+                isset( $this->options_2['hide_brandnew_vehicles'] ) && $this->options_2['hide_brandnew_vehicles'] === 'on' ? ' checked="checked"' : ''
             );
         }
 

@@ -45,6 +45,17 @@
             return $this->Request('/vehicle/type');
         }
 
+//        public function GetVehicleStates()
+//        {
+//            $vehicleStatesRaw = $this->Request('/vehicle/vehiclestates');
+//            $vehicleStates = array();
+//            foreach($vehicleStatesRaw as $vehicleStates)
+//            {
+//                $vehicleStates[$vehicleStates->key] = $vehicleStates->value;
+//            }
+//            return $vehicleStates;
+//        }
+
         public function GetVehicle($id)
         {
             return $this->Request('/vehicle/detail/' . TextUtils::Sanitize($id));

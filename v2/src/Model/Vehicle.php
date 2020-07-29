@@ -50,6 +50,10 @@ class Vehicle
      */
     private $automatic;
     /**
+     * @var bool|null
+     */
+    private $brandNew;
+    /**
      * @var string|null
      */
     private $propellant;
@@ -279,6 +283,24 @@ class Vehicle
     public function setAutomatic(?bool $automatic): Vehicle
     {
         $this->automatic = $automatic;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getBrandNew(): ?bool
+    {
+        return $this->brandNew;
+    }
+
+    /**
+     * @param  bool|null $automatic
+     * @return Vehicle
+     */
+    public function setBrandNew(?bool $brandNew): Vehicle
+    {
+        $this->brandNew = $brandNew;
         return $this;
     }
 

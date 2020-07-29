@@ -19,7 +19,7 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;"
 "_nx_noop:4c,1,2;_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
 "X-Poedit-Basepath: ..\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: ajax/Ajax.php:12 classes/BiltorvetShortcodes.php:22
@@ -270,6 +270,9 @@ msgstr "- Vælg Karrosseri -"
 #: templates/VehicleSearch.php:106
 msgid "- Select propellant -"
 msgstr "- Brændstof -"
+
+msgid "- Select vehicle state -"
+msgstr "- Vælg stand -"
 
 #: templates/VehicleSearch.php:120
 msgid "Consumption"
@@ -543,6 +546,9 @@ msgstr "Skjul køretøjstypen Lastbil"
 
 msgid "Hide vehicles with type Bus"
 msgstr "Skjul køretøjstypen Bus"
+
+msgid "Hide brandnew vehicles"
+msgstr "Skjul fabriksnye køretøjer"
 
 msgid "Enter your AutoIT API key to activate the service. To obtain your own API key, please contact an AutoIt sales representative."
 msgstr "Indtast din AutoIT API nøgle for at aktivere plugin'et."

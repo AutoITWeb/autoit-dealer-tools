@@ -33,6 +33,10 @@ class SearchFilter
      * @var string[]
      */
     public $ProductTypes;
+    /**
+     * @var string[]
+     */
+    public $NewUsed;
 
     /**
      * @var int
@@ -269,6 +273,24 @@ class SearchFilter
     public function setProductTypes(array $ProductTypes): SearchFilter
     {
         $this->ProductTypes = $ProductTypes;
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getNewUsed(): array
+    {
+        return $this->NewUsed;
+    }
+
+    /**
+     * @param  string[] $ProductTypes
+     * @return SearchFilter
+     */
+    public function setNewUsed(array $NewUsed): SearchFilter
+    {
+        $this->NewUsed = $NewUsed;
         return $this;
     }
 

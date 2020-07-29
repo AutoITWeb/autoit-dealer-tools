@@ -310,6 +310,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     }
                     $filterObject->HideByTypeBus = 'true';
                 }
+                if(isset($this->_options_2['hide_brandnew_vehicles']) && $this->_options_2['hide_brandnew_vehicles'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideBrandNewVehicles = 'true';
+                }
                 if(isset($this->_options_2['hide_ad_vehicles']) && $this->_options_2['hide_ad_vehicles'] === 'on')
                 {
                     if($filterObject === null)
