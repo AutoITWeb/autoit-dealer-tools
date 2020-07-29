@@ -1,5 +1,8 @@
 # AutoIT Dealer Tools
 
+**For versions 2.x.x PHP 7.1+ is required!**
+<br><br>
+
 Adds Vehicle search, Vehicle list and Vehicle Detail Page.
 
 **Features**
@@ -17,7 +20,7 @@ Developed by [AutoIT A/S](https://biltorvet.as)
 
 ## Other Notes
 ### License
-Good news, this plugin is free for everyone! But to be able to shown your own cars from AutoDesktop you must contact AutoIT Support, 
+To be able to shown your own cars from AutoDesktop you must contact AutoIT Support, 
 so we can create your personal API Key.
 
 
@@ -56,7 +59,10 @@ Head over to the settings page of the plugin:
 ![Old settings](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-biltorvet-settings-old-view.png)
 
 Head back to the plugin menu and update the plugin to the latest version (If no updates are shown try installing WP_Control and run the plugin update cron event).
-When updated to the newest version, the plugin settings are now shown in the dashboard menu and not as a submenu to settings:  
+When updated to the newest version, the plugin settings are now shown in the dashboard menu and not as a submenu to settings:
+<br><br>
+**NOTE: Versions 2.x.x requires PHP 7.1+**
+<br><br>
 
 ![New settings](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-autoit-settings-new.png)
 
