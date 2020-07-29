@@ -104,10 +104,9 @@ Shows a list of vehicles that had been marked as "In focus" in AutoDesktop. This
 
 __bdt_get_vehicles__  
 Creates a list of cars from a specific make  
-Required attribute:  
-* __make__  
 
-Optional attributes:  
+Attributes:  
+* __make__
 * __model__  
 * __propellant__  
 
@@ -133,7 +132,8 @@ Creates a list of cars from status codes set in AutoDesktop (In order to use thi
 * __Upcoming__ - Shows all cars with the label "På vej ind".  
 * __Rental__ - Shows all cars with the label "Udlejning".  
 * __Commision__ - Shows all cars with the label "Kommision".  
-* __Wholesale__ - Shows all cars with the label "Kun engros".  
+* __Wholesale__ - Shows all cars with the label "Kun engros". 
+* __NewCar__ - Shows all cars which "Fabriksny" checked in AutoDesktop. 
 
 Example 1: __[bdt_get_vehicles_by_status_code status="Sold"]__ - lists all cars marked as "Solgt".  
 
@@ -141,12 +141,20 @@ __bdt_get_vehicles_by_type__
 Creates a list of cars from their type.  
 <br>Required attribute:  
 * __type__
+<br><br>
+Optional attribute:  
+* __state__  
+<br>
 
 <br>The following types are currently supported:  
 * __Car__ - Shows all vehicles of the type "Car".
 * __Van__ - Shows all vehicles of the type "Van".
 * __Motorcycle__ - Shows all vehicles of the type "Motorcycle".
 * __Truck__ - Shows all vehicles of the type "Truck".  
+
+<br>The following states are currently supported:  
+* __BrandNew__ - only vehicles with "Fabriksny" checked in AutoDesktop. 
+* __Used__ - Used vehicles.
 
 
 Example 1: __[bdt_get_vehicles_by_type type="Car"]__ - lists all vehicles with the type "Personbil".<br><br>
