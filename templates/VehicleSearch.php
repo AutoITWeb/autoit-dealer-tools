@@ -232,7 +232,6 @@
                     </div>
                 <?php } ?>
 
-
             </div>
             <div class="row justify-content-between">
                 <div class="col-sm-4 mt-3 mt-sm-0 mb-3">
