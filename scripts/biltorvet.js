@@ -20,6 +20,7 @@ function Biltorvet($) {
         Models: null,
         BodyTypes: null,
         ProductTypes: null,
+        VehicleStates: null,
         PriceMin: null,
         PriceMax: null,
         ConsumptionMin: null,
@@ -173,6 +174,17 @@ function Biltorvet($) {
                         vehicleSearch.find('select[name=bodyType]').removeAttr('disabled');
                     }
 
+                    var vehicleStates = '';
+                    for(var i in response.vehicleStates)
+                    {
+                        vehicleStates += '<option value="' + response.vehicleStates[i].name + '">' + response.vehicleStates[i].name + '</option>';
+                    }
+                    vehicleSearch.find('select[name=vehicleState]').find('option:not(:first-child)').remove().end().append(vehicleStates);
+                    if(vehicleStates !== '')
+                    {
+                        vehicleSearch.find('select[name=vehicleState]').removeAttr('disabled');
+                    }
+
                     var productTypes = '';
                     for(var i in response.productTypes)
                     {
@@ -239,6 +251,10 @@ function Biltorvet($) {
                         if(response.values.productTypes && response.values.productTypes[0])
                         {
                             vehicleSearch.find('select[name=productType] option[value="' + response.values.productTypes[0] + '"]').prop('selected', true);
+                        }
+                        if(response.values.vehicleStates && response.values.vehicleStates[0])
+                        {
+                            vehicleSearch.find('select[name=vehicleState] option[value="' + response.values.vehicleStates[0] + '"]').prop('selected', true);
                         }
                     }
                 },
@@ -441,6 +457,7 @@ function Biltorvet($) {
             Models: vehicleSearch.find('select[name=model]').val() === '' ? null : [vehicleSearch.find('select[name=model]').val()],
             BodyTypes: vehicleSearch.find('select[name=bodyType]').val() === '' ? null : [vehicleSearch.find('select[name=bodyType]').val()],
             ProductTypes: vehicleSearch.find('select[name=productType]').val() === '' ? null : [vehicleSearch.find('select[name=productType]').val()],
+            VehicleStates: vehicleSearch.find('select[name=vehicleState]').val() === '' ? null : [vehicleSearch.find('select[name=vehicleState]').val()],
             PriceMin: priceRangeSlider !== null ? (priceRangeSlider.data('slider').getAttribute('min') !== priceMin ? priceMin : null) : null,
             PriceMax: priceRangeSlider !== null ? (priceRangeSlider.data('slider').getAttribute('max') !== priceMax ? priceMax : null) : null,
             ConsumptionMin: consumptionRangeSlider !== null ? (consumptionRangeSlider.data('slider').getAttribute('min') !== consumptionMin ? consumptionMin : null) : null,
