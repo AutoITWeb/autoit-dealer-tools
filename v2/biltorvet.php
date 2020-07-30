@@ -41,6 +41,7 @@ define('LABEL_NEWCAR', 99999);
 define('LABEL_BUS', 416);
 
 // Do
+
 // @TODO: Refactor.
 //  As the data for price calculations are pretty messy we try to map it more logically before working with it.
 define('RELATED_PRICE_PROPERTY_KEYS', [
