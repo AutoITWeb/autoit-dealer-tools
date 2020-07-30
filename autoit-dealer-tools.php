@@ -10,6 +10,8 @@ License:     Proprietary
 License URI: https://www.biltorvet.as/media/1385/betingelser-biltorvetas.pdf
 Text Domain: biltorvet-dealer-tools
 Domain Path: /languages
+GitHub Plugin URI: AutoITWeb/autoit-dealer-tools
+GitHub Plugin URI: https://github.com/AutoITWeb/autoit-dealer-tools
 
 Biltorvet Dealer Tools is free software: you can redistribute it, but NOT modify it.
 Changes to the code or attempts on rebranding is NOT allowed.
