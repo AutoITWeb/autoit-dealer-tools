@@ -171,9 +171,6 @@ Creates a list of cars from status codes set in AutoDesktop (In order to use thi
 * __Upcoming__ - Shows all cars with the label "På vej ind".  
 * __Rental__ - Shows all cars with the label "Udlejning".  
 * __Commision__ - Shows all cars with the label "Kommision".  
-
-* __Wholesale__ - Shows all cars with the label "Kun engros".  
-=======
 * __Wholesale__ - Shows all cars with the label "Kun engros". 
 * __NewCar__ - Shows all cars which "Fabriksny" checked in AutoDesktop. 
 
