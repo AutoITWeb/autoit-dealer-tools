@@ -151,7 +151,6 @@ Attributes:
 
 Example 1: __[bdt_get_vehicles make="Audi"]__ - lists all cars with the make "Audi".  
 
-
 Example 2: __[bdt_get_vehicles make="Audi" model="A5"]__ - lists all cars with the make "Audi" and model "A5".  
 
 Example 3: __[bdt_get_vehicles make="Audi" model="A5" propellant="diesel"]__ - lists all cars with the make "Audi", model "A5" and uses diesel as propellant.
@@ -182,7 +181,6 @@ Creates a list of cars from their type.
 <br>Required attribute:  
 * __type__
 
-=======
 <br><br>
 Optional attribute:  
 * __state__  
@@ -196,7 +194,6 @@ Optional attribute:
 * __Truck__ - Shows all vehicles of the type "Truck".  
 
 
-=======
 <br>The following states are currently supported:  
 * __BrandNew__ - only vehicles with "Fabriksny" checked in AutoDesktop. 
 * __Used__ - Used vehicles.
