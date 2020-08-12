@@ -4776,6 +4776,11 @@ a.bdt .badge:focus {
     background-color: #FF9900
 }
 
+.bdt .badge-lightblue {
+    color: #000;
+    background-color: #bde0eb
+}
+
 .bdt .badge-primary {
     color: #fff;
     background-color: #555
@@ -5386,42 +5391,46 @@ a.bdt .badge-dark.focus {
 
 .bdt .vehicleCard .vehicleLabel {
     color: #fff;
-    padding: 3px 15px;
+    padding: 2px 8px;
     position: absolute;
     left: 0;
-    top: 10px;
     font-size: .7rem;
     text-transform: uppercase;
     font-weight: 700;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15)
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
 
-.bdt .vehicleCard .vehicleLabel2 {
-    color: #fff;
-    padding: 3px 15px;
-    position: absolute;
-    left: 0;
-    top: 50px;
-    font-size: .7rem;
-    text-transform: uppercase;
-    font-weight: 700;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15)
+.bdt .vehicleCard .vehicleLabel.Nyhed {
+    background-color: #28a745;
 }
 
-.bdt .vehicleCard .vehicleLabel.new {
-    background-color: #28a745
-}
-
-.bdt .vehicleCard .vehicleLabel.sold {
+.bdt .vehicleCard .vehicleLabel.Solgt {
     background-color: #dc3545
 }
 
-.bdt .vehicleCard .vehicleLabel.NewCar {
+.bdt .vehicleCard .vehicleLabel.Fabriksny {
      background-color: #4B0082
  }
 
-.bdt .vehicleCard .vehicleLabel2.NewCar {
-    background-color: #4B0082
+.bdt .vehicleCard .vehicleLabel.Leasing {
+    background-color: #17a2b8
+}
+
+.bdt .vehicleCard .vehicleLabel.Engros {
+    background-color: #bde0eb
+}
+
+.bdt .vehicleCard .vehicleLabel.Eksport {
+    background-color: #ffc107
+}
+
+.bdt .vehicleCard .vehicleLabel.Lagersalg {
+    background-color: #6c757d
+}
+
+.bdt .vehicleCard .vehicleLabel.DealerSpecificLabel {
+    color: #000;
+    background-color: #ffff00
 }
 
 .bdt .vehicle_search select,
