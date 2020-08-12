@@ -123,7 +123,7 @@ class DataHelper
                 $vehicles[] = VehicleFactory::create($vehicle);
             }
         } else {
-            throw new Exception('Unable to local vehicle array');
+            throw new Exception('Unable to locate vehicle array');
         }
 
         return $vehicles;

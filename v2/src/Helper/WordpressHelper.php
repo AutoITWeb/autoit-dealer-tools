@@ -45,11 +45,12 @@ class WordpressHelper
      */
     public static function getApiKey() : string
     {
-
         $options = self::getOptions(1);
 
-        if (array_key_exists('api_key', $options) && $options['api_key']) {
+        if (array_key_exists('api_key', $options) && isset($options['api_key'])) {
             return $options['api_key'];
+        } else {
+            return '';
         }
     }
 
