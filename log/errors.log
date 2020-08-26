@@ -1738,3 +1738,6 @@ URL: http://localhost:53871/vehicle/detail/BI1738076974
 2020-05-14 09:04:47 (Request took 10.004476070404s)\r\nBiltorvet API: can not connect to the server (28)
 URL: http://localhost:53871/vehicle/count
 
+2020-08-12 12:10:28 (Request took 0.036255121231079s)\r\nBiltorvet API: method not found
+URL: https://api-v1.autoit.dk/vehicle/featured
+

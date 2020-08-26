@@ -21,6 +21,9 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 /** @var Property[] $vehicleProperties */
 /** @var PriceController $priceController */
 
+// Sorted labels for use on the vehiclecards
+$vehicleLabels = Vehicle::sortVehicleLabels($vehicle->getLabels())
+
 ?>
 
 <div class="col-sm-6 col-md-6 col-lg-4">
@@ -29,21 +32,25 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             <a href="<?= get_permalink($basePage) . $vehicle->getUri() ?>">
                 <span class="vehicleThumb">
                     <img src="<?= $vehicle->getImages()[0] ?>" class="img-responsive" />
-                    <?php if ($vehicle->getLabels()) : ?>
+                        <?php if ($vehicleLabels) : ?>
 
-                        <?php foreach ($vehicle->getLabels() as $label) : ?>
+                            <?php foreach ($vehicleLabels as $label) : ?>
+                                <?php if(strpos($label, ' DealerSpecificLabel')) : ?>
 
-                            <?php if ($label->getKey() === LABEL_SOLD) : ?>
-                                <span class="vehicleLabel sold"><?= $label->getValue(); ?></span>
-                            <?php endif; ?>
+                                    <?php $dealerSpecificLabel = str_replace(" DealerSpecificLabel", " ", $label); ?>
+                                    <?php unset($vehicleLabels[$label]); ?>
 
-                            <?php if ($label->getKey() === LABEL_NEW) : ?>
-                                <span class="vehicleLabel new"><?= $label->getValue(); ?></span>
-                            <?php endif; ?>
+                                    <p><span class="vehicleLabel DealerSpecificLabel"><?= $dealerSpecificLabel; ?></span></p><br>
 
-                        <?php endforeach; ?>
+                                <?php else: ?>
 
-                    <?php endif; ?>
+                                    <p><span class="vehicleLabel <?= $label; ?>"><?= $label; ?></span></p><br>
+
+                                <?php endif; ?>
+
+                            <?php endforeach; ?>
+
+                        <?php endif; ?>
                 </span>
                 <span class="vehicleDescription">
                     <span class="vehicleTitle"><?= $vehicle->getMakeName() .' '. $vehicle->getModel() .' '. $vehicle->getVariant() ?></span>

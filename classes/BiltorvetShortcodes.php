@@ -182,15 +182,18 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     case 382: $badgeType = 'badge-warning'; break;
                     // "Uden afgift"
                     case 359: $badgeType = 'badge-dark'; break;
-                    // "Udlejning"
-                    case 2: $badgeType = 'badge-purple'; break;
+                    // "Fabriksny"
+                    case 99999: $badgeType = 'badge-purple'; break;
                     // "Lagersalg"
                     case 26: $badgeType = 'badge-secondary'; break;
                     // "I fokus"
                     case 10: $badgeType = 'badge-orange'; break;
+                    // "Kun engros
+                    case 9: $badgeType = 'badge-lightblue'; break;
                 }
                 $labels .= '<span class="badge ' . $badgeType. ' mr-2 mb-1">' . $label->value . '</span>';
             }
+
             return '<div class="bdt">' . $labels . '</div>';
         }
 

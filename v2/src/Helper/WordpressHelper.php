@@ -26,6 +26,11 @@ class WordpressHelper
             return get_option('bdt_options_3') ?? [];
         }
         else {
+
+            if(gettype(get_option('bdt_options')) != 'array') {
+                return [];
+            }
+
             return get_option('bdt_options') ?? [];
        }
     }
@@ -45,11 +50,20 @@ class WordpressHelper
      */
     public static function getApiKey() : string
     {
-
         $options = self::getOptions(1);
 
-        if (array_key_exists('api_key', $options) && $options['api_key']) {
+        // Issues connected to not being able to install the plugin directly from GitHub when installing it for the first time.
+        // This should make it easier for external partners to get started.
+        if($options == null)
+        {
+            $apiKey = $options['api_key'];
+            update_option($apiKey, '');
+        }
+
+        if (array_key_exists('api_key', $options) && isset($options['api_key'])) {
             return $options['api_key'];
+        } else {
+            return '';
         }
     }
 

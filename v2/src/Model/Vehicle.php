@@ -537,4 +537,65 @@ class Vehicle
         $this->companyId = $companyId;
         return $this;
     }
+
+    // Sort labels for better use on vehiclecards
+    public static function sortVehicleLabels(?array $labels) : array
+    {
+        $vehicleLabels = array();
+
+        if ($labels) {
+            foreach($labels as $label) {
+
+                // DealerSpecificLabel
+                if($label->getKey() == 427)
+                {
+                    $vehicleLabels[1] = $label->getValue() . ' DealerSpecificLabel';
+                }
+
+                if($label->getKey() == 11)
+                {
+                    $vehicleLabels[2] = 'Nyhed';
+                }
+
+                if($label->getKey() == 5)
+                {
+                    $vehicleLabels[3] = 'Solgt';
+                }
+
+                if($label->getKey() == 99999)
+                {
+                    $vehicleLabels[4] = 'Fabriksny';
+                }
+
+                if($label->getKey() == 12)
+                {
+                    $vehicleLabels[5] = 'Leasing';
+                }
+
+                if($label->getKey() == 9)
+                {
+                    $vehicleLabels[6] = 'Engros';
+                }
+
+                if($label->getKey() == 382)
+                {
+                    $vehicleLabels[7] = 'Eksport';
+                }
+
+                if($label->getKey() == 26)
+                {
+                    $vehicleLabels[8] = 'Lagersalg';
+                }
+                if($label->getKey() == 1)
+                {
+                    $vehicleLabels[9] = 'Demo';
+                }
+            }
+        }
+
+        // We need the array in ascending order
+        ksort($vehicleLabels);
+
+        return $vehicleLabels;
+    }
 }
