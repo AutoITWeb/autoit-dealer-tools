@@ -56,12 +56,10 @@ Head over to the settings page of the plugin:
 * Choose you primary color (This will be used in multiple places)
 * Configure the rest of the settings if needed.  
 <br>
+
 __Save the settings in all three tabs (if not the plugin might throw errors).__  
+
 <br><br>
-
-![New settings](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-autoit-settings-new.png)
-
-__Save the settings in all three tabs (if not the plugin might throw errors).__  
 
 ![New settings](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-autoit-settings-view.png)
 
