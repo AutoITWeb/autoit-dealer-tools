@@ -59,7 +59,7 @@ Head over to the settings page of the plugin:
 
 __Save the settings in all three tabs (if not the plugin might throw errors).__  
 
-<br><br>
+<br>
 
 ![New settings](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-autoit-settings-view.png)
 
