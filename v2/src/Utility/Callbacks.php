@@ -81,7 +81,8 @@ class Callbacks
 
         $setStatusCode = ucfirst($atts['status']);
 
-        $validStatusCodes = array("Sold", "New", "Leasing", "Warehousesale", "Flexleasing", "Export", "Upcoming", "Rental", "Commission", "Wholesale", "Bus", "NewCar");
+        // Remember to add the labels to the list of valid statuscodes AND thr switch case, else nothing will be returned!
+        $validStatusCodes = array("Sold", "New", "Leasing", "Warehousesale", "Flexleasing", "Export", "Upcoming", "Rental", "Commission", "Wholesale", "Bus", "NewCar", "Demo");
 
         if(!in_array($setStatusCode, $validStatusCodes))
         {
@@ -101,6 +102,7 @@ class Callbacks
             case 'Wholesale' : $label = 9; break;
             case "Bus" : $label = 416; break;
             case "NewCar" : $label = 99999; break;
+            case "Demo" : $label = 1; break;
         }
 
         wp_enqueue_style("bdt_style");

@@ -5428,6 +5428,10 @@ a.bdt .badge-dark.focus {
     background-color: #6c757d
 }
 
+.bdt .vehicleCard .vehicleLabel.Demo {
+    background-color: #00008B
+}
+
 .bdt .vehicleCard .vehicleLabel.DealerSpecificLabel {
     color: #000;
     background-color: #ffff00

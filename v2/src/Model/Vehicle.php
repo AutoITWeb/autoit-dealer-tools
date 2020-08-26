@@ -586,6 +586,10 @@ class Vehicle
                 {
                     $vehicleLabels[8] = 'Lagersalg';
                 }
+                if($label->getKey() == 1)
+                {
+                    $vehicleLabels[9] = 'Demo';
+                }
             }
         }
 
