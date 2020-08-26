@@ -37,9 +37,10 @@ You can find our privacy policy at https://www.biltorvet.as/media/1389/privatliv
 See the release tab in this repository to see the latest changes.
 
 # Installing and using the plugin
-It's very important to follow the installation guide closely in order to make the plugin work.
-
-Download and install the plugin
+It's very important to follow the installation guide closely in order to make the plugin work. We advice against installing the plugin directly from Wordpress. Instead download the files from this repository. Make sure the plugin folder is called __autoit-dealer-tools__.    
+<br>
+The plugin GitHub Updater makes updating this plugin easier: https://github.com/afragen/github-updater  
+<br>
 
 Create a wordpress landingpages for the following:
 * A page for the car search and result list
