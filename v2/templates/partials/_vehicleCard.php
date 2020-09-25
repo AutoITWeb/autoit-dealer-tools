@@ -22,7 +22,9 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 /** @var PriceController $priceController */
 
 // Sorted labels for use on the vehiclecards
-$vehicleLabels = Vehicle::sortVehicleLabels($vehicle->getLabels())
+$vehicleLabels = Vehicle::sortVehicleLabels($vehicle->getLabels());
+
+$carliteDealerLabel = isset($this->_options_2['carlite_dealer_label']) ? $this->_options_2['carlite_dealer_label'] : null;
 
 ?>
 
@@ -35,12 +37,16 @@ $vehicleLabels = Vehicle::sortVehicleLabels($vehicle->getLabels())
                         <?php if ($vehicleLabels) : ?>
 
                             <?php foreach ($vehicleLabels as $label) : ?>
-                                <?php if(strpos($label, ' DealerSpecificLabel')) : ?>
+                                <?php if($label == 'Carlite Dealer Label' && $carliteDealerLabel != null) : ?>
 
-                                    <?php $dealerSpecificLabel = str_replace(" DealerSpecificLabel", " ", $label); ?>
+                                    <?php $dealerSpecificLabel = str_replace("Carlite Dealer Label", $carliteDealerLabel, $label); ?>
                                     <?php unset($vehicleLabels[$label]); ?>
 
                                     <p><span class="vehicleLabel DealerSpecificLabel"><?= $dealerSpecificLabel; ?></span></p><br>
+
+                                <?php elseif($label == 'Carlite Dealer Label' && $carliteDealerLabel == null) : ?>
+
+                                    <?php unset($vehicleLabels[$label]); ?>
 
                                 <?php else: ?>
 
