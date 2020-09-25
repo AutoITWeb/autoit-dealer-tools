@@ -549,7 +549,7 @@ class Vehicle
                 // DealerSpecificLabel
                 if($label->getKey() == 427)
                 {
-                    $vehicleLabels[1] = $label->getValue() . ' DealerSpecificLabel';
+                    $vehicleLabels[1] = 'Carlite Dealer Label';
                 }
 
                 if($label->getKey() == 11)

@@ -186,7 +186,7 @@
                     </div>
                 <?php } ?>
 
-                <?php if(count($initialFilterOptions->companies) > 1 || count($initialFilterOptions->vehicleStates) >= 2): ?>
+                <?php if(count($initialFilterOptions->vehicleStates) >= 2): ?>
                     <div class="col-sm-4 mb-1 mb-sm-3">
                         <select name="vehicleState">
                             <option value=""><?php _e('- Select vehicle state -', 'biltorvet-dealer-tools'); ?></option>

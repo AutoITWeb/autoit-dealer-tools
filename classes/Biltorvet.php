@@ -212,6 +212,7 @@ class Biltorvet
             if (!session_id())
                 session_start();
         }
+
         public function bdt_load_plugin_textdomain() {
             load_plugin_textdomain( 'biltorvet-dealer-tools', FALSE, basename( dirname(dirname( __FILE__ )) ) . '/languages' );
         }
