@@ -498,17 +498,6 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 array_splice($properties, $exclMomsPropIndex, 1);
             }
 
-            foreach($properties as $prop)
-            {
-                // TODO: Refactor - Change the publicName in the API
-                // publicName of "Price" changed to show "ink. devcost"
-                if($prop->id === 'Price')
-                {
-                    $prop->publicName = "Pris (ink. lev. omkostninger)";
-
-                }
-            }
-
             return '<div class="bdt">'.TextUtils::GenerateSpecificationsTable($properties).'</div>';
         }
 

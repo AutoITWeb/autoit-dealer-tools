@@ -1741,3 +1741,66 @@ URL: http://localhost:53871/vehicle/count
 2020-08-12 12:10:28 (Request took 0.036255121231079s)\r\nBiltorvet API: method not found
 URL: https://api-v1.autoit.dk/vehicle/featured
 
+2020-09-21 08:38:21 (Request took 3.2100207805634s)\r\nBiltorvet API: can not connect to the server (7)
+URL: http://localhost:53871/vehicle/count
+
+2020-09-21 08:38:24 (Request took 3.2053561210632s)\r\nBiltorvet API: can not connect to the server (7)
+URL: http://localhost:53871/vehicle/filteroptions
+
+2020-09-21 08:38:40 (Request took 3.2039921283722s)\r\nBiltorvet API: can not connect to the server (7)
+URL: http://localhost:53871/vehicle/count
+
+2020-09-21 08:38:43 (Request took 3.2046148777008s)\r\nBiltorvet API: can not connect to the server (7)
+URL: http://localhost:53871/vehicle/filteroptions
+
+2020-09-25 06:31:17 (Request took 3.2015290260315s)\r\nBiltorvet API: can not connect to the server (7)
+URL: http://localhost:53871/vehicle/count
+
+2020-09-25 06:31:20 (Request took 3.1994090080261s)\r\nBiltorvet API: can not connect to the server (7)
+URL: http://localhost:53871/vehicle/filteroptions
+
+2020-09-25 06:35:04 (Request took 1.8085610866547s)\r\nBiltorvet API: unexpected response code (500)
+URL: http://localhost:53871/vehicle/count
+
+2020-09-25 06:35:06 (Request took 1.1551101207733s)\r\nBiltorvet API: unexpected response code (500)
+URL: http://localhost:53871/vehicle/filteroptions
+
+2020-09-25 06:35:10 (Request took 0.63794207572937s)\r\nBiltorvet API: unexpected response code (500)
+URL: http://localhost:53871/vehicle/count
+
+2020-09-25 06:35:11 (Request took 1.1819500923157s)\r\nBiltorvet API: unexpected response code (500)
+URL: http://localhost:53871/vehicle/filteroptions
+
+2020-09-25 06:36:02 (Request took 0.6831419467926s)\r\nBiltorvet API: unexpected response code (500)
+URL: http://localhost:53871/vehicle/count
+
+2020-09-25 06:36:03 (Request took 1.2369909286499s)\r\nBiltorvet API: unexpected response code (500)
+URL: http://localhost:53871/vehicle/filteroptions
+
+2020-09-25 06:36:12 (Request took 0.64604187011719s)\r\nBiltorvet API: unexpected response code (500)
+URL: http://localhost:53871/vehicle/count
+
+2020-09-25 06:36:13 (Request took 1.3626120090485s)\r\nBiltorvet API: unexpected response code (500)
+URL: http://localhost:53871/vehicle/filteroptions
+
+2020-09-25 06:36:39 (Request took 0.64475297927856s)\r\nBiltorvet API: unexpected response code (500)
+URL: http://localhost:53871/vehicle/count
+
+2020-09-25 06:36:40 (Request took 1.3301689624786s)\r\nBiltorvet API: unexpected response code (500)
+URL: http://localhost:53871/vehicle/filteroptions
+
+2020-09-25 06:44:54 (Request took 5.113941192627s)\r\nBiltorvet API: unexpected response code (500)
+URL: http://localhost:53871/vehicle/count
+
+2020-09-25 06:44:55 (Request took 0.81055998802185s)\r\nBiltorvet API: unexpected response code (500)
+URL: http://localhost:53871/vehicle/filteroptions
+
+2020-09-25 06:46:37 (Request took 4.7027680873871s)\r\nBiltorvet API: unexpected response code (500)
+URL: http://localhost:53871/vehicle/count
+
+2020-09-25 06:46:38 (Request took 1.3236138820648s)\r\nBiltorvet API: unexpected response code (500)
+URL: http://localhost:53871/vehicle/filteroptions
+
+2020-09-25 07:58:14 (Request took 10.004531145096s)\r\nBiltorvet API: can not connect to the server (28)
+URL: http://localhost:53871/vehicle/filteroptions
+

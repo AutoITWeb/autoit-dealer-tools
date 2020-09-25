@@ -233,6 +233,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
 
             add_settings_field(
+                'carlite_dealer_label',
+                __( 'Carlite dealer label', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_carlite_dealer_label_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
                 'hide_vehicles_ad',
                 sprintf(__( 'Hide %s vehicles', 'biltorvet-dealer-tools' ), 'AutoDesktop'),
                 array( $this, 'bdt_hide_ad_vehicles_callback' ), // Callback
@@ -527,6 +535,16 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             $HTML .= '</select>';
 
             echo $HTML;
+        }
+
+
+
+        public function bdt_carlite_dealer_label_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_2" name="bdt_options_2[carlite_dealer_label]" value="%s" size="20"/>',
+                isset( $this->options_2['carlite_dealer_label'] ) ? esc_attr( $this->options_2['carlite_dealer_label']) : ''
+            );
         }
 
         public function bdt_hide_financing_prices_card_callback()
