@@ -126,7 +126,7 @@ Optional attributes:
 
 Example 1: __[bdt_get_vehicles make="Audi"]__ - lists all cars with the make "Audi".  
 
-
+<br>
 ### Global shortcodes  
 These shortcodes should work anywhere in WordPress.  
 <br><br>
