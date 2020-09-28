@@ -104,7 +104,7 @@ If statuscodes are used in AutoDekstop (statuscode are set in the tab "Status, a
 
 __bdt_featuredvehicles__  
 Shows a list of vehicles that had been marked as "In focus" in AutoDesktop. This allows sold cars to show until removed from the index.  
-
+<br>
 Attributes:  
 * __type__ - Set the vehicle type. Valid types: Motorcycle, Car, Truck and Van.  
 * __show__  - Set the amount of featured vehicles shown.  
@@ -112,8 +112,7 @@ Attributes:
 Example 1: __[bdt_featuredvehicles show="3"]__ - 3 vehicles with the statuscode "I fokus" are shown.  
 
 Example 2: __[bdt_featuredvehicles show="3" type="Car"]__ - 3 cars with the statuscode "I fokus" are shown.  
-
-Example 3: __[bdt_get_vehicles make="Audi" model="A5" propellant="diesel"]__ - lists all cars with the make "Audi", model "A5" and uses diesel as propellant.
+<br>
 
 __bdt_get_vehicles__  
 Creates a list of cars from a specific make  
