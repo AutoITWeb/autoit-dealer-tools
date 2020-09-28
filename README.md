@@ -101,7 +101,8 @@ If statuscodes are used in AutoDekstop (statuscode are set in the tab "Status, a
 ![Settings](https://www.autoit.dk/Media/autoit-dealer-tools/dealer_label_documentation.png)  
 
 <br>
-__bdt_featuredvehicles__ 
+
+__bdt_featuredvehicles__  
 Shows a list of vehicles that had been marked as "In focus" in AutoDesktop. This allows sold cars to show until removed from the index.  
 
 __bdt_get_vehicles__  
