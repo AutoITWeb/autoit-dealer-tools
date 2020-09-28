@@ -93,8 +93,10 @@ Print out a vehicle "card" - a box with short informations about the vehicle. Th
 Attributes:
 * vehicle - specifies the vehicle ID. If omitted, it will look for bdt_vehicle_id URL parameter.  
 <br>
+
 __Labels__  
 If statuscodes are used in AutoDekstop (statuscode are set in the tab "Status, annoncering og leasing") they will be shown on top of the vehicle image on the vehiclecards. A special dealer specific label can be activated (Please contact our Support deparment for further information) and set in the settings menu.  
+
 ![Vehiclelabes](https://www.autoit.dk/Media/autoit-dealer-tools/vehiclecard_documentation.png)  
 ![Settings](https://www.autoit.dk/Media/autoit-dealer-tools/dealer_label_documentation.png)  
 
