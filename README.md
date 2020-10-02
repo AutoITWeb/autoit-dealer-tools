@@ -334,7 +334,9 @@ Print out a list of labels asociated with the given car. Labels come in predefin
 * .bdt .badge-purple - used for "Udlejning" label  
 
 Attributes:  
-* __allowed="new,sold"__ - comma separated list of labels that are allowed to be shown. Use this if there are too many labels available, and you don't necessarily want to show them all. If ommited, all labels will be returned.  
+* __allowed=""__ - comma separated list of labels that are allowed to be shown. Use this if there are too many labels available, and you don't necessarily want to show them all. If ommited, all labels will be returned.  
+
+Example 1: [bdt_vehicle_labels allowed="Nyhed,Solgt,Leasing,Reserveret,Demonstration,Fabriksny,Kun engros"  
 
 __bdt_vehicle_search_backtoresults__  
 Prints out a "smart" back button, that returns you to the vehicle search results if available, or car search if not.  
