@@ -121,7 +121,8 @@ Required attribute:
 
 Optional attributes:  
 * __model__  
-* __propellant__  
+* __propellant__
+* __companyid__  
 
 
 Example 1: __[bdt_get_vehicles make="Audi"]__ - lists all cars with the make "Audi".  
