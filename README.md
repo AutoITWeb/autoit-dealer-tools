@@ -113,20 +113,6 @@ Example 1: __[bdt_featuredvehicles show="3"]__ - 3 vehicles with the statuscode 
 
 Example 2: __[bdt_featuredvehicles show="3" type="Car"]__ - 3 cars with the statuscode "I fokus" are shown.  
 <br>
-
-__bdt_get_vehicles__  
-Creates a list of cars from a specific make  
-Required attribute:  
-* __make__  
-
-Optional attributes:  
-* __model__  
-* __propellant__
-* __companyid__  
-
-
-Example 1: __[bdt_get_vehicles make="Audi"]__ - lists all cars with the make "Audi".  
-
 <br>
 
 ### Global shortcodes  
