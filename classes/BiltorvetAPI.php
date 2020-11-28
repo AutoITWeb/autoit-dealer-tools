@@ -45,17 +45,6 @@
             return $this->Request('/vehicle/type');
         }
 
-//        public function GetVehicleStates()
-//        {
-//            $vehicleStatesRaw = $this->Request('/vehicle/vehiclestates');
-//            $vehicleStates = array();
-//            foreach($vehicleStatesRaw as $vehicleStates)
-//            {
-//                $vehicleStates[$vehicleStates->key] = $vehicleStates->value;
-//            }
-//            return $vehicleStates;
-//        }
-
         public function GetVehicle($id)
         {
             return $this->Request('/vehicle/detail/' . TextUtils::Sanitize($id));
@@ -236,14 +225,14 @@
 
                 return $data;
             } catch(Exception $e) {
-//                $requestEnd = microtime(true);
-//                if(!is_dir(dirname($this->errLogFile)))
-//                {
-//                    mkdir(dirname($this->errLogFile), 0777);
-//                }
-//                error_log(date('Y-m-d H:i:s') . ' (Request took '. ($requestEnd - $requestStart) . 's)\r\n' . $e->getMessage() . "\r\nURL: " . $this->endpoint . $method . "\r\n\r\n", 3, $this->errLogFile);
-//
-//                throw $e;
+                $requestEnd = microtime(true);
+                if(!is_dir(dirname($this->errLogFile)))
+                {
+                    mkdir(dirname($this->errLogFile), 0777);
+                }
+                error_log(date('Y-m-d H:i:s') . ' (Request took '. ($requestEnd - $requestStart) . 's)\r\n' . $e->getMessage() . "\r\nURL: " . $this->endpoint . $method . "\r\n\r\n", 3, $this->errLogFile);
+
+                throw $e;
             }
         }
     }
