@@ -1804,3 +1804,117 @@ URL: http://localhost:53871/vehicle/filteroptions
 2020-09-25 07:58:14 (Request took 10.004531145096s)\r\nBiltorvet API: can not connect to the server (28)
 URL: http://localhost:53871/vehicle/filteroptions
 
+2020-10-06 11:19:06 (Request took 0.015324115753174s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/count
+
+2020-10-06 11:19:06 (Request took 0.019428014755249s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/filteroptions
+
+2020-10-06 11:19:24 (Request took 0.021257877349854s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/count
+
+2020-10-06 11:19:24 (Request took 0.020002841949463s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/filteroptions
+
+2020-10-06 11:19:42 (Request took 0.026197910308838s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/count
+
+2020-10-06 11:19:42 (Request took 0.017296075820923s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/filteroptions
+
+2020-10-06 11:19:46 (Request took 0.015176057815552s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/count
+
+2020-10-06 11:19:46 (Request took 0.022491931915283s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/filteroptions
+
+2020-10-06 11:20:46 (Request took 0.055026054382324s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/count
+
+2020-10-06 11:20:46 (Request took 0.016282081604004s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/filteroptions
+
+2020-10-06 11:21:33 (Request took 0.022981882095337s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/count
+
+2020-10-06 11:21:33 (Request took 0.015736818313599s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/filteroptions
+
+2020-10-06 11:23:18 (Request took 0.019132852554321s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/count
+
+2020-10-06 11:23:18 (Request took 0.016247034072876s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/filteroptions
+
+2020-10-06 11:40:10 (Request took 0.021413087844849s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/count
+
+2020-10-06 11:40:10 (Request took 0.017981052398682s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/filteroptions
+
+2020-10-06 11:40:13 (Request took 0.01389217376709s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/count
+
+2020-10-06 11:40:13 (Request took 0.014136075973511s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/filteroptions
+
+2020-10-06 11:40:19 (Request took 0.01653790473938s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/count
+
+2020-10-06 11:40:19 (Request took 0.017777919769287s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/filteroptions
+
+2020-10-06 13:36:45 (Request took 0.020906925201416s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/count
+
+2020-10-06 13:36:45 (Request took 0.015842914581299s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/filteroptions
+
+2020-10-06 13:47:02 (Request took 0.0141921043396s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/count
+
+2020-10-06 13:47:03 (Request took 0.017957925796509s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/filteroptions
+
+2020-10-06 13:47:11 (Request took 0.025718927383423s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/count
+
+2020-10-06 13:47:11 (Request took 0.017436027526855s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/filteroptions
+
+2020-10-06 13:54:33 (Request took 0.033007144927979s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/count
+
+2020-10-06 13:54:33 (Request took 0.023606061935425s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/filteroptions
+
+2020-10-06 13:55:13 (Request took 0.013657093048096s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/count
+
+2020-10-06 13:55:13 (Request took 0.014541149139404s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/filteroptions
+
+2020-10-06 18:43:17 (Request took 0.091049909591675s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/count
+
+2020-10-06 18:43:17 (Request took 0.050836086273193s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/filteroptions
+
+2020-10-06 18:43:23 (Request took 0.036171913146973s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/count
+
+2020-10-06 18:43:23 (Request took 0.036555051803589s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/filteroptions
+
+2020-10-06 18:44:14 (Request took 0.072074890136719s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/count
+
+2020-10-06 18:44:14 (Request took 0.033183813095093s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/filteroptions
+
+2020-10-06 19:07:25 (Request took 0.091322898864746s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/count
+
+2020-10-06 19:07:25 (Request took 0.02363109588623s)\r\nBiltorvet API: can not connect to the server (60)
+URL: https://api-v1.autoit.dk/vehicle/filteroptions
+

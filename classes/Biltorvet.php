@@ -209,7 +209,7 @@ class Biltorvet
 
         public function bdt_register_session()
         {
-            if (!session_id())
+            if (session_id() == '')
                 session_start();
         }
 
@@ -244,7 +244,7 @@ class Biltorvet
             if($postId != $vehicleSearchPage && !in_array($postId, $vehicleSearchPageAncestors))
             {
                 return;
-            }   
+            }
             Biltorvet::bdt_refresh_rewrite_rules();
         }
 

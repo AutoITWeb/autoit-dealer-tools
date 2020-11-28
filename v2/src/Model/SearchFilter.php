@@ -285,7 +285,7 @@ class SearchFilter
     }
 
     /**
-     * @param  string[] $ProductTypes
+     * @param  string[] $NewUsed
      * @return SearchFilter
      */
     public function setNewUsed(array $NewUsed): SearchFilter
