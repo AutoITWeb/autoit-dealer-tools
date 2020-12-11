@@ -176,7 +176,7 @@
     ?>
     <div class="bdt">
         <div class="vehicle_search"<?php echo $makeIds !== null ? ' data-makeids="'.$makeIds.'"' : '';  ?>>
-            <div class="row justify-content-between">
+            <div class="row">
                 <?php if(count((array)$initialFilterOptions->companies) > 1) { ?>
                     <div class="col-sm-4 mb-1 mb-sm-3">
                         <select name="company" id="company">
@@ -232,7 +232,7 @@
                 <?php } ?>
 
             </div>
-            <div class="row justify-content-between">
+            <div class="row">
                 <div class="col-sm-4 mt-3 mt-sm-0 mb-3">
                     <div class="bdtSliderContainer">
                         <label for="priceRange" class="float-left"><?php _e('Price', 'biltorvet-dealer-tools'); ?></label>
