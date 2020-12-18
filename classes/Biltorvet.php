@@ -91,22 +91,6 @@ class Biltorvet
         global $wp_query;
         global $wp;
 
-        // Check if this is a car search, and if it is, make it non-cacheable
-        if (isset($wp_query->post->ID) && $wp_query->post->ID === intval($this->_options['vehiclesearch_page_id'])) {
-            // Make sure that the search page, which is volatile,  does not get indexed.
-            if (!has_action('wp_no_robots') && !has_action('noindex')) {
-                wp_no_robots();
-            }
-            ?>
-            <meta http-equiv="cache-control" content="max-age=0"/>
-            <meta http-equiv="cache-control" content="no-cache"/>
-            <meta http-equiv="expires" content="0"/>
-            <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT"/>
-            <meta http-equiv="pragma" content="no-cache"/>
-            <?php
-            return;
-        }
-
         $vehicleId = get_query_var('bdt_vehicle_id', -1);
         if ($vehicleId === -1) {
             return;
@@ -211,6 +195,8 @@ class Biltorvet
         {
             if (session_id() == '')
                 session_start();
+
+            session_write_close();
         }
 
         public function bdt_load_plugin_textdomain() {
