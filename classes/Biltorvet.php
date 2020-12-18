@@ -195,8 +195,6 @@ class Biltorvet
         {
             if (session_id() == '')
                 session_start();
-
-            //session_write_close();
         }
 
         public function bdt_load_plugin_textdomain() {
