@@ -21,7 +21,6 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-
 require_once plugin_dir_path( __FILE__ ) . 'enums/ActivityType.php';
 require_once plugin_dir_path( __FILE__ ) . 'enums/WidgetType.php';
 require_once plugin_dir_path( __FILE__ ) . 'enums/WidgetAutodesktopLeadsActivityTypesEnum.php';
