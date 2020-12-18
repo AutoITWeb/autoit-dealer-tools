@@ -185,7 +185,7 @@
                             break;
                             case 404:
                                 throw new Exception(__('Biltorvet API: method not found', 'biltorvet-dealer-tools'));
-                            break;
+                            break;se
                             default:
                                 throw new Exception(sprintf( __('Biltorvet API: unexpected response code (%u)', 'biltorvet-dealer-tools'), intval($httpCode)));
                             break;
