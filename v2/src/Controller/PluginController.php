@@ -51,7 +51,7 @@ class PluginController
      */
     private function filters()
     {
-        add_filter('wp_mail', array($this->callbacks, 'sendLead'));
+        //add_filter('wp_mail', array($this->callbacks, 'sendLead'));
     }
 
     /**

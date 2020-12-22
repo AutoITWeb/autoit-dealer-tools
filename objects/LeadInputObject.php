@@ -11,7 +11,7 @@
         public $Model; // vehicle make, model and variant
         public $FirstRegistrationDate; // DateTime
         public $RequestedTestdriveDateTime; // DateTime
-        public $Message; // Additional info
+        public $body; // Additional info
         public $ActivityType; // ActivityType enum
         public $CompanyId;
     }

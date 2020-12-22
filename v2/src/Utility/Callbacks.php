@@ -188,28 +188,30 @@ class Callbacks
      * @return array
      * @throws Exception
      */
-    public function sendLead(array $args)
-    {
-
-        if (WordpressHelper::isActivityType(WordpressHelper::getQueryParameter('bdt_actiontype'))) {
-            $vehicle = $this->apiController->getVehicleDetails(WordpressHelper::getQueryParameter('bdt_vehicle_id'));
-
-            if ($vehicle === null) {
-                return $args;
-            }
-
-            // Append the vehicle info to the WP email.
-            $args['message'] .= "\r\n\r\n" .  sprintf(__('Selected vehicle: %s', 'biltorvet-dealer-tools'), $vehicle->getModel() . ' (' . $vehicle->getId() . ')');
-            // Some e-mail clients don't respect the reply-to header, and then we lose the information about sender. For this reason, we are gluing the sender e-mail back to the e-mail body.
-            $args['message'] .= "\r\n\r\n" .  sprintf(__('Lead sender: %s', 'biltorvet-dealer-tools'), WordpressHelper::getReplyTo($args));
-
-            $this->apiController->sendLead(VehicleLeadFactory::create($vehicle, $args, WordpressHelper::getQueryParameters()));
-        }
-
-        $args['message'] = MailFormatter::MakeLabelsUppercase($args['message']);
-
-        return $args;
-    }
+//    public function sendLead(array $args)
+//    {
+//        $args['message'] .= "\r\n" . "Email afsendt fra: " . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+//
+//        if (WordpressHelper::isActivityType(WordpressHelper::getQueryParameter('bdt_actiontype'))) {
+//            $vehicle = $this->apiController->getVehicleDetails(WordpressHelper::getQueryParameter('bdt_vehicle_id'));
+//
+//            if ($vehicle === null) {
+//                $args['message'] = MailFormatter::MakeLabelsUppercase($args['message']);
+//                return $args;
+//            }
+//
+//            // Append the vehicle info to the WP email.
+//            $args['message'] .= "\r\n\r\n" .  sprintf(__('Selected vehicle: %s', 'biltorvet-dealer-tools'), $vehicle->getModel() . ' (' . $vehicle->getId() . ')');
+//            // Some e-mail clients don't respect the reply-to header, and then we lose the information about sender. For this reason, we are gluing the sender e-mail back to the e-mail body.
+//            $args['message'] .= "\r\n\r\n" .  sprintf(__('Lead sender: %s', 'biltorvet-dealer-tools'), WordpressHelper::getReplyTo($args));
+//
+//            $this->apiController->sendLead(VehicleLeadFactory::create($vehicle, $args, WordpressHelper::getQueryParameters()));
+//        }
+//
+//        $args['message'] = MailFormatter::MakeLabelsUppercase($args['message']);
+//
+//        return $args;
+//    }
 
     public function debug_page_menu()
     {
