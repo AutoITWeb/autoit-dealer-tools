@@ -26,12 +26,12 @@ class WordpressHelper
             return get_option('bdt_options_3') ?? [];
         }
         else {
-
             if(gettype(get_option('bdt_options')) != 'array') {
                 return [];
             }
 
-            return get_option('bdt_options') ?? [];
+        return get_option('bdt_options') ?? [];
+
        }
     }
 

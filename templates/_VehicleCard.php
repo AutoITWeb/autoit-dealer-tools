@@ -23,8 +23,7 @@
         $priceLabel = null;
         if(intval($leasingMonthlyPaymentRaw) > 0)
         {
-            if ($this->_options['bdt_hide_leasing_prices'] != 'on') {
-
+            if ($this->_options_2['bdt_hide_leasing_prices_card'] != 'on') {
 
                 if($leasingBusiness === 'Ja')
                 {
@@ -36,7 +35,7 @@
             }
             $priceLabel = __('Leasing price', 'biltorvet-dealer-tools');
         }
-        if(intval($financingMonthlyPayment) > 0 && $this->_options['bdt_hide_financing_prices'] != 'on')
+        if(intval($financingMonthlyPayment) > 0 && $this->_options_2['bdt_hide_financing_prices_card'] != 'on')
         {
             $showPrice = $financingMonthlyPayment;
             $priceLabel = __('Financing price', 'biltorvet-dealer-tools');
