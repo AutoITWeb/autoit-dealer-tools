@@ -50,7 +50,7 @@ Create a wordpress landingpages for the following:
 
 Head over to the settings page of the plugin:  
 
-![New settings](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-autoit-settings-new.png)
+![New settings](https://www.autoit.dk/media/autoit-dealer-tools/bdt-autoit-settings-new.png)
 
 
 * Fill out the api-key that has been provided by AutoIT A/S.
@@ -346,7 +346,7 @@ Se example below to see an example with the Contact Form 7 plugin.
 
 To show a car-card next to the form, as showed below, use this shortcode: [bdt_vehicle_card]  
 
-![contactform](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-adt-leads-3.png)  
+![contactform](https://www.autoit.dk/media/autoit-dealer-tools/bdt-adt-leads-3.png)  
 
 __NB The vehicle-card will only be visible, when a client comes directly from a vehicle detailspage.__<br><br>
 
@@ -376,7 +376,7 @@ All widgets have following common attributes, that you can use to tweak their ap
 
 Example 1: [bdt_widget type="Santander" color="#ff0000"]<br><br>
 
-![widget](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-widget.png)<br><br>
+![widget](https://www.autoit.dk/media/autoit-dealer-tools/bdt-widget.png)<br><br>
 
 
 
