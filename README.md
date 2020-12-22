@@ -62,7 +62,7 @@ __Save the settings in all three tabs (if not the plugin might throw errors).__
 
 <br>
 
-![New settings](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-autoit-settings-view.png)
+![New settings](https://www.autoit.dk/media/autoit-dealer-tools/bdt-autoit-settings-view.png)
 
 ## Shortcodes
 You are now ready to place the shorcodes on the landingpages  
@@ -97,8 +97,8 @@ Attributes:
 __Labels__  
 If statuscodes are used in AutoDekstop (statuscode are set in the tab "Status, annoncering og leasing") they will be shown on top of the vehicle image on the vehiclecards. A special dealer specific label can be activated (Please contact our Support deparment for further information) and set in the settings menu.  
 
-![Vehiclelabes](https://www.autoit.dk/Media/autoit-dealer-tools/vehiclecard_documentation.png)  
-![Settings](https://www.autoit.dk/Media/autoit-dealer-tools/dealer_label_documentation.png)  
+![Vehiclelabes](https://www.autoit.dk/media/autoit-dealer-tools/vehiclecard_documentation.png)  
+![Settings](https://www.autoit.dk/media/autoit-dealer-tools/dealer_label_documentation.png)  
 
 <br>
 
@@ -337,12 +337,12 @@ Shows icons for Facebook-sharing, sharing by mail and printing.<br><br>
 ### Setup your forms to send leads to AutoDesktop  
 To be able to send leads to AutoDesktop you need to create forms on the pages that you have specified on the settingspage of the AutoIt plugin.  
 
-![forms](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-adt-leads-1.png)  
+![forms](https://www.autoit.dk/media/autoit-dealer-tools/bdt-adt-leads-1.png)  
 
 To be able to send leads when the forms get submitted, you need to set the ID’ to the specific inputs fields.
 Se example below to see an example with the Contact Form 7 plugin.  
 
-![contactform7](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-adt-leads-2-contactform7.png)  
+![contactform7](https://www.autoit.dk/media/autoit-dealer-tools/bdt-adt-leads-2-contactform7.png)  
 
 To show a car-card next to the form, as showed below, use this shortcode: [bdt_vehicle_card]  
 
@@ -428,14 +428,14 @@ __Consent:__
 How the search, result and detailspage can be build.
 
 <br>__Car search / resultlist__  
-![search page](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-search-and-result-page-old-1.png)  
+![search page](https://www.autoit.dk/media/autoit-dealer-tools/bdt-search-and-result-page-old-1.png)  
 
 <br>__Vehicle detailspage__  
-![detailspage](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-details-old-1.png)  
+![detailspage](https://www.autoit.dk/media/autoit-dealer-tools/bdt-details-old-1.png)  
 
-![detailspage](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-details-old-2.png)  
+![detailspage](https://www.autoit.dk/media/autoit-dealer-tools/bdt-details-old-2.png)  
 
-![detailspage](https://www.autoit.dk/Media/autoit-dealer-tools/bdt-details-old-3.png)<br><br>
+![detailspage](https://www.autoit.dk/media/autoit-dealer-tools/bdt-details-old-3.png)<br><br>
 
 
 ### Searchpage and resultlist  
