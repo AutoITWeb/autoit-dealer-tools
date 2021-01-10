@@ -42,6 +42,11 @@ It's very important to follow the installation guide closely in order to make th
 The plugin GitHub Updater makes updating this plugin easier: https://github.com/afragen/github-updater  
 <br>
 
+__Caching__  
+<br>
+As the vehiclefeed get's updated four times an hour caching the search resultlist and vehicledetails page can cause issues with the amount of vehicles shown on the website and their data. It's advised not to cache the pages containing the vehiclesearch results and vehicledetails.  
+<br>
+
 Create a wordpress landingpages for the following:
 * A page for the car search and result list
 * A page for the car detail
