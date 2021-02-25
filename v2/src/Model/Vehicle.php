@@ -78,6 +78,10 @@ class Vehicle
      */
     private $images;
     /**
+     * @var string|null
+     */
+    private $vehicleCardImage;
+    /**
      * @var Property[]|null
      */
     private $properties;
@@ -499,6 +503,24 @@ class Vehicle
     public function setUrl(?string $url): Vehicle
     {
         $this->url = $url;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getVehicleCardImage(): ?string
+    {
+        return $this->vehicleCardImage;
+    }
+
+    /**
+     * @param  string|null $vehicleCardImage
+     * @return Vehicle
+     */
+    public function setVehicleCardImage(?string $vehicleCardImage): Vehicle
+    {
+        $this->vehicleCardImage = $vehicleCardImage;
         return $this;
     }
 

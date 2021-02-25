@@ -33,7 +33,7 @@ $carliteDealerLabel = isset($this->_options_2['carlite_dealer_label']) ? $this->
         <div class="vehicleCard">
             <a href="<?= get_permalink($basePage) . $vehicle->getUri() ?>">
                 <span class="vehicleThumb">
-                    <img src="<?= $vehicle->getImages()[0] ?>" class="img-responsive" loading="lazy" alt="<?= $vehicle->getMakeName() .' '. $vehicle->getModel() .' '. $vehicle->getVariant() ?>"/>
+                    <img src="<?= $vehicle->getVehicleCardImage() ? $vehicle->getVehicleCardImage() : $vehicle->getImages()[0] ?>" class="img-responsive" loading="lazy" alt="<?= $vehicle->getMakeName() .' '. $vehicle->getModel() .' '. $vehicle->getVariant() ?>"/>
                         <?php if ($vehicleLabels) : ?>
 
                             <?php foreach ($vehicleLabels as $label) : ?>
