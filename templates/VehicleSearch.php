@@ -193,7 +193,7 @@
                     </div>
                 <?php endif; ?>
 
-                <?php if(count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->makes) > 1): ?>
+                <?php if(count($initialFilterOptions->makes) >= 1): ?>
                 <div class="col-sm-4 mb-1 mb-sm-3">
                     <select name="make" id="make">
                         <option value=""><?php _e('- Select make -', 'biltorvet-dealer-tools'); ?></option>
