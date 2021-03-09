@@ -65,6 +65,14 @@
             }
             $filterObject->HideWarehousesaleVehicles = 'true';
         }
+        if(isset($this->_options_2['hide_carlite_dealer_label_vehicles']) && $this->_options_2['hide_carlite_dealer_label_vehicles'] === 'on')
+        {
+            if($filterObject === null)
+            {
+                $filterObject = new BDTFilterObject();
+            }
+            $filterObject->HideCarLiteDealerLabelVehicles = 'true';
+        }
         if(isset($this->_options_2['hide_export_vehicles']) && $this->_options_2['hide_export_vehicles'] === 'on')
         {
             if($filterObject === null)
@@ -193,7 +201,7 @@
                     </div>
                 <?php endif; ?>
 
-                <?php if(count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->makes) > 1): ?>
+                <?php if(count($initialFilterOptions->makes) >= 1): ?>
                 <div class="col-sm-4 mb-1 mb-sm-3">
                     <select name="make" id="make">
                         <option value=""><?php _e('- Select make -', 'biltorvet-dealer-tools'); ?></option>

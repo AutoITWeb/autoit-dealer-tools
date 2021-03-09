@@ -58,6 +58,14 @@ try{
         }
         $filterObject->HideWarehousesaleVehicles = 'true';
     }
+    if(isset($this->_options_2['hide_carlite_dealer_label_vehicles']) && $this->_options_2['hide_carlite_dealer_label_vehicles'] === 'on')
+    {
+        if($filterObject === null)
+        {
+            $filterObject = new BDTFilterObject();
+        }
+        $filterObject->HideCarLiteDealerLabelVehicles = 'true';
+    }
     if(isset($this->_options_2['hide_export_vehicles']) && $this->_options_2['hide_export_vehicles'] === 'on')
     {
         if($filterObject === null)

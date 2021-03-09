@@ -21,6 +21,7 @@
         public $HideLeasingVehicles; // Bool
         public $HideFlexLeasingVehicles; // Bool
         public $HideWarehousesaleVehicles; // Bool
+        public $HideCarLiteDealerLabelVehicles; // Bool
         public $HideExportVehicles; // Bool
         public $HideRentalVehicles; // Bool
         public $HideCommissionVehicles; // Bool

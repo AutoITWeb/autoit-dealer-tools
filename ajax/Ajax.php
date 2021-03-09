@@ -6,6 +6,7 @@
         private $_options;
         private $_options_2;
         private $_options_3;
+        private $_options_4;
 
         public function __construct($biltorvetAPI)
         {
@@ -16,6 +17,7 @@
             $this->_options = get_option( 'bdt_options' );
             $this->_options_2 = get_option( 'bdt_options_2' );
             $this->_options_3 = get_option( 'bdt_options_3' );
+            $this->_options_4 = get_option( 'bdt_options_4' );
             $this->biltorvetAPI = $biltorvetAPI;
 
             add_action( 'wp_ajax_get_filter_options', array($this, 'bdt_get_filter_options') );
@@ -41,6 +43,7 @@
             $filterObject->HideLeasingVehicles = isset($this->_options_2['hide_leasing_vehicles']) && $this->_options_2['hide_leasing_vehicles'] === 'on' ? 'true' : null;
             $filterObject->HideFlexLeasingVehicles = isset($this->_options_2['hide_flexleasing_vehicles']) && $this->_options_2['hide_flexleasing_vehicles'] === 'on' ? 'true' : null;
             $filterObject->HideWarehousesaleVehicles = isset($this->_options_2['hide_flexleasing_vehicles']) && $this->_options_2['hide_flexleasing_vehicles'] === 'on' ? 'true' : null;
+            $filterObject->HideCarLiteDealerLabelVehicles = isset($this->_options_2['hide_carlite_dealer_label_vehicles']) && $this->_options_2['hide_carlite_dealer_label_vehicles'] === 'on' ? 'true' : null;
             $filterObject->HideRentalVehicles = isset($this->_options_2['hide_rental_vehicles']) && $this->_options_2['hide_rental_vehicles'] === 'on' ? 'true' : null;
             $filterObject->HideUpcomingVehicles = isset($this->_options_2['hide_upcoming_vehicles']) && $this->_options_2['hide_upcoming_vehicles'] === 'on' ? 'true' : null;
             $filterObject->HideWholesaleVehicles = isset($this->_options_2['hide_wholesale_vehicles']) && $this->_options_2['hide_wholesale_vehicles'] === 'on' ? 'true' : null;

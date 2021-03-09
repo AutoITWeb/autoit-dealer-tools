@@ -96,6 +96,11 @@ class SearchFilter
     /**
      * @var boolean
      */
+    public $HideCarLiteDealerLabelVehicles; // Bool
+
+    /**
+     * @var boolean
+     */
     public $HideExportVehicles; // Bool
 
     /**
@@ -489,6 +494,24 @@ class SearchFilter
     public function setHideWarehousesaleVehicles(bool $HideWarehousesaleVehicles): SearchFilter
     {
         $this->HideWarehousesaleVehicles = $HideWarehousesaleVehicles;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideCarLiteDealerLabelVehicles(): bool
+    {
+        return $this->HideCarLiteDealerLabelVehicles;
+    }
+
+    /**
+     * @param  bool $HideCarLiteDealerLabelVehicles
+     * @return SearchFilter
+     */
+    public function setHideCarLiteDealerLabelVehicles(bool $HideCarLiteDealerLabelVehicles): SearchFilter
+    {
+        $this->HideCarLiteDealerLabelVehicles = $HideCarLiteDealerLabelVehicles;
         return $this;
     }
 
