@@ -128,6 +128,27 @@
             }
         }
 
+        public static function GenerateAdditionalEquipmentTable($array)
+        {
+            $content = '';
+            $additionalEquipmentContentItems = '';
+
+            foreach($array as $a)
+            {
+                if(!isset($a->value) || trim($a->value) === '')
+                {
+                    continue;
+                }
+
+                $additionalEquipmentContentItems .= '<div class="col-6 col-sm-4 col-lg-3 ' . $a->id . '"><img src="' . $a->images[0] . '" loading="lazy" alt="' . $a->id . '" class="additionalequipment_image"><p class="additionalequipmentlabel">' . $a->publicName . '</p><p class="bdt_additionalequipment_value">' . (isset($a->valueFormatted) && $a->valueFormatted != '' ? $a->valueFormatted : $a->value) . '</p></div>';
+                $additionalEquipmentContent = '<div class="row">' . $additionalEquipmentContentItems . '</div>';
+
+                $content = '<div class="contentColumn">' . $additionalEquipmentContent . '</div></div>';
+            }
+
+            return $content;
+        }
+
         public static function GenerateSpecificationsTable($array)
         {
             $groups = array();

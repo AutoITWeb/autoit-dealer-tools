@@ -2,8 +2,8 @@
     if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
     
     class BiltorvetAPI {
-        private $endpoint = 'https://api-v1.autoit.dk';
-//        private $endpoint = 'http://localhost:53871';
+//        private $endpoint = 'https://api-v1.autoit.dk';
+        private $endpoint = 'http://localhost:60718';
         private $apiKey;
         private $vehicleResultsPageLimit = 30;
         private $errLogFile;
@@ -23,6 +23,11 @@
         public function GetMakes()
         {
             return $this->Request('/vehicle/make');
+        }
+
+        public function GetCompanies()
+        {
+            return $this->Request('/companies');
         }
 
         public function GetModels($make = null)

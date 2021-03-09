@@ -12,11 +12,12 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
         private $options;
         private $options_2;
         private $options_3;
+        private $options_4;
 
         /**
          * Start up
          */
-        public function __construct($options, $options_2, $options_3)
+        public function __construct($options, $options_2, $options_3, $options_4)
         {
             if($options === null)
             {
@@ -25,6 +26,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             $this->options = $options;
             $this->options_2 = $options_2;
             $this->options_3 = $options_3;
+            $this->options_4 = $options_4;
 
             add_action( 'admin_menu', array( $this, 'bdt_add_plugin_page' ) );
             add_action( 'admin_init', array( $this, 'bdt_page_init' ) );
@@ -72,6 +74,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     <a href="?page=autoit-dealer-tools-options&tab=tab_one" class="nav-tab <?= $active_tab == 'tab_one' ? 'nav-tab-active' : ''; ?>"><?= __( 'General Settings', 'biltorvet-dealer-tools' ) ?></a>
                     <a href="?page=autoit-dealer-tools-options&tab=tab_two" class="nav-tab <?= $active_tab == 'tab_two' ? 'nav-tab-active' : ''; ?>"><?= __( 'Search result settings', 'biltorvet-dealer-tools' ) ?></a>
                     <a href="?page=autoit-dealer-tools-options&tab=tab_three" class="nav-tab <?= $active_tab == 'tab_three' ? 'nav-tab-active' : ''; ?>"><?= __( 'Vehicle details settings', 'biltorvet-dealer-tools' ) ?></a>
+                    <a href="?page=autoit-dealer-tools-options&tab=tab_four" class="nav-tab <?= $active_tab == 'tab_four' ? 'nav-tab-active' : ''; ?>"><?= __( 'Map settings', 'biltorvet-dealer-tools' ) ?></a>
                 </h2>
 
                 <form method="post" action="options.php">
@@ -90,6 +93,11 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
                         settings_fields( 'bdt-settings-group-3' );
                         do_settings_sections( 'bdt-settings-group-3' );
+
+                    } else if ( $active_tab == 'tab_four') {
+
+                        settings_fields( 'bdt-settings-group-4' );
+                        do_settings_sections( 'bdt-settings-group-4' );
                     }
 
                     ?>
@@ -127,6 +135,13 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt-settings-group-3' // Page
             );
 
+            add_settings_section(
+                'bdt_settings_section_4',
+                __( 'Map settings', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_print_section_info_map_settings' ), // Callback
+                'bdt-settings-group-4' // Page
+            );
+
             register_setting(
                 'bdt-settings-group-1', // Option group
                 'bdt_options' // Option name
@@ -139,6 +154,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             register_setting(
                 'bdt-settings-group-3', // Option group
                 'bdt_options_3' // Option name
+            );
+            register_setting(
+                'bdt-settings-group-4', // Option group
+                'bdt_options_4' // Option name
             );
 
             add_settings_field(
@@ -280,6 +299,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt_settings_section_2' // Section
             );
             add_settings_field(
+                'hide_carlite_dealer_label_vehicles',
+                __( 'Hide vehicles with status Carlite Dealer Label', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_hide_carlite_dealer_label_vehicles_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
                 'hide_warehousesale_vehicles',
                 __( 'Hide vehicles with status Warehousesale', 'biltorvet-dealer-tools' ),
                 array( $this, 'bdt_hide_warehousesale_vehicles_callback' ), // Callback
@@ -390,6 +417,51 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt-settings-group-2', // Page
                 'bdt_settings_section_2' // Section
             );
+
+            add_settings_field(
+                'bdt_set_view',
+                __( 'Set view (latitude and longitude)', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_set_view_callback' ),
+                'bdt-settings-group-4', // Page
+                'bdt_settings_section_4' // Section
+            );
+
+            add_settings_field(
+                'bdt_zoom_level',
+                __( 'Set zoom level for global map', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_zoom_level_callback' ),
+                'bdt-settings-group-4', // Page
+                'bdt_settings_section_4' // Section
+            );
+            add_settings_field(
+                'bdt_zoom_level_detailspage',
+                __( 'Set zoom level for map on detailspage', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_zoom_level_detailspage_callback' ),
+                'bdt-settings-group-4', // Page
+                'bdt_settings_section_4' // Section
+            );
+            add_settings_field(
+                'bdt_tile_layer',
+                __( 'Set tile layer', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_tile_layer_callback' ),
+                'bdt-settings-group-4', // Page
+                'bdt_settings_section_4' // Section
+            );
+
+            add_settings_field(
+                'bdt_marker_color',
+                __( 'Marker color', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_marker_color_callback' ),
+                'bdt-settings-group-4', // Page
+                'bdt_settings_section_4' // Section
+            );
+            add_settings_field(
+                'bdt_custom_marker',
+                __( 'Custom marker URL', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_custom_marker_callback' ),
+                'bdt-settings-group-4', // Page
+                'bdt_settings_section_4' // Section
+            );
         }
 
         /**
@@ -413,6 +485,11 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
         public function bdt_print_section_info_vehicle_details_settings()
         {
             print __( 'Customize the vehicle details page.', 'biltorvet-dealer-tools' );
+        }
+
+        public function bdt_print_section_info_map_settings()
+        {
+            print __( 'Customize the map', 'biltorvet-dealer-tools' );
         }
 
         public function bdt_api_key_callback()
@@ -587,6 +664,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
         }
 
+        public function bdt_hide_carlite_dealer_label_vehicles_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[hide_carlite_dealer_label_vehicles]"%s />',
+                isset( $this->options_2['hide_carlite_dealer_label_vehicles'] ) && $this->options_2['hide_carlite_dealer_label_vehicles'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
         public function bdt_hide_warehousesale_vehicles_callback()
         {
             printf(
@@ -708,6 +793,78 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             printf(
                 '<input type="hidden" id="bdt_options_3" value="on"  checked="checked" name="bdt_options_3[bdt_hidden_field_3_callback]"%s />',
                 isset( $this->options_3['bdt_hidden_field_3_callback'] ) && $this->options_3['bdt_hidden_field_3_callback'] === 'on'
+            );
+        }
+
+        /**
+         * Options_4 : "Indstillinger for kort" tab
+         */
+
+        public function bdt_set_view_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_4" name="bdt_options_4[bdt_set_view]" value="%s" size="30" placeholder="Latitude, longitude" />',
+                isset( $this->options_4['bdt_set_view'] ) ? esc_attr($this->options_4['bdt_set_view']) : ''
+            );
+        }
+
+        public function bdt_zoom_level_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_4" name="bdt_options_4[bdt_zoom_level]" value="%s" size="5" />',
+                isset( $this->options_4['bdt_zoom_level'] ) ? esc_attr($this->options_4['bdt_zoom_level']) : ''
+            );
+        }
+
+        public function bdt_zoom_level_detailspage_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_4" name="bdt_options_4[bdt_zoom_level_detailspage]" value="%s" size="5" />',
+                isset( $this->options_4['bdt_zoom_level_detailspage'] ) ? esc_attr($this->options_4['bdt_zoom_level_detailspage']) : ''
+            );
+        }
+
+        public function bdt_tile_layer_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_4" name="bdt_options_4[bdt_tile_layer]" value="%s" size="65" />',
+                isset( $this->options_4['bdt_tile_layer'] ) ? esc_attr($this->options_4['bdt_tile_layer']) : ''
+            );
+        }
+
+        public function bdt_marker_color_callback()
+        {
+            $markerColors = array(
+                "Green",
+                "Blue",
+                "Gold",
+                "Orange",
+                "Yellow",
+                "Violet",
+                "Grey",
+                "Black"
+            );
+
+            $HTML = '<select id="bdt_options_4" value="on" name="bdt_options_4[bdt_marker_color]"/>';
+            $HTML .= '<option value="Red">Red</option>';
+
+            foreach ( $markerColors as $colors) {
+                $selected = isset( $this->options_4['bdt_marker_color']) && $this->options_4['bdt_marker_color'] == $colors;
+                $HTML .= '<option value="' . $colors . '"';
+                $HTML .= $selected ? 'selected="selected"' : '';
+                $HTML .= '>' . $colors . '</option>';
+            }
+
+            $HTML .= '</select>';
+
+            echo $HTML;
+        }
+
+        public function bdt_custom_marker_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_4" name="bdt_options_4[bdt_custom_marker]" value="%s" size="65" />',
+                isset( $this->options_4['bdt_custom_marker'] ) ? esc_attr($this->options_4['bdt_custom_marker']) : ''
             );
         }
     }

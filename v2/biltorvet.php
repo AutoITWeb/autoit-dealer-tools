@@ -29,6 +29,7 @@ define('LABEL_NEW', 11);
 define('LABEL_FEATURED', 10);
 define('LABEL_LEASING', 12);
 define('LABEL_WAREHOUSESALE', 26);
+define('LABEL_CARLITEDEALERLABEL', 427);
 define('LABEL_FLEXLEASING', 198);
 define('LABEL_EXPORT', 382);
 define('LABEL_UPCOMING', 4);

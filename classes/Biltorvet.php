@@ -11,6 +11,7 @@ class Biltorvet
     private $_options;
     private $_options_2;
     private $_options_3;
+    private $_options_4;
     private $biltorvetAPI;
 
     public function __construct()
@@ -34,6 +35,7 @@ class Biltorvet
         $this->_options = get_option('bdt_options');
         $this->_options_2 = get_option('bdt_options_2');
         $this->_options_3 = get_option('bdt_options_3');
+        $this->_options_4 = get_option('bdt_options_4');
 
         if ($this->_options['api_key'] === null || trim($this->_options['api_key']) === '') {
            add_action('admin_notices', array(&$this, 'bdt_error_noapikey'));
@@ -41,12 +43,12 @@ class Biltorvet
             $this->biltorvetAPI = new BiltorvetAPI($this->_options['api_key']);
             new Ajax($this->biltorvetAPI);
             if (!is_admin()) {
-                new BiltorvetShortcodes($this->biltorvetAPI, $this->_options, $this->_options_2);
+                new BiltorvetShortcodes($this->biltorvetAPI, $this->_options, $this->_options_2, $this->_options_4);
             }
         }
 
         if (is_admin()) {
-            new BDTSettingsPage($this->_options, $this->_options_2, $this->_options_3);
+            new BDTSettingsPage($this->_options, $this->_options_2, $this->_options_3, $this->_options_4);
         }
     }
 
@@ -241,8 +243,10 @@ class Biltorvet
             wp_register_script( 'bootstrap_slider', plugins_url('scripts/bootstrap-slider.min.js',  dirname(__FILE__) ) , array('jquery'), '1.0.1', true );
             wp_register_script( 'bdt_vimeo', 'https://player.vimeo.com/api/player.js', '2.11.0', true );
             wp_register_script( 'hammerjs', 'https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js', null, '2.0.8', true );
+
             wp_register_script( 'bt_slideshow', 'https://source.autoit.dk/slideshow/v1.0.5/slideshow.min.js', array('hammerjs', 'jquery', 'bdt_vimeo'), '1.0.5', true );
             wp_register_script( 'bdt_script', plugins_url('scripts/biltorvet.min.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
+
             wp_localize_script( 'bdt_script', 'ajax_config', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
             wp_register_script( 'search_script', plugins_url('scripts/search.js',  dirname(__FILE__) ) , array('jquery'), '1.0.0', true );
             wp_localize_script( 'search_script', 'ajax_config', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );

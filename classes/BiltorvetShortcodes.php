@@ -12,9 +12,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
         public $biltorvetAPI;
         public $_options;
         public $_options_2;
+        public $_options_4;
         public $currentVehicle;
 
-        public function __construct($biltorvetAPI, $options, $options_2)
+        public function __construct($biltorvetAPI, $options, $options_2, $options_4)
         {
             if ($options === null) {
                 throw new Exception(__('No options provided.', 'biltorvet-dealer-tools'));
@@ -24,12 +25,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             }
             $this->_options = $options;
             $this->_options_2 = $options_2;
+            $this->_options_4 = $options_4;
             $this->biltorvetAPI = $biltorvetAPI;
 
             add_action('parse_query', array(&$this, 'bdt_get_current_vehicle'), 1000);
             add_shortcode('bdt_cta', array($this, 'bdt_shortcode_detail_cta'));
             add_shortcode('bdt_prop', array($this, 'bdt_shortcode_detail_property'));
             add_shortcode('bdt_specifications', array($this, 'bdt_shortcode_specifications'));
+            add_shortcode('bdt_additional_equipment', array($this, 'bdt_shortcode_additional_equipment'));
             add_shortcode('bdt_equipment', array($this, 'bdt_shortcode_equipment'));
             add_shortcode('bdt_recommendedvehicles', array($this, 'bdt_shortcode_recommendedvehicles'));
             add_shortcode('bdt_featuredvehicles', array($this, 'bdt_shortcode_featuredvehicles'));
@@ -44,6 +47,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             add_shortcode('bdt_vehicle_search_backtoresults', array($this, 'bdt_shortcode_vehicle_search_backtoresults'));
             add_shortcode('bdt_widget', array($this, 'bdt_shortcode_widget'));
             add_shortcode('bdt_sharethis', array($this, 'bdt_shortcode_sharethis'));
+            add_shortcode( 'bdt_map', array($this, 'bdt_shortcode_map'));
         }
 
         public function bdt_get_current_vehicle()
@@ -74,6 +78,19 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
             return '<a href="http://www.facebook.com/sharer.php?u=' . $body . '" onclick="window.open(this.href, \'facebookwindow\',\'left=20,top=20,width=600,height=700,toolbar=0,resizable=1\'); return false;"><img src="https://www.autoit.dk/media/autoit-dealer-tools/facebook.svg" class="bdt_sharethis" height="30" width="30" /></a><a href="mailto:indsæt_email_adresse@her.dk?subject=' . $subject . '&body=' . $body . '"><img src="https://www.autoit.dk/media/autoit-dealer-tools/email.svg" class="bdt_sharethis" height="30" width="30" /></a><a href="#" onclick="window.print();"><img src="https://www.autoit.dk/media/autoit-dealer-tools/print.svg" class="bdt_sharethis" height="30" width="30" /></a>';
 
+        }
+
+        public function bdt_shortcode_map( $atts)
+        {
+            extract(shortcode_atts(array(
+                    'detailspage' => 'detailspage'
+            ), $atts));
+
+            ob_start();
+            require Biltorvet::bdt_get_template("Map.php");
+            $contents = ob_get_contents();
+            ob_end_clean();
+            return $contents;
         }
         
         public function bdt_shortcode_vehicle_search( $atts ){
@@ -232,6 +249,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                         $filterObject = new BDTFilterObject();
                     }
                     $filterObject->HideWarehousesaleVehicles = 'true';
+                }
+                if(isset($this->_options_2['hide_carlite_dealer_label_vehicles']) && $this->_options_2['hide_carlite_dealer_label_vehicles'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideCarLiteDealerLabelVehicles = 'true';
                 }
                 if(isset($this->_options_2['hide_export_vehicles']) && $this->_options_2['hide_export_vehicles'] === 'on')
                 {
@@ -469,6 +494,19 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             }
             $value = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, $propertyName, isset($atts['raw']));
             return isset($value) && trim($value) !== '' ? nl2br($value) : (isset($atts['nona']) ? $atts['nona'] : __('N/A', 'biltorvet-dealer-tools'));
+        }
+
+        public function bdt_shortcode_additional_equipment() {
+            if(!isset($this->currentVehicle) || $this->currentVehicle === null)
+            {
+                return __('Vehicle not found', 'biltorvet-dealer-tools');
+            }
+
+            ob_start();
+            require Biltorvet::bdt_get_template("AdditionalEquipment.php");
+            $contents = ob_get_contents();
+            ob_end_clean();
+            return $contents;
         }
 
         public function bdt_shortcode_specifications() {

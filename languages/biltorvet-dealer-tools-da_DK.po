@@ -19,7 +19,7 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;"
 "_nx_noop:4c,1,2;_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
 "X-Poedit-Basepath: ..\n"
-"X-Generator: Poedit 2.4\n"
+"X-Generator: Poedit 2.4.2\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: ajax/Ajax.php:12 classes/BiltorvetShortcodes.php:22
@@ -451,6 +451,21 @@ msgstr "Første indregistreringsdato"
 msgid "Department"
 msgstr "Afdeling"
 
+msgid "Set zoom level for global map"
+msgstr "Indstil zoom for globalt kort"
+
+msgid "Set zoom level for map on detailspage"
+msgstr "Indstil zoom for kort på detaljesiden"
+
+msgid "Set tile layer"
+msgstr "Indstil kortlayout"
+
+msgid "Marker color"
+msgstr "Markør farve"
+
+msgid "Custom marker URL"
+msgstr "Indstil selvvalgt markør"
+
 msgid "ProductType"
 msgstr "Køretøjtype"
 
@@ -478,8 +493,23 @@ msgstr "Tophastighed"
 msgid "FirstRegistrationYear"
 msgstr "Første indregistrerings år"
 
+msgid "Carlite dealer label"
+msgstr "Carlite Forhandler Label"
+
 msgid "AgeAndState"
 msgstr "Alder og kilometerstand"
+
+msgid "Map settings"
+msgstr "Indstillinger for kort"
+
+msgid "Set zoom level"
+msgstr "Zoom level"
+
+msgid "Set view (latitude and longitude)"
+msgstr "Indstil fokus (latitude and longitude)"
+
+msgid "Customize the map"
+msgstr "Redigér indstillinger for kort"
 
 msgid "EngineAndPerformance"
 msgstr "Motor og ydelse"
@@ -516,6 +546,9 @@ msgstr "Skjul køretøjer med status koden Flexleasing"
 
 msgid "Hide vehicles with status Warehousesale"
 msgstr "Skjul køretøjer med status koden Lagersalg"
+
+msgid "Hide vehicles with status Carlite Dealer Label"
+msgstr "Skjul køretøjer med status koden Carlite Forhandler Label"
 
 msgid "Hide vehicles with status Export"
 msgstr "Skjul køretøjer med status koden Eksport"

@@ -24,6 +24,9 @@ class WordpressHelper
         else if ($options_number == 3)
         {
             return get_option('bdt_options_3') ?? [];
+        }else if ($options_number == 4)
+        {
+            return get_option('bdt_options_4') ?? [];
         }
         else {
             if(gettype(get_option('bdt_options')) != 'array') {
