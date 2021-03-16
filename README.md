@@ -1,6 +1,6 @@
 # AutoIT Dealer Tools
 
-**For versions 2.x.x PHP 7.1+ is required!**
+
 <br><br>
 
 Adds Vehicle search, Vehicle list and Vehicle Detail Page.
@@ -12,6 +12,10 @@ Adds Vehicle search, Vehicle list and Vehicle Detail Page.
 * Show car-data
 * Send leads to AutoDesktop
 
+**Requirements**
+
+**For versions 2.x.x PHP 7.1+ is required!**  
+A theme (does not work with themeless builders like Oxygen)  
 
 **Credits**
 
