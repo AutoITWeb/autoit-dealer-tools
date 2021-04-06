@@ -900,22 +900,13 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                         $filterpersonalmodels = isset($atts['filterpersonalmodels']) ? explode(';', TextUtils::SanitizeText($atts['filterpersonalmodels'])) : null;
                         $filterbusinessmodels = isset($atts['filterbusinessmodels']) ? explode(';', TextUtils::SanitizeText($atts['filterbusinessmodels'])) : null;
                         $selectedmodel = isset($atts['selectedmodel']) ? TextUtils::Sanitize($atts['selectedmodel']) : null;
-                        $openingtimes = isset($atts['openingtimes']) ? TextUtils::SanitizeJSON($atts['openingtimes']) : null;
-                        // $variant = isset($atts['variant']) ? TextUtils::Sanitize($atts['variant']) : null;
-                        // $engineSize =  isset($atts['enginesize']) ? TextUtils::Sanitize($atts['enginesize']) : null;
-                        // $month = isset($atts['month']) ? TextUtils::Sanitize($atts['month']) : null;
-                        // $year = isset($atts['year']) ? TextUtils::Sanitize($atts['year']) : null;
 
                         if(isset($this->currentVehicle) && $this->currentVehicle !== null)
                         {
                             $selectedmake = array($this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'makeName', true));
                             $selectedmodel = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'model', true);
                             $selectedvehicletype = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'type', true);
-                            // $variant = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'variant', true);
-                            // $engineSize = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'EngineSize', true);
-                            // $firstRegistrationDate = date_parse($this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'FirstRegistrationDate', true));
-                            // $month = $firstRegistrationDate['month'];
-                            // $year = $firstRegistrationDate['year'];
+
                         }
 
                         $widgetAttributes = $productKeyAttribute . ' ' . ' data-btsettings-guid="' . $externalId . '" ' .
@@ -935,10 +926,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                             (isset($atts['modelhide']) ?  'data-btsettings-modelhide="true" ' : '') .
                             (isset($atts['title']) ?  'data-btsettings-title="' . TextUtils::SanitizeText($atts['title']) . '" ' : '');
                             (isset($atts['GTMID']) ?  'data-btsettings-GTMID="' . TextUtils::Sanitize($atts['GTMID']) . '" ' : '');
-                            // (isset($variant) ?  'data-btsettings-variant="' . $variant . '" ' : '') .
-                            // (isset($engineSize) ?  'data-btsettings-enginesize="' . $engineSize . '" ' : '') .
-                            // (isset($month) ?  'data-btsettings-month="' . $month . '" ' : '') .
-                            // (isset($year) ?  'data-btsettings-year="' . $year . '" ' : '');
+
                     }
 
                     if(!isset($widgetAttributes))
