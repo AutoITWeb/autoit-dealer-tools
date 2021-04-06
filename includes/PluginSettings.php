@@ -419,6 +419,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
 
             add_settings_field(
+                'bdt_activate_map',
+                __( 'Activate map', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_activate_map_callback' ),
+                'bdt-settings-group-4', // Page
+                'bdt_settings_section_4' // Section
+            );
+
+            add_settings_field(
                 'bdt_set_view',
                 __( 'Set view (latitude and longitude)', 'biltorvet-dealer-tools' ),
                 array( $this, 'bdt_set_view_callback' ),
@@ -799,6 +807,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
         /**
          * Options_4 : "Indstillinger for kort" tab
          */
+
+        public function bdt_activate_map_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_4" value="on" name="bdt_options_4[activate_map]"%s />',
+                isset( $this->options_4['activate_map'] ) && $this->options_4['activate_map'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
 
         public function bdt_set_view_callback()
         {

@@ -48,6 +48,9 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             add_shortcode('bdt_widget', array($this, 'bdt_shortcode_widget'));
             add_shortcode('bdt_sharethis', array($this, 'bdt_shortcode_sharethis'));
             add_shortcode( 'bdt_map', array($this, 'bdt_shortcode_map'));
+
+            add_action('wp_head', array(&$this, 'bdt_insert_map_dependencies'), 1000);
+
         }
 
         public function bdt_get_current_vehicle()
@@ -78,6 +81,29 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
             return '<a href="http://www.facebook.com/sharer.php?u=' . $body . '" onclick="window.open(this.href, \'facebookwindow\',\'left=20,top=20,width=600,height=700,toolbar=0,resizable=1\'); return false;"><img src="https://www.autoit.dk/media/autoit-dealer-tools/facebook.svg" class="bdt_sharethis" height="30" width="30" /></a><a href="mailto:indsæt_email_adresse@her.dk?subject=' . $subject . '&body=' . $body . '"><img src="https://www.autoit.dk/media/autoit-dealer-tools/email.svg" class="bdt_sharethis" height="30" width="30" /></a><a href="#" onclick="window.print();"><img src="https://www.autoit.dk/media/autoit-dealer-tools/print.svg" class="bdt_sharethis" height="30" width="30" /></a>';
 
+        }
+
+        public function bdt_insert_map_dependencies()
+        {
+            if(isset($this->_options_4['activate_map']) && $this->_options_4['activate_map'] === 'on') {
+
+                ?>
+                    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+                          crossorigin=""/>
+
+                    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+                            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+                            crossorigin=""></script>
+
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-providers/1.10.2/leaflet-providers.js"></script>
+
+                    <link rel="stylesheet" href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css">
+
+                <script src="//unpkg.com/leaflet-gesture-handling"></script>
+
+                <?php
+
+            }
         }
 
         public function bdt_shortcode_map( $atts)
