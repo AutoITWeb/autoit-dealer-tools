@@ -13,7 +13,7 @@ $companiesFeed = null;
 $setView = "";
 
 $zoomLevel = isset($this->_options_4['bdt_zoom_level']) && $this->_options_4['bdt_zoom_level'] != '' ? $this->_options_4['bdt_zoom_level'] : 17;
-$setTileLayer = isset($this->_options_4['bdt_tile_layer']) && $this->_options_4['bdt_tile_layer']!= '' ? $this->_options_4['bdt_tile_layer'] : 'https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png';
+$setTileLayer = isset($this->_options_4['bdt_tile_layer']) && $this->_options_4['bdt_tile_layer']!= '' ? $this->_options_4['bdt_tile_layer'] : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 $markerColor = isset($this->_options_4['bdt_marker_color']) && $this->_options_4['bdt_marker_color'] != '' ? $this->_options_4['bdt_marker_color'] : 'Red';
 $marker = isset($this->_options_4['bdt_custom_marker']) && $this->_options_4['bdt_custom_marker']!= '' ? $this->_options_4['bdt_custom_marker'] : plugin_dir_url( dirname( __FILE__ ) ) . 'includes/img/marker-icon-' . strtolower($markerColor) . '.png';
 
@@ -44,7 +44,9 @@ if($this->currentVehicle != null)
         gestureHandling: true
     });
 
-    map.invalidateSize()
+    $('#map').ready(function() {
+        map.invalidateSize()
+    });
 
     L.tileLayer(<?= "'" . $setTileLayer ."'"; ?>, {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
