@@ -1,5 +1,9 @@
 <?php
-    if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
+
+use mysql_xdevapi\Exception;
+use phpDocumentor\Reflection\Types\Integer;
+
+if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
     
     class TextUtils {
         public static function GetSlug($txt)
@@ -186,5 +190,24 @@
             }
 
             return $content;
+        }
+
+        /**
+         * @param  string $vehiclePrice
+         * @return int
+         */
+        public static function VehiclePriceFormatter(string $vehiclePrice) : ?int {
+
+            str_replace('.', '', $vehiclePrice);
+            str_replace(',', '', $vehiclePrice);
+            str_replace('-', '', $vehiclePrice);
+
+            try{
+                $vehiclePrice = (int)$vehiclePrice;
+            } catch (Exception $e) {
+                return null;
+            }
+
+            return $vehiclePrice;
         }
     }
