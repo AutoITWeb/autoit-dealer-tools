@@ -1,4 +1,7 @@
 <?php
+
+use Biltorvet\Helper\MailFormatter;
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -130,10 +133,7 @@ class Biltorvet
                 }
             }
         }
-//        if($replyTo === '')
-//        {
-//            wp_die( '<div class="et_pb_contact_error_text">' . sprintf( __('Could not send the lead: %s', 'biltorvet-dealer-tools'), 'No Reply-To header found.') . '</div>' );
-//        }
+
         $query = parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_QUERY);
         parse_str( $query, $queryParams );
 
@@ -219,6 +219,7 @@ class Biltorvet
         // Append the vehicle info to the WP email.
         $args['message'] .= "\r\n\r\n" .  sprintf( __('Selected vehicle: %s', 'biltorvet-dealer-tools'), $lead->Model . ' (' . $vehicle->id . ')');
 
+        // URl
         $args['message'] .= "\r\n\r\n" . "Email afsendt fra: " . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
         $lead->Body = $args['message'];
@@ -231,8 +232,10 @@ class Biltorvet
             //wp_die( '<div class="et_pb_contact_error_text">' . sprintf( __('Could not send the lead: %s', 'biltorvet-dealer-tools'), $e->getMessage()) . '</div>' );
         }
 
-        return $args;
+        $args['email_message'] .= "\r\n\r\n" . "Email afsendt fra: " . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
+
+        return $args;
         }
 
         public function bdt_register_scripts()

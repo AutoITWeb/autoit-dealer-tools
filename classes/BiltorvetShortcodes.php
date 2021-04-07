@@ -48,6 +48,9 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             add_shortcode('bdt_widget', array($this, 'bdt_shortcode_widget'));
             add_shortcode('bdt_sharethis', array($this, 'bdt_shortcode_sharethis'));
             add_shortcode( 'bdt_map', array($this, 'bdt_shortcode_map'));
+
+            add_action('wp_head', array(&$this, 'bdt_insert_map_dependencies'), 1000);
+
         }
 
         public function bdt_get_current_vehicle()
@@ -78,6 +81,29 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
             return '<a href="http://www.facebook.com/sharer.php?u=' . $body . '" onclick="window.open(this.href, \'facebookwindow\',\'left=20,top=20,width=600,height=700,toolbar=0,resizable=1\'); return false;"><img src="https://www.autoit.dk/media/autoit-dealer-tools/facebook.svg" class="bdt_sharethis" height="30" width="30" /></a><a href="mailto:indsæt_email_adresse@her.dk?subject=' . $subject . '&body=' . $body . '"><img src="https://www.autoit.dk/media/autoit-dealer-tools/email.svg" class="bdt_sharethis" height="30" width="30" /></a><a href="#" onclick="window.print();"><img src="https://www.autoit.dk/media/autoit-dealer-tools/print.svg" class="bdt_sharethis" height="30" width="30" /></a>';
 
+        }
+
+        public function bdt_insert_map_dependencies()
+        {
+            if(isset($this->_options_4['activate_map']) && $this->_options_4['activate_map'] === 'on') {
+
+                ?>
+                    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+                          crossorigin=""/>
+
+                    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+                            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+                            crossorigin=""></script>
+
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-providers/1.10.2/leaflet-providers.js"></script>
+
+                    <link rel="stylesheet" href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css">
+
+                <script src="//unpkg.com/leaflet-gesture-handling"></script>
+
+                <?php
+
+            }
         }
 
         public function bdt_shortcode_map( $atts)
@@ -900,22 +926,13 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                         $filterpersonalmodels = isset($atts['filterpersonalmodels']) ? explode(';', TextUtils::SanitizeText($atts['filterpersonalmodels'])) : null;
                         $filterbusinessmodels = isset($atts['filterbusinessmodels']) ? explode(';', TextUtils::SanitizeText($atts['filterbusinessmodels'])) : null;
                         $selectedmodel = isset($atts['selectedmodel']) ? TextUtils::Sanitize($atts['selectedmodel']) : null;
-                        $openingtimes = isset($atts['openingtimes']) ? TextUtils::SanitizeJSON($atts['openingtimes']) : null;
-                        // $variant = isset($atts['variant']) ? TextUtils::Sanitize($atts['variant']) : null;
-                        // $engineSize =  isset($atts['enginesize']) ? TextUtils::Sanitize($atts['enginesize']) : null;
-                        // $month = isset($atts['month']) ? TextUtils::Sanitize($atts['month']) : null;
-                        // $year = isset($atts['year']) ? TextUtils::Sanitize($atts['year']) : null;
 
                         if(isset($this->currentVehicle) && $this->currentVehicle !== null)
                         {
                             $selectedmake = array($this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'makeName', true));
                             $selectedmodel = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'model', true);
                             $selectedvehicletype = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'type', true);
-                            // $variant = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'variant', true);
-                            // $engineSize = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'EngineSize', true);
-                            // $firstRegistrationDate = date_parse($this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'FirstRegistrationDate', true));
-                            // $month = $firstRegistrationDate['month'];
-                            // $year = $firstRegistrationDate['year'];
+
                         }
 
                         $widgetAttributes = $productKeyAttribute . ' ' . ' data-btsettings-guid="' . $externalId . '" ' .
@@ -935,10 +952,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                             (isset($atts['modelhide']) ?  'data-btsettings-modelhide="true" ' : '') .
                             (isset($atts['title']) ?  'data-btsettings-title="' . TextUtils::SanitizeText($atts['title']) . '" ' : '');
                             (isset($atts['GTMID']) ?  'data-btsettings-GTMID="' . TextUtils::Sanitize($atts['GTMID']) . '" ' : '');
-                            // (isset($variant) ?  'data-btsettings-variant="' . $variant . '" ' : '') .
-                            // (isset($engineSize) ?  'data-btsettings-enginesize="' . $engineSize . '" ' : '') .
-                            // (isset($month) ?  'data-btsettings-month="' . $month . '" ' : '') .
-                            // (isset($year) ?  'data-btsettings-year="' . $year . '" ' : '');
+
                     }
 
                     if(!isset($widgetAttributes))

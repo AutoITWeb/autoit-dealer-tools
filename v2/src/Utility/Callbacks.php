@@ -13,6 +13,7 @@ use Biltorvet\Helper\MailFormatter;
 use Biltorvet\Helper\WordpressHelper;
 use Biltorvet\Model\SearchFilter;
 use Exception;
+use phpDocumentor\Reflection\Types\Integer;
 use TextUtils;
 
 
@@ -36,6 +37,7 @@ class Callbacks
     public function get_vehicles_shortcode(array $atts)
     {
         $searchFilter = new SearchFilter();
+        $errors = "";
 
         if(isset($atts['make'])){
             $searchFilter->setMakes([ucfirst($atts['make'])]);
@@ -48,6 +50,38 @@ class Callbacks
         }
         if(isset($atts['companyid'])) {
             $searchFilter->setCompanyIds([ucfirst($atts['companyid'])]);
+        }
+        if(isset($atts['minprice']) && isset($atts['maxprice'])) {
+
+            if(TextUtils::VehiclePriceFormatter($atts['minprice']) == null && TextUtils::VehiclePriceFormatter($atts['maxprice']) == null) {
+                $errors .= '<b>' . 'Error: ' . '</b>' . 'Error: Incorrect values  (min/max price).' . '<br>';
+            }
+
+            $searchFilter->setPriceMin($atts['minprice']);
+            $searchFilter->setPriceMax($atts['maxprice']);
+        }
+        if(isset($atts['orderby'])) {
+
+            $orderByValues = array("DateEdited", "Mileage", "FirstRegistrationYear", "Consumption", "Make", "Price");
+
+            if(in_array($atts['orderby'], $orderByValues)) {
+                $searchFilter->setOrderBy($atts['orderby']);
+                $searchFilter->setAscending(false);
+            } else {
+                $errors .= '<b>' . 'Error: ' . '</b>' . 'Incorrect orderby value - Must be one of the following: "DateEdited", "Mileage", "FirstRegistrationYear", "Consumption", "Make", "Price".' . '<br>';
+            }
+        }
+        if(isset($atts['ascending'])) {
+
+            if($atts['ascending'] == 'true') {
+                $searchFilter->setAscending(true);
+            } else {
+                $errors .= '<b>' . 'Error: ' . '</b>' . 'Incorrect ascending value: Must be either true or false.' . '<br>';
+            }
+        }
+
+        if($errors != "") {
+            return $errors;
         }
 
         $option = get_option('bdt_options');

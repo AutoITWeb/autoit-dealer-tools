@@ -3,24 +3,25 @@
 $additionalEquipment = $this->currentVehicle->additionalEquipment;
 
 ?>
-
-<div class="results">
-    <div class="row">
-        <?php foreach($additionalEquipment as $a) : ?>
-            <div class="col-sm-4 col-md-4 col-lg-2">
-                <div class="bdt">
-                    <div class="vehicleCard">
-                        <span class="vehicleThumb">
+<div class="bdt">
+    <div class="results">
+        <div class="row">
+            <?php foreach($additionalEquipment as $a) : ?>
+                <div class="col-12 col-sm-4 col-md-3">
+                    <div class="bdt">
+                        <div class="additionalEquipmentCard">
+                        <span class="additionalEquipmentThumb">
                             <img src="<?= $a->images[0] ?>" class="img-responsive" loading="lazy" alt="<?= $a->publicName; ?> "/>
                         </span>
-                        <span class="vehicleDescription">
-                            <span class="vehicleTitle"><?= $a->publicName; ?></span>
+                            <span class="additionalEquipmentDescription">
+                            <span class="additionalEquipmentTitle"><?= $a->publicName; ?></span>
                             <span class="price bdt_color"><?= (isset($a->valueFormatted) && $a->valueFormatted != '' ? $a->valueFormatted : "-") ?></span>
-                            <span class="price bdt_colo"><?= $a->vatIncluded; ?></span>
+                            <span class="vat"><?= $a->vatIncluded; ?></span>
                         </span>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
+        </div>
     </div>
 </div>
