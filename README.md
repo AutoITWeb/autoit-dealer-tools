@@ -148,19 +148,28 @@ __bdt_featuredvehicles__
 Shows a list of vehicles that had been marked as "In focus" in AutoDesktop. This allows sold cars to show until removed from the index.  
 
 __bdt_get_vehicles__  
-Creates a list of cars from a specific make  
+Creates a list of cars from specific filters  
 
 Attributes:  
 * __make__
 * __model__  
 * __propellant__  
+* __minprice__  
+* __maxprice__  
+* __orderby__  
+* __ascending__  
 
+Both minprice and maxprice are needed in order to use the price filter (See example 4).  
+
+When using the attribute "orderby" the follwing values are valid: "(”DateEdited”, ”Mileage”, ”FirstRegistrationYear”, ”Consumption”, ”Make”, “Price”.
 
 Example 1: __[bdt_get_vehicles make="Audi"]__ - lists all cars with the make "Audi".  
 
 Example 2: __[bdt_get_vehicles make="Audi" model="A5"]__ - lists all cars with the make "Audi" and model "A5".  
 
-Example 3: __[bdt_get_vehicles make="Audi" model="A5" propellant="diesel"]__ - lists all cars with the make "Audi", model "A5" and uses diesel as propellant.
+Example 3: __[bdt_get_vehicles make="Audi" model="A5" propellant="diesel"]__ - lists all cars with the make "Audi", model "A5" and uses diesel as propellant.  
+
+Example 3: __[bdt_get_vehicles minprice=0 maxprice=50000 orderby="Price"]__ - lists all cars with with a cash price between 0,- and 50000,-. The list is order by price (descending).  
 
 __bdt_get_vehicles_by_status_code__  
 Creates a list of cars from status codes set in AutoDesktop (In order to use this shortcodes the dealer has to list cars using AutoDesktop. BilInfo cars are currently not supported as it's specific fields set in AutoDesktop).  
@@ -178,7 +187,8 @@ Creates a list of cars from status codes set in AutoDesktop (In order to use thi
 * __Rental__ - Shows all cars with the label "Udlejning".  
 * __Commision__ - Shows all cars with the label "Kommision".  
 * __Wholesale__ - Shows all cars with the label "Kun engros". 
-* __NewCar__ - Shows all cars which "Fabriksny" checked in AutoDesktop. 
+* __NewCar__ - Shows all cars with "Fabriksny" checked in AutoDesktop. 
+* __CarLite Dealer Label__ - Shows all vehicles with "CarLite forhandler label" checked in AutoDesktop.  
 
 
 Example 1: __[bdt_get_vehicles_by_status_code status="Sold"]__ - lists all cars marked as "Solgt".  
@@ -207,7 +217,9 @@ Optional attribute:
 
 
 
-Example 1: __[bdt_get_vehicles_by_type type="Car"]__ - lists all vehicles with the type "Personbil".<br><br>
+Example 1: __[bdt_get_vehicles_by_type type="Car"]__ - lists all vehicles with the type "Personbil".<br><br>  
+
+[bdt_map]  
 
 ### Vehicle detail shortcodes  
 These will work only on a vehicle detail template page.  
