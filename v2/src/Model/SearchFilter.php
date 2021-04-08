@@ -39,6 +39,11 @@ class SearchFilter
     public $NewUsed;
 
     /**
+     * @var string[]
+     */
+    public $FullTextSearch;
+
+    /**
      * @var int
      */
     public $PriceMin;
@@ -242,6 +247,24 @@ class SearchFilter
     public function setModels(array $Models): SearchFilter
     {
         $this->Models = $Models;
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getFullTextSearch(): array
+    {
+        return $this->FullTextSearch;
+    }
+
+    /**
+     * @param  string[] $FullTextSearch
+     * @return SearchFilter
+     */
+    public function setFullTextSearch(array $FullTextSearch): SearchFilter
+    {
+        $this->FullTextSearch = $FullTextSearch;
         return $this;
     }
 

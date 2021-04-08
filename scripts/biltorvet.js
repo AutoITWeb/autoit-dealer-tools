@@ -22,6 +22,7 @@ function Biltorvet($) {
         BodyTypes: null,
         ProductTypes: null,
         VehicleStates: null,
+        FullTextSearch: null,
         PriceMin: null,
         PriceMax: null,
         ConsumptionMin: null,
@@ -39,6 +40,9 @@ function Biltorvet($) {
     }
 
     this.Init = function() {
+
+        this.PlaceholderShuffler();
+
         // There can be a situation, namely with AVADA themes, where there's another .slider bound to the jQuery object. IF that's the case, we'll switch to an alternative namespace.
         // This alternative namespace only exists if there's been a conflict, so it can't be always used by default.
         if($.bootstrapSlider)
@@ -72,6 +76,31 @@ function Biltorvet($) {
             consumptionRangeSlider = sliderAlternativeNamespace ? $('#consumptionRange').bootstrapSlider(crsC) : $('#consumptionRange').slider(crsC);
         }
         this.ReloadUserFilterSelection(true);
+    }
+
+   this.PlaceholderShuffler = function()
+   {
+        element = vehicleSearch.find('input[name=fullTextSearch]');
+        var owner = this;
+        var placeholders = [
+            'Søg på mærke, model, farve, udstyr mm...          ',
+            'Stationcar anhængertræk...                        ',
+            'Hvid varevogn...                                  ',
+            'Diesel SUV...                                     '
+        ];
+
+        var randomIndex = Math.floor(Math.random() * 4);
+        var placeholder = placeholders[randomIndex];
+        var i = 0;
+        var interval = setInterval(function(){
+            if(i === placeholder.length) {
+                clearInterval(interval);
+                setTimeout(() => owner.PlaceholderShuffler(), 400)
+                return;
+            }
+            element.attr('placeholder', placeholder.substr(0, i +1));
+            i++;
+        }, 100)
     }
 
     this.ReloadUserFilterSelection = function(getFromSession)
@@ -109,6 +138,18 @@ function Biltorvet($) {
                     if(companies !== '')
                     {
                         vehicleSearch.find('select[name=company]').removeAttr('disabled');
+                    }
+
+                    var fullTextSearch = '';
+                    for(var i in response.fullTextSearch)
+                    {
+                        fullTextSearch += response.fullTextSearch.value;
+                    }
+
+                    vehicleSearch.find('input[name=fullTextSearch]').val(fullTextSearch);
+                    if(fullTextSearch !== '')
+                    {
+                        vehicleSearch.find('input[name=fullTextSearch]').removeAttr('disabled');
                     }
 
                     var makes = '';
@@ -206,12 +247,15 @@ function Biltorvet($) {
                     }
 
                     // Select the previously selected values
-
                     if(response.values)
                     {
                         if(response.values.companyIds && response.values.companyIds[0])
                         {
                             vehicleSearch.find('select[name=company] option[value="' + response.values.companyIds[0] + '"]').prop('selected', true);
+                        }
+                        if(response.values.fullTextSearch && response.values.fullTextSearch[0])
+                        {
+                            vehicleSearch.find('input[name=fullTextSearch]').val(response.values.fullTextSearch[0]);
                         }
                         if(response.values.makes && response.values.makes[0])
                         {
@@ -433,6 +477,7 @@ function Biltorvet($) {
         consumptionMax = consumptionMax === -1 ? null : consumptionMax;
         filter = {
             CompanyIds: vehicleSearch.find('select[name=company]').val() === '' ? null : [vehicleSearch.find('select[name=company]').val()],
+            FullTextSearch: vehicleSearch.find('input[name=fullTextSearch]').val() === '' ? null : [vehicleSearch.find('input[name=fullTextSearch]').val()],
             Propellants: vehicleSearch.find('select[name=propellant]').val() === '' ? null : [vehicleSearch.find('select[name=propellant]').val()],
             Makes: vehicleSearch.find('select[name=make]').val() === '' ? null : [vehicleSearch.find('select[name=make]').val()],
             Models: vehicleSearch.find('select[name=model]').val() === '' ? null : [vehicleSearch.find('select[name=model]').val()],
@@ -463,15 +508,6 @@ function FormatPrice(x, suffix)
     }
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + (suffix ? ',-' : '');
 }
-
-
-
-
-
-
-
-
-
 
 
 jQuery(function($) {
@@ -521,6 +557,14 @@ jQuery(function($) {
         .on('change', '.bdt .vehicle_search_results', function(){
             bdt.SaveUserFilterSettings();
         })
+
+        // FullTextSearch, input field
+        .on('blur', '.fullTextSearch', function(){
+            var vehicleSearch = $(this).closest('.bdt .vehicle_search');
+            bdt.ReloadUserFilterSelection(false);
+        })
+
+        // Select fields
         .on('change', '.bdt .vehicle_search select', function(){
             var vehicleSearch = $(this).closest('.bdt .vehicle_search');
             // Selecting a different make will reset the selected model

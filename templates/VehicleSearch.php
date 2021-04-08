@@ -185,6 +185,13 @@
     <div class="bdt">
         <div class="vehicle_search"<?php echo $makeIds !== null ? ' data-makeids="'.$makeIds.'"' : '';  ?>>
             <div class="row">
+
+                    <div class="col-sm-12 mb-1 mb-sm-3">
+                        <input type="text" class="fullTextSearch" name="fullTextSearch" id="fullTextSearch">
+                    </div>
+
+            </div>
+                <div class="row">
                 <?php if(count((array)$initialFilterOptions->companies) > 1) { ?>
                     <div class="col-sm-4 mb-1 mb-sm-3">
                         <select name="company" id="company">

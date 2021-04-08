@@ -7,6 +7,7 @@ jQuery(function ($) {
         BodyTypes: null,
         ProductTypes: null,
         VehicleStates: null,
+        FullTextSearch: null,
         PriceMin: null,
         PriceMax: null,
         ConsumptionMin: null,
