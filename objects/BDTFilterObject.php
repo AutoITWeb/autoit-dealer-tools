@@ -14,6 +14,7 @@
         public $ConsumptionMin;
         public $ConsumptionMax;
         public $VehicleStates;
+        public $FullTextSearch;
         public $Start;
         public $Limit;
         public $OrderBy;
