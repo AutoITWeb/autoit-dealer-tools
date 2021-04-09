@@ -123,30 +123,6 @@ Example 2: __[bdt_featuredvehicles show="3" type="Car"]__ - 3 cars with the stat
 <br>
 <br>
 
-### Global shortcodes  
-These shortcodes should work anywhere in WordPress.  
-<br><br>
-__bdt_vehicletotalcount__  
-shows a total count of vehicles for the current dealer.  
-
-__bdt_vehicle_search__  
-Print out the vehicle search filter.  
-
-__bdt_vehicle_search_results__  
-Print out the search results - list of cars.  
-
-__bdt_vehicle_search_frontpage__  
-Specialized search for use on the frontpage (or any other landingpage that is not the main search and result page)  
-
-__bdt_vehicle_card__  
-Print out a vehicle "card" - a box with short informations about the vehicle. This is equal to one search result item from the vehicle search results.  
-Attributes:
-* vehicle - specifies the vehicle ID. If omitted, it will look for bdt_vehicle_id URL parameter.  
-
-
-__bdt_featuredvehicles__ 
-Shows a list of vehicles that had been marked as "In focus" in AutoDesktop. This allows sold cars to show until removed from the index.  
-
 __bdt_get_vehicles__  
 Creates a list of cars from specific filters  
 
