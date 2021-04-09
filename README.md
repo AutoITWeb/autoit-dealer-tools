@@ -1,5 +1,5 @@
 # AutoIT Dealer Tools
-<br><br>
+<br>
 
 Adds Vehicle search, Vehicle list and Vehicle Detail Page.
 
