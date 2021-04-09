@@ -1,6 +1,4 @@
 # AutoIT Dealer Tools
-
-
 <br><br>
 
 Adds Vehicle search, Vehicle list and Vehicle Detail Page.
@@ -120,7 +118,6 @@ Attributes:
 Example 1: __[bdt_featuredvehicles show="3"]__ - 3 vehicles with the statuscode "I fokus" are shown.  
 
 Example 2: __[bdt_featuredvehicles show="3" type="Car"]__ - 3 cars with the statuscode "I fokus" are shown.  
-<br>
 <br>
 
 __bdt_get_vehicles__  
