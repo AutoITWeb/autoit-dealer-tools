@@ -132,7 +132,7 @@ Attributes:
 * __orderby__  
 * __ascending__  
 
-Both minprice and maxprice are needed in order to use the price filter (See example 4).  
+Both minprice and maxprice are needed in order to use the price filter (See example 4) and both values needs to be integers.  
 
 When using the attribute "orderby" the follwing values are valid: "(”DateEdited”, ”Mileage”, ”FirstRegistrationYear”, ”Consumption”, ”Make”, “Price”.
 
