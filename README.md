@@ -144,6 +144,8 @@ Example 3: __[bdt_get_vehicles make="Audi" model="A5" propellant="diesel"]__ - l
 
 Example 3: __[bdt_get_vehicles minprice=0 maxprice=50000 orderby="Price"]__ - lists all cars with with a cash price between 0,- and 50000,-. The list is order by price (descending).  
 
+<br>
+
 __bdt_get_vehicles_by_status_code__  
 Creates a list of cars from status codes set in AutoDesktop (In order to use this shortcodes the dealer has to list cars using AutoDesktop. BilInfo cars are currently not supported as it's specific fields set in AutoDesktop).  
 <br>Required attribute:  
@@ -171,18 +173,15 @@ Creates a list of cars from their type.
 <br>Required attribute:  
 * __type__
 
-<br><br>
+<br>
 Optional attribute:  
 * __state__  
-<br>
-
 
 <br>The following types are currently supported:  
 * __Car__ - Shows all vehicles of the type "Car".
 * __Van__ - Shows all vehicles of the type "Van".
 * __Motorcycle__ - Shows all vehicles of the type "Motorcycle".
 * __Truck__ - Shows all vehicles of the type "Truck".  
-
 
 <br>The following states are currently supported:  
 * __BrandNew__ - only vehicles with "Fabriksny" checked in AutoDesktop. 
@@ -192,7 +191,25 @@ Optional attribute:
 
 Example 1: __[bdt_get_vehicles_by_type type="Car"]__ - lists all vehicles with the type "Personbil".<br><br>  
 
-[bdt_map]  
+__[bdt_map]__  
+It's only possible to use this shortcode once of every page!  
+To activate the map go to the plugin settings as check "Activate map". The rest of the settings can be left as they are or changed if needed. Add the following CSS to get a full-width map with a height of 400px:  
+
+#map {
+    height: 400px;
+    width: 100%;
+}  
+
+Custom tiles and markers are support by adding them in the plugin settings. Below is a list of a few free tiles that can be used:  
+* __https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png__  
+* __https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png__  
+* __https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png__  
+* __https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png__  
+
+![maps](https://www.autoit.dk/media/autoit-dealer-tools/maps.png)  
+
+if the shortcode is used on the vehicle detailspage the department where the vehicle is located will automatically be marked on the map. 
+<br>
 
 ### Vehicle detail shortcodes  
 These will work only on a vehicle detail template page.  
