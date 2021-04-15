@@ -106,7 +106,13 @@ class Biltorvet
         } catch (Exception $e) {
             return;
         }
+
+        $currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ?
+                "https" : "http") . "://" . $_SERVER['HTTP_HOST'] .
+            $_SERVER['REQUEST_URI'];
+
         ?>
+        <link rel="canonical" href="<?= $currentUrl ?>">
         <meta property="og:url" content="<?php echo home_url($wp->request); ?>" />
         <meta property="og:type" content="product"/>
         <meta property="og:title"
