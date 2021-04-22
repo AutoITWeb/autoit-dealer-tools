@@ -473,3 +473,6 @@ __Car search / resultlist__
 [bdt_vehicle_search]  
 [bdt_vehicle_search_results]
 
+<br>
+
+__Vehicle detailspage__  
