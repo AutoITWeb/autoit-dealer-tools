@@ -312,6 +312,9 @@ Print out the car description.
 __bdt_equipment__  
 Print out a table of equipment  
 
+__bdt_additional_equipment__  
+Print out a table of additional equipment set in AutoDesktop.  
+
 __bdt_recommendedvehicles__ 
 Print out three recommended unsold vehicles, related to the current vehicle.  
 
