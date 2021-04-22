@@ -464,4 +464,12 @@ __/1/make/model__
 The first paramater is the pagination number, the second parameter is the make of the vehicle and the third parameter is the model of the vehicle.  
 <br>
 Example 1: __/1/audi/__ - Will show the searchpage with all the Audi's for sale  
-Example 2: __/1/audi/a5__ - Will show the searchpage with all the Audi A5's for sale
+Example 2: __/1/audi/a5__ - Will show the searchpage with all the Audi A5's for sale<br><br>
+
+
+### ShortCodes list for easy implemention  
+__Car search / resultlist__  
+[bdt_vehicletotalcount]  
+[bdt_vehicle_search]  
+[bdt_vehicle_search_results]
+
