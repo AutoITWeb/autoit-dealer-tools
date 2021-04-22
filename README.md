@@ -509,3 +509,12 @@ __Vehicle detailspage__
 <br>
 
 [bdt_prop p="description"]
+[bdt_equipment]  
+[bdt_specifications]  
+[10:28 AM] Kim Padkjær
+[bdt_additional_equipment]  
+
+<br>
+
+[bdt_recommendedvehicles show="3"]  
+
