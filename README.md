@@ -520,5 +520,5 @@ __Vehicle detailspage__
 
 [bdt_recommendedvehicles show="3"]  
 
-__Bookingspage__ 
+__Bookingspage__  
 [bdt_vehicle_card nona="Ingen bil valgt"]
