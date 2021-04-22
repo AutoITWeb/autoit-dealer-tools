@@ -49,11 +49,12 @@ As the vehiclefeed get's updated four times an hour caching the search resultlis
 <br>
 
 Create a wordpress landingpages for the following:
-(List of shortcodes and implementation guide found at the bottom of this page)  
 * A page for the car search and result list
 * A page for the car detail  
 * A page for the form to book testdrive 
 * A page for the form to send purchase request
+
+(List of shortcodes and implementation guide found at the bottom of this page)  
 
 Head over to the settings page of the plugin:  
 
