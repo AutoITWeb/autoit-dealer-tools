@@ -476,3 +476,33 @@ __Car search / resultlist__
 <br>
 
 __Vehicle detailspage__  
+[bdt_vehicle_search_backtoresults]  
+[bdt_sharethis]  
+
+<br>
+
+[bdt_slideshow]  
+
+<br>
+
+[bdt_prop p="makeName"]  
+[bdt_prop p="model" nona="true"]  
+[bdt_prop p="variant"]  
+[bdt_vehicle_labels allowed="Nyhed,Solgt,Leasing,Reserveret,Demonstration"]  
+[bdt_vehicle_price]  
+[bdt_cta type="TestDrive" color="#ffffff"] (Change the color if needed)  
+[bdt_cta type="Purchase" color="#ffffff"]
+[bdt_prop p="FirstRegYear"]  
+[bdt_prop p="Color"]  
+[bdt_prop p="mileage"]  
+[bdt_prop p="Geartype"]  
+[bdt_prop p="PropellantType"]  
+[bdt_prop p="Kmx1l"]  
+[bdt_cta type="Contact"]  
+[bdt_cta type="Email"]  
+[bdt_cta type="PhoneCall"]  
+[bdt_prop p="company"]  
+
+<br>
+
+[bdt_prop p="description"]
