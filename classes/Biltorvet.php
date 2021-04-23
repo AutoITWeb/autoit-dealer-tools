@@ -34,6 +34,8 @@ class Biltorvet
         add_filter('wp_title', array(&$this, 'bdt_title'), 1000);
         add_action('wp_head', array(&$this, 'bdt_meta_tags'), 1000);
         add_action('post_updated', array(&$this, 'bdt_post_updated'), 1000);
+        add_filter('get_canonical_url', array(&$this, 'bdt_vehicledetails_canonical'), 1000);
+        add_filter('get_shortlink', array(&$this, 'bdt_vehicledetails_canonical'), 1000);
 
         $this->_options = get_option('bdt_options');
         $this->_options_2 = get_option('bdt_options_2');
@@ -107,20 +109,26 @@ class Biltorvet
             return;
         }
 
-        $currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ?
-                "https" : "http") . "://" . $_SERVER['HTTP_HOST'] .
-            $_SERVER['REQUEST_URI'];
-
         ?>
-        <link rel="canonical" href="<?= $currentUrl ?>">
         <meta property="og:url" content="<?php echo home_url($wp->request); ?>" />
         <meta property="og:type" content="product"/>
-        <meta property="og:title"
-              content="<?php echo $vehicle->makeName . ' ' . $vehicle->model . ' ' . $vehicle->variant; ?>"/>
+        <meta property="og:title"content="<?php echo $vehicle->makeName . ' ' . $vehicle->model . ' ' . $vehicle->variant; ?>"/>
         <meta property="og:description" content="<?php echo strip_tags($vehicle->description); ?>"/>
         <meta property="og:image" content="<?php echo $vehicle->images[0]; ?>"/>
         <meta property="og:image:width" content="1024"/>
         <meta property="og:image:height" content="768"/><?php
+    }
+
+    public function bdt_vehicledetails_canonical()
+    {
+        global $wp;
+
+        $vehicleId = get_query_var('bdt_vehicle_id', -1);
+        if ($vehicleId === -1) {
+            return;
+        }
+
+        return home_url($wp->request);
     }
 
     public function bdt_adt_send_lead( $args )
@@ -149,6 +157,7 @@ class Biltorvet
         }
         if(!in_array($queryParams['bdt_actiontype'], $ActivityType))
         {
+            return sprintf( __('Unrecognized CTA type. Allowed types: %s', 'biltorvet-dealer-tools'), implode(', ', $ActivityType));
             return sprintf( __('Unrecognized CTA type. Allowed types: %s', 'biltorvet-dealer-tools'), implode(', ', $ActivityType));
         }
 
@@ -316,8 +325,8 @@ class Biltorvet
             Biltorvet::bdt_refresh_rewrite_rules();
         }
 
-        public static function bdt_locate_template( $template_name, $template_path = '', $default_path = '' ) {
-            // Set variable to search in woocommerce-plugin-templates folder of theme.
+        public static function bdt_locate_template( $template_name, $template_path, $default_path) {
+
             if ( ! $template_path ) :
                 $template_path = 'biltorvet-dealer-tools/';
             endif;
@@ -334,6 +343,7 @@ class Biltorvet
             if ( ! $template ) :
                 $template = $default_path . $template_name;
             endif;
+
             return apply_filters( 'bdt_locate_template', $template, $template_name, $template_path, $default_path );
         }
         
@@ -353,8 +363,9 @@ class Biltorvet
             if ( is_array( $args ) && isset( $args ) ) :
                 extract( $args );
             endif;
+
             $template_file = Biltorvet::bdt_locate_template( $template_name, $tempate_path, $default_path );
-            if ( ! file_exists( $template_file ) ) :
+                        if ( ! file_exists( $template_file ) ) :
                 _doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', $template_file ), '1.0.0' );
                 return;
             endif;

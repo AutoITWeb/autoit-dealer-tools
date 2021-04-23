@@ -620,4 +620,51 @@ class Vehicle
 
         return $vehicleLabels;
     }
+
+    // Vehicle properties shown on vehicle card
+    public static function getVehicleParam(string $propertiesValue, Array $vehicleProperties, Vehicle $vehicle) : string
+    {
+        $HTML = '<span class="vehicleParamValue">';
+
+        switch ($propertiesValue) {
+            case '0':
+                if($vehicleProperties['ModelYear']->getValue() == $vehicleProperties['FirstRegYear']->getValue()) {
+                    $HTML .= ' ' . $vehicleProperties['ModelYear']->getValue() ? $vehicleProperties['ModelYear']->getValue() : '-' . '';
+                }
+
+                if($vehicleProperties['ModelYear']->getValue() != $vehicleProperties['FirstRegYear']->getValue()) {
+                    $HTML .= '' . $vehicleProperties['ModelYear']->getValue() ? $vehicleProperties['ModelYear']->getValue() : '-' . '';
+                    $HTML .= '' . $vehicleProperties['FirstRegYear']->getValue() ? " / " . $vehicleProperties['FirstRegYear']->getValue() : '' . '';
+                }
+
+                $HTML .= '</span><span class="vehicleParamLabel">Årgang</span>';
+                break;
+            case '1':
+                $HTML .= '' . $vehicleProperties['FirstRegYear']->getValue() != "" ? $vehicleProperties['FirstRegYear']->getValue() : '-' . '';
+                $HTML .= '</span><span class="vehicleParamLabel">Årgang</span>';
+                break;
+            case '2':
+                $HTML .= '' . $vehicleProperties['ModelYear']->getValue() ?? '-' . '';
+                $HTML .= '</span><span class="vehicleParamLabel">Modelår</span>';
+                break;
+            case '3':
+                $HTML .= '' . $vehicle->getCompany()->getCity() ?? '-' . '';
+                $HTML .= '</span><span class="vehicleParamLabel">Placering</span>';
+                break;
+            case '4':
+                $HTML .= '' . $vehicleProperties['Mileage']->getValueFormatted() != "" ? $vehicleProperties['Mileage']->getValueFormatted() : '-' . '';
+                $HTML .= '</span><span class="vehicleParamLabel">KM</span>';
+                break;
+            case '5':
+                $HTML .= '' . $vehicleProperties['Kmx1l']->getValueFormatted() != "" ? $vehicleProperties['Kmx1l']->getValueFormatted() : '-' . '';
+                $HTML .= '</span><span class="vehicleParamLabel">Km/L</span>';
+                break;
+            case '6':
+                $HTML .= '' . $vehicle->getPropellant() ?? '-' . '';
+                $HTML .= '</span><span class="vehicleParamLabel">Drivmiddel</span>';
+                break;
+        }
+
+        return $HTML;
+    }
 }

@@ -8,7 +8,12 @@
      * @package 	Biltorvet Dealer Tools
      * @version     1.0.0
      */
+
+
+
+
     if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
+
 
     try {
         $cashPrice = $this->biltorvetAPI->GetPropertyValue($vehicle, 'price');
@@ -44,6 +49,7 @@
         $modelYear = $this->biltorvetAPI->GetPropertyValue($vehicle, 'firstRegYear');
         $mileage = $this->biltorvetAPI->GetPropertyValue($vehicle, 'mileage');
         $xVat = $this->biltorvetAPI->GetPropertyValue($vehicle, 'XVat') === 'Ja';
+
     } catch(Exception $e) {
         die($e->getMessage());
     }

@@ -3,7 +3,7 @@
  * Plugin Name:       Biltorvet
  * Plugin URI:        http://www.biltorvet.as/hjemmesider
  * Description:       Tools providing connection to AutoDesktop, and other Biltorvet services.
- * Version:           2.2.5
+ * Version:           2.2.6
  * Requires at least: 7.1
  * Requires PHP:      7.2
  * Author:            Biltorvet A/S
