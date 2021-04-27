@@ -30,11 +30,20 @@ $vehicleLabels = Vehicle::sortVehicleLabels($vehicle->getLabels());
 if(isset($options_two['vehiclecard_prop_one'])) {
     $paramValueColumnOne = $options_two['vehiclecard_prop_one'] != '-1' ? $options_two['vehiclecard_prop_one'] : '0';
 }
+else {
+    $paramValueColumnOne = '0';
+}
 if(isset($options_two['vehiclecard_prop_two'])) {
     $paramValueColumnTwo = $options_two['vehiclecard_prop_two'] != '-1' ? $options_two['vehiclecard_prop_two'] : '4';
 }
+else {
+    $paramValueColumnTwo = '4';
+}
 if(isset($options_two['vehiclecard_prop_three'])) {
     $paramValueColumnThree = $options_two['vehiclecard_prop_three'] != '-1' ? $options_two['vehiclecard_prop_three'] : '6';
+}
+else {
+    $paramValueColumnThree = '6';
 }
 
 $carliteDealerLabel = isset($options_two['carlite_dealer_label']) ? $options_two['carlite_dealer_label'] : null;
