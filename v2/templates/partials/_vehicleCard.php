@@ -26,6 +26,26 @@ $options_two = get_option('bdt_options_2');
 // Sorted labels for use on the vehiclecards
 $vehicleLabels = Vehicle::sortVehicleLabels($vehicle->getLabels());
 
+
+if(isset($options_two['vehiclecard_prop_one'])) {
+    $paramValueColumnOne = $options_two['vehiclecard_prop_one'] != '-1' ? $options_two['vehiclecard_prop_one'] : '0';
+}
+else {
+    $paramValueColumnOne = '0';
+}
+if(isset($options_two['vehiclecard_prop_two'])) {
+    $paramValueColumnTwo = $options_two['vehiclecard_prop_two'] != '-1' ? $options_two['vehiclecard_prop_two'] : '4';
+}
+else {
+    $paramValueColumnTwo = '4';
+}
+if(isset($options_two['vehiclecard_prop_three'])) {
+    $paramValueColumnThree = $options_two['vehiclecard_prop_three'] != '-1' ? $options_two['vehiclecard_prop_three'] : '6';
+}
+else {
+    $paramValueColumnThree = '6';
+}
+
 $carliteDealerLabel = isset($options_two['carlite_dealer_label']) ? $options_two['carlite_dealer_label'] : null;
 
 ?>
@@ -67,26 +87,13 @@ $carliteDealerLabel = isset($options_two['carlite_dealer_label']) ? $options_two
                     <span class="bdt_price_small_cashprice_vehicle_card"><?= $priceController->showCashPriceFinanceAndLeasing() ?></span>
                     <span class="row">
                         <span class="col-4">
-                            <span class="vehicleParamValue">
-
-                                <?php if ($vehicleProperties['ModelYear']->getValue() == $vehicleProperties['FirstRegYear']->getValue()) : ?>
-                                    <?= $vehicleProperties['ModelYear']->getValue() ? $vehicleProperties['ModelYear']->getValue() : '-'; ?>
-                                <?php endif; ?>
-
-                                <?php if ($vehicleProperties['ModelYear']->getValue() != $vehicleProperties['FirstRegYear']->getValue()) : ?>
-                                    <?= $vehicleProperties['ModelYear']->getValue() ? $vehicleProperties['ModelYear']->getValue() : '-'; ?><?= $vehicleProperties['FirstRegYear']->getValue() ? " / " . $vehicleProperties['FirstRegYear']->getValue() : ''; ?>
-                                <?php endif; ?>
-
-                            </span>
-                            <span class="vehicleParamLabel"><?php _e('ModelYear', 'biltorvet-dealer-tools'); ?></span>
+                            <?= Vehicle::getVehicleParam($paramValueColumnOne, $vehicleProperties, $vehicle) ?>
                         </span>
                         <span class="col-4">
-                            <span class="vehicleParamValue"><?= $vehicleProperties['Mileage']->getValueFormatted() ? $vehicleProperties['Mileage']->getValueFormatted() : '-'; ?></span>
-                            <span class="vehicleParamLabel"><?php _e('Mileage', 'biltorvet-dealer-tools'); ?></span>
+                           <?= Vehicle::getVehicleParam($paramValueColumnTwo, $vehicleProperties, $vehicle) ?>
                         </span>
                         <span class="col-4">
-                            <span class="vehicleParamValue"><?= $vehicle->getPropellant() ?? '-' ?></span>
-                            <span class="vehicleParamLabel"><?php _e('Propellant', 'biltorvet-dealer-tools'); ?></span>
+                             <?= Vehicle::getVehicleParam($paramValueColumnThree, $vehicleProperties, $vehicle) ?>
                         </span>
                     </span>
                 </span>

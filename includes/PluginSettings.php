@@ -216,6 +216,29 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt_settings_section_2' // Section
             );
 
+            add_settings_field(
+                'bdt_vehiclecard_prop_one',
+                __( 'Vehiclecard properties column one', 'biltorvet-dealer-tools' ),
+                array( $this, 'vehiclecard_prop_one_callback' ),
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
+                'bdt_vehiclecard_prop_two',
+                __( 'Vehiclecard properties column two', 'biltorvet-dealer-tools' ),
+                array( $this, 'vehiclecard_prop_two_callback' ),
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
+                'bdt_vehiclecard_prop_three',
+                __( 'Vehiclecard properties column three', 'biltorvet-dealer-tools' ),
+                array( $this, 'vehiclecard_prop_three_callback' ),
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
 
 
             add_settings_field(
@@ -622,7 +645,53 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             echo $HTML;
         }
 
+        public function vehiclecard_prop_one_callback()
+        {
+            $api = new ApiController();
 
+            $HTML = '<select id="bdt_options_2" value="on" name="bdt_options_2[vehiclecard_prop_one]"/>';
+            $HTML .= '<option value="-1">Default</option>';
+
+            foreach ($api->vehiclCardProperties() as $key=>$value) {
+                $selected = isset( $this->options_2['vehiclecard_prop_one']) && $this->options_2['vehiclecard_prop_one'] == $key;
+                $HTML .= '<option value="' . $key . '"';
+                $HTML .= $selected ? 'selected="selected"' : '';
+                $HTML .= '>' . $value . '</option>';
+            }
+            echo $HTML;
+        }
+
+        public function vehiclecard_prop_two_callback()
+        {
+            $api = new ApiController();
+
+            $HTML = '<select id="bdt_options_2" value="on" name="bdt_options_2[vehiclecard_prop_two]"/>';
+            $HTML .= '<option value="-1">Default</option>';
+
+            foreach ($api->vehiclCardProperties() as $key=>$value) {
+                $selected = isset( $this->options_2['vehiclecard_prop_two']) && $this->options_2['vehiclecard_prop_two'] == $key;
+                $HTML .= '<option value="' . $key . '"';
+                $HTML .= $selected ? 'selected="selected"' : '';
+                $HTML .= '>' . $value . '</option>';
+            }
+            echo $HTML;
+        }
+
+        public function vehiclecard_prop_three_callback()
+        {
+            $api = new ApiController();
+
+            $HTML = '<select id="bdt_options_2" value="on" name="bdt_options_2[vehiclecard_prop_three]"/>';
+            $HTML .= '<option value="-1">Default</option>';
+
+            foreach ($api->vehiclCardProperties() as $key=>$value) {
+                $selected = isset( $this->options_2['vehiclecard_prop_three']) && $this->options_2['vehiclecard_prop_three'] == $key;
+                $HTML .= '<option value="' . $key . '"';
+                $HTML .= $selected ? 'selected="selected"' : '';
+                $HTML .= '>' . $value . '</option>';
+            }
+            echo $HTML;
+        }
 
         public function bdt_carlite_dealer_label_callback()
         {

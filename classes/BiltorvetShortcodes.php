@@ -2,8 +2,8 @@
 
 use Biltorvet\Controller\PriceController;
 use Biltorvet\Factory\VehicleFactory;
+use Biltorvet\Model\Property;
 use Biltorvet\Helper\DataHelper;
-use Biltorvet\Helper\WordpressHelper;
 use Biltorvet\Model\Vehicle;
 
 if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
@@ -739,9 +739,27 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             }
 
             wp_enqueue_style("bdt_style");
-            $link = null;
+
+            if(isset($this->_options) && isset($this->_options['vehiclesearch_page_id'])) {
+                $bdt_root_url = rtrim(get_permalink($this->_options['vehiclesearch_page_id']), '/');
+            } else {
+                return '<!-- Cannot load Biltorvet featured vehicles: no root page (Vehicle search) has been set! -->';
+            }
+
             ob_start();
-            require Biltorvet::bdt_get_template("_VehicleCard.php");
+
+            // @TODO: Refactor.
+            // For new we convert the old vehicle object to the new, so it works with the new templates
+            // PLUGIN_ROOT refers to the v2 root.
+
+            /** @var Vehicle $vehicle */
+            $vehicle = VehicleFactory::create(json_decode(json_encode($vehicle), true));
+            /** @var Property[] $vehicleProperties */
+            $vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
+            $priceController = new PriceController($vehicle);
+            $basePage = $bdt_root_url;
+
+            require PLUGIN_ROOT . 'templates/partials/_vehicleCard.php';
             $content = ob_get_contents();
             ob_end_clean();
             return $content;

@@ -23,8 +23,6 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 #: ajax/Ajax.php:12 classes/BiltorvetShortcodes.php:22
-#, fuzzy
-#| msgid "Biltorvet API: not authorized"
 msgid "No AutoIT API instance provided."
 msgstr "AutoIT API: ikke autoriseret"
 
@@ -53,8 +51,7 @@ msgid "No API key specified. AutoIT plugin functionality is disabled."
 msgstr "Ingen API-nøgle angivet. AutoITs Plugin er deaktiveret."
 
 #: classes/BiltorvetAPI.php:174
-#, fuzzy, php-format
-#| msgid "Biltorvet API: unexpected response code (%u)"
+#, php-format
 msgid "AutoIT API: can not connect to the server (%u)"
 msgstr "AutoIT API: uforudset responskode (%u)"
 
@@ -76,10 +73,7 @@ msgid "Malformed API response"
 msgstr "Uventet API Svar"
 
 #: classes/BiltorvetAPI.php:206
-#, fuzzy, php-format
-#| msgid ""
-#| "Biltorvet API returned following error(s):\r\n"
-#| "%s"
+#, php-format
 msgid "AutoIT API returned following error(s):\\r\\n%s"
 msgstr ""
 "AutoIT API returnerede de følgende fejl:\r\n"
@@ -214,8 +208,6 @@ msgid "Vehicle detail template page"
 msgstr "Bildetalje-sideskabelon"
 
 #: includes/PluginSettings.php:166
-#, fuzzy
-#| msgid "Default sorting order"
 msgid "Default sorting"
 msgstr "Standard rækkefølge"
 
@@ -597,3 +589,6 @@ msgstr "Se denne %s %s fra %s"
 
 msgid "Incl. delivery costs"
 msgstr "Inkl. leveringsomkostninger"
+
+msgid "Activate map"
+msgstr "Aktivér kort"

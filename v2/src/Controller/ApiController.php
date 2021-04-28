@@ -82,6 +82,27 @@ class ApiController
     }
 
     /**
+     * @return string[]
+     *
+     */
+
+    // Using the API to control param options might be worth considering
+    public function vehiclCardProperties()
+    {
+        $vehicleCardProps = array(
+            "Første indregistrering og modelår",
+            "Første indregistrering",
+            "Modelår",
+            "Placering",
+            "Kørte kilometer",
+            "Km/L",
+            "Drivemiddel"
+        );
+
+        return $vehicleCardProps;
+    }
+
+    /**
      * @param  VehicleLead $lead
      * @return array|Vehicle
      * @throws Exception

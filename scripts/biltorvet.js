@@ -40,9 +40,6 @@ function Biltorvet($) {
     }
 
     this.Init = function() {
-
-        this.PlaceholderShuffler();
-
         // There can be a situation, namely with AVADA themes, where there's another .slider bound to the jQuery object. IF that's the case, we'll switch to an alternative namespace.
         // This alternative namespace only exists if there's been a conflict, so it can't be always used by default.
         if($.bootstrapSlider)
@@ -65,7 +62,7 @@ function Biltorvet($) {
         if($('#consumptionRange').length > 0)
         {
             var crsC = {
-                id: $(this).attr('id'),
+                id: $(this).attr('id'me),
                 min: 0,
                 max:10,
                 range: true,
@@ -76,6 +73,7 @@ function Biltorvet($) {
             consumptionRangeSlider = sliderAlternativeNamespace ? $('#consumptionRange').bootstrapSlider(crsC) : $('#consumptionRange').slider(crsC);
         }
         this.ReloadUserFilterSelection(true);
+        this.PlaceholderShuffler();
     }
 
    this.PlaceholderShuffler = function()
