@@ -110,6 +110,42 @@ use Biltorvet\Factory\VehicleFactory;
 use Biltorvet\Helper\DataHelper;
 use Biltorvet\Model\Vehicle;
 ?>
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "url": "http://multivarki.ru?filters%5Bprice%5D%5BLTE%5D=39600",
+        "numberOfItems": "<?= $start + $this->biltorvetAPI->GetVehicleResultsPageLimit() ?>",
+        "itemListElement": [
+        <?php foreach($vehicleFeed->vehicles as $vehicle) : ?>
+        {
+            "@type": "Vehicle",
+            "image": "<?= $vehicle->images[0] ?>",
+            "url": "<?= rtrim(get_page_link($this->_options['vehiclesearch_page_id']),'/') . "/" . $vehicle->uri ?>",
+            "name": "<?= $vehicle->makeName ?>",
+            "offers": {
+                "@type": "Offer",
+                "price": "4399 p."
+            }
+        },
+        <?php endforeach; ?>
+            {
+                "@type": "Vehicle",
+                "image": "http://img01.multivarki.ru.ru/c9/f1/a5fe6642-18d0-47ad-b038-6fca20f1c923.jpeg",
+                "url": "http://multivarki.ru/brand_502/",
+                "name": "Brand 502",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "4399 p."
+                }
+            },
+            {
+                "@type": "Product",
+                "name": "..."
+            }
+        ]
+    }
+</script>
     <div class="bdt">
         <div class="vehicle_search_results" data-totalResults="<?= $vehicleFeed->totalResults ?>">
             <div class="row resultsTitle">

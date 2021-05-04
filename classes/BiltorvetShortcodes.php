@@ -178,9 +178,12 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     $i++;
                 }
             }
+
+            $altTag = $this->currentVehicle->makeName . " " . $this->currentVehicle->model . " " . $this->currentVehicle->variant;
+
             foreach($this->currentVehicle->images as $image)
             {
-                $slides .= '<img src="' . $image . '"' . ($i == 0 ? ' class="bt-slideshow-active"' : '') . ' alt="">';
+                $slides .= '<img loading=lazy src="' . $image . '"' . ($i == 0 ? ' class="bt-slideshow-active"' : '') . ' alt="' . $altTag . '">';
                 $i++;
             }
             $iconGalleryArrowLeft = '<span class="bticon bticon-GalleryArrowLeft"></span>';
@@ -594,19 +597,18 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             } catch(Exception $e) {
                 return $e->getMessage();
             }
-            $bdt_root_url = rtrim($_SERVER['REQUEST_URI'], '/') . '../..'; // take care of trailing slash, that can be disabled or enabled on the server.
-            
+
             ob_start();
             ?>
             <div class="bdt">
                 <div class="vehicle_search_results">
                     <div class="row">
                         <?php
-                            $iVehicle = 1;
+                        $bdt_root_url = rtrim(get_permalink($this->_options['vehiclesearch_page_id']),'/');
+
+                        $iVehicle = 1;
                             foreach($vehicleFeed->vehicles as $oVehicle)
                             {
-                                $link = $bdt_root_url . '/' . $oVehicle->uri;
-
                                 // @TODO: Refactor.
                                 // For new we convert the old vehicle object to the new, so it works with the new templates
                                 // PLUGIN_ROOT refers to the v2 root.
@@ -637,6 +639,8 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
         public function bdt_shortcode_featuredvehicles( $atts )
         {
+            /** @var string $basePage */
+
             $atts = shortcode_atts( array(
                 'show' => 3,
                 'type' => null
@@ -652,9 +656,8 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             }
             wp_enqueue_style("bdt_style");
 
-            if(isset($this->_options) && isset($this->_options['vehiclesearch_page_id'])) {
-                $bdt_root_url = rtrim(get_permalink($this->_options['vehiclesearch_page_id']), '/');
-            } else {
+
+            if(!isset($this->_options) && !isset($this->_options['vehiclesearch_page_id'])) {
                 return '<!-- Cannot load Biltorvet featured vehicles: no root page (Vehicle search) has been set! -->';
             }
 
@@ -664,28 +667,27 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 <div class="vehicle_search_results">
                     <div class="row justify-content-center">
                         <?php
+                            $bdt_root_url = rtrim(get_permalink($this->_options['vehiclesearch_page_id']),'/');
+
                             $iVehicle = 1;
                             foreach($vehicleFeed->vehicles as $oVehicle)
                             {
-                            $link = $bdt_root_url . '/' . $oVehicle->uri;
+                                // @TODO: Refactor.
+                                // For new we convert the old vehicle object to the new, so it works with the new templates
+                                // PLUGIN_ROOT refers to the v2 root.
 
-                            // @TODO: Refactor.
-                            // For new we convert the old vehicle object to the new, so it works with the new templates
-                            // PLUGIN_ROOT refers to the v2 root.
+                                /** @var Vehicle $vehicle */
+                                $vehicle = VehicleFactory::create(json_decode(json_encode($oVehicle), true));
+                                $vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
+                                $priceController = new PriceController($vehicle);
+                                $basePage = $bdt_root_url;
+                                require PLUGIN_ROOT . 'templates/partials/_vehicleCard.php';
 
-                            /** @var Vehicle $vehicle */
-                            $vehicle = VehicleFactory::create(json_decode(json_encode($oVehicle), true));
-                            $vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
-                            $priceController = new PriceController($vehicle);
-                            $basePage = $bdt_root_url;
-                            require PLUGIN_ROOT . 'templates/partials/_vehicleCard.php';
-
-                            if($iVehicle % 3 === 0)
-                            {
-
-                            ?></div><div class="row"><?php
-                            }
-                            $iVehicle++;
+                                if($iVehicle % 3 === 0)
+                                {
+                                    ?></div><div class="row"><?php
+                                }
+                                $iVehicle++;
                             }
                         ?>
                     </div>

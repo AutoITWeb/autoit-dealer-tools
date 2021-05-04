@@ -1,6 +1,9 @@
 <?php
 
-use Biltorvet\Helper\MailFormatter;
+use Biltorvet\Factory\VehicleFactory;
+use Biltorvet\Factory\StructuredDataFactory;
+use Biltorvet\Controller\PriceController;
+use Biltorvet\Helper\DataHelper;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -96,9 +99,6 @@ class Biltorvet
 
     public function bdt_meta_tags()
     {
-        global $wp_query;
-        global $wp;
-
         $vehicleId = get_query_var('bdt_vehicle_id', -1);
         if ($vehicleId === -1) {
             return;
@@ -109,14 +109,31 @@ class Biltorvet
             return;
         }
 
+        global $wp;
+        $oVehicle = VehicleFactory::create(json_decode(json_encode($vehicle), true));
+        $priceController = new PriceController($oVehicle);
+
+        //$priceController->getStructuredDataPrice();
+
         ?>
         <meta property="og:url" content="<?php echo home_url($wp->request); ?>" />
         <meta property="og:type" content="product"/>
-        <meta property="og:title"content="<?php echo $vehicle->makeName . ' ' . $vehicle->model . ' ' . $vehicle->variant; ?>"/>
-        <meta property="og:description" content="<?php echo strip_tags($vehicle->description); ?>"/>
-        <meta property="og:image" content="<?php echo $vehicle->images[0]; ?>"/>
+        <meta property="og:title"content="<?php echo $oVehicle->getMakeName() . ' ' . $oVehicle->getMakeName() . ' ' . $oVehicle->getVariant(); ?>"/>
+        <meta property="og:description" content="<?php echo strip_tags($oVehicle->getDescription()); ?>"/>
+        <meta property="og:image" content="<?php echo $oVehicle->getImages()[0]; ?>"/>
         <meta property="og:image:width" content="1024"/>
-        <meta property="og:image:height" content="768"/><?php
+        <meta property="og:image:height" content="768"/>
+        <?php
+
+        // Structured data - requires the product "Structured Data" in the dashboard
+        if($priceController->getStructuredDataPrice() != null) {
+            ?>
+            <script type="application/ld+json">
+                <?= StructuredDataFactory::VehicleDetails($oVehicle, $priceController->getStructuredDataPrice(), $this->_options); ?>
+            </script>
+                <?php
+        }
+
     }
 
     public function bdt_vehicledetails_canonical()
@@ -400,7 +417,7 @@ class Biltorvet
 
                 $vehicledetail = get_page_uri($options['detail_template_page_id']);
                 $query = 'index.php?pagename=' . $vehicledetail. '&bdt_vehicle_id=$matches[1]';
-                add_rewrite_rule( '^' . $vehiclesearchresults . '/.+((?:AD|BI)[0-9]+)$', $query , 'top' );
+                add_rewrite_rule( '^' . $vehiclesearchresults . '.+((?:AD|BI)[0-9]+)$', $query , 'top' );
             }
             if(isset($options['vehiclesearch_page_id']) && trim($options['vehiclesearch_page_id']) !== '')
             {
