@@ -639,8 +639,6 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
         public function bdt_shortcode_featuredvehicles( $atts )
         {
-            /** @var string $basePage */
-
             $atts = shortcode_atts( array(
                 'show' => 3,
                 'type' => null
@@ -656,10 +654,11 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             }
             wp_enqueue_style("bdt_style");
 
-
             if(!isset($this->_options) && !isset($this->_options['vehiclesearch_page_id'])) {
                 return '<!-- Cannot load Biltorvet featured vehicles: no root page (Vehicle search) has been set! -->';
             }
+
+            $bdt_root_url = rtrim(get_permalink($this->_options['vehiclesearch_page_id']),'/');
 
             ob_start();
             ?>
@@ -667,11 +666,11 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 <div class="vehicle_search_results">
                     <div class="row justify-content-center">
                         <?php
-                            $bdt_root_url = rtrim(get_permalink($this->_options['vehiclesearch_page_id']),'/');
-
                             $iVehicle = 1;
                             foreach($vehicleFeed->vehicles as $oVehicle)
                             {
+                                $link = $bdt_root_url . '/' . $oVehicle->uri;
+
                                 // @TODO: Refactor.
                                 // For new we convert the old vehicle object to the new, so it works with the new templates
                                 // PLUGIN_ROOT refers to the v2 root.

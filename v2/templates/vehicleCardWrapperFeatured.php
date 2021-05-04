@@ -18,6 +18,8 @@ use Biltorvet\Model\Vehicle;
 
 if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
+$bdt_root_url = rtrim(get_permalink($this->_options['vehiclesearch_page_id']),'/');
+
 ?>
 
 <div class="bdt">
@@ -31,6 +33,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     /** @var Property[] $vehicleProperties */
                     $vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
                     $priceController = new PriceController($vehicle);
+                    $basePage = $bdt_root_url;
                     include 'partials/_vehicleCard.php';
                 }
                 ?>
