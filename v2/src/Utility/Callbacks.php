@@ -36,6 +36,7 @@ class Callbacks
      */
     public function get_vehicles_shortcode(array $atts)
     {
+
         $searchFilter = new SearchFilter();
         $errors = "";
 

@@ -83,7 +83,6 @@ class PriceController
      */
     public function getCardPrioritizedPrice()
     {
-
         if (!$this->hideFinancingCards && $this->price->getFinancingValue()) {
             $this->prioritizedPriceType = 'financing';
             return $this->formatValue($this->price->getFinancingValue()) . $this->monthlyPostFix;
@@ -103,6 +102,40 @@ class PriceController
                 if ($this->price->getPriceValue()) {
                     $this->prioritizedPriceType = 'cash';
                     return $this->formatValue($this->price->getPriceValue());
+                }
+            }
+        }
+
+        return $this->noPriceValue;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStructuredDataPrice()
+    {
+        if($this->price->getPriceValue())
+        {
+            return $this->price->getPriceValue();
+        }
+
+        if (!$this->hideFinancingCards && $this->price->getFinancingValue()) {
+            $this->prioritizedPriceType = 'financing';
+            return $this->price->getFinancingValue();
+        } else {
+            if (!$this->hideLeasingCards && $this->price->getLeasingPriceValue()) {
+                $this->prioritizedPriceType = 'leasing';
+                if ($this->price->getIsBusinessLeasing()) {
+                    return $this->price->getLeasingPriceValue();
+                } else if($this->price->getIsPrivateLeasing()) {
+                    return $this->price->getLeasingPriceValue();
+                } else {
+                    return $this->price->getLeasingPriceValue();
+                }
+            } else {
+                if ($this->price->getPriceValue()) {
+                    $this->prioritizedPriceType = 'cash';
+                    return $this->price->getPriceValue();
                 }
             }
         }
