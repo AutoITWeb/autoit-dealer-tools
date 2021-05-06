@@ -1,9 +1,11 @@
 <?php
 
+use Biltorvet\Controller\ApiController;
 use Biltorvet\Factory\VehicleFactory;
 use Biltorvet\Factory\StructuredDataFactory;
 use Biltorvet\Controller\PriceController;
 use Biltorvet\Helper\DataHelper;
+use Biltorvet\Helper\ProductHelper;
 
 if (!defined('ABSPATH')) {
     exit;
