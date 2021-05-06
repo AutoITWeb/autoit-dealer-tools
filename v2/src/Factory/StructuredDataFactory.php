@@ -74,6 +74,10 @@ class StructuredDataFactory
             $data .= ',"modelDate" : "' . $vehicleProperties['ModelYear']->getValue() . '"';
         }
 
+        if($vehicle->getVin() != null) {
+            $data .= ',"identifier": "' . $vehicle->getVin() . '"';
+        }
+
         if($equipment != null) {
             $data .= $equipment;
         }
@@ -98,7 +102,8 @@ class StructuredDataFactory
             $priceController = new PriceController($vehicle);
             $vehiclePrice = $priceController->getStructuredDataPrice() ?? 0;
             $vehicleUrl = $vehicle->getUri();
-            $vehicleDescription = $vehicle->getDescription() != null? TextUtils::Sanitize($vehicle->getDescription()) : $vehicle->getMakeName() . $vehicle->getModel() . $vehicle->getVariant();
+            $vehicle->getDescription() != null? TextUtils::Sanitize($vehicle->getDescription()) :
+            $vehicleDescription = $vehicle->getMakeName() . $vehicle->getModel() . $vehicle->getVariant();
             $brandUrl = rtrim(get_page_link($options['vehiclesearch_page_id']),'/') . "/1/" . ucfirst($vehicle->getMakeName());
             $vehicleLabels = array();
 

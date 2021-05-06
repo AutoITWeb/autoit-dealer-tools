@@ -109,6 +109,10 @@ class Vehicle
      * @var integer|null
      */
     private $companyId;
+    /**
+     * @var string|null
+     */
+    private $vin;
 
     /**
      * @return Equipment[]|null
@@ -179,6 +183,24 @@ class Vehicle
     public function setDocumentId(?string $documentId): Vehicle
     {
         $this->documentId = $documentId;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getVin(): ?string
+    {
+        return $this->vin;
+    }
+
+    /**
+     * @param  string|null $vin
+     * @return Vehicle
+     */
+    public function setVin(?string $vin): Vehicle
+    {
+        $this->vin = $vin;
         return $this;
     }
 
