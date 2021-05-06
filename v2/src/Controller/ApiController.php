@@ -129,7 +129,7 @@ class ApiController
      * @throws Exception
      */
     public function getCompanyProducts() {
-        return $this->requestApi('/products', [], 'products');
+        return $this->requestApi('products', [], 'products');
     }
 
 

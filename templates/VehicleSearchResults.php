@@ -10,6 +10,14 @@
      */
     if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
+    use Biltorvet\Controller\PriceController;
+    use Biltorvet\Factory\StructuredDataFactory;
+    use Biltorvet\Factory\VehicleFactory;
+    use Biltorvet\Helper\DataHelper;
+    use Biltorvet\Model\Vehicle;
+    use Biltorvet\Helper\ProductHelper;
+    use Biltorvet\Controller\ApiController;
+
     global $wp;
     $root = dirname(dirname(dirname(plugin_dir_url( __FILE__ ))));
     $currentPage = get_query_var('bdt_page', -1);
@@ -75,12 +83,6 @@
         $filterObject->Start = $start;
         $filterObject->Limit = $limit;
 
-//        if ($filterObject->Ascending === null && isset($this->_options['bdt_asc_sorting_value'])) {
-//            $filterObject->Ascending = $this->_options['bdt_asc_sorting_value'];
-//        }
-//
-//        ($filterObject->Ascending = isset($this->_options['bdt_asc_sorting_value']) && $this->_options['bdt_asc_sorting_value'] === 'on' ? 'true' : null);
-
         $filterObject->HideSoldVehicles = isset($this->_options_2['hide_sold_vehicles']) && $this->_options_2['hide_sold_vehicles'] === 'on' ? 'true' : null;
         $filterObject->HideLeasingVehicles = isset($this->_options_2['hide_leasing_vehicles']) && $this->_options_2['hide_leasing_vehicles'] === 'on' ? 'true' : null;
         $filterObject->HideFlexLeasingVehicles = isset($this->_options_2['hide_flexleasing_vehicles']) && $this->_options_2['hide_flexleasing_vehicles'] === 'on' ? 'true' : null;
@@ -105,47 +107,22 @@
         die($e->getMessage());
     }
 
-use Biltorvet\Controller\PriceController;
-use Biltorvet\Factory\VehicleFactory;
-use Biltorvet\Helper\DataHelper;
-use Biltorvet\Model\Vehicle;
-?>
-<script type="application/ld+json">
+    $start = ($currentPage - 1) * $this->biltorvetAPI->GetVehicleResultsPageLimit();
+    $end = $start + $this->biltorvetAPI->GetVehicleResultsPageLimit();
+    if($end > $vehicleFeed->totalResults)
     {
-        "@context": "https://schema.org",
-        "@type": "ItemList",
-        "url": "http://multivarki.ru?filters%5Bprice%5D%5BLTE%5D=39600",
-        "numberOfItems": "<?= $start + $this->biltorvetAPI->GetVehicleResultsPageLimit() ?>",
-        "itemListElement": [
-        <?php foreach($vehicleFeed->vehicles as $vehicle) : ?>
-        {
-            "@type": "Vehicle",
-            "image": "<?= $vehicle->images[0] ?>",
-            "url": "<?= rtrim(get_page_link($this->_options['vehiclesearch_page_id']),'/') . "/" . $vehicle->uri ?>",
-            "name": "<?= $vehicle->makeName ?>",
-            "offers": {
-                "@type": "Offer",
-                "price": "4399 p."
-            }
-        },
-        <?php endforeach; ?>
-            {
-                "@type": "Vehicle",
-                "image": "http://img01.multivarki.ru.ru/c9/f1/a5fe6642-18d0-47ad-b038-6fca20f1c923.jpeg",
-                "url": "http://multivarki.ru/brand_502/",
-                "name": "Brand 502",
-                "offers": {
-                    "@type": "Offer",
-                    "price": "4399 p."
-                }
-            },
-            {
-                "@type": "Product",
-                "name": "..."
-            }
-        ]
+        $end = $vehicleFeed->totalResults;
     }
-</script>
+
+    $product = new ApiController()
+?>
+    <?php if(ProductHelper::hasAccess("Structured Data", $product->getCompanyProducts())) : ?>
+
+    <script type="application/ld+json">
+        <?= StructuredDataFactory::VehicleSearchPage($vehicleFeed, $start, $end, $this->_options)?>
+    </script>
+
+    <?php endif; ?>
     <div class="bdt">
         <div class="vehicle_search_results" data-totalResults="<?= $vehicleFeed->totalResults ?>">
             <div class="row resultsTitle">
@@ -155,12 +132,7 @@ use Biltorvet\Model\Vehicle;
                     </h4>
                     <p class="showingResultsXofY">
                         <?php
-                            $start = ($currentPage - 1) * $this->biltorvetAPI->GetVehicleResultsPageLimit();
-                            $end = $start + $this->biltorvetAPI->GetVehicleResultsPageLimit();
-                            if($end > $vehicleFeed->totalResults)
-                            {
-                                $end = $vehicleFeed->totalResults;
-                            }
+
                             printf(__('Showing results %1$d-%2$d', 'biltorvet-dealer-tools'), ($start +1), $end);
                         ?>
                     </p>
