@@ -114,15 +114,15 @@
         $end = $vehicleFeed->totalResults;
     }
 
-    $product = new ApiController()
+    //$product = new ApiController()
 ?>
-    <?php if(ProductHelper::hasAccess("Structured Data", $product->getCompanyProducts())) : ?>
+<!--    <?php /*if(ProductHelper::hasAccess("Structured Data", $product->getCompanyProducts())) : */?>
 
     <script type="application/ld+json">
-        <?= StructuredDataFactory::VehicleSearchPage($vehicleFeed, $start, $end, $this->_options)?>
+        <?/*= StructuredDataFactory::VehicleSearchPage($vehicleFeed, $start, $end, $this->_options)*/?>
     </script>
 
-    <?php endif; ?>
+    --><?php /*endif; */?>
     <div class="bdt">
         <div class="vehicle_search_results" data-totalResults="<?= $vehicleFeed->totalResults ?>">
             <div class="row resultsTitle">
