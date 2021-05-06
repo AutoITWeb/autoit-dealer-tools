@@ -112,6 +112,7 @@ class Biltorvet
         global $wp;
         $oVehicle = VehicleFactory::create(json_decode(json_encode($vehicle), true));
         $priceController = new PriceController($oVehicle);
+        $product = new ApiController()
 
         //$priceController->getStructuredDataPrice();
 
@@ -126,14 +127,14 @@ class Biltorvet
         <?php
 
         // Structured data - requires the product "Structured Data" in the dashboard
-        if($priceController->getStructuredDataPrice() != null) {
+        if(ProductHelper::hasAccess("Structured Data", $product->getCompanyProducts()) && $priceController->getStructuredDataPrice() != null)
+        {
             ?>
             <script type="application/ld+json">
-                <?= StructuredDataFactory::VehicleDetails($oVehicle, $priceController->getStructuredDataPrice(), $this->_options); ?>
+                <?= StructuredDataFactory::VehicleDetails($oVehicle, $priceController->getStructuredDataPrice(), $vehicle->equipment, $this->_options); ?>
             </script>
-                <?php
+            <?php
         }
-
     }
 
     public function bdt_vehicledetails_canonical()

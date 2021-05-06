@@ -140,7 +140,7 @@ class PriceController
             }
         }
 
-        return $this->noPriceValue;
+        return null;
     }
 
     /**

@@ -16,7 +16,7 @@ class ProductHelper
     public static function hasAccess(string $productName, ApiResponse $products) : bool {
 
         foreach ($products->getResult() as $product) {
-            if (isset($product['name']) && $product['name'] === 'Vehicle Module') {
+            if (isset($product['name']) && $product['name'] === $productName) {
                 return true;
             }
         }

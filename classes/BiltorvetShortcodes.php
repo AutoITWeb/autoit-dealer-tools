@@ -48,6 +48,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             add_shortcode('bdt_widget', array($this, 'bdt_shortcode_widget'));
             add_shortcode('bdt_sharethis', array($this, 'bdt_shortcode_sharethis'));
             add_shortcode( 'bdt_map', array($this, 'bdt_shortcode_map'));
+            add_shortcode('bdt_get_vehicleid', array($this, 'bdt_shortcode_vehicleid'));
 
             add_action('wp_head', array(&$this, 'bdt_insert_map_dependencies'), 1000);
 
@@ -503,6 +504,24 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             }
 
             return '<span class="bdt_price_container">'. $showPrice .'</span>';
+        }
+
+        public function bdt_shortcode_vehicleid($atts)
+        {
+            if(!isset($this->currentVehicle) || $this->currentVehicle === null)
+            {
+                return __('Vehicle not found', 'biltorvet-dealer-tools');
+            }
+
+            $vehicleId = $this->currentVehicle->id;
+
+            if(isset($atts['int'])) {
+                return (int)$vehicleId;
+            } else if (isset($atts['string'])) {
+                return strval($vehicleId);
+            } else {
+                return $this->currentVehicle->id;
+            }
         }
 
         public function bdt_shortcode_detail_property( $atts )
