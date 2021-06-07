@@ -103,7 +103,7 @@ Attributes:
 <br>
 
 __Labels__  
-If statuscodes are used in AutoDekstop (statuscode are set in the tab "Status, annoncering og leasing") they will be shown on top of the vehicle image on the vehiclecards. A special dealer specific label can be activated (Please contact our Support deparment for further information) and set in the settings menu.  
+If statuscodes are used in AutoDekstop (statuscode are set in the tab "Status, annoncering og leasing") they will be shown on top of the vehicle image on the vehiclecards. A total of five labels can be shown on a vehiclecard at any given time. A special dealer specific label (Dynamic label, which can be change via the plugin settings) can be activated (Please contact our Support deparment for further information) and set in the settings menu.  
 
 ![Vehiclelabes](https://www.autoit.dk/media/autoit-dealer-tools/vehiclecard_documentation.png)  
 ![Settings](https://www.autoit.dk/media/autoit-dealer-tools/dealer_label_documentation.png)  
@@ -129,6 +129,9 @@ Attributes:
 * __make__
 * __model__  
 * __propellant__  
+* __bodytype__  
+* __vehicletype__ (Personbil, Varebil, Motorcykel, Lastbil)  
+* __vehiclestate__ (Fabriksny, Brugt)  
 * __minprice__  
 * __maxprice__  
 * __orderby__  
