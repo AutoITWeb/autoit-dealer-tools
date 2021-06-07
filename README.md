@@ -131,7 +131,8 @@ Attributes:
 * __propellant__  
 * __bodytype__  
 * __vehicletype__ (Personbil, Varebil, Motorcykel, Lastbil)  
-* __vehiclestate__ (Fabriksny, Brugt)  
+* __vehiclestate__ (Fabriksny, Brugt) 
+* __hidesoldvehicles__ (true)   
 * __minprice__  
 * __maxprice__  
 * __orderby__  
