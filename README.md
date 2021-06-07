@@ -135,7 +135,7 @@ Attributes:
 * __minprice__  
 * __maxprice__  
 * __orderby__  
-* __ascending__  
+* __ascending__ (true, defaults to false)  
 
 Both minprice and maxprice are needed in order to use the price filter (See example 4) and both values needs to be integers.  
 
