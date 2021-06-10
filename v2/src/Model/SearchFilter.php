@@ -44,6 +44,11 @@ class SearchFilter
     public $FullTextSearch;
 
     /**
+     * @var string[]
+     */
+    public $VehicleStates;
+
+        /**
      * @var int
      */
     public $PriceMin;
@@ -319,6 +324,24 @@ class SearchFilter
     public function setNewUsed(array $NewUsed): SearchFilter
     {
         $this->NewUsed = $NewUsed;
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getVehicleStates(): array
+    {
+        return $this->VehicleStates;
+    }
+
+    /**
+     * @param  string[] $VehicleStates
+     * @return SearchFilter
+     */
+    public function setVehicleStates(array $VehicleStates): SearchFilter
+    {
+        $this->VehicleStates = $VehicleStates;
         return $this;
     }
 

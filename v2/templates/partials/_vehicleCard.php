@@ -27,6 +27,9 @@ $basePage = rtrim(get_permalink(get_option('bdt_options')['vehiclesearch_page_id
 // Sorted labels for use on the vehiclecards
 $vehicleLabels = Vehicle::sortVehicleLabels($vehicle->getLabels());
 
+if(count($vehicleLabels) > 5) {
+    $vehicleLabels = array_slice($vehicleLabels, 0, 5);
+}
 
 if(isset($options_two['vehiclecard_prop_one'])) {
     $paramValueColumnOne = $options_two['vehiclecard_prop_one'] != '-1' ? $options_two['vehiclecard_prop_one'] : '0';
