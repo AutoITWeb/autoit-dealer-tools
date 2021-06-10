@@ -69,6 +69,11 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
         public function bdt_shortcode_sharethis() {
 
+            if(!isset($this->currentVehicle) || $this->currentVehicle === null)
+            {
+                return __('Vehicle not found', 'biltorvet-dealer-tools');
+            }
+
             $make = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'makeName', true);
             $model = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'model', true);
             $company = $this->currentVehicle->company->name;
@@ -475,12 +480,18 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
         /**
          * Automaticaly show kontant or leasing + kontant price.
+         * This function will redirect to the 404 template if currentVehicle is null
          */
         public function bdt_shortcode_vehicleprice()
         {
             if(!isset($this->currentVehicle) || $this->currentVehicle === null)
             {
-                return __('Vehicle not found', 'biltorvet-dealer-tools');
+                global $wp_query;
+                $wp_query->set_404();
+                status_header( 404 );
+                get_template_part( 404 );
+                exit();
+                //return __('Vehicle not found', 'biltorvet-dealer-tools');
             }
             $showPrice = '';
             // @TODO: refactor

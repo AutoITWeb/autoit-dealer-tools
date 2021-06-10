@@ -262,13 +262,12 @@ class Biltorvet
         try{
             $sendLead = $this->biltorvetAPI->AutodesktopSendLead($lead, isset($this->_options['adt_email_receipt']) && $this->_options['adt_email_receipt'] === "on");
         } catch(Exception $e) {
-            // If wp_die() is called and the dealer doesn't accepts lead to ADT no mail will be sent.
+            // If wp_die() is called and the dealer doesn't accept leads to ADT no mail will be sent.
             // Every dealers get an email AND a lead in ADT if "send leads to ADT" is activated. They shouldn't get an email unless it's checked in the plugin settings.
             //wp_die( '<div class="et_pb_contact_error_text">' . sprintf( __('Could not send the lead: %s', 'biltorvet-dealer-tools'), $e->getMessage()) . '</div>' );
         }
 
         $args['email_message'] .= "\r\n\r\n" . "Email afsendt fra: " . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
 
         return $args;
         }

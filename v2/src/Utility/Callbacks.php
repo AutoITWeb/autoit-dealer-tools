@@ -36,7 +36,6 @@ class Callbacks
      */
     public function get_vehicles_shortcode(array $atts)
     {
-
         $searchFilter = new SearchFilter();
         $errors = "";
 
@@ -51,6 +50,30 @@ class Callbacks
         }
         if(isset($atts['companyid'])) {
             $searchFilter->setCompanyIds([ucfirst($atts['companyid'])]);
+        }
+        if(isset($atts['bodytype'])) {
+            $searchFilter->setBodyTypes([ucfirst($atts['bodytype'])]);
+        }
+        if(isset($atts['vehicletype'])) {
+            $searchFilter->setProductTypes([ucfirst($atts['vehicletype'])]);
+        }
+        if(isset($atts['vehiclestate'])) {
+
+            $vehicleStates = array();
+
+            switch ($atts['vehiclestate']) {
+                case "Fabriksny":
+                    $vehicleStates = array("Fabriksny");
+                    break;
+                case "Brugt":
+                    $vehicleStates = array("Brugt");
+                    break;
+            }
+
+            $searchFilter->setVehicleStates($vehicleStates);
+        }
+        if(isset($atts["hidesoldvehicles"]) && $atts["hidesoldvehicles"] == 'true') {
+            $searchFilter->setHideSoldVehicles(true);
         }
         if(isset($atts['minprice']) && isset($atts['maxprice'])) {
 
@@ -77,7 +100,7 @@ class Callbacks
             if($atts['ascending'] == 'true') {
                 $searchFilter->setAscending(true);
             } else {
-                $errors .= '<b>' . 'Error: ' . '</b>' . 'Incorrect ascending value: Must be either true or false.' . '<br>';
+                $errors .= '<b>' . 'Error: ' . '</b>' . 'Incorrect ascending value: Must be true (defaults to false if attribute is not set' . '<br>';
             }
         }
 
@@ -93,6 +116,7 @@ class Callbacks
         {
             return 'Vi har solgt alle biler af denne type' . '<br><br>' . 'Se alle vores biler ' . '<a href="' . get_site_url() . '/' . get_page_uri($page = $vehicleSearchPageId) . '">her</a>';
         }
+
 
         wp_enqueue_style("bdt_style");
         return $this->templateController->load(

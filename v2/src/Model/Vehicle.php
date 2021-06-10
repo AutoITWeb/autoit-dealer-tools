@@ -634,6 +634,14 @@ class Vehicle
                 {
                     $vehicleLabels[9] = 'Demo';
                 }
+
+                else {
+
+                    if(!in_array($label->getValue(), $vehicleLabels)) {
+                    array_push($vehicleLabels, $label->getValue());
+
+                    }
+                }
             }
         }
 

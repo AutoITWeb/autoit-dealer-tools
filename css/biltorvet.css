@@ -5439,6 +5439,11 @@ a.bdt .badge-dark.focus {
     background-color: #ffff00
 }
 
+.bdt .vehicleCard .vehicleLabel {
+    color: #FFF;
+    background-color: #ffa500;
+}
+
 .bdt .vehicle_search select,
 .bdt .vehicle_search input {
     width: 100%;
