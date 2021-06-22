@@ -218,7 +218,7 @@ Custom tiles and markers are support by adding them in the plugin settings. Belo
 
 ![maps](https://www.autoit.dk/media/autoit-dealer-tools/maps.png)  
 
-if the shortcode is used on the vehicle detailspage the department where the vehicle is located will automatically be marked on the map. 
+if the shortcode is used on the vehicle detailspage use the attribute "detailspage" with the value "true" ([bdt_map detailspage="true"]) the department where the vehicle is located will automatically be marked on the map. 
 <br>
 <br>
 ### Vehicle detail shortcodes  
