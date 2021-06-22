@@ -42,6 +42,15 @@ class Biltorvet
         add_filter('get_canonical_url', array(&$this, 'bdt_vehicledetails_canonical'), 1000);
         add_filter('get_shortlink', array(&$this, 'bdt_vehicledetails_canonical'), 1000);
 
+        /*
+         *  Used in conjuction with our divi child theme.
+         *  Tells the divi ContactForm.php in our child theme how to handle form submissions.
+         */
+
+        define( 'leads' , $this->_options['bdt_leads'] ?? null );
+
+        add_action('call_AutodesktopSendLead', 'AutodesktopSendLead', 10, 2);
+
         $this->_options = get_option('bdt_options');
         $this->_options_2 = get_option('bdt_options_2');
         $this->_options_3 = get_option('bdt_options_3');
@@ -60,6 +69,7 @@ class Biltorvet
         if (is_admin()) {
             new BDTSettingsPage($this->_options, $this->_options_2, $this->_options_3, $this->_options_4);
         }
+
     }
 
     public function bdt_parse_request($request)
@@ -153,124 +163,126 @@ class Biltorvet
 
     public function bdt_adt_send_lead( $args )
     {
-        global $ActivityType;
-        $replyTo = '';
-        if(array_key_exists('headers', $args))
-        {
-            foreach($args['headers'] as $header)
+        if($this->_options['bdt_leads'] == "-1" || $this->_options['bdt_leads'] == null) {
+            global $ActivityType;
+            $replyTo = '';
+            if(array_key_exists('headers', $args))
             {
-                preg_match('/^Reply-To: ".*" <(.+)>$/', $header, $matches);
-                if(count($matches) > 1)
+                foreach($args['headers'] as $header)
                 {
-                    $replyTo = $matches[1];
-                    break;
+                    preg_match('/^Reply-To: ".*" <(.+)>$/', $header, $matches);
+                    if(count($matches) > 1)
+                    {
+                        $replyTo = $matches[1];
+                        break;
+                    }
                 }
             }
-        }
 
-        $query = parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_QUERY);
-        parse_str( $query, $queryParams );
+            $query = parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_QUERY);
+            parse_str( $query, $queryParams );
 
-        if(!isset($queryParams) || !isset($queryParams['bdt_vehicle_id']) || !isset($queryParams['bdt_actiontype']))
-        {
-            return;
-        }
-        if(!in_array($queryParams['bdt_actiontype'], $ActivityType))
-        {
-            return sprintf( __('Unrecognized CTA type. Allowed types: %s', 'biltorvet-dealer-tools'), implode(', ', $ActivityType));
-            return sprintf( __('Unrecognized CTA type. Allowed types: %s', 'biltorvet-dealer-tools'), implode(', ', $ActivityType));
-        }
-
-        try{
-            $vehicle = $this->biltorvetAPI->GetVehicle($queryParams['bdt_vehicle_id']);
-        } catch(Exception $e) {
-            return $e->getMessage();
-        }
-
-        $lead = new LeadInputObject();
-
-        $firstReg = $this->biltorvetAPI->GetPropertyValue($vehicle, '1. indregistreringsdato');
-        $lead->FirstRegistrationDate = isset($firstReg) ?  date('Y-m-d H:i:s', strtotime($firstReg)) : '';
-        $lead->Type = $vehicle->type;
-        //$lead->Type = $this->biltorvetAPI->GetPropertyValue($vehicle, 'Personbil') === 'Personbil' ? 'ja' : 'Andet'; // TODO: Jace this needs fixing, but it will require some more substantial work on the API side.
-        $lead->Model = TextUtils::GetVehicleIdentification($vehicle);
-        $lead->CompanyId = $vehicle->company->id;
-        $lead->ActivityType = $queryParams['bdt_actiontype'];
-        $lead->Email = $replyTo;
-
-        foreach($_POST as $key => $value)
-        {
-            if(strpos($key, 'bdtname') !== false)
+            if(!isset($queryParams) || !isset($queryParams['bdt_vehicle_id']) || !isset($queryParams['bdt_actiontype']))
             {
-                $lead->Name = $value;
+                return;
             }
-            if(strpos($key, 'Email') !== false)
+            if(!in_array($queryParams['bdt_actiontype'], $ActivityType))
             {
-                $lead->Email = $value;
+                return sprintf( __('Unrecognized CTA type. Allowed types: %s', 'biltorvet-dealer-tools'), implode(', ', $ActivityType));
+                return sprintf( __('Unrecognized CTA type. Allowed types: %s', 'biltorvet-dealer-tools'), implode(', ', $ActivityType));
             }
-            if(strpos($key, 'bdtpostalcode') !== false)
+
+            try{
+                $vehicle = $this->biltorvetAPI->GetVehicle($queryParams['bdt_vehicle_id']);
+            } catch(Exception $e) {
+                return $e->getMessage();
+            }
+
+            $lead = new LeadInputObject();
+
+            $firstReg = $this->biltorvetAPI->GetPropertyValue($vehicle, '1. indregistreringsdato');
+            $lead->FirstRegistrationDate = isset($firstReg) ?  date('Y-m-d H:i:s', strtotime($firstReg)) : '';
+            $lead->Type = $vehicle->type;
+            //$lead->Type = $this->biltorvetAPI->GetPropertyValue($vehicle, 'Personbil') === 'Personbil' ? 'ja' : 'Andet'; // TODO: Jace this needs fixing, but it will require some more substantial work on the API side.
+            $lead->Model = TextUtils::GetVehicleIdentification($vehicle);
+            $lead->CompanyId = $vehicle->company->id;
+            $lead->ActivityType = $queryParams['bdt_actiontype'];
+            $lead->Email = $replyTo;
+
+            foreach($_POST as $key => $value)
             {
-                $lead->PostalCode = $value;
+                if(strpos($key, 'bdtname') !== false)
+                {
+                    $lead->Name = $value;
+                }
+                if(strpos($key, 'Email') !== false)
+                {
+                    $lead->Email = $value;
+                }
+                if(strpos($key, 'bdtpostalcode') !== false)
+                {
+                    $lead->PostalCode = $value;
+                }
+                if(strpos($key, 'bdtcity') !== false)
+                {
+                    $lead->City = $value;
+                }
+                if(strpos($key, 'bdtphone') !== false)
+                {
+                    $lead->CellPhoneNumber = $value;
+                }
+                if(strpos($key, 'bdtrequestedtestdrivedatetime') !== false)
+                {
+                    $lead->RequestedTestdriveDateTime = date('Y-m-d H:i:s', strtotime($value));
+                }
+                if(strpos($key, 'bdtrequestedday') !== false)
+                {
+                    $day = intval($value);
+                }
+                if(strpos($key, 'bdtrequestedtime') !== false)
+                {
+                    $time = $value;
+                }
             }
-            if(strpos($key, 'bdtcity') !== false)
+
+            if(isset($day))
             {
-                $lead->City = $value;
+                $lead->RequestedTestdriveDateTime = date('Y-m-d H:i:s', strtotime('+' . $day . ' day'));
             }
-            if(strpos($key, 'bdtphone') !== false)
+
+            if(isset($day) && isset($time))
             {
-                $lead->CellPhoneNumber = $value;
+                if(strlen($time) === 4)
+                {
+                    $time = '0' . $time;
+                }
+                $lead->RequestedTestdriveDateTime = date('Y-m-d', strtotime($lead->RequestedTestdriveDateTime)) . ' ' . $time .':00';
             }
-            if(strpos($key, 'bdtrequestedtestdrivedatetime') !== false)
-            {
-                $lead->RequestedTestdriveDateTime = date('Y-m-d H:i:s', strtotime($value));
+
+            // Some e-mail clients don't respect the reply-to header, and then we lose the information about sender. For this reason, we are gluing the sender e-mail back to the e-mail body.
+            $args['message'] .= "\r\n\r\n" .  sprintf( __('Lead sender: %s', 'biltorvet-dealer-tools'), $replyTo);
+
+            // Append the vehicle info to the WP email.
+            $args['message'] .= "\r\n\r\n" .  sprintf( __('Selected vehicle: %s', 'biltorvet-dealer-tools'), $lead->Model . ' (' . $vehicle->id . ')');
+
+            // URl
+            $args['message'] .= "\r\n\r\n" . "Email afsendt fra: " . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+            $lead->Body = $args['message'];
+
+            try{
+                $sendLead = $this->biltorvetAPI->AutodesktopSendLead($lead);
+            } catch(Exception $e) {
+                // If wp_die() is called and the dealer doesn't accept leads to ADT no mail will be sent.
+                // Every dealers get an email AND a lead in ADT if "send leads to ADT" is activated. They shouldn't get an email unless it's checked in the plugin settings.
+                //wp_die( '<div class="et_pb_contact_error_text">' . sprintf( __('Could not send the lead: %s', 'biltorvet-dealer-tools'), $e->getMessage()) . '</div>' );
             }
-            if(strpos($key, 'bdtrequestedday') !== false)
-            {
-                $day = intval($value);
-            }
-            if(strpos($key, 'bdtrequestedtime') !== false)
-            {
-                $time = $value;
-            }
+
+            $args['email_message'] .= "\r\n\r\n" . "Email afsendt fra: " . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+            return $args;
         }
-
-        if(isset($day))
-        {
-            $lead->RequestedTestdriveDateTime = date('Y-m-d H:i:s', strtotime('+' . $day . ' day'));
-        }
-
-        if(isset($day) && isset($time))
-        {
-            if(strlen($time) === 4)
-            {
-                $time = '0' . $time;
-            }
-            $lead->RequestedTestdriveDateTime = date('Y-m-d', strtotime($lead->RequestedTestdriveDateTime)) . ' ' . $time .':00';
-        }
-
-        // Some e-mail clients don't respect the reply-to header, and then we lose the information about sender. For this reason, we are gluing the sender e-mail back to the e-mail body.
-        $args['message'] .= "\r\n\r\n" .  sprintf( __('Lead sender: %s', 'biltorvet-dealer-tools'), $replyTo);
-
-        // Append the vehicle info to the WP email.
-        $args['message'] .= "\r\n\r\n" .  sprintf( __('Selected vehicle: %s', 'biltorvet-dealer-tools'), $lead->Model . ' (' . $vehicle->id . ')');
-
-        // URl
-        $args['message'] .= "\r\n\r\n" . "Email afsendt fra: " . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-        $lead->Body = $args['message'];
-
-        try{
-            $sendLead = $this->biltorvetAPI->AutodesktopSendLead($lead, isset($this->_options['adt_email_receipt']) && $this->_options['adt_email_receipt'] === "on");
-        } catch(Exception $e) {
-            // If wp_die() is called and the dealer doesn't accept leads to ADT no mail will be sent.
-            // Every dealers get an email AND a lead in ADT if "send leads to ADT" is activated. They shouldn't get an email unless it's checked in the plugin settings.
-            //wp_die( '<div class="et_pb_contact_error_text">' . sprintf( __('Could not send the lead: %s', 'biltorvet-dealer-tools'), $e->getMessage()) . '</div>' );
-        }
-
-        $args['email_message'] .= "\r\n\r\n" . "Email afsendt fra: " . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-        return $args;
-        }
+    }
 
         public function bdt_register_scripts()
         {

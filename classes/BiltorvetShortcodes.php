@@ -94,13 +94,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             if(isset($this->_options_4['activate_map']) && $this->_options_4['activate_map'] === 'on') {
 
                 ?>
-                    <link rel="stylesheet" href="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'css/leaflet.css'; ?>" />
-                    <script src="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'scripts/leaflet.js'; ?>"></script>
 
-                    <script src="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'scripts/leaflet-providers.js'; ?>"></script>
+                <link rel="stylesheet" href="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'css/leaflet.css'; ?>" />
+                <script src="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'scripts/leaflet.js'; ?>"></script>
 
-                    <link rel="stylesheet" href="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'css/leaflet-gesture-handling.min.css'; ?>" />
-                    <script src="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'scripts/leaflet-gesture-handling.min.js'; ?>"></script>
+                <script src="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'scripts/leaflet-providers.js'; ?>"></script>
+
+                <link rel="stylesheet" href="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'css/leaflet-gesture-handling.min.css'; ?>" />
+                <script src="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'scripts/leaflet-gesture-handling.min.js'; ?>"></script>
 
                 <?php
 

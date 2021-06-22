@@ -19,8 +19,7 @@ $marker = isset($this->_options_4['bdt_custom_marker']) && $this->_options_4['bd
 
 
 // Globalmap not to be used on VehicleDetailsPage as it will only show the map data for the current vehicle
-if($this->currentVehicle != null)
-{
+if(isset($atts['detailspage']) && $atts['detailspage'] == 'true') {
     $setView = $this->currentVehicle->company->coordinates->latitude . "," . $this->currentVehicle->company->coordinates->longitude;
     $zoomLevel = isset($this->_options_4['bdt_zoom_level_detailspage']) && $this->_options_4['bdt_zoom_level_detailspage'] != '' ? $this->_options_4['bdt_zoom_level_detailspage'] : 17;
 
@@ -76,7 +75,7 @@ if($this->currentVehicle != null)
     <?php endif; ?>
 
     // VehicleDetailsPage marker
-    <?php if($this->currentVehicle != null) : ?>
+    <?php if(isset($atts['detailspage']) && $atts['detailspage'] == 'true') : ?>
         L.marker([<?= $this->currentVehicle->company->coordinates->latitude; ?>, <?=  $this->currentVehicle->company->coordinates->longitude; ?>], {icon: coloredIcon}).addTo(map)
             .bindPopup(" <b><?=  $this->currentVehicle->company->name; ?></b> <br> <?=  $this->currentVehicle->company->address; ?> <br> <?=  $this->currentVehicle->company->postNumber; ?> <?=  $this->currentVehicle->company->city; ?> <br> <?=  $this->currentVehicle->company->phone != 0 ? '<a href=' . 'tel:+45' .  $this->currentVehicle->company->phone . '>' . '+45 ' .  $this->currentVehicle->company->phone . '</a>' : ""; ?>")
 

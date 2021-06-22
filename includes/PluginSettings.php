@@ -1,6 +1,7 @@
 <?php
 
 use Biltorvet\Controller\ApiController;
+use Biltorvet\Helper\ProductHelper;
 
 if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
@@ -240,7 +241,17 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt_settings_section_2' // Section
             );
 
+            add_settings_field(
+                'bdt_leads',
+                __( 'How to recieve leads', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_leads_callback' ),
+                'bdt-settings-group-1', // Page
+                'bdt_settings_section_1' // Section
+            );
 
+            /*
+            *  This function is depricated but is still show to avoid errors
+            */
             add_settings_field(
                 'adt_email_receipt',
                 __( 'Send AutoDesktop receipts by e-mail', 'biltorvet-dealer-tools' ),
@@ -576,6 +587,37 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'selected'              => isset($this->options['detail_template_page_id']) ? intval($this->options['detail_template_page_id']) : 0
             ));
         }
+
+        public function bdt_leads_callback()
+        {
+            $api = new ApiController();
+
+            $leadOptions = ["Autodesktop" => 0, "Mail" => 1, "Autodesktop & mail" => 2];
+
+            if(!ProductHelper::hasAccess("External User", $api->getCompanyProducts()) && ProductHelper::hasAccess("Leads to ADT", $api->getCompanyProducts())) {
+
+                $HTML = '<select id="bdt_options" value="on" name="bdt_options[bdt_leads]"/>';
+                $HTML .= '<option value="-1">Vælg hvor leads skal sendes hen</option>';
+
+                foreach($leadOptions as $key => $value) {
+                    $selected = isset( $this->options['bdt_leads']) && $this->options['bdt_leads'] == $value;
+                    $HTML .= '<option value="' . $value . '"';
+                    $HTML .= $selected ? 'selected="selected"' : '';
+                    $HTML .= '>' . $key . '</option>';
+                }
+
+                $HTML .= '</select>';
+
+                echo $HTML;
+
+            } else {
+                echo "<br>I kan kun modtage leads på mail. <br>Kontakt <a ahref='mail:web@autoit.dk'>AutoIt</a> for at få kunne sende leads til Autodesktop og mail";
+            }
+        }
+
+        /*
+         *  This function is depricated but is still show to avoid errors
+         */
 
         public function bdt_adt_email_receipt_callback()
         {
