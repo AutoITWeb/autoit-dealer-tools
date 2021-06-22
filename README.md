@@ -173,7 +173,7 @@ Creates a list of cars from status codes set in AutoDesktop (In order to use thi
 * __Commision__ - Shows all cars with the label "Kommision".  
 * __Wholesale__ - Shows all cars with the label "Kun engros". 
 * __NewCar__ - Shows all cars with "Fabriksny" checked in AutoDesktop. 
-* __CarLite Dealer Label__ - Shows all vehicles with "CarLite forhandler label" checked in AutoDesktop.  
+* __Carlite Dealer Label__ - Shows all vehicles with "CarLite forhandler label" checked in AutoDesktop.  
 
 
 Example 1: __[bdt_get_vehicles_by_status_code status="Sold"]__ - lists all cars marked as "Solgt".  
