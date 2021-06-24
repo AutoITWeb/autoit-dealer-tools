@@ -616,7 +616,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
         }
 
         /*
-         *  This function is depricated but is still show to avoid errors
+         *  This function is depricated but is still has to be shown to avoid errors
          */
 
         public function bdt_adt_email_receipt_callback()

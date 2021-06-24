@@ -42,22 +42,22 @@ class Biltorvet
         add_filter('get_canonical_url', array(&$this, 'bdt_vehicledetails_canonical'), 1000);
         add_filter('get_shortlink', array(&$this, 'bdt_vehicledetails_canonical'), 1000);
 
-        /*
-         *  Used in conjuction with our divi child theme.
-         *  Tells the divi ContactForm.php in our child theme how to handle form submissions.
-         */
-
-        define( 'leads' , $this->_options['bdt_leads'] ?? null );
-
-        add_action('call_AutodesktopSendLead', 'AutodesktopSendLead', 10, 2);
-
         $this->_options = get_option('bdt_options');
         $this->_options_2 = get_option('bdt_options_2');
         $this->_options_3 = get_option('bdt_options_3');
         $this->_options_4 = get_option('bdt_options_4');
 
+        /*
+        *  Used in conjuction with our divi child theme.
+        *  Tells the divi ContactForm.php in our child theme how to handle form submissions.
+        */
+
+        define ('leads', $this->_options['bdt_leads']);
+        add_action('call_get_vehicle_data', array($this, 'get_vehicle_data'), 10, 2);
+        add_action('call_AutodesktopSendLead', array($this, 'bdt_send_adt_lead'), 10, 4);
+
         if ($this->_options['api_key'] === null || trim($this->_options['api_key']) === '') {
-           add_action('admin_notices', array(&$this, 'bdt_error_noapikey'));
+            add_action('admin_notices', array(&$this, 'bdt_error_noapikey'));
         } else {
             $this->biltorvetAPI = new BiltorvetAPI($this->_options['api_key']);
             new Ajax($this->biltorvetAPI);
@@ -70,6 +70,49 @@ class Biltorvet
             new BDTSettingsPage($this->_options, $this->_options_2, $this->_options_3, $this->_options_4);
         }
 
+    }
+
+    /*
+     * New function to send leads to Autodesktop
+     * This will only send leads to the first company in the GetCompanies() array.
+     * At the moment there's no way to determine where a lead should be sent to so the first companyid in the array is chosen (in the API)
+     */
+
+    public function get_vehicle_data($vehicleId, $returnValue)
+    {
+        if($vehicleId != null) {
+            try{
+                $vehicle = $this->biltorvetAPI->GetVehicle($vehicleId);
+                $message = "\r\n\r\n" . "En kunde har udvist interesse for bilen " . $vehicle->makeName . " " . $vehicle->model . " med id " . $vehicle->id;
+            } catch(Exception $e) {
+                // If the vehicle isn't found the data won't be added to the lead. Should only happen if the call to the API fails.
+            }
+        }
+
+        $returnValue->return = $message;
+    }
+
+    public function bdt_send_adt_lead( $message, $email, $name, $query_actiontype)
+    {
+        $getCompanies = $this->biltorvetAPI->GetCompanies();
+
+        $lead = new LeadInputObject();
+
+        $lead->CompanyId = $getCompanies->companies[0]->id;
+        $lead->ActivityType = $query_actiontype ?? "Contact";
+        $lead->Email = $email;
+        $lead->Name = $name;
+        $lead->Body = $message;
+
+        try{
+            $sendLead = $this->biltorvetAPI->AutodesktopSendLead($lead);
+        } catch(Exception $e) {
+            /*
+             * Do nothing if it fails - the API will catch the error.
+             * Divi DB will catch the post call and save the lead in the Wordpress Database.
+             * Perhaps the form submission should fail if the call fails? This is only relevant if the dealer only recieves leads to Autodesktop
+             */
+        }
     }
 
     public function bdt_parse_request($request)
@@ -160,6 +203,11 @@ class Biltorvet
 
         return home_url($wp->request);
     }
+
+    /*
+     * Depricated function to send leads to Autodesktop (From certain forms only)
+     * Right now this will fire if the leads setting hasn't been set. At some point this function should be removed completely.
+     */
 
     public function bdt_adt_send_lead( $args )
     {
