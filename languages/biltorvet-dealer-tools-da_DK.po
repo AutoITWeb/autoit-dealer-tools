@@ -592,3 +592,6 @@ msgstr "Inkl. leveringsomkostninger"
 
 msgid "Activate map"
 msgstr "Aktivér kort"
+
+msgid "How to recieve leads"
+msgstr "Hvordan ønsker i at modtage leads?"

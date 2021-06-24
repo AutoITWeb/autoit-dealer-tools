@@ -94,18 +94,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             if(isset($this->_options_4['activate_map']) && $this->_options_4['activate_map'] === 'on') {
 
                 ?>
-                    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-                          crossorigin=""/>
 
-                    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-                            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-                            crossorigin=""></script>
+                <link rel="stylesheet" href="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'css/leaflet.css'; ?>" />
+                <script src="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'scripts/leaflet.js'; ?>"></script>
 
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-providers/1.10.2/leaflet-providers.js"></script>
+                <script src="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'scripts/leaflet-providers.js'; ?>"></script>
 
-                    <link rel="stylesheet" href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css">
-
-                <script src="//unpkg.com/leaflet-gesture-handling"></script>
+                <link rel="stylesheet" href="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'css/leaflet-gesture-handling.min.css'; ?>" />
+                <script src="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'scripts/leaflet-gesture-handling.min.js'; ?>"></script>
 
                 <?php
 
