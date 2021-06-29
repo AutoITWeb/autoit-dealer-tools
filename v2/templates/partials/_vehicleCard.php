@@ -25,11 +25,15 @@ $options_two = get_option('bdt_options_2');
 $basePage = rtrim(get_permalink(get_option('bdt_options')['vehiclesearch_page_id']),'/');
 
 // Sorted labels for use on the vehiclecards
-$vehicleLabels = Vehicle::sortVehicleLabels($vehicle->getLabels());
+$vehicleLabels = Vehicle::sortVehicleLabels($vehicle->getLabels(), isset($options_two['show_all_labels']) ?? null);
 
 if(count($vehicleLabels) > 5) {
     $vehicleLabels = array_slice($vehicleLabels, 0, 5);
 }
+
+/*
+ * Handle which props to show on the vehicle card
+ */
 
 if(isset($options_two['vehiclecard_prop_one'])) {
     $paramValueColumnOne = $options_two['vehiclecard_prop_one'] != '-1' ? $options_two['vehiclecard_prop_one'] : '0';
@@ -49,6 +53,10 @@ if(isset($options_two['vehiclecard_prop_three'])) {
 else {
     $paramValueColumnThree = '6';
 }
+
+/*
+ * Is the special carlite dealer label in use?
+ */
 
 $carliteDealerLabel = isset($options_two['carlite_dealer_label']) ? $options_two['carlite_dealer_label'] : null;
 

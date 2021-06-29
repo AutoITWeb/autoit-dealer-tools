@@ -453,6 +453,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
 
             add_settings_field(
+                'bdt_show_all_labels',
+                __( 'Show all labels set in Autodesktop', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_show_all_labels_callback' ),
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
                 'bdt_activate_map',
                 __( 'Activate map', 'biltorvet-dealer-tools' ),
                 array( $this, 'bdt_activate_map_callback' ),
@@ -884,6 +892,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             printf(
                 '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[hide_brandnew_vehicles]"%s />',
                 isset( $this->options_2['hide_brandnew_vehicles'] ) && $this->options_2['hide_brandnew_vehicles'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_show_all_labels_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[show_all_labels]"%s />',
+                isset( $this->options_2['show_all_labels'] ) && $this->options_2['show_all_labels'] === 'on' ? ' checked="checked"' : ''
             );
         }
 
