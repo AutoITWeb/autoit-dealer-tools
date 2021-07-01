@@ -583,7 +583,7 @@ class Vehicle
     }
 
     // Sort labels for better use on vehiclecards
-    public static function sortVehicleLabels(?array $labels) : array
+    public static function sortVehicleLabels(?array $labels, ?string $showAllLabes) : array
     {
         $vehicleLabels = array();
 
@@ -635,13 +635,22 @@ class Vehicle
                     $vehicleLabels[9] = 'Demo';
                 }
 
+
+
                 else {
+                    /*
+                     * Is the show all labels setting on?
+                     */
 
-                    if(!in_array($label->getValue(), $vehicleLabels)) {
-                    array_push($vehicleLabels, $label->getValue());
+                    if($showAllLabes != null) {
 
+                        if(!in_array($label->getValue(), $vehicleLabels)) {
+                            array_push($vehicleLabels, $label->getValue());
+
+                        }
                     }
                 }
+
             }
         }
 
