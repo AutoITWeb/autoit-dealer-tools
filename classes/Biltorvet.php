@@ -52,7 +52,7 @@ class Biltorvet
         *  Tells the divi ContactForm.php in our child theme how to handle form submissions.
         */
 
-        define ('leads', $this->_options['bdt_leads']);
+        isset($this->_options['bdt_leads']) ? (define ('leads', $this->_options['bdt_leads'])) : (define ('leads', "-1"));
         add_action('call_get_vehicle_data', array($this, 'get_vehicle_data'), 10, 2);
         add_action('call_AutodesktopSendLead', array($this, 'bdt_send_adt_lead'), 10, 4);
 
