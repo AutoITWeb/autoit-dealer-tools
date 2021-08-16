@@ -5494,6 +5494,13 @@ a.bdt .badge-dark.focus {
     padding: 5px 10px
 }
 
+.bdt .vehicle_search .resetFrontpage {
+    background-color: transparent;
+    color: #555;
+    border: none;
+    padding: 5px 10px
+}
+
 .bdt .vehicle_search_results select,
 .bdt .vehicle_search_results input {
     width: 100%;

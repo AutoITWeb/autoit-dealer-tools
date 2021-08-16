@@ -62,7 +62,7 @@ function Biltorvet($) {
         if($('#consumptionRange').length > 0)
         {
             var crsC = {
-                id: $(this).attr('id'me),
+                id: $(this).attr('id'),
                 min: 0,
                 max:10,
                 range: true,
@@ -308,6 +308,13 @@ function Biltorvet($) {
         SaveFilter();
     }
 
+    this.ResetFrontpageFilter = function()
+    {
+        StartLoadingAnimation();
+
+        StopLoadingAnimation();
+    }
+
     // "Private" functions
     function SaveFilter()
     {
@@ -545,7 +552,15 @@ jQuery(function($) {
             e.preventDefault();
 
             $(this).closest('.bdt .vehicle_search').find('select').val('');
+
             bdt.ResetFilter();
+        })
+        .on('click', '.bdt .resetFrontpage', function(e){
+            e.preventDefault();
+
+            $(this).closest('.bdt .vehicle_search').find('select').val('');
+
+            bdt.ResetFrontpageFilter();
         })
         .on('click', '.bdt .search', function(e){
             e.preventDefault();
