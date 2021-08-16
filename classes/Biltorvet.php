@@ -20,6 +20,7 @@ class Biltorvet
     private $_options_2;
     private $_options_3;
     private $_options_4;
+    private $_options_5;
     private $biltorvetAPI;
 
     public function __construct()
@@ -46,6 +47,7 @@ class Biltorvet
         $this->_options_2 = get_option('bdt_options_2');
         $this->_options_3 = get_option('bdt_options_3');
         $this->_options_4 = get_option('bdt_options_4');
+        $this->_options_5 = get_option('bdt_options_5');
 
         /*
         *  Used in conjuction with our divi child theme.
@@ -62,12 +64,12 @@ class Biltorvet
             $this->biltorvetAPI = new BiltorvetAPI($this->_options['api_key']);
             new Ajax($this->biltorvetAPI);
             if (!is_admin()) {
-                new BiltorvetShortcodes($this->biltorvetAPI, $this->_options, $this->_options_2, $this->_options_4);
+                new BiltorvetShortcodes($this->biltorvetAPI, $this->_options, $this->_options_2, $this->_options_4, $this->_options_5);
             }
         }
 
         if (is_admin()) {
-            new BDTSettingsPage($this->_options, $this->_options_2, $this->_options_3, $this->_options_4);
+            new BDTSettingsPage($this->_options, $this->_options_2, $this->_options_3, $this->_options_4, $this->_options_5);
         }
 
     }

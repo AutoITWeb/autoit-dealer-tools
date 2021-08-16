@@ -14,11 +14,12 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
         private $options_2;
         private $options_3;
         private $options_4;
+        private $options_5;
 
         /**
          * Start up
          */
-        public function __construct($options, $options_2, $options_3, $options_4)
+        public function __construct($options, $options_2, $options_3, $options_4, $options_5)
         {
             if($options === null)
             {
@@ -28,6 +29,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             $this->options_2 = $options_2;
             $this->options_3 = $options_3;
             $this->options_4 = $options_4;
+            $this->options_5 = $options_5;
 
             add_action( 'admin_menu', array( $this, 'bdt_add_plugin_page' ) );
             add_action( 'admin_init', array( $this, 'bdt_page_init' ) );
@@ -76,6 +78,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     <a href="?page=autoit-dealer-tools-options&tab=tab_two" class="nav-tab <?= $active_tab == 'tab_two' ? 'nav-tab-active' : ''; ?>"><?= __( 'Search result settings', 'biltorvet-dealer-tools' ) ?></a>
                     <a href="?page=autoit-dealer-tools-options&tab=tab_three" class="nav-tab <?= $active_tab == 'tab_three' ? 'nav-tab-active' : ''; ?>"><?= __( 'Vehicle details settings', 'biltorvet-dealer-tools' ) ?></a>
                     <a href="?page=autoit-dealer-tools-options&tab=tab_four" class="nav-tab <?= $active_tab == 'tab_four' ? 'nav-tab-active' : ''; ?>"><?= __( 'Map settings', 'biltorvet-dealer-tools' ) ?></a>
+                    <a href="?page=autoit-dealer-tools-options&tab=tab_five" class="nav-tab <?= $active_tab == 'tab_five' ? 'nav-tab-active' : ''; ?>"><?= __( 'Frontpage search', 'biltorvet-dealer-tools' ) ?></a>
                 </h2>
 
                 <form method="post" action="options.php">
@@ -99,6 +102,11 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
                         settings_fields( 'bdt-settings-group-4' );
                         do_settings_sections( 'bdt-settings-group-4' );
+
+                    } else if ( $active_tab == 'tab_five') {
+
+                    settings_fields( 'bdt-settings-group-5' );
+                    do_settings_sections( 'bdt-settings-group-5' );
                     }
 
                     ?>
@@ -143,6 +151,13 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt-settings-group-4' // Page
             );
 
+            add_settings_section(
+                'bdt_settings_section_5',
+                __( 'Frontpage Search settings', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_frontpage_search_settings' ), // Callback
+                'bdt-settings-group-5' // Page
+            );
+
             register_setting(
                 'bdt-settings-group-1', // Option group
                 'bdt_options' // Option name
@@ -159,6 +174,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             register_setting(
                 'bdt-settings-group-4', // Option group
                 'bdt_options_4' // Option name
+            );
+            register_setting(
+                'bdt-settings-group-5', // Option group
+                'bdt_options_5' // Option name
             );
 
             add_settings_field(
@@ -512,11 +531,97 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt-settings-group-4', // Page
                 'bdt_settings_section_4' // Section
             );
+
+            /**
+             * Frontpage Seach setting fields
+             */
+
+            add_settings_field(
+                'bdt_set_frontpagesearch_column',
+                __( 'Set column size', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_frontpagesearch_setcolumn_callback' ),
+                'bdt-settings-group-5', // Page
+                'bdt_settings_section_5' // Section
+            );
+
+            add_settings_field(
+                'frontpagesearch_fulltextsearch',
+                __( 'Activate fulltextsearch', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_frontpagesearch_fulltextsearch_callback' ),
+                'bdt-settings-group-5', // Page
+                'bdt_settings_section_5' // Section
+            );
+
+            add_settings_field(
+                'frontpagesearch_company',
+                __( 'Activate companies', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_frontpagesearch_company_callback' ),
+                'bdt-settings-group-5', // Page
+                'bdt_settings_section_5' // Section
+            );
+
+            add_settings_field(
+                'frontpagesearch_vehiclestate',
+                __( 'Activate vehiclestates', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_frontpagesearch_vehiclestate_callback' ),
+                'bdt-settings-group-5', // Page
+                'bdt_settings_section_5' // Section
+            );
+
+            add_settings_field(
+                'frontpagesearch_makemodel',
+                __( 'Activate makes and models', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_frontpagesearch_makemodel_callback' ),
+                'bdt-settings-group-5', // Page
+                'bdt_settings_section_5' // Section
+            );
+
+            add_settings_field(
+                'frontpagesearch_producttype',
+                __( 'Activate product types', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_frontpagesearch_producttype_callback' ),
+                'bdt-settings-group-5', // Page
+                'bdt_settings_section_5' // Section
+            );
+
+            add_settings_field(
+                'frontpagesearch_bodytype',
+                __( 'Activate body types', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_frontpagesearch_bodytype_callback' ),
+                'bdt-settings-group-5', // Page
+                'bdt_settings_section_5' // Section
+            );
+
+            add_settings_field(
+                'frontpagesearch_propellants',
+                __( 'Activate propellants', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_frontpagesearch_propellants_callback' ),
+                'bdt-settings-group-5', // Page
+                'bdt_settings_section_5' // Section
+            );
+
+            add_settings_field(
+                'frontpagesearch_pricerange',
+                __( 'Activate price range', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_frontpagesearch_pricerange_callback' ),
+                'bdt-settings-group-5', // Page
+                'bdt_settings_section_5' // Section
+            );
+
+            add_settings_field(
+                'frontpagesearch_fuelconsumption',
+                __( 'Activate fuel consumption', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_frontpagesearch_fuelconsumption_callback' ),
+                'bdt-settings-group-5', // Page
+                'bdt_settings_section_5' // Section
+            );
         }
 
         /**
          * Callbacks
          */
+
+
 
         /**
          * options "Generelle indstillinger" tab
@@ -540,6 +645,11 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
         public function bdt_print_section_info_map_settings()
         {
             print __( 'Customize the map', 'biltorvet-dealer-tools' );
+        }
+
+        public function bdt_frontpage_search_settings()
+        {
+            print __( 'Customize frontpage search', 'biltorvet-dealer-tools' );
         }
 
         public function bdt_api_key_callback()
@@ -1008,6 +1118,102 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             printf(
                 '<input type="text" id="bdt_options_4" name="bdt_options_4[bdt_custom_marker]" value="%s" size="65" />',
                 isset( $this->options_4['bdt_custom_marker'] ) ? esc_attr($this->options_4['bdt_custom_marker']) : ''
+            );
+        }
+
+        /*
+         * options "Forside søgning" tab
+         * options "Forside søgning" tab
+         */
+
+        public function  bdt_frontpagesearch_setcolumn_callback()
+        {
+            $columsSizes = array("3", "4");
+
+            $HTML = '<select id="bdt_options_5" value="on" name="bdt_options_5[set_frontpagesearch_column]"/>';
+            $HTML .= '<option value="Default">Default</option>';
+
+            foreach ($columsSizes as $sizes) {
+                $selected = isset( $this->options_5['set_frontpagesearch_column']) && $this->options_5['set_frontpagesearch_column'] == $sizes;
+                $HTML .= '<option value="' . $sizes . '"';
+                $HTML .= $selected ? 'selected="selected"' : '';
+                $HTML .= '>' . $sizes . '</option>';
+            }
+
+            $HTML .= '</select>';
+
+            echo $HTML;
+        }
+
+        public function bdt_frontpagesearch_fulltextsearch_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_5" value="on" name="bdt_options_5[frontpagesearch_fulltextsearch]"%s />',
+                isset( $this->options_5['frontpagesearch_fulltextsearch'] ) && $this->options_5['frontpagesearch_fulltextsearch'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_frontpagesearch_company_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_5" value="on" name="bdt_options_5[frontpagesearch_company]"%s />',
+                isset( $this->options_5['frontpagesearch_company'] ) && $this->options_5['frontpagesearch_company'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_frontpagesearch_vehiclestate_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_5" value="on" name="bdt_options_5[frontpagesearch_vehiclestate]"%s />',
+                isset( $this->options_5['frontpagesearch_vehiclestate'] ) && $this->options_5['frontpagesearch_vehiclestate'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_frontpagesearch_makemodel_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_5" value="on" name="bdt_options_5[frontpagesearch_makemodel]"%s />',
+                isset( $this->options_5['frontpagesearch_makemodel'] ) && $this->options_5['frontpagesearch_makemodel'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_frontpagesearch_producttype_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_5" value="on" name="bdt_options_5[frontpagesearch_producttype]"%s />',
+                isset( $this->options_5['frontpagesearch_producttype'] ) && $this->options_5['frontpagesearch_producttype'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_frontpagesearch_bodytype_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_5" value="on" name="bdt_options_5[frontpagesearch_bodytype]"%s />',
+                isset( $this->options_5['frontpagesearch_bodytype'] ) && $this->options_5['frontpagesearch_bodytype'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_frontpagesearch_propellants_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_5" value="on" name="bdt_options_5[frontpagesearch_propellants]"%s />',
+                isset( $this->options_5['frontpagesearch_propellants'] ) && $this->options_5['frontpagesearch_propellants'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_frontpagesearch_pricerange_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_5" value="on" name="bdt_options_5[frontpagesearch_pricerange]"%s />',
+                isset( $this->options_5['frontpagesearch_pricerange'] ) && $this->options_5['frontpagesearch_pricerange'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_frontpagesearch_fuelconsumption_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_5" value="on" name="bdt_options_5[frontpagesearch_fuelconsumption]"%s />',
+                isset( $this->options_5['frontpagesearch_fuelconsumption'] ) && $this->options_5['frontpagesearch_fuelconsumption'] === 'on' ? ' checked="checked"' : ''
             );
         }
     }

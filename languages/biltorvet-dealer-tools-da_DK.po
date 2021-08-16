@@ -16,10 +16,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Textdomain-Support: yesX-Generator: Poedit 1.6.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;"
-"_nx_noop:4c,1,2;_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
+"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
 "X-Poedit-Basepath: ..\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.0\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: ajax/Ajax.php:12 classes/BiltorvetShortcodes.php:22
@@ -91,8 +90,9 @@ msgstr "AutoIT API: Svar mangler"
 msgid "No options provided."
 msgstr ""
 
-#: classes/BiltorvetShortcodes.php:88 classes/BiltorvetShortcodes.php:121 classes/BiltorvetShortcodes.php:202
-#: classes/BiltorvetShortcodes.php:268 classes/BiltorvetShortcodes.php:291 classes/BiltorvetShortcodes.php:310
+#: classes/BiltorvetShortcodes.php:88 classes/BiltorvetShortcodes.php:121
+#: classes/BiltorvetShortcodes.php:202 classes/BiltorvetShortcodes.php:268
+#: classes/BiltorvetShortcodes.php:291 classes/BiltorvetShortcodes.php:310
 #: classes/BiltorvetShortcodes.php:340 classes/BiltorvetShortcodes.php:504
 msgid "Vehicle not found"
 msgstr ""
@@ -125,7 +125,8 @@ msgstr "Bliv ringet op"
 msgid "Shortcode's vehicle property has not been set."
 msgstr "Shortcode’s bil-egenskab er ikke blevet indsat."
 
-#: classes/BiltorvetShortcodes.php:304 classes/BiltorvetShortcodes.php:314 classes/BiltorvetShortcodes.php:350
+#: classes/BiltorvetShortcodes.php:304 classes/BiltorvetShortcodes.php:314
+#: classes/BiltorvetShortcodes.php:350
 msgid "N/A"
 msgstr "Ikke angivet"
 
@@ -154,7 +155,8 @@ msgstr "Ukendt lead-type. Tilladte typer: %s"
 msgid "Unknown"
 msgstr "Ukendt"
 
-#: classes/TextUtils.php:114 templates/_VehicleCard.php:114 v2/templates/partials/_vehicleCard.php:61
+#: classes/TextUtils.php:114 templates/_VehicleCard.php:114
+#: v2/templates/partials/_vehicleCard.php:61
 msgid "Mileage"
 msgstr "KM"
 
@@ -166,7 +168,8 @@ msgstr "Pris"
 msgid "No Options specified"
 msgstr ""
 
-#: includes/PluginSettings.php:38 includes/PluginSettings.php:54 includes/Settings.php:28 includes/Settings.php:45
+#: includes/PluginSettings.php:38 includes/PluginSettings.php:54
+#: includes/Settings.php:28 includes/Settings.php:45
 msgid "AutoIT Settings"
 msgstr "AutoIT indstillinger"
 
@@ -309,7 +312,8 @@ msgstr "Leasingpris"
 msgid "Financing price"
 msgstr "Finansieringspris"
 
-#: templates/_VehicleCard.php:92 v2/src/Controller/PriceController.php:137 v2/src/Controller/PriceController.php:209
+#: templates/_VehicleCard.php:92 v2/src/Controller/PriceController.php:137
+#: v2/src/Controller/PriceController.php:209
 msgid "Excl. VAT"
 msgstr "Ekskl. moms"
 
@@ -530,6 +534,9 @@ msgstr "Indstillinger for bilsøgning"
 msgid "Vehicle details settings"
 msgstr "Indstillinger for bildetaljeside"
 
+msgid "Frontpage Search settings"
+msgstr "Indstillinger for forsidesøgning"
+
 msgid "Hide vehicles with status Leasing"
 msgstr "Skjul køretøjer med status koden Leasing"
 
@@ -581,6 +588,9 @@ msgstr "Indtast din AutoIT API nøgle for at aktivere plugin'et."
 msgid "Customize the vehicle search page."
 msgstr "Indstillinger for bilsøgningen"
 
+msgid "Frontpage search"
+msgstr "Forsidesøgning"
+
 msgid "Customize the vehicle details page."
 msgstr "Indstillinger for bildetalesiden"
 
@@ -595,3 +605,45 @@ msgstr "Aktivér kort"
 
 msgid "How to recieve leads"
 msgstr "Hvordan ønsker i at modtage leads?"
+
+msgid "Vehiclecard properties column one"
+msgstr "Dataområde 1 på bilkort"
+
+msgid "Vehiclecard properties column two"
+msgstr "Dataområde 2 på bilkort"
+
+msgid "Vehiclecard properties column three"
+msgstr "Dataområde 3 på bilkort"
+
+msgid "Customize frontpage search"
+msgstr "Redigér indstillinger for forsidesøgning"
+
+msgid "Set column size"
+msgstr "Redigér indstillinger for kolonnestørrelse"
+
+msgid "Activate fulltextsearch"
+msgstr "Aktivér fritekstssøgning"
+
+msgid "Activate companies"
+msgstr "Aktivér afdelinger"
+
+msgid "Activate vehiclestates"
+msgstr "Aktivér stand"
+
+msgid "Activate makes and models"
+msgstr "Aktivér mærke og modeller"
+
+msgid "Activate product types"
+msgstr "Aktivér køretøjstyper"
+
+msgid "Activate body types"
+msgstr "Aktivér karosserityper"
+
+msgid "Activate propellants"
+msgstr "Aktivér drivmiddeltyper"
+
+msgid "Activate price range"
+msgstr "Aktivér pris-slider"
+
+msgid "Activate fuel consumption"
+msgstr "Aktivér km/l-slider"

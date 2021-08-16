@@ -13,9 +13,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
         public $_options;
         public $_options_2;
         public $_options_4;
+        public $_options_5;
         public $currentVehicle;
 
-        public function __construct($biltorvetAPI, $options, $options_2, $options_4)
+        public function __construct($biltorvetAPI, $options, $options_2, $options_4, $options_5)
         {
             if ($options === null) {
                 throw new Exception(__('No options provided.', 'biltorvet-dealer-tools'));
@@ -26,6 +27,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             $this->_options = $options;
             $this->_options_2 = $options_2;
             $this->_options_4 = $options_4;
+            $this->_options_5 = $options_5;
             $this->biltorvetAPI = $biltorvetAPI;
 
             add_action('parse_query', array(&$this, 'bdt_get_current_vehicle'), 1000);
