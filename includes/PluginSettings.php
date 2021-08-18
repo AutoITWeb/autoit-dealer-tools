@@ -15,11 +15,13 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
         private $options_3;
         private $options_4;
         private $options_5;
+        private $options_6;
+        private $biltorvetAPI;
 
         /**
          * Start up
          */
-        public function __construct($options, $options_2, $options_3, $options_4, $options_5)
+        public function __construct($options, $options_2, $options_3, $options_4, $options_5, $options_6, $biltorvetAPI)
         {
             if($options === null)
             {
@@ -30,6 +32,8 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             $this->options_3 = $options_3;
             $this->options_4 = $options_4;
             $this->options_5 = $options_5;
+            $this->options_6 = $options_6;
+            $this->biltorvetAPI = $biltorvetAPI;
 
             add_action( 'admin_menu', array( $this, 'bdt_add_plugin_page' ) );
             add_action( 'admin_init', array( $this, 'bdt_page_init' ) );
@@ -79,6 +83,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     <a href="?page=autoit-dealer-tools-options&tab=tab_three" class="nav-tab <?= $active_tab == 'tab_three' ? 'nav-tab-active' : ''; ?>"><?= __( 'Vehicle details settings', 'biltorvet-dealer-tools' ) ?></a>
                     <a href="?page=autoit-dealer-tools-options&tab=tab_four" class="nav-tab <?= $active_tab == 'tab_four' ? 'nav-tab-active' : ''; ?>"><?= __( 'Map settings', 'biltorvet-dealer-tools' ) ?></a>
                     <a href="?page=autoit-dealer-tools-options&tab=tab_five" class="nav-tab <?= $active_tab == 'tab_five' ? 'nav-tab-active' : ''; ?>"><?= __( 'Frontpage search', 'biltorvet-dealer-tools' ) ?></a>
+                    <a href="?page=autoit-dealer-tools-options&tab=tab_six" class="nav-tab <?= $active_tab == 'tab_six' ? 'nav-tab-active' : ''; ?>"><?= __( 'Departments', 'biltorvet-dealer-tools' ) ?></a>
                 </h2>
 
                 <form method="post" action="options.php">
@@ -105,8 +110,13 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
                     } else if ( $active_tab == 'tab_five') {
 
-                    settings_fields( 'bdt-settings-group-5' );
-                    do_settings_sections( 'bdt-settings-group-5' );
+                        settings_fields( 'bdt-settings-group-5' );
+                        do_settings_sections( 'bdt-settings-group-5' );
+
+                    } else if ( $active_tab == 'tab_six') {
+
+                        settings_fields( 'bdt-settings-group-6' );
+                        do_settings_sections( 'bdt-settings-group-6' );
                     }
 
                     ?>
@@ -158,6 +168,13 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt-settings-group-5' // Page
             );
 
+            add_settings_section(
+                'bdt_settings_section_6',
+                __( 'Department settings', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_departments_settings' ), // Callback
+                'bdt-settings-group-6' // Page
+            );
+
             register_setting(
                 'bdt-settings-group-1', // Option group
                 'bdt_options' // Option name
@@ -178,6 +195,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             register_setting(
                 'bdt-settings-group-5', // Option group
                 'bdt_options_5' // Option name
+            );
+            register_setting(
+                'bdt-settings-group-6', // Option group
+                'bdt_options_6' // Option name
             );
 
             add_settings_field(
@@ -615,6 +636,18 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt-settings-group-5', // Page
                 'bdt_settings_section_5' // Section
             );
+
+            /**
+             * Deparment setting fields
+             */
+
+            add_settings_field(
+                'departments_list',
+                __( 'Departments', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_departments_list_callback' ),
+                'bdt-settings-group-6', // Page
+                'bdt_settings_section_6' // Section
+            );
         }
 
         /**
@@ -650,6 +683,11 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
         public function bdt_frontpage_search_settings()
         {
             print __( 'Customize frontpage search', 'biltorvet-dealer-tools' );
+        }
+
+        public function bdt_departments_settings()
+        {
+            print __( 'Department information for use with a department dropdown selector in Divi Contact Form.', 'biltorvet-dealer-tools' );
         }
 
         public function bdt_api_key_callback()
@@ -1123,7 +1161,6 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
         /*
          * options "Forside søgning" tab
-         * options "Forside søgning" tab
          */
 
         public function  bdt_frontpagesearch_setcolumn_callback()
@@ -1215,5 +1252,38 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 '<input type="checkbox" id="bdt_options_5" value="on" name="bdt_options_5[frontpagesearch_fuelconsumption]"%s />',
                 isset( $this->options_5['frontpagesearch_fuelconsumption'] ) && $this->options_5['frontpagesearch_fuelconsumption'] === 'on' ? ' checked="checked"' : ''
             );
+        }
+
+        /*
+        * options Departments tab
+        */
+
+        public function bdt_departments_list_callback()
+        {
+            $companiesFeed = $this->biltorvetAPI->GetCompanies();
+
+            echo 'Brug disse navne som valgmuligheder i dropdown afdelingsvælgeren. Det er vigtigt at navne er helt ens.<br>';
+            echo 'Indtast den eller de email adresser der skal sendes mails til, når man vælger afdelingen. Der kan indsættes lige så mange som man ønsker (indtast alle email adresser kun adskilt af , og uden mellemrum ). Eks.: <b>test@autoit.dk,test@biltorvet.dk</b><br><br>';
+
+
+            foreach($companiesFeed->companies as $company)
+            {
+                echo '<input type="text" id="bdt_options_6" name="bdt_options_5[departments_company_name]" value="' . $company->name . '" size="30" readonly style="margin-bottom: 5px; background: #A8A8A8; "/><br>';
+                echo '<input type="text" id="bdt_options_6" name="bdt_options_5[departments_company_name]" value="' . $company->address . ' ' . $company->city . '" size="30" readonly style="margin-bottom: 5px; background: #A8A8A8; "/><br>';
+
+                printf(
+                    '<input type="text" id="bdt_options_6" name="bdt_options_6[departments_company_id_' . $company->id . ']" value="' . $company->id .'" size="30" readonly style="margin-bottom: 5px; background: #A8A8A8; "/>',
+                    isset( $this->options_6['departments_company_id_' . $company->id] ) ? esc_attr($this->options_6['departments_company_id_' . $company->id]) : ''
+                );
+
+                echo '<br>';
+
+                printf(
+                    '<input type="text" id="bdt_options_6" name="bdt_options_6[departments_company_email_' . $company->id . ']" value="%s" size="30" placeholder="Indtast email / emails for afdeling" style="margin-bottom: 5px;" />',
+                    isset( $this->options_6['departments_company_email_' . $company->id] ) ? esc_attr($this->options_6['departments_company_email_' . $company->id]) : ''
+                );
+
+                echo '<br><br>';
+            }
         }
     }
