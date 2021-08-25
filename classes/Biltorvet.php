@@ -343,9 +343,6 @@ class Biltorvet
 
         public function bdt_register_scripts()
         {
-            // deregister WP's autoloaded Jquery and replace with specified version. Versions below and above 2 will break the video player on the cardetail page
-            wp_deregister_script('jquery');
-            wp_register_script('jquery', 'https://code.jquery.com/jquery-2.2.4.min.js', '2.2.4', false);
             wp_register_script( 'bootstrap_slider', plugins_url('scripts/bootstrap-slider.min.js',  dirname(__FILE__) ) , array('jquery'), '1.0.1', true );
             wp_register_script( 'bdt_vimeo', 'https://player.vimeo.com/api/player.js', '2.11.0', true );
             wp_register_script( 'hammerjs', 'https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js', null, '2.0.8', true );
