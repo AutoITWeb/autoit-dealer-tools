@@ -21,6 +21,7 @@ class Biltorvet
     private $_options_3;
     private $_options_4;
     private $_options_5;
+    private $_options_6;
     private $biltorvetAPI;
 
     public function __construct()
@@ -48,6 +49,7 @@ class Biltorvet
         $this->_options_3 = get_option('bdt_options_3');
         $this->_options_4 = get_option('bdt_options_4');
         $this->_options_5 = get_option('bdt_options_5');
+        $this->_options_6 = get_option('bdt_options_6');
 
         /*
         *  Used in conjuction with our divi child theme.
@@ -56,12 +58,13 @@ class Biltorvet
 
         isset($this->_options['bdt_leads']) ? (define ('leads', $this->_options['bdt_leads'])) : (define ('leads', "-1"));
         add_action('call_get_vehicle_data', array($this, 'get_vehicle_data'), 10, 2);
-        add_action('call_AutodesktopSendLead', array($this, 'bdt_send_adt_lead'), 10, 4);
+        add_action('call_AutodesktopSendLead', array($this, 'bdt_send_adt_lead'), 10, 5);
 
         if ($this->_options['api_key'] === null || trim($this->_options['api_key']) === '') {
             add_action('admin_notices', array(&$this, 'bdt_error_noapikey'));
         } else {
             $this->biltorvetAPI = new BiltorvetAPI($this->_options['api_key']);
+
             new Ajax($this->biltorvetAPI);
             if (!is_admin()) {
                 new BiltorvetShortcodes($this->biltorvetAPI, $this->_options, $this->_options_2, $this->_options_4, $this->_options_5);
@@ -69,9 +72,14 @@ class Biltorvet
         }
 
         if (is_admin()) {
-            new BDTSettingsPage($this->_options, $this->_options_2, $this->_options_3, $this->_options_4, $this->_options_5);
+            new BDTSettingsPage($this->_options, $this->_options_2, $this->_options_3, $this->_options_4, $this->_options_5, $this->_options_6, $this->biltorvetAPI);
         }
 
+        // Getting the list of companies connected to the API key for use with the department selector used on contactforms
+        // This feature is only usable by CarLite dealers and not external users.
+        // the array of companies is encoded to avoid php warnings.
+        $get_companies = $this->biltorvetAPI->GetCompanies();
+        (define('bdt_companies_list', json_encode($get_companies->companies)));
     }
 
     /*
@@ -85,22 +93,21 @@ class Biltorvet
         if($vehicleId != null) {
             try{
                 $vehicle = $this->biltorvetAPI->GetVehicle($vehicleId);
-                $message = "\r\n\r\n" . "En kunde har udvist interesse for bilen " . $vehicle->makeName . " " . $vehicle->model . " med id " . $vehicle->id;
             } catch(Exception $e) {
                 // If the vehicle isn't found the data won't be added to the lead. Should only happen if the call to the API fails.
             }
         }
 
-        $returnValue->return = $message;
+        $returnValue->return = $vehicle;
     }
 
-    public function bdt_send_adt_lead( $message, $email, $name, $query_actiontype)
+    public function bdt_send_adt_lead( $message, $email, $name, $query_actiontype, $companyId)
     {
         $getCompanies = $this->biltorvetAPI->GetCompanies();
 
         $lead = new LeadInputObject();
 
-        $lead->CompanyId = $getCompanies->companies[0]->id;
+        $lead->CompanyId = $companyId != 0 ? $companyId : $getCompanies->companies[0]->id;
         $lead->ActivityType = $query_actiontype ?? "Contact";
         $lead->Email = $email;
         $lead->Name = $name;
@@ -336,9 +343,6 @@ class Biltorvet
 
         public function bdt_register_scripts()
         {
-            // deregister WP's autoloaded Jquery and replace with specified version. Versions below and above 2 will break the video player on the cardetail page
-            wp_deregister_script('jquery');
-            wp_register_script('jquery', 'https://code.jquery.com/jquery-2.2.4.min.js', '2.2.4', false);
             wp_register_script( 'bootstrap_slider', plugins_url('scripts/bootstrap-slider.min.js',  dirname(__FILE__) ) , array('jquery'), '1.0.1', true );
             wp_register_script( 'bdt_vimeo', 'https://player.vimeo.com/api/player.js', '2.11.0', true );
             wp_register_script( 'hammerjs', 'https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js', null, '2.0.8', true );

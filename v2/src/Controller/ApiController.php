@@ -132,7 +132,6 @@ class ApiController
         return $this->requestApi('products', [], 'products');
     }
 
-
     /**
      * @param  string $resource
      * @param  array  $params
