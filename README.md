@@ -14,7 +14,7 @@ Adds Vehicle search, Vehicle list and Vehicle Detail Page.
 
 **For versions 2.x.x PHP 7.1+ is required!**  
 A theme (does not work with themeless builders like Oxygen)  
-Currently there's issues with Divi 4.10.x - if you plan on using Divi please avoid using Divi 4.10.x  
+!There's currently issues with Divi 4.10.x - if you plan on using Divi please avoid using Divi 4.10.x!  
 
 **Credits**
 
