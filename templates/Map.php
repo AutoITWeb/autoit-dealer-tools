@@ -34,31 +34,49 @@ if(isset($atts['detailspage']) && $atts['detailspage'] == 'true') {
 }
 ?>
 
+<script>
+    const lazyInit = (element, fn) => {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries.some(({isIntersecting}) => isIntersecting)) {
+                observer.disconnect();
+                fn();
+            }
+        });
+        observer.observe(element);
+    };
+</script>
+
+
 <div id="map"></div>
 
 <script>
-    var map = L.map('map', {
-        center:[<?= $setView; ?>],
-        zoom: <?= $zoomLevel; ?>,
-        gestureHandling: true
-    });
 
-    $('#map').ready(function() {
-        map.invalidateSize()
-    });
+    const mapElement = document.querySelector("#map");
 
-    L.tileLayer(<?= "'" . $setTileLayer ."'"; ?>, {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+    lazyInit(mapElement, () => {
+        var map = L.map('map', {
+            center:[<?= $setView; ?>],
+            zoom: <?= $zoomLevel; ?>,
+            gestureHandling: true
+        });
 
-    var coloredIcon = new L.Icon({
-        iconUrl: '<?= $marker; ?>',
-        shadowUrl: '<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'includes/img/marker-shadow.png'; ?>',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-    });
+        $('#map').ready(function() {
+            map.invalidateSize()
+        });
+
+        L.tileLayer(<?= "'" . $setTileLayer ."'"; ?>, {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var coloredIcon = new L.Icon({
+            iconUrl: '<?= $marker; ?>',
+            shadowUrl: '<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'includes/img/marker-shadow.png'; ?>',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+
 
     // Globalmap markers
     <?php if(empty($atts)) : ?>
@@ -80,5 +98,7 @@ if(isset($atts['detailspage']) && $atts['detailspage'] == 'true') {
             .bindPopup(" <b><?=  $this->currentVehicle->company->name; ?></b> <br> <?=  $this->currentVehicle->company->address; ?> <br> <?=  $this->currentVehicle->company->postNumber; ?> <?=  $this->currentVehicle->company->city; ?> <br> <?=  $this->currentVehicle->company->phone != 0 ? '<a href=' . 'tel:+45' .  $this->currentVehicle->company->phone . '>' . '+45 ' .  $this->currentVehicle->company->phone . '</a>' : ""; ?>")
 
     <?php endif; ?>
+
+    });
 </script>
 

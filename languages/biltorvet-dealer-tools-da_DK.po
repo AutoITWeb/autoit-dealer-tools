@@ -564,6 +564,9 @@ msgstr "Skjul køretøjer med status koden 'Kommission"
 msgid "Hide vehicles with status Wholesale"
 msgstr "Skjul køretøjer med status koden Kun engros"
 
+msgid "Hide vehicles with status Trailer"
+msgstr "Skjul køretøjer med status koden Trailer"
+
 msgid "Hide vehicles with type Car"
 msgstr "Skjul køretøjstypen Personbil"
 
@@ -647,3 +650,9 @@ msgstr "Aktivér pris-slider"
 
 msgid "Activate fuel consumption"
 msgstr "Aktivér km/l-slider"
+
+msgid "Departments"
+msgstr "Afdelinger"
+
+msgid "Show all labels set in Autodesktop"
+msgstr "Vis alle labels der er sat i AutoDesktop"
