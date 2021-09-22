@@ -140,8 +140,12 @@ class Callbacks
 
         $setStatusCode = ucfirst($atts['status']);
 
+        if(isset($atts['make'])) {
+            $searchFilter->setMakes(array(ucfirst($atts['make'])));
+        }
+
         // Remember to add the labels to the list of valid statuscodes AND the switch case: else nothing will be returned!
-        $validStatusCodes = array("Sold", "New", "Leasing", "Warehousesale", "Flexleasing", "Export", "Upcoming", "Rental", "Commission", "Wholesale", "Bus", "NewCar", "Demo", "Carlite Dealer Label");
+        $validStatusCodes = array("Sold", "New", "Leasing", "Warehousesale", "Flexleasing", "Export", "Upcoming", "Rental", "Commission", "Wholesale", "Bus", "NewCar", "Demo", "Carlite Dealer Label", "Trailer");
 
         if(!in_array($setStatusCode, $validStatusCodes))
         {
@@ -163,6 +167,7 @@ class Callbacks
             case "NewCar" : $label = 99999; break;
             case "Demo" : $label = 1; break;
             case "Carlite Dealer Label" : $label = 427; break;
+            case "Trailer" : $label = 471; break;
         }
 
         wp_enqueue_style("bdt_style");
