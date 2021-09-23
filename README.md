@@ -173,6 +173,7 @@ Creates a list of cars from status codes set in AutoDesktop (In order to use thi
 * __Rental__ - Shows all cars with the label "Udlejning".  
 * __Commision__ - Shows all cars with the label "Kommision".  
 * __Wholesale__ - Shows all cars with the label "Kun engros". 
+* __Demo__ - Shows all cars with the label "Demonstration". 
 * __NewCar__ - Shows all cars with "Fabriksny" checked in AutoDesktop. 
 * __Carlite Dealer Label__ - Shows all vehicles with "CarLite forhandler label" checked in AutoDesktop.  
 
