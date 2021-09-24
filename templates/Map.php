@@ -77,7 +77,6 @@ if(isset($atts['detailspage']) && $atts['detailspage'] == 'true') {
             shadowSize: [41, 41]
         });
 
-
     // Globalmap markers
     <?php if(empty($atts)) : ?>
     <?php foreach ($companiesFeed->companies as $company) : ?>

@@ -127,17 +127,6 @@ function Biltorvet($) {
                 //dataType: 'application/json;encoding=utf8',
                 success: function(response){
 
-                    var companies = '';
-                    for(var i in response.companies)
-                    {
-                        companies += '<option value="' + response.companies[i].key + '">' + response.companies[i].value + '</option>';
-                    }
-                    vehicleSearch.find('select[name=company]').find('option:not(:first-child)').remove().end().append(companies);
-                    if(companies !== '')
-                    {
-                        vehicleSearch.find('select[name=company]').removeAttr('disabled');
-                    }
-
                     var fullTextSearch = '';
                     for(var i in response.fullTextSearch)
                     {
@@ -148,6 +137,17 @@ function Biltorvet($) {
                     if(fullTextSearch !== '')
                     {
                         vehicleSearch.find('input[name=fullTextSearch]').removeAttr('disabled');
+                    }
+
+                    var companies = '';
+                    for(var i in response.companies)
+                    {
+                        companies += '<option value="' + response.companies[i].key + '">' + response.companies[i].value + '</option>';
+                    }
+                    vehicleSearch.find('select[name=company]').find('option:not(:first-child)').remove().end().append(companies);
+                    if(companies !== '')
+                    {
+                        vehicleSearch.find('select[name=company]').removeAttr('disabled');
                     }
 
                     var makes = '';
@@ -574,6 +574,20 @@ jQuery(function($) {
         // FullTextSearch, input field
         .on('blur', '.fullTextSearch', function(){
             var vehicleSearch = $(this).closest('.bdt .vehicle_search');
+
+            // using the fulltext search field will reset all other fields.
+            vehicleSearch.find('select[name=company]').val('');
+            vehicleSearch.find('select[name=vehicleState]').val('');
+            vehicleSearch.find('select[name=make]').val('');
+            vehicleSearch.find('select[name=model]').val('');
+            vehicleSearch.find('select[name=bodyType]').val('');
+            vehicleSearch.find('select[name=productType]').val('');
+            vehicleSearch.find('select[name=propellant]').val('');
+            vehicleSearch.find('select[name=priceMinMax]').val('');
+            vehicleSearch.find('select[name=priceMinMax]').val('');
+            vehicleSearch.find('select[name=consumptionMin]').val('');
+            vehicleSearch.find('select[name=consumptionMax]').val('');
+
             bdt.ReloadUserFilterSelection(false);
         })
 
@@ -588,6 +602,33 @@ jQuery(function($) {
             // selecting a new model will reset all other fields.
             if($(this).attr('name') === 'model')
             {
+                vehicleSearch.find('select[name=bodyType]').val('');
+                vehicleSearch.find('select[name=productType]').val('');
+                vehicleSearch.find('select[name=propellant]').val('');
+                vehicleSearch.find('select[name=priceMinMax]').val('');
+                vehicleSearch.find('select[name=priceMinMax]').val('');
+                vehicleSearch.find('select[name=consumptionMin]').val('');
+                vehicleSearch.find('select[name=consumptionMax]').val('');
+            }
+            // selecting vehicle state will reset all other fields.
+            if($(this).attr('name') === 'vehicleState')
+            {
+                vehicleSearch.find('select[name=make]').val('');
+                vehicleSearch.find('select[name=model]').val('');
+                vehicleSearch.find('select[name=bodyType]').val('');
+                vehicleSearch.find('select[name=productType]').val('');
+                vehicleSearch.find('select[name=propellant]').val('');
+                vehicleSearch.find('select[name=priceMinMax]').val('');
+                vehicleSearch.find('select[name=priceMinMax]').val('');
+                vehicleSearch.find('select[name=consumptionMin]').val('');
+                vehicleSearch.find('select[name=consumptionMax]').val('');
+            }
+            // selecting a new company will reset all other fields.
+            if($(this).attr('name') === 'company')
+            {
+                vehicleSearch.find('select[name=vehicleState]').val('');
+                vehicleSearch.find('select[name=make]').val('');
+                vehicleSearch.find('select[name=model]').val('');
                 vehicleSearch.find('select[name=bodyType]').val('');
                 vehicleSearch.find('select[name=productType]').val('');
                 vehicleSearch.find('select[name=propellant]').val('');

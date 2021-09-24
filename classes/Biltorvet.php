@@ -66,6 +66,7 @@ class Biltorvet
             $this->biltorvetAPI = new BiltorvetAPI($this->_options['api_key']);
 
             new Ajax($this->biltorvetAPI);
+
             if (!is_admin()) {
                 new BiltorvetShortcodes($this->biltorvetAPI, $this->_options, $this->_options_2, $this->_options_4, $this->_options_5);
             }
@@ -73,8 +74,12 @@ class Biltorvet
             // Getting the list of companies connected to the API key for use with the department selector used on contactforms
             // This feature is only usable by CarLite dealers and not external users.
             // the array of companies is encoded to avoid php warnings.
-            $get_companies = $this->biltorvetAPI->GetCompanies();
-            (define('bdt_companies_list', json_encode($get_companies->companies)));
+            try {
+                $get_companies = $this->biltorvetAPI->GetCompanies();
+                (define('bdt_companies_list', json_encode($get_companies->companies)));
+            } catch (exception $e) {
+            }
+
         }
 
         if (is_admin()) {
