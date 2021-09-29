@@ -175,7 +175,8 @@ Creates a list of cars from status codes set in AutoDesktop (In order to use thi
 * __Wholesale__ - Shows all cars with the label "Kun engros". 
 * __Demo__ - Shows all cars with the label "Demonstration". 
 * __NewCar__ - Shows all cars with "Fabriksny" checked in AutoDesktop. 
-* __Carlite Dealer Label__ - Shows all vehicles with "CarLite forhandler label" checked in AutoDesktop.  
+* __Carlite Dealer Label__ - Shows all vehicles with "CarLite forhandler label" checked in AutoDesktop. 
+* __Trailer__ - Show all vehicles with the "Trailer" statuscode checked in AutoDesktop.   
 
 
 Example 1: __[bdt_get_vehicles_by_status_code status="Sold"]__ - lists all cars marked as "Solgt".  
