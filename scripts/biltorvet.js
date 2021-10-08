@@ -358,7 +358,8 @@ function Biltorvet($) {
 
         for (var property in filter) {
 
-            if (property == 'Models'  || property == 'Makes') {
+            //if (property === 'Makes' || property === 'Models') {
+            if (filter[property] != null) {
 
                 var filterValue = filter[property]
 
@@ -384,16 +385,38 @@ function Biltorvet($) {
             0 = empty
             1 = page slug
             2 = pagination page
-            3 = make
-            4 = model
+            3 = filter type
+            3 = Property
+            5 = model
         */
 
         switch (filterKey) {
             case 'Makes':
-                urlPathElements[3] = filterValue;
+                urlPathElements[3] = 'Maerke';
+                urlPathElements[4] = filterValue;
+                break;
+            case 'Propellants':
+                urlPathElements[3] = 'Braendstof';
+                urlPathElements[4] = filterValue;
+                urlPathElements[5] = '';
+                break;
+            case 'BodyTypes':
+                urlPathElements[3] = 'Karrosseri';
+                urlPathElements[4] = filterValue;
+                urlPathElements[5] = '';
+                break;
+            case 'CompanyIds':
+                urlPathElements[3] = 'Afdeling';
+                urlPathElements[4] = filterValue;
+                urlPathElements[5] = '';
+                break;
+            case 'VehicleStates':
+                urlPathElements[3] = 'Stand';
+                urlPathElements[4] = filterValue;
+                urlPathElements[5] = '';
                 break;
             case 'Models':
-                urlPathElements[4] = filterValue;
+                urlPathElements[5] = filterValue;
                 break;
         }
 
@@ -401,7 +424,7 @@ function Biltorvet($) {
             urlPathElements[2] = 1;
         }
         // Make sure pagination is set to 1 when setting new filters
-        else if (urlPathElements[2] != ""){
+        else if (urlPathElements[2] !== ""){
 
             urlPathElements[2] = 1;
         }

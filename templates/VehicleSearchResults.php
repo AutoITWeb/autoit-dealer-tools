@@ -60,14 +60,18 @@
         {
             $filterObject->Makes = explode(',', $atts['makes']);
         }
+
         $make = get_query_var('bdt_vehicle_make', -1);
         if($make !== -1)
         {
             $filterObject->Makes = array($this->biltorvetAPI->GetMakeFromSlug($make));
         }
 
-        $urlFilterMake = get_query_var('filter_make', false);
-        if ($urlFilterMake) {
+        $urlFilter = get_query_var('bdt_filter_type', false);
+
+        if ($urlFilter === "Maerke") {
+
+            $urlFilterMake = get_query_var('bdt_filter', false);
 
             $filterObject->Makes = [sanitize_text_field(urldecode($urlFilterMake))];
 
@@ -76,6 +80,54 @@
                 $filterObject->Models = [sanitize_text_field(urldecode($urlFilterModel))];
             }
         }
+
+        if ($urlFilter === "Braendstof") {
+
+            $urlFilterPropellant = get_query_var('bdt_filter', false);
+
+            $filterObject->Propellants = [sanitize_text_field(urldecode($urlFilterPropellant))];
+        }
+
+        if ($urlFilter === "Karrosseri") {
+
+            $urlFilterBodyTypes = get_query_var('bdt_filter', false);
+
+            $filterObject->BodyTypes = [sanitize_text_field(urldecode($urlFilterBodyTypes))];
+        }
+
+        if ($urlFilter === "Afdeling") {
+
+            $urlFilterCompanyIds = get_query_var('bdt_filter', false);
+
+            $filterObject->CompanyIds = [sanitize_text_field(urldecode($urlFilterCompanyIds))];
+        }
+
+        if ($urlFilter === "Stand") {
+
+            $urlFilterVehicleStates = get_query_var('bdt_filter', false);
+
+            $filterObject->VehicleStates = [sanitize_text_field(urldecode($urlFilterVehicleStates))];
+        }
+
+//        $urlFilterMake = get_query_var('filter_make', false);
+//        if ($urlFilterMake) {
+//
+//            $filterObject->Makes = [sanitize_text_field(urldecode($urlFilterMake))];
+//
+//            $urlFilterModel = get_query_var('filter_brand', false);
+//            if ($urlFilterModel) {
+//                $filterObject->Models = [sanitize_text_field(urldecode($urlFilterModel))];
+//            }
+//        }
+
+//        $propellantsArray = ["Benzin", "Hybrid", "Diesel", "EL"];
+//
+//        $urlFilterPropellant = get_query_var('filter_make', false);
+//        if ($urlFilterPropellant && in_array($urlFilterPropellant, $propellantsArray)) {
+//
+//            $filterObject->Propellants = [sanitize_text_field(urldecode($urlFilterPropellant))];
+//        }
+
         if ($filterObject->OrderBy === null && isset($this->_options_2['default_sorting_value'])) {
             $filterObject->OrderBy = $this->_options_2['default_sorting_value'];
         }
@@ -114,6 +166,8 @@
     {
         $end = $vehicleFeed->totalResults;
     }
+
+    var_dump($filterObject);
 
     //$product = new ApiController()
 ?>

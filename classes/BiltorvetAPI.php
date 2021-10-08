@@ -2,8 +2,8 @@
     if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
     
     class BiltorvetAPI {
-        private $endpoint = 'https://api-v1.autoit.dk';
-//        private $endpoint = 'http://localhost:60718';
+//        private $endpoint = 'https://api-v1.autoit.dk';
+        private $endpoint = 'http://localhost:61893';
         private $apiKey;
         private $vehicleResultsPageLimit = 30;
         private $errLogFile;
@@ -23,6 +23,11 @@
         public function GetMakes()
         {
             return $this->Request('/vehicle/make');
+        }
+
+        public function GetBodyTypes()
+        {
+            return $this->Request('/vehicle/bodytypes');
         }
 
         public function GetCompanies()
@@ -120,6 +125,17 @@
                 if(strtolower(TextUtils::Sanitize($make->name)) == strtolower(TextUtils::Sanitize($slug)))
                 {
                     return $make->id;
+                }
+            }
+        }
+
+        public function GetBodyTypeFromSlug($slug)
+        {
+            foreach($this->GetBodyTypes() as $bodyType)
+            {
+                if(strtolower(TextUtils::Sanitize($bodyType->name)) == strtolower(TextUtils::Sanitize($slug)))
+                {
+                    return $bodyType->id;
                 }
             }
         }
