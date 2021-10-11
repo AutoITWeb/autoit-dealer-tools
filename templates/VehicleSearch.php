@@ -189,70 +189,68 @@
     } catch(Exception $e) {
         die($e->getMessage());
     }
+
+    $showCompanies = (count((array)$initialFilterOptions->companies) > 1) ? "" : "style='display: none;'";
+    $showVehicleStates = (count((array)$initialFilterOptions->vehicleStates) >= 2) ? "" : "style='display: none;'";
+    $showMakeModel = (count($initialFilterOptions->makes) >= 1) ? "" : "style='display: none;'";
+    $showProductTypes = (count((array)$initialFilterOptions->companies) > 2 || count($initialFilterOptions->productTypes) > 1) ? "" : "style='display: none;'";
+    $showBodyTypes = (count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->bodyTypes) > 1) ? "" : "style='display: none;'";
+    $showPropellants = (count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->propellants) > 1) ? "" : "style='display: none;'";
+
     ?>
     <div class="bdt">
         <div class="vehicle_search"<?php echo $makeIds !== null ? ' data-makeids="'.$makeIds.'"' : '';  ?>>
             <div class="row">
 
-                    <div class="col-sm-12 mb-1 mb-sm-3">
-                        <input type="text" class="fullTextSearch" name="fullTextSearch" id="fullTextSearch">
-                    </div>
+                <div class="col-sm-12 mb-1 mb-sm-3">
+                    <input type="text" class="fullTextSearch" name="fullTextSearch" id="fullTextSearch">
+                </div>
 
             </div>
-                <div class="row">
-                <?php if(count((array)$initialFilterOptions->companies) > 1) { ?>
-                    <div class="col-sm-4 mb-1 mb-sm-3">
-                        <select name="company" id="company">
-                            <option value=""><?php _e('- Select department -', 'biltorvet-dealer-tools'); ?></option>
-                        </select>
-                    </div>
-                <?php } ?>
+            <div class="row">
 
-                <?php if(count((array)$initialFilterOptions->vehicleStates) >= 2): ?>
-                    <div class="col-sm-4 mb-1 mb-sm-3">
-                        <select name="vehicleState">
-                            <option value=""><?php _e('- Select vehicle state -', 'biltorvet-dealer-tools'); ?></option>
-                        </select>
-                    </div>
-                <?php endif; ?>
+                <div class="col-sm-4 mb-1 mb-sm-3" <?= $showCompanies ?>>
+                    <select name="company" id="company">
+                        <option value=""><?php _e('- Select department -', 'biltorvet-dealer-tools'); ?></option>
+                    </select>
+                </div>
 
-                <?php if(count($initialFilterOptions->makes) >= 1): ?>
-                <div class="col-sm-4 mb-1 mb-sm-3">
+                <div class="col-sm-4 mb-1 mb-sm-3" <?= $showVehicleStates ?>>
+                    <select name="vehicleState">
+                        <option value=""><?php _e('- Select vehicle state -', 'biltorvet-dealer-tools'); ?></option>
+                    </select>
+                </div>
+
+                <div class="col-sm-4 mb-1 mb-sm-3" <?= $showMakeModel ?>>
                     <select name="make" id="make">
                         <option value=""><?php _e('- Select make -', 'biltorvet-dealer-tools'); ?></option>
                     </select>
                 </div>
-                <?php endif; ?>
 
-                <div class="col-sm-4 mb-1 mb-sm-3">
+                <div class="col-sm-4 mb-1 mb-sm-3" <?= $showMakeModel ?>>
                     <select name="model">
                         <option value=""><?php _e('- Select model -', 'biltorvet-dealer-tools'); ?></option>
                     </select>
                 </div>
 
-                <?php if(count((array)$initialFilterOptions->companies) > 2 || count($initialFilterOptions->productTypes) > 1) { ?>
-                    <div class="col-sm-4 mb-1 mb-sm-3">
-                        <select name="productType">
-                            <option value=""><?php _e('- Select vehicle type -', 'biltorvet-dealer-tools'); ?></option>
-                        </select>
-                    </div>
-                <?php } ?>
+                <div class="col-sm-4 mb-1 mb-sm-3" <?= $showProductTypes ?>>
+                <select name="productType">
+                    <option value=""><?php _e('- Select vehicle type -', 'biltorvet-dealer-tools'); ?></option>
+                </select>
+                </div>
 
-                <?php if(count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->bodyTypes) > 1) { ?>
-                    <div class="col-sm-4 mb-1 mb-sm-3">
-                        <select name="bodyType">
-                            <option value=""><?php _e('- Select body type -', 'biltorvet-dealer-tools'); ?></option>
-                        </select>
-                    </div>
-                <?php } ?>
 
-                <?php if(count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->propellants) > 1) { ?>
-                    <div class="col-sm-4 mb-1 mb-sm-3">
-                        <select name="propellant">
-                            <option value=""><?php _e('- Select propellant -', 'biltorvet-dealer-tools'); ?></option>
-                        </select>
-                    </div>
-                <?php } ?>
+                <div class="col-sm-4 mb-1 mb-sm-3" <?= $showBodyTypes ?>>
+                <select name="bodyType">
+                    <option value=""><?php _e('- Select body type -', 'biltorvet-dealer-tools'); ?></option>
+                </select>
+                </div>
+
+              <div class="col-sm-4 mb-1 mb-sm-3" <?= $showPropellants ?>>
+                <select name="propellant">
+                    <option value=""><?php _e('- Select propellant -', 'biltorvet-dealer-tools'); ?></option>
+                </select>
+                </div>
 
             </div>
             <div class="row">
