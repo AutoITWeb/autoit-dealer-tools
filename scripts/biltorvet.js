@@ -330,6 +330,7 @@ function Biltorvet($) {
             },
             cache: false,
             success: function(response){
+
                 // When page number is ommitted, the session with search settings gets deleted.
                 // That's why, unless we're resetting the filter, we need to redirect to "the first page of results"
                 // var firstResultsPage = window.location.href.replace(/\/$/, '').replace(/\/\d+$/, '');
@@ -358,7 +359,6 @@ function Biltorvet($) {
 
         for (var property in filter) {
 
-            //if (property === 'Makes' || property === 'Models') {
             if (filter[property] != null) {
 
                 var filterValue = filter[property]
@@ -412,6 +412,11 @@ function Biltorvet($) {
                 break;
             case 'VehicleStates':
                 urlPathElements[3] = 'Stand';
+                urlPathElements[4] = filterValue;
+                urlPathElements[5] = '';
+                break;
+            case 'ProductTypes':
+                urlPathElements[3] = 'Type';
                 urlPathElements[4] = filterValue;
                 urlPathElements[5] = '';
                 break;

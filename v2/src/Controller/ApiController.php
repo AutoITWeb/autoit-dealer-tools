@@ -151,7 +151,8 @@ class ApiController
             return $this->handleResponse(
                 $this->client->request(
                     $request_method,
-                    $_ENV['API_URL'] . '/' . $resource,
+                    //$_ENV['API_URL'] . '/' . $resource,
+                    'https://api-v1.autoit.dk' . '/' . $resource,
                     ['query' => array_merge($params, ['a' => $this->apiKey])]
                 ),
                 $response_type

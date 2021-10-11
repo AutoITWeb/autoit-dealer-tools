@@ -109,24 +109,12 @@
             $filterObject->VehicleStates = [sanitize_text_field(urldecode($urlFilterVehicleStates))];
         }
 
-//        $urlFilterMake = get_query_var('filter_make', false);
-//        if ($urlFilterMake) {
-//
-//            $filterObject->Makes = [sanitize_text_field(urldecode($urlFilterMake))];
-//
-//            $urlFilterModel = get_query_var('filter_brand', false);
-//            if ($urlFilterModel) {
-//                $filterObject->Models = [sanitize_text_field(urldecode($urlFilterModel))];
-//            }
-//        }
+        if ($urlFilter === "Type") {
 
-//        $propellantsArray = ["Benzin", "Hybrid", "Diesel", "EL"];
-//
-//        $urlFilterPropellant = get_query_var('filter_make', false);
-//        if ($urlFilterPropellant && in_array($urlFilterPropellant, $propellantsArray)) {
-//
-//            $filterObject->Propellants = [sanitize_text_field(urldecode($urlFilterPropellant))];
-//        }
+            $urlFilterProductTypes = get_query_var('bdt_filter', false);
+
+            $filterObject->ProductTypes = [sanitize_text_field(urldecode($urlFilterProductTypes))];
+        }
 
         if ($filterObject->OrderBy === null && isset($this->_options_2['default_sorting_value'])) {
             $filterObject->OrderBy = $this->_options_2['default_sorting_value'];
@@ -166,8 +154,6 @@
     {
         $end = $vehicleFeed->totalResults;
     }
-
-    var_dump($filterObject);
 
     //$product = new ApiController()
 ?>
@@ -242,13 +228,27 @@
             </div>
             <ul class="paging">
                 <?php
+                    $getUrlFilterParts = array_filter(explode("/", $_SERVER['REQUEST_URI']));
+
+                    switch (count($getUrlFilterParts)) {
+                        case 4:
+                            $urlFilterPaging = "/" . $getUrlFilterParts[3] . "/" . $getUrlFilterParts[4];
+                            break;
+                        case 5:
+                            $urlFilterPaging = "/" . $getUrlFilterParts[4] . "/" . $getUrlFilterParts[5];
+                            break;
+                        case 6:
+                            $urlFilterPaging = "/" . $getUrlFilterParts[5] . "/" . $getUrlFilterParts[6];
+                            break;
+                    }
+
                     for($i = 1; $i < ceil($vehicleFeed->totalResults / $this->biltorvetAPI->GetVehicleResultsPageLimit())+1; $i++)
                     {
                         $active = (isset($currentPage) && intval($currentPage) == $i) || (!isset($currentPage) && $i == 1);
                         $pageSlug = (!isset($_SESSION['bdt_filter']) && $i == 1 ? '' : '/' . $i);
                         $searchResultsPageUrl = $bdt_root_url . $pageSlug;
 
-                        ?><li><a <?php echo $active ? ' class="active bdt_bgcolor"' : ''; ?> href="<?php echo $active ? '#' : $searchResultsPageUrl; ?>"><?php echo $i; ?></a></li><?php
+                        ?><li><a <?php echo $active ? ' class="active bdt_bgcolor"' : ''; ?> href="<?php echo $active ? '#' : $searchResultsPageUrl . $urlFilterPaging; ?>"><?php echo $i; ?></a></li><?php
                     }
                 ?>
             </ul>
