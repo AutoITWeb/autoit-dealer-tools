@@ -205,7 +205,7 @@ Optional attribute:
 Example 1: __[bdt_get_vehicles_by_type type="Car"]__ - lists all vehicles with the type "Personbil".<br><br>  
 
 __[bdt_map]__  
-It's only possible to use this shortcode once of every page!  
+It's only possible to use this shortcode once on every page!  
 To activate the map go to the plugin settings as check "Activate map". The rest of the settings can be left as they are or changed if needed. Add the following CSS to get a full-width map with a height of 400px:  
 
 #map {
