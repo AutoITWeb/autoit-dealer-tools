@@ -474,13 +474,24 @@ Be sure to remember this when creating a website using this plugin.
 <br>
 __Share links with predefined searchfilters__  
 The URL are build to make it easy to share pages with predefined searchfilters. The url build like this:  
-__/1/make/model__   
+__/paging/Filter-type/Filter__  
+__/paging/Filter-type/Filter/Model (special case when searching for a model)__  
 <br>
 
-The first paramater is the pagination number, the second parameter is the make of the vehicle and the third parameter is the model of the vehicle.  
+__Valid filter types:__  
+* Afdeling (Takes a company id as filter - check the plugin settings "Afdelinger" to get a departments companyid)
+* Stand
+* Maerke
+* Type
+* Karrosseri
+* Braendstof
+
 <br>
-Example 1: __/1/audi/__ - Will show the searchpage with all the Audi's for sale  
-Example 2: __/1/audi/a5__ - Will show the searchpage with all the Audi A5's for sale<br><br>
+
+The first paramater is the pagination number, the second parameter is the filter type, the third parameter is the filter (and a fourth is the vehicles model).  
+<br>
+Example 1: __/1/Maerke/Audi/__ - Will show the searchpage with all the Audi's for sale  
+Example 2: __/1/Maerke/Audi/A5__ - Will show the searchpage with all the Audi A5's for sale<br><br>
 
 
 ### ShortCodes list for easy implemention  
