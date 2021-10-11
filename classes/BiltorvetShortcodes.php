@@ -497,7 +497,6 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 status_header( 404 );
                 get_template_part( 404 );
                 exit();
-                //return __('Vehicle not found', 'biltorvet-dealer-tools');
             }
             $showPrice = '';
             // @TODO: refactor
@@ -557,7 +556,33 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             {
                 return nl2br('<span class="bdt_vehicle_company_name">'. $this->currentVehicle->company->name . "</span>\r\n" . $this->currentVehicle->company->address . "\r\n" . $this->currentVehicle->company->postNumber . " " . $this->currentVehicle->company->city);
             }
+
             $value = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, $propertyName, isset($atts['raw']));
+
+            if($propertyName == 'uri')
+            {
+                $vehicleDetailBreadCrumb = str_replace("/", " ", $value);
+
+                ?>
+
+                <script>
+                    $( document ).ready(function() {
+
+                        try {
+                            var x = document.getElementsByClassName("current");
+                            x[0].innerHTML = '<?= $vehicleDetailBreadCrumb; ?>';
+                        }
+                        catch (err) {
+                            console.log(err);
+                        }
+                    });
+                </script>
+
+                <?php
+
+                return;
+            }
+
             return isset($value) && trim($value) !== '' ? nl2br($value) : (isset($atts['nona']) ? $atts['nona'] : __('N/A', 'biltorvet-dealer-tools'));
         }
 

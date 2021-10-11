@@ -60,14 +60,18 @@
         {
             $filterObject->Makes = explode(',', $atts['makes']);
         }
+
         $make = get_query_var('bdt_vehicle_make', -1);
         if($make !== -1)
         {
             $filterObject->Makes = array($this->biltorvetAPI->GetMakeFromSlug($make));
         }
 
-        $urlFilterMake = get_query_var('filter_make', false);
-        if ($urlFilterMake) {
+        $urlFilter = get_query_var('bdt_filter_type', false);
+
+        if ($urlFilter === "Maerke") {
+
+            $urlFilterMake = get_query_var('bdt_filter', false);
 
             $filterObject->Makes = [sanitize_text_field(urldecode($urlFilterMake))];
 
@@ -76,6 +80,42 @@
                 $filterObject->Models = [sanitize_text_field(urldecode($urlFilterModel))];
             }
         }
+
+        if ($urlFilter === "Braendstof") {
+
+            $urlFilterPropellant = get_query_var('bdt_filter', false);
+
+            $filterObject->Propellants = [sanitize_text_field(urldecode($urlFilterPropellant))];
+        }
+
+        if ($urlFilter === "Karrosseri") {
+
+            $urlFilterBodyTypes = get_query_var('bdt_filter', false);
+
+            $filterObject->BodyTypes = [sanitize_text_field(urldecode($urlFilterBodyTypes))];
+        }
+
+        if ($urlFilter === "Afdeling") {
+
+            $urlFilterCompanyIds = get_query_var('bdt_filter', false);
+
+            $filterObject->CompanyIds = [sanitize_text_field(urldecode($urlFilterCompanyIds))];
+        }
+
+        if ($urlFilter === "Stand") {
+
+            $urlFilterVehicleStates = get_query_var('bdt_filter', false);
+
+            $filterObject->VehicleStates = [sanitize_text_field(urldecode($urlFilterVehicleStates))];
+        }
+
+        if ($urlFilter === "Type") {
+
+            $urlFilterProductTypes = get_query_var('bdt_filter', false);
+
+            $filterObject->ProductTypes = [sanitize_text_field(urldecode($urlFilterProductTypes))];
+        }
+
         if ($filterObject->OrderBy === null && isset($this->_options_2['default_sorting_value'])) {
             $filterObject->OrderBy = $this->_options_2['default_sorting_value'];
         }
@@ -188,13 +228,27 @@
             </div>
             <ul class="paging">
                 <?php
+                    $getUrlFilterParts = array_filter(explode("/", $_SERVER['REQUEST_URI']));
+
+                    switch (count($getUrlFilterParts)) {
+                        case 4:
+                            $urlFilterPaging = "/" . $getUrlFilterParts[3] . "/" . $getUrlFilterParts[4];
+                            break;
+                        case 5:
+                            $urlFilterPaging = "/" . $getUrlFilterParts[4] . "/" . $getUrlFilterParts[5];
+                            break;
+                        case 6:
+                            $urlFilterPaging = "/" . $getUrlFilterParts[5] . "/" . $getUrlFilterParts[6];
+                            break;
+                    }
+
                     for($i = 1; $i < ceil($vehicleFeed->totalResults / $this->biltorvetAPI->GetVehicleResultsPageLimit())+1; $i++)
                     {
                         $active = (isset($currentPage) && intval($currentPage) == $i) || (!isset($currentPage) && $i == 1);
                         $pageSlug = (!isset($_SESSION['bdt_filter']) && $i == 1 ? '' : '/' . $i);
                         $searchResultsPageUrl = $bdt_root_url . $pageSlug;
 
-                        ?><li><a <?php echo $active ? ' class="active bdt_bgcolor"' : ''; ?> href="<?php echo $active ? '#' : $searchResultsPageUrl; ?>"><?php echo $i; ?></a></li><?php
+                        ?><li><a <?php echo $active ? ' class="active bdt_bgcolor"' : ''; ?> href="<?php echo $active ? '#' : $searchResultsPageUrl . $urlFilterPaging; ?>"><?php echo $i; ?></a></li><?php
                     }
                 ?>
             </ul>

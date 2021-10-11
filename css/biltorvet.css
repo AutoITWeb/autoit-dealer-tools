@@ -5659,7 +5659,13 @@ a.bdt .badge-dark.focus {
 }
 
 .bdt_price_big {
-    font-size: 2rem
+    font-size: 2rem;
+}
+
+@media (max-width: 400px) {
+    .bdt_price_big {
+        font-size: 1.8rem;
+    }
 }
 
 .bdt_cta {

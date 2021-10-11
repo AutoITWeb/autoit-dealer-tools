@@ -27,6 +27,7 @@ if(isset($atts) && isset($atts['makeids']) && trim($atts['makeids']) !== '')
 
 try{
     $filterObject = null;
+
     if(isset($this->_options['hide_sold_vehicles']) && $this->_options['hide_sold_vehicles'] === 'on')
     {
         if($filterObject === null)
@@ -198,8 +199,13 @@ $setCol =  (isset($this->_options_5['set_frontpagesearch_column'])) && $this->_o
  */
 
 $showPriceRange = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_pricerange'])) ? "" : "style='display: none;'";
-
 $showConsumption = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_fuelconsumption'])) ? "" : "style='display: none;'";
+$showCompanies = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_company'])) && ($this->_options_5['frontpagesearch_company'] === 'on') || (!isset($this->_options_5['set_frontpagesearch_column'])) ? "" : "style='display: none;'";
+$showMakeModel = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_makemodel'])) && ($this->_options_5['frontpagesearch_makemodel'] === 'on') || (!isset($this->_options_5['set_frontpagesearch_column'])) ? "" : "style='display: none;'";
+$showVehicleStates = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_vehiclestate'])) && ($this->_options_5['frontpagesearch_vehiclestate'] === 'on') ? "" : "style='display: none;'";
+$showProductTypes = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_producttype'])) && ($this->_options_5['frontpagesearch_producttype'] === 'on') ? "" : "style='display: none;'";
+$showBodyTypes = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_bodytype'])) && ($this->_options_5['frontpagesearch_bodytype'] === 'on') ? "" : "style='display: none;'";
+$showPropellants = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_propellants'])) && ($this->_options_5['frontpagesearch_propellants'] === 'on') ? "" : "style='display: none;'";
 
 ?>
 
@@ -214,58 +220,48 @@ $showConsumption = (isset($this->_options_5)) && (isset($this->_options_5['front
         </div>
         <div class="row justify-content-between">
 
-            <?php if(count($initialFilterOptions->companies) > 1 && !isset($this->_options_5['set_frontpagesearch_column']) || isset($this->_options_5['frontpagesearch_company'])) : ?>
-                <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3">
+            <?php if(count($initialFilterOptions->companies) > 1) : ?>
+                <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showCompanies ?>>
                     <select name="company" id="company_frontpage">
                         <option value=""><?php _e('- Select department -', 'biltorvet-dealer-tools'); ?></option>
                     </select>
                 </div>
             <?php endif; ?>
 
-            <?php if(count((array)$initialFilterOptions->vehicleStates) >= 2 && isset($this->_options_5['frontpagesearch_vehiclestate'])): ?>
-                <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3">
+                <div class="col-sm-<?= $setCol ?> mt-3 mt-sm-0 mb-3" <?= $showVehicleStates ?>>
                     <select name="vehicleState">
                         <option value=""><?php _e('- Select vehicle state -', 'biltorvet-dealer-tools'); ?></option>
                     </select>
                 </div>
-            <?php endif; ?>
 
-            <?php if(!isset($this->_options_5['set_frontpagesearch_column']) || isset($this->_options_5['frontpagesearch_makemodel'])) : ?>
-                <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3">
+                <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showMakeModel ?>>
                 <select name="make" id="make_frontpage">
                     <option value=""><?php _e('- Select make -', 'biltorvet-dealer-tools'); ?></option>
                 </select>
             </div>
-            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3">
+            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showMakeModel ?>>
                 <select name="model" id="model_frontpage">
                     <option value=""><?php _e('- Select model -', 'biltorvet-dealer-tools'); ?></option>
                 </select>
             </div>
-            <?php endif; ?>
 
-            <?php if(count($initialFilterOptions->productTypes) > 1 && isset($this->_options_5['frontpagesearch_producttype'])) : ?>
-                <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3">
+                <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showProductTypes ?>>
                     <select name="productType">
                         <option value=""><?php _e('- Select vehicle type -', 'biltorvet-dealer-tools'); ?></option>
                     </select>
                 </div>
-            <?php endif; ?>
 
-            <?php if(count($initialFilterOptions->bodyTypes) > 1 && isset($this->_options_5['frontpagesearch_bodytype'])) : ?>
-                <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3">
+                <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showBodyTypes ?>>
                     <select name="bodyType">
                         <option value=""><?php _e('- Select body type -', 'biltorvet-dealer-tools'); ?></option>
                     </select>
                 </div>
-            <?php endif; ?>
 
-            <?php if(count($initialFilterOptions->propellants) > 1 && isset($this->_options_5['frontpagesearch_propellants'])) : ?>
-                <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3">
+                <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showPropellants ?>>
                     <select name="propellant">
                         <option value=""><?php _e('- Select propellant -', 'biltorvet-dealer-tools'); ?></option>
                     </select>
                 </div>
-            <?php endif; ?>
 
             <div class="col-sm-<?= $setCol ?> mt-3 mt-sm-0 mb-3" <?= $showPriceRange ?>>
                 <div class="bdtSliderContainer" >

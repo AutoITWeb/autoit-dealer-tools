@@ -260,11 +260,11 @@ msgstr "- Vælg type -"
 
 #: templates/VehicleSearch.php:99
 msgid "- Select body type -"
-msgstr "- Vælg Karrosseri -"
+msgstr "- Vælg karrosseri -"
 
 #: templates/VehicleSearch.php:106
 msgid "- Select propellant -"
-msgstr "- Brændstof -"
+msgstr "- Vælg brændstof -"
 
 msgid "- Select vehicle state -"
 msgstr "- Vælg stand -"

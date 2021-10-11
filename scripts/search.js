@@ -18,8 +18,14 @@ jQuery(function ($) {
         Ascending: false, // Bool
         BrandNew: null // Bool
     };
+
     let urlFilterMake = null;
     let urlFilterModel = null;
+    let urlFilterPropellant = null;
+    let urlFilterBodyTypes = null;
+    let urlFilterCompanyIds = null;
+    let urlFilterVehicleStates = null;
+    let urlFilterProductTypes = null;
 
     $(document).ready(function () {
         getUrlPathFilters
@@ -58,6 +64,26 @@ jQuery(function ($) {
                             _vehicleSearch.find('select[name=model] option[value="' + decodeURIComponent(urlFilterModel) + '"]').prop('selected', true);
                         }
 
+                        if (urlFilterPropellant !== null) {
+                            _vehicleSearch.find('select[name=propellant] option[value="' + decodeURIComponent(urlFilterPropellant) + '"]').prop('selected', true);
+                        }
+
+                        if (urlFilterBodyTypes !== null) {
+                            _vehicleSearch.find('select[name=bodyType] option[value="' + decodeURIComponent(urlFilterBodyTypes) + '"]').prop('selected', true);
+                        }
+
+                        if (urlFilterCompanyIds !== null) {
+                            _vehicleSearch.find('select[name=company] option[value="' + decodeURIComponent(urlFilterCompanyIds) + '"]').prop('selected', true);
+                        }
+
+                        if (urlFilterVehicleStates !== null) {
+                            _vehicleSearch.find('select[name=vehicleState] option[value="' + decodeURIComponent(urlFilterVehicleStates) + '"]').prop('selected', true);
+                        }
+
+                        if (urlFilterProductTypes !== null) {
+                            _vehicleSearch.find('select[name=productType] option[value="' + decodeURIComponent(urlFilterProductTypes) + '"]').prop('selected', true);
+                        }
+
                         _vehicleSearch.find('.search').text(_vehicleSearch.find('.search').data('labelpattern').replace('%u', $('.vehicle_search_results').attr('data-totalResults')));
 
                         var frontpageSearch = document.getElementById("frontpage_vehicle_search");
@@ -87,13 +113,38 @@ jQuery(function ($) {
                     filter.Start = urlPathElements[2];
                 }
 
-                if (urlPathElements[3] !== "" && urlPathElements[3] !== filter.Makes) {
-                    filter.Makes = [decodeURIComponent(urlPathElements[3])];
-                    urlFilterMake = urlPathElements[3];
+                if (urlPathElements[3] === "Maerke" && urlPathElements[4] !== "" && urlPathElements[4] !== filter.Makes) {
+                    filter.Makes = [decodeURIComponent(urlPathElements[4])];
+                    urlFilterMake = urlPathElements[4];
                 }
 
-                if (urlPathElements[4] !== "") {
-                    urlFilterModel = decodeURIComponent(urlPathElements[4]);
+                if (urlPathElements[3] === "Braendstof" && urlPathElements[4] !== "" && urlPathElements[4] !== filter.Propellant) {
+                    filter.Propellant = [decodeURIComponent(urlPathElements[4])];
+                    urlFilterPropellant = urlPathElements[4];
+                }
+
+                if (urlPathElements[3] === "Karrosseri" && urlPathElements[4] !== "" && urlPathElements[4] !== filter.BodyTypes) {
+                    filter.BodyTypes = [decodeURIComponent(urlPathElements[4])];
+                    urlFilterBodyTypes = urlPathElements[4];
+                }
+
+                if (urlPathElements[3] === "Afdeling" && urlPathElements[4] !== "" && urlPathElements[4] !== filter.CompanyIds) {
+                    filter.CompanyIds = [decodeURIComponent(urlPathElements[4])];
+                    urlFilterCompanyIds = urlPathElements[4];
+                }
+
+                if (urlPathElements[3] === "Stand" && urlPathElements[4] !== "" && urlPathElements[4] !== filter.VehicleStates) {
+                    filter.VehicleStates = [decodeURIComponent(urlPathElements[4])];
+                    urlFilterVehicleStates = urlPathElements[4];
+                }
+
+                if (urlPathElements[3] === "Type" && urlPathElements[4] !== "" && urlPathElements[4] !== filter.ProductTypes) {
+                    filter.ProductTypes = [decodeURIComponent(urlPathElements[4])];
+                    urlFilterProductTypes = urlPathElements[4];
+                }
+
+                if (urlPathElements[5] !== "") {
+                    urlFilterModel = decodeURIComponent(urlPathElements[5]);
                 }
 
                 resolve({
@@ -102,9 +153,7 @@ jQuery(function ($) {
             } else {
                 reject(new Error('No url parameters'));
             }
-
         }
     );
-
 });
 

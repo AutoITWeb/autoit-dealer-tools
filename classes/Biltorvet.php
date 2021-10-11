@@ -44,6 +44,8 @@ class Biltorvet
         add_filter('get_canonical_url', array(&$this, 'bdt_vehicledetails_canonical'), 1000);
         add_filter('get_shortlink', array(&$this, 'bdt_vehicledetails_canonical'), 1000);
 
+        add_action( 'upgrader_process_complete', 'bdt_plugin_updated' );
+
         $this->_options = get_option('bdt_options');
         $this->_options_2 = get_option('bdt_options_2');
         $this->_options_3 = get_option('bdt_options_3');
@@ -78,6 +80,7 @@ class Biltorvet
                 $get_companies = $this->biltorvetAPI->GetCompanies();
                 (define('bdt_companies_list', json_encode($get_companies->companies)));
             } catch (exception $e) {
+                
             }
 
         }
@@ -86,6 +89,13 @@ class Biltorvet
             new BDTSettingsPage($this->_options, $this->_options_2, $this->_options_3, $this->_options_4, $this->_options_5, $this->_options_6, $this->biltorvetAPI);
         }
     }
+
+    function bdt_plugin_updated() {
+
+        flush_rewrite_rules();
+
+    }
+
 
     /*
      * New function to send leads to Autodesktop
@@ -395,8 +405,11 @@ class Biltorvet
             $query_vars[] = 'bdt_vehicle_id';
             $query_vars[] = 'bdt_actiontype';
 
-            $query_vars[] = 'filter_make';
+            $query_vars[] = 'bdt_filter_type';
+            $query_vars[] = 'bdt_filter';
             $query_vars[] = 'filter_brand';
+
+//            $query_vars[] = 'filter_make';
 
             return $query_vars;
         }
@@ -438,7 +451,6 @@ class Biltorvet
             if ( ! $template ) :
                 $template = $default_path . $template_name;
             endif;
-
             return apply_filters( 'bdt_locate_template', $template, $template_name, $template_path, $default_path );
         }
         
@@ -464,6 +476,7 @@ class Biltorvet
                 _doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', $template_file ), '1.0.0' );
                 return;
             endif;
+
             return $template_file;
         }
 
@@ -479,7 +492,7 @@ class Biltorvet
             Biltorvet::bdt_rewriterules();
             Biltorvet::bdt_flushrewriterules();
         }
-        
+
         static function bdt_rewriterules()
         {
             $options = get_option( 'bdt_options' );
@@ -503,11 +516,11 @@ class Biltorvet
                 $query = 'index.php?pagename=' . $vehiclesearchresults . '&bdt_page=$matches[1]';
                 add_rewrite_rule( '^' . $vehiclesearchresults . '\/([0-9]+)$', $query, 'top' );
 
-                $query = 'index.php?pagename=' . $vehiclesearchresults . '&bdt_page=$matches[1]&filter_make=$matches[2]';
-                add_rewrite_rule( '^' . $vehiclesearchresults . '\/([0-9]+)/([^/]*)$', $query, 'top' );
-
-                $query = 'index.php?pagename=' . $vehiclesearchresults . '&bdt_page=$matches[1]&filter_make=$matches[2]&filter_brand=$matches[3]';
+                $query = 'index.php?pagename=' . $vehiclesearchresults . '&bdt_page=$matches[1]&bdt_filter_type=$matches[2]&bdt_filter=$matches[3]';
                 add_rewrite_rule( '^' . $vehiclesearchresults . '\/([0-9]+)/([^/]*)/([^/]*)$', $query, 'top' );
+
+                $query = 'index.php?pagename=' . $vehiclesearchresults . '&bdt_page=$matches[1]&bdt_filter_type=$matches[2]&bdt_filter=$matches[3]&filter_brand=$matches[4]';
+                add_rewrite_rule( '^' . $vehiclesearchresults . '\/([0-9]+)/([^/]*)/([^/]*)/([^/]*)$', $query, 'top' );
             }
         }
 
