@@ -201,8 +201,8 @@ $setCol =  (isset($this->_options_5['set_frontpagesearch_column'])) && $this->_o
 $showPriceRange = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_pricerange'])) ? "" : "style='display: none;'";
 $showConsumption = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_fuelconsumption'])) ? "" : "style='display: none;'";
 $showCompanies = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_company'])) && ($this->_options_5['frontpagesearch_company'] === 'on') || (!isset($this->_options_5['set_frontpagesearch_column'])) ? "" : "style='display: none;'";
-$showMakeModel = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_makemodel'])) && ($this->_options_5['frontpagesearch_makemodel'] === 'on') || (!isset($this->_options_5['set_frontpagesearch_column'])) ? "" : "style='display: none;'";
 $showVehicleStates = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_vehiclestate'])) && ($this->_options_5['frontpagesearch_vehiclestate'] === 'on') ? "" : "style='display: none;'";
+$showMakeModel = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_makemodel'])) && ($this->_options_5['frontpagesearch_makemodel'] === 'on') || (!isset($this->_options_5['set_frontpagesearch_column'])) ? "" : "style='display: none;'";
 $showProductTypes = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_producttype'])) && ($this->_options_5['frontpagesearch_producttype'] === 'on') ? "" : "style='display: none;'";
 $showBodyTypes = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_bodytype'])) && ($this->_options_5['frontpagesearch_bodytype'] === 'on') ? "" : "style='display: none;'";
 $showPropellants = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_propellants'])) && ($this->_options_5['frontpagesearch_propellants'] === 'on') ? "" : "style='display: none;'";
