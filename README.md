@@ -133,6 +133,7 @@ Creates a list of cars from specific filters
 Attributes:  
 * __make__
 * __model__  
+* __companyid__  
 * __propellant__  
 * __bodytype__  
 * __vehicletype__ (Personbil, Varebil, Motorcykel, Lastbil)  
