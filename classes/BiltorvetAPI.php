@@ -61,6 +61,11 @@
             return $this->Request('/vehicle/detail/' . TextUtils::Sanitize($id));
         }
 
+        public function SendInfluxDbVehicleData($id)
+        {
+            return $this->Request('/influxdb/vehicledetail/' . TextUtils::Sanitize($id), null, 'POST');
+        }
+
         public function GetVehicleTotalCount($filter)
         {
             return $this->Request('/vehicle/count', isset($filter) && $filter !== null ? array('filter' => json_encode($filter)) : null);
