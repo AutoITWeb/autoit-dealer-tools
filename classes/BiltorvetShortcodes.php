@@ -498,6 +498,15 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 get_template_part( 404 );
                 exit();
             }
+
+            /**
+             * Tracking of hits to the detailspage - sends a call to our influx db endpoint
+             */
+//            if(isset($_SERVER['HTTP_USER_AGENT']) && !preg_match('/bot|crawl|slurp|spider|facebook|semrush|bing|ecosia|yandex|duckduck|AdsBot|slack|twitter|whatsapp|mediapartners/i', $_SERVER['HTTP_USER_AGENT'])) {
+//
+//                $this->biltorvetAPI->SendInfluxDbVehicleData($this->currentVehicle->documentId);
+//            }
+
             $showPrice = '';
             // @TODO: refactor
             $priceController = new PriceController(VehicleFactory::create(json_decode(json_encode($this->currentVehicle), true)));
@@ -559,6 +568,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
             $value = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, $propertyName, isset($atts['raw']));
 
+            // Vehicledetail breadcrumb
             if($propertyName == 'uri')
             {
                 $vehicleDetailBreadCrumb = str_replace("/", " ", $value);

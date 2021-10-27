@@ -14,4 +14,6 @@
         public $body; // Additional info
         public $ActivityType; // ActivityType enum
         public $CompanyId;
+        public $WebsiteUrl;
+        public $Source;
     }

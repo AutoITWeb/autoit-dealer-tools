@@ -240,6 +240,9 @@
                         case 6:
                             $urlFilterPaging = "/" . $getUrlFilterParts[5] . "/" . $getUrlFilterParts[6];
                             break;
+                        default:
+                            $urlFilterPaging = "";
+                            break;
                     }
 
                     for($i = 1; $i < ceil($vehicleFeed->totalResults / $this->biltorvetAPI->GetVehicleResultsPageLimit())+1; $i++)
