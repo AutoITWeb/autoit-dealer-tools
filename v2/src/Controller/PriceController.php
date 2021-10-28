@@ -3,6 +3,7 @@
 namespace Biltorvet\Controller;
 
 use Biltorvet\Factory\PriceFactory;
+use Biltorvet\Factory\PropertyFactory;
 use Biltorvet\Factory\VehicleFactory;
 use Biltorvet\Helper\WordpressHelper;
 use Biltorvet\Model\Price;
@@ -68,6 +69,7 @@ class PriceController
         $this->vehicle = $vehicle;
 
         $this->price = PriceFactory::create($vehicle);
+
         $this->hideFinancingCards =
             WordpressHelper::getOption(2,'bdt_hide_financing_prices_card') == 'on' ? true : false;
         $this->hideFinancingDetails =
@@ -158,13 +160,19 @@ class PriceController
             }
         }
         else if (!$this->hideLeasingCards && $this->price->getLeasingPriceValue()) {
+            // Private leasing
             if($this->prioritizedPriceType = 'leasing' && $this->price->getIsPrivateLeasing() && $this->price->getPriceValue() != null)
             {
                 return _e('Cash price', 'biltorvet-dealer-tools') . ': ' . $this->formatValue($this->price->getPriceValue());
             }
+            // Business leasing support vehicles with and without Taxes (VAT)
             else if($this->prioritizedPriceType = 'leasing' && $this->price->getIsBusinessLeasing() && $this->price->getPriceValue() != null)
             {
-                return _e('Cash price', 'biltorvet-dealer-tools') . ' (' . __('Excl. VAT', 'biltorvet-dealer-tools') . ')' . ': ' . $this->formatValue($this->price->getPriceValue());
+                if($this->price->getIsBusinessPrice() == true) {
+                    return _e('Cash price', 'biltorvet-dealer-tools') . ' (' . __('Excl. VAT', 'biltorvet-dealer-tools') . ')' . ': ' . $this->formatValue($this->price->getPriceValue());
+                }
+
+                return _e('Cash price', 'biltorvet-dealer-tools') . ': ' . $this->formatValue($this->price->getPriceValue());
             }
             else {
                 return "<br>";

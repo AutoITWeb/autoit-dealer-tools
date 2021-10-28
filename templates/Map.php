@@ -60,9 +60,7 @@ if(isset($atts['detailspage']) && $atts['detailspage'] == 'true') {
             gestureHandling: true
         });
 
-        $('#map').ready(function() {
-            map.invalidateSize()
-        });
+        map.invalidateSize();
 
         L.tileLayer(<?= "'" . $setTileLayer ."'"; ?>, {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
