@@ -13,7 +13,7 @@ class StructuredDataFactory
     public static function VehicleDetails($vehicle, $vehiclePrice, $vehicleEquipment, $options) : string
     {
         global $wp;
-        $brandUrl = rtrim(get_page_link($options['vehiclesearch_page_id']),'/') . "/1/" . ucfirst($vehicle->getMakeName());
+        $brandUrl = rtrim(get_page_link($options['vehiclesearch_page_id']),'/') . "/1/Maerke/" . ucfirst($vehicle->getMakeName());
         $vehicleCondition = $vehicle->getBrandNew() == false ? "Brugt" : "Fabriksny";
         $vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
         $vehicleDescription = $vehicle->getDescription() != null? TextUtils::Sanitize($vehicle->getDescription()) : $vehicle->getMakeName() . $vehicle->getModel() . $vehicle->getVariant();
