@@ -18,6 +18,8 @@ $markerColor = isset($this->_options_4['bdt_marker_color']) && $this->_options_4
 $marker = isset($this->_options_4['bdt_custom_marker']) && $this->_options_4['bdt_custom_marker']!= '' ? $this->_options_4['bdt_custom_marker'] : plugin_dir_url( dirname( __FILE__ ) ) . 'includes/img/marker-icon-' . strtolower($markerColor) . '.png';
 
 
+$options = get_option( 'bdt_options' );
+
 // Globalmap not to be used on VehicleDetailsPage as it will only show the map data for the current vehicle
 if(isset($atts['detailspage']) && $atts['detailspage'] == 'true') {
     $setView = $this->currentVehicle->company->coordinates->latitude . "," . $this->currentVehicle->company->coordinates->longitude;
@@ -48,6 +50,12 @@ if(isset($atts['detailspage']) && $atts['detailspage'] == 'true') {
 
 
 <div id="map"></div>
+
+<style>
+    .leaflet-container a {
+        color: <?= $options['primary_color']; ?>;
+    }
+</style>
 
 <script>
 
