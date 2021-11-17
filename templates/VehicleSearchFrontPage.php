@@ -220,13 +220,11 @@ $showPropellants = (isset($this->_options_5)) && (isset($this->_options_5['front
         </div>
         <div class="row justify-content-between">
 
-            <?php if(count($initialFilterOptions->companies) > 1) : ?>
                 <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showCompanies ?>>
                     <select name="company" id="company_frontpage">
                         <option value=""><?php _e('- Select department -', 'biltorvet-dealer-tools'); ?></option>
                     </select>
                 </div>
-            <?php endif; ?>
 
                 <div class="col-sm-<?= $setCol ?> mt-3 mt-sm-0 mb-3" <?= $showVehicleStates ?>>
                     <select name="vehicleState">

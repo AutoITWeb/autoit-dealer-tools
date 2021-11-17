@@ -1279,6 +1279,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             echo 'Brug disse navne som valgmuligheder i dropdown afdelingsvælgeren. Det er vigtigt at navne er helt ens.<br>';
             echo 'Indtast den eller de email adresser der skal sendes mails til, når man vælger afdelingen. Der kan indsættes lige så mange som man ønsker (indtast alle email adresser kun adskilt af , og uden mellemrum ). Eks.: <b>test@autoit.dk,test@biltorvet.dk</b><br><br>';
 
+            $i = 0;
 
             foreach($companiesFeed->companies as $company)
             {
@@ -1286,8 +1287,8 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 echo '<input type="text" id="bdt_options_6" name="bdt_options_5[departments_company_name]" value="' . $company->address . ' ' . $company->city . '" size="30" readonly style="margin-bottom: 5px; background: #A8A8A8; "/><br>';
 
                 printf(
-                    '<input type="text" id="bdt_options_6" name="bdt_options_6[departments_company_id_' . $company->id . ']" value="' . $company->id .'" size="30" readonly style="margin-bottom: 5px; background: #A8A8A8; "/>',
-                    isset( $this->options_6['departments_company_id_' . $company->id] ) ? esc_attr($this->options_6['departments_company_id_' . $company->id]) : ''
+                    '<input type="text" id="bdt_options_6" name="bdt_options_6[departments_company_id_' . $i . ']" value="' . $company->id .'" size="30" readonly style="margin-bottom: 5px; background: #A8A8A8; "/>',
+                    isset( $this->options_6['departments_company_id_' . $i] ) ? esc_attr($this->options_6['departments_company_id_' . $i]) : ''
                 );
 
                 echo '<br>';
@@ -1296,6 +1297,8 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     '<input type="text" id="bdt_options_6" name="bdt_options_6[departments_company_email_' . $company->id . ']" value="%s" size="30" placeholder="Indtast email / emails for afdeling" style="margin-bottom: 5px;" />',
                     isset( $this->options_6['departments_company_email_' . $company->id] ) ? esc_attr($this->options_6['departments_company_email_' . $company->id]) : ''
                 );
+
+                $i ++;
 
                 echo '<br><br>';
             }

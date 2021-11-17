@@ -593,6 +593,24 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 return;
             }
 
+            if($propertyName == 'BilInfoVideo')
+            {
+                if(!is_null($this->currentVehicle->bilInfoVideos) || !empty($this->currentVehicle->bilInfoVideos))
+                {
+                    $bilInfoVideo = '<div class="bilInfoVideo">';
+
+                    $bilInfoVideo .= '<iframe id="vzvd-infoVid" name="vzvd-infoVid" title="video player" class="video-player" type="text/html" width="100%" height="400px" style="max-width:100%; max-height:auto;" frameborder="0" allowFullScreen allowTransparency="true" mozallowfullscreen webkitAllowFullScreen src="'. $this->currentVehicle->bilInfoVideos[0] . '"></iframe>';
+                    $bilInfoVideo .= '<script src="https://player.vzaar.com/libs/flashtakt/client.js" type="text/javascript"></script>';
+                    $bilInfoVideo .= '<script> var vzp = new vzPlayer("vzvd-infoVid"); $(".bilInfoVideo").on("click", (el) => { vzp.pause() });</script>';
+
+                    $bilInfoVideo .= '</div>';
+
+                    return $bilInfoVideo;
+                }
+
+                return "";
+            }
+
             return isset($value) && trim($value) !== '' ? nl2br($value) : (isset($atts['nona']) ? $atts['nona'] : __('N/A', 'biltorvet-dealer-tools'));
         }
 
