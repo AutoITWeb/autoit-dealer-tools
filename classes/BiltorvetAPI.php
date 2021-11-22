@@ -1,4 +1,5 @@
 <?php
+
     if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
     
     class BiltorvetAPI {
@@ -81,13 +82,13 @@
             return $this->Request('/vehicle', array('filter' => json_encode($filter)));
         }
 
-        public function AutodesktopSendLead($lead, $emailReciept = false) 
-        {   
+        public function AutodesktopSendLead($lead, $emailReciept = false)
+        {
             if(!isset($lead))
             {
                 throw new Exception("BT API: No lead specified");
             }
-            
+
             return $this->Request('/autodesktop/sendlead', array('leadInput' => json_encode($lead), 'emailReciept' => $emailReciept === true ? 'true' : 'false'), 'POST');
         }
 
@@ -175,7 +176,6 @@
 
         private function Request($method, $query = null, $requestType = 'GET')
         {
-            $requestStart = microtime(true);
             try{
                 if($method === null || trim($method) === '')
                 {
@@ -189,12 +189,15 @@
                 {
                     $data = get_transient( $transientName );
                 }
-                
+
+                //delete_transient($transientName);
+
                 if( false === $data ) {
                     $ch = curl_init($this->endpoint . $method . '?' . ($requestType === 'GET' && isset($query) ? http_build_query($query) . '&'  : '') .'a=' . $this->apiKey );
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10); 
+                    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
                     curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+
                     if($requestType === 'POST')
                     {
                         curl_setopt($ch, CURLOPT_POST, true);
@@ -213,40 +216,39 @@
                     }
                     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE );
                     curl_close($ch);
-        
+
                     if($httpCode !== 200)
                     {
                         switch($httpCode):
                             case 401:
                                 throw new Exception(__('Biltorvet API: not authorized','biltorvet-dealer-tools'));
-                            break;
+                                break;
                             case 404:
                                 throw new Exception(__('Biltorvet API: method not found', 'biltorvet-dealer-tools'));
-                            break;
+                                break;
                             default:
                                 throw new Exception(sprintf( __('Biltorvet API: unexpected response code (%u)', 'biltorvet-dealer-tools'), intval($httpCode)));
-                            break;
+                                break;
                         endswitch;
                     }
-        
+
                     $response = json_decode($body);
-                    
-        
+
+
                     if(!property_exists($response, 'status'))
                     {
                         throw new Exception(__('Malformed API response', 'biltorvet-dealer-tools'));
                     }
-        
+
                     if(intval($response->status) !== 1)
                     {
                         if(property_exists($response, 'errors' ))
                         {
                             throw new Exception( sprintf(__('Biltorvet API returned following error(s):\r\n%s', 'biltorvet-dealer-tools'), implode(',\r\n', $response->errors)));
-                        } 
-        
+                        }
+
                         throw new Exception(__('Biltorvet API: Unexpected API error', 'biltorvet-dealer-tools'));
                     }
-        
 
                     if(!property_exists($response, 'result'))
                     {
@@ -254,6 +256,8 @@
                     }
 
                     $data = $response->result;
+
+                    set_transient( $transientName, $data, 600);
                 }
 
                 return $data;

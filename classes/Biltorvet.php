@@ -53,7 +53,7 @@ class Biltorvet
         $this->_options_4 = get_option('bdt_options_4');
         $this->_options_5 = get_option('bdt_options_5');
         $this->_options_6 = get_option('bdt_options_6');
-        $this->errLogFile = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR .'log'. DIRECTORY_SEPARATOR .'errors.log';
+        //$this->errLogFile = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR .'log'. DIRECTORY_SEPARATOR .'errors.log';
 
         /*
         *  Used in conjuction with our divi child theme.
@@ -83,7 +83,7 @@ class Biltorvet
                 $get_companies = $this->biltorvetAPI->GetCompanies();
                 (define('bdt_companies_list', json_encode($get_companies->companies)));
             } catch (exception $e) {
-                
+
             }
 
         }
