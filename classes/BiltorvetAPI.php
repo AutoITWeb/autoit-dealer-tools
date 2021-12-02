@@ -185,7 +185,7 @@
                 $data = false;
                 $transientName = $method . (isset($query) ? md5(implode('_', $query)) : '');
 
-                if($requestType === 'GET')
+                if($requestType === 'GET' && !strpos($method, 'influxdb'))
                 {
                     $data = get_transient( $transientName );
                 }
