@@ -502,10 +502,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             /**
              * Tracking of hits to the detailspage - sends a call to our influx db endpoint
              */
-            if(isset($_SERVER['HTTP_USER_AGENT']) && !preg_match('/bot|crawl|slurp|spider|facebook|semrush|bing|ecosia|yandex|duckduck|AdsBot|slack|twitter|whatsapp|mediapartners/i', $_SERVER['HTTP_USER_AGENT'])) {
-
-                $this->biltorvetAPI->SendInfluxDbVehicleData($this->currentVehicle->documentId);
-            }
+//            if(isset($_SERVER['HTTP_USER_AGENT']) && !preg_match('/bot|crawl|slurp|spider|facebook|semrush|bing|ecosia|yandex|duckduck|AdsBot|slack|twitter|whatsapp|mediapartners/i', $_SERVER['HTTP_USER_AGENT'])) {
+//
+//                $this->biltorvetAPI->SendInfluxDbVehicleData($this->currentVehicle->documentId);
+//            }
 
             $showPrice = '';
             // @TODO: refactor
