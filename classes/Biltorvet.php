@@ -63,7 +63,7 @@ class Biltorvet
         isset($this->_options['bdt_leads']) ? (define ('leads', $this->_options['bdt_leads'])) : (define ('leads', "-1"));
         add_action('call_get_vehicle_data', array($this, 'get_vehicle_data'), 10, 2);
         add_action('call_AutodesktopSendLead', array($this, 'bdt_send_adt_lead'), 10, 6);
-        add_action('call_create_lead', array($this, 'bdt_create_lead'), 10, 8);
+        add_action('call_create_lead', array($this, 'bdt_create_lead'), 10, 10);
 
         if ($this->_options['api_key'] === null || trim($this->_options['api_key']) === '') {
             add_action('admin_notices', array(&$this, 'bdt_error_noapikey'));
@@ -146,12 +146,12 @@ class Biltorvet
         }
     }
 
-    public function bdt_create_lead($message, $email, $name, $phoneNumber, $address, $postalcode, $city, $companyId)
+    public function bdt_create_lead($message, $email, $name, $phoneNumber, $address, $postalcode, $city, $companyId, $externalId, $query_source)
     {
         $getCompanies = $this->biltorvetAPI->GetCompanies();
 
         $newLead = new NewLeadInputObject();
-        $lead = $newLead->CreateLead($newLead, $message, $email, $name, $phoneNumber, $address, $postalcode, $city);
+        $lead = $newLead->CreateLead($newLead, $message, $email, $name, $phoneNumber, $address, $postalcode, $city, $externalId, $query_source);
 
         $sendLeadTo = $companyId != 0 ? $companyId : $getCompanies->companies[0]->id;
 

@@ -3,7 +3,7 @@
     if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
     
     class BiltorvetAPI {
-        private $endpoint = 'https://api-v1.autoit.dk'; // Prod
+          private $endpoint = 'https://api-v1.autoit.dk'; // Prod
 //        private $endpoint = 'http://api-v1-staging.autoitweb.dk'; // Staging
 //        private $endpoint = 'http://localhost:61893'; // Local
         private $apiKey;
@@ -66,6 +66,11 @@
         {
             return $this->Request('/influxdb/vehicledetail/' . TextUtils::Sanitize($id));
         }
+
+    public function SendInfluxDbCampaginData($campaingId, $url)
+    {
+        return $this->Request('/influxdb/campaign', array('externalId' => json_encode($campaingId), 'url' => json_encode($url)));
+    }
 
         public function GetVehicleTotalCount($filter)
         {
