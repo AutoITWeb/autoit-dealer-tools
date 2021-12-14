@@ -22,7 +22,7 @@
         public $leadStatusRequest; //LeadStatusRequest
         public $contactInformationRequest; //ContactInformationRequest
 
-        public function CreateLead(NewLeadInputObject $lead, string $message, string $email, string $name, string $phoneNumber, string $address, string $postalcode, string $city): NewLeadInputObject
+        public function CreateLead(NewLeadInputObject $lead, string $message, string $email, string $name, string $phoneNumber, string $address, string $postalcode, string $city, string $externalId, string $query_source): NewLeadInputObject
         {
             $this->description = $message;
             $lead->internalInfoRequest = new InternalInfoRequest();
@@ -46,10 +46,20 @@
                 $lead->personRequest->lastName = ".";
             }
 
+            if($externalId != null)
+            {
+                $lead->externalId = $externalId;
+            }
+
+            if($query_source != null)
+            {
+                $lead->externalSource = $query_source;
+            }
+
             $lead->businessRequest = new BusinessRequest();
             $lead->leadStatusRequest = new LeadStatusRequest();
             $lead->contactInformationRequest->emailRequest->emailAddress = $email;
-            $lead->contactInformationRequest->phoneRequest->number = $phoneNumber;
+            $lead->contactInformationRequest->phoneRequest->number = $phoneNumber; // Is required if not set the API will handle it
 
             $lead->contactInformationRequest->addressRequest->street = $address !== '' ? $address : null;
             $lead->contactInformationRequest->addressRequest->city = $city !== '' ? $city : null;
