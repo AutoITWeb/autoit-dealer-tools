@@ -24,8 +24,6 @@ class Biltorvet
     private $_options_6;
     private $biltorvetAPI;
 
-    private $errLogFile;
-
     public function __construct()
     {
         // Include helper classes
@@ -53,7 +51,7 @@ class Biltorvet
         $this->_options_4 = get_option('bdt_options_4');
         $this->_options_5 = get_option('bdt_options_5');
         $this->_options_6 = get_option('bdt_options_6');
-        //$this->errLogFile = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR .'log'. DIRECTORY_SEPARATOR .'errors.log';
+
 
         /*
         *  Used in conjuction with our divi child theme.
@@ -148,6 +146,7 @@ class Biltorvet
 
     public function bdt_create_lead($message, $email, $name, $phoneNumber, $address, $postalcode, $city, $companyId, $externalId, $query_source)
     {
+
         $getCompanies = $this->biltorvetAPI->GetCompanies();
 
         $newLead = new NewLeadInputObject();
@@ -159,9 +158,12 @@ class Biltorvet
             $sendLead = $this->biltorvetAPI->CreateLead($lead, $sendLeadTo);
 
         } catch (Exception $e) {
+            error_log(date('Y-m-d H:i:s') . '' . $e->getMessage(), $this->errLogFile);
+
             // the api handles all exceptions (more or less....) Check the api log if something fails
             // the user should still get a success message and the lead will be saved in Divi DB - But why would it ever fail? ;-)
         }
+
     }
 
     public function bdt_parse_request($request)
