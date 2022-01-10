@@ -22,7 +22,7 @@
         public $leadStatusRequest; //LeadStatusRequest
         public $contactInformationRequest; //ContactInformationRequest
 
-        public function CreateLead(NewLeadInputObject $lead, string $message, string $email, string $name, string $phoneNumber, string $address, string $postalcode, string $city, string $externalId, string $query_source): NewLeadInputObject
+        public function CreateLead(NewLeadInputObject $lead, $message, $email, $name, $phoneNumber, $address, $postalcode, $city, $externalId, $query_source): NewLeadInputObject
         {
             $this->description = $message;
             $lead->internalInfoRequest = new InternalInfoRequest();
