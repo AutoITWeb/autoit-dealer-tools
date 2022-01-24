@@ -49,9 +49,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             add_shortcode('bdt_vehicle_search_backtoresults', array($this, 'bdt_shortcode_vehicle_search_backtoresults'));
             add_shortcode('bdt_widget', array($this, 'bdt_shortcode_widget'));
             add_shortcode('bdt_sharethis', array($this, 'bdt_shortcode_sharethis'));
-            add_shortcode( 'bdt_map', array($this, 'bdt_shortcode_map'));
+            add_shortcode('bdt_map', array($this, 'bdt_shortcode_map'));
             add_shortcode('bdt_get_vehicleid', array($this, 'bdt_shortcode_vehicleid'));
             add_shortcode('bdt_set_campaign_id', array($this, 'bdt_shortcode_set_campaign_id'));
+            add_shortcode('bdt_findleasing_calculator', array($this, 'bdt_shortcode_findleasing_calculator'));
 
             add_action('wp_head', array(&$this, 'bdt_insert_map_dependencies'), 1000);
         }
@@ -879,6 +880,25 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             $content = ob_get_contents();
             ob_end_clean();
             return $content;
+        }
+
+        public function bdt_shortcode_findleasing_calculator()
+        {
+            if(isset($this->currentVehicle) && $this->currentVehicle !== null)
+            {
+                $vehicle = $this->currentVehicle;
+
+                $findLeasingExternalId = $this->biltorvetAPI->GetPropertyValue($vehicle, 'FindLeasingExternalId');
+
+                if($findLeasingExternalId !== null)
+                {
+                    $findLeasingCalculator = "<h2 class='findleasing-beregner'>Beregn leasingpris</h2>";
+                    $findLeasingCalculator .= '<div id="findleasing-sliders-embed-div" data-findleasing data-width="100%" data-id="' . $findLeasingExternalId . '"></div>';
+                    $findLeasingCalculator .= '<script src="https://www.findleasing.nu/static/javascript/embed-sliders.js"></script>';
+
+                    return $findLeasingCalculator;
+                }
+            }
         }
 
         public function bdt_shortcode_widget( $atts, $content = null )
