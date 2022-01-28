@@ -120,6 +120,10 @@
             $filterObject->OrderBy = $this->_options_2['default_sorting_value'];
         }
 
+        if($filterObject->Ascending === null && isset($this->_options_2['default_sorting_order'])) {
+            $filterObject->Ascending = $this->_options_2['default_sorting_order'] === 'Ascending' ? 'true' : 'false';
+        }
+
         $filterObject->Start = $start;
         $filterObject->Limit = $limit;
 
@@ -186,9 +190,7 @@
                                 <?php
                                 foreach($orderByValues as $orderBy) : ?>
                                     <option value="<?php echo $orderBy; ?>"
-                                        <?php if (isset($filterObject->OrderBy) && $filterObject->OrderBy == $orderBy) : ?>
-                                            selected="selected"
-                                        <?php elseif (isset($this->_options_2['default_sorting_value']) && $this->_options_2['default_sorting_value'] == $orderBy) : ?>
+                                        <?php if (isset($filterObject->OrderBy) && $filterObject->OrderBy === $orderBy) : ?>
                                             selected="selected"
                                         <?php endif; ?>
                                     ><?= _e($orderBy, 'biltorvet-dealer-tools'); ?></option>
@@ -197,8 +199,8 @@
                         </div>
                         <div class="col">
                             <select name="ascDesc">
-                                <option value="desc"<?php echo $filterObject->Ascending !== 'true' ? ' selected="selected"' : '';  ?>><?php _e('Descending', 'biltorvet-dealer-tools'); ?></option>
-                                <option value="asc"<?php echo $filterObject->Ascending === 'true' ? ' selected="selected"' : '';  ?>><?php _e('Ascending', 'biltorvet-dealer-tools'); ?></option>
+                                <option value="desc"<?php echo $filterObject->Ascending !== 'true' || isset($this->_options_2['default_sorting_order']) && isset($this->_options_2['default_sorting_order']) === "Descending" ? ' selected="selected"' : '';  ?>><?php _e('Descending', 'biltorvet-dealer-tools'); ?></option>
+                                <option value="asc"<?php echo $filterObject->Ascending === 'true' || isset($this->_options_2['default_sorting_order']) && isset($this->_options_2['default_sorting_order']) === "Ascending" ? ' selected="selected"' : '';  ?>><?php _e('Ascending', 'biltorvet-dealer-tools'); ?></option>
                             </select>
                         </div>
                     </div>
