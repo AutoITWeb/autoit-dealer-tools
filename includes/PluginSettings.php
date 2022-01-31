@@ -258,6 +258,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
 
             add_settings_field(
+                'bdt_default_sorting_order',
+                __( 'Faldende / stigende rækkefølge', 'biltorvet-dealer-tools' ),
+                array( $this, 'default_sorting_order_callback' ),
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
                 'bdt_vehiclecard_prop_one',
                 __( 'Vehiclecard properties column one', 'biltorvet-dealer-tools' ),
                 array( $this, 'vehiclecard_prop_one_callback' ),
@@ -835,13 +843,32 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             $api = new ApiController();
 
             $HTML = '<select id="bdt_options_2" value="on" name="bdt_options_2[default_sorting_value]"/>';
-            $HTML .= '<option value="-1">None</option>';
+            $HTML .= '<option value="-1">Default</option>';
 
             foreach ($api->GetOrderByValues() as $orderByValue) {
                 $selected = isset( $this->options_2['default_sorting_value']) && $this->options_2['default_sorting_value'] == $orderByValue;
                 $HTML .= '<option value="' . $orderByValue . '"';
                 $HTML .= $selected ? 'selected="selected"' : '';
                 $HTML .= '>' . $orderByValue . '</option>';
+            }
+
+            $HTML .= '</select>';
+
+            echo $HTML;
+        }
+
+        public function default_sorting_order_callback()
+        {
+            $sortOrderOptions = array("Descending", "Ascending");
+
+            $HTML = '<select id="bdt_options_2" value="on" name="bdt_options_2[default_sorting_order]"/>';
+            $HTML .= '<option value="-1">Default</option>';
+
+            foreach ($sortOrderOptions as $sortOrderOption) {
+                $selected = isset( $this->options_2['default_sorting_order']) && $this->options_2['default_sorting_order'] == $sortOrderOption;
+                $HTML .= '<option value="' . $sortOrderOption . '"';
+                $HTML .= $selected ? 'selected="selected"' : '';
+                $HTML .= '>' . $sortOrderOption . '</option>';
             }
 
             $HTML .= '</select>';
