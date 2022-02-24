@@ -165,7 +165,7 @@ class PriceController
             {
                 return _e('Cash price', 'biltorvet-dealer-tools') . ': ' . $this->formatValue($this->price->getPriceValue());
             }
-            // Business leasing support vehicles with and without Taxes (VAT)
+            // Business leasing supports vehicles with and without Taxes (VAT)
             else if($this->prioritizedPriceType = 'leasing' && $this->price->getIsBusinessLeasing() && $this->price->getPriceValue() != null)
             {
                 if($this->price->getIsBusinessPrice() == true) {

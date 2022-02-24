@@ -53,6 +53,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             add_shortcode('bdt_get_vehicleid', array($this, 'bdt_shortcode_vehicleid'));
             add_shortcode('bdt_set_campaign_id', array($this, 'bdt_shortcode_set_campaign_id'));
             add_shortcode('bdt_findleasing_calculator', array($this, 'bdt_shortcode_findleasing_calculator'));
+            add_shortcode('bdt_amount_of_biltorvet_ads', array($this, 'bdt_shortcode_amount_of_biltorvet_ads'));
 
             add_action('wp_head', array(&$this, 'bdt_insert_map_dependencies'), 1000);
         }
@@ -137,6 +138,20 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             }
         }
 
+        public function bdt_shortcode_amount_of_biltorvet_ads($atts)
+        {
+            $get_dealer_info = $this->biltorvetAPI->GetBiltorvetBmsDealerInfo();
+
+            if(isset($get_dealer_info))
+            {
+                $amount_of_ads = $get_dealer_info->amountOfAdsOnBiltorvet;
+
+                return $amount_of_ads;
+            }
+
+            return "Dealer doesn't have any active ads on Biltorvet.dk";
+        }
+
         public function bdt_shortcode_map( $atts)
         {
             extract(shortcode_atts(array(
@@ -193,6 +208,45 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             {
                 return __('Vehicle not found', 'biltorvet-dealer-tools');
             }
+
+            wp_enqueue_style('bdt_style');
+            wp_enqueue_script('bt_slideshow');
+            $slideCount = count($this->currentVehicle->images);
+            $slides = '';
+            $i = 0;
+            if(isset($this->currentVehicle->videos))
+            {
+                $slideCount += count($this->currentVehicle->videos);
+                foreach($this->currentVehicle->videos as $video)
+                {
+                    $slides .= '<div class="bt-slideshow-video' . ($i == 0 ? ' bt-slideshow-active' : '') . '" >' . '<div class="bt-videoplaceholder" data-vimeo-background="0" data-vimeo-autoplay="0" data-vimeo-loop="0" data-vimeo-muted="0" data-vimeo-id="https://vimeo.com/' . $video->vimeoId . '" id="bdt' . $video->vimeoId . '"></div><a class="bt-slideshow-playpause"><span class="bt-slideshow-centericon"><span class="bticon bticon-Play"></span></span></a></div>';
+                    $i++;
+                }
+            }
+
+            $altTag = $this->currentVehicle->makeName . " " . $this->currentVehicle->model . " " . $this->currentVehicle->variant;
+
+            foreach($this->currentVehicle->images as $image)
+            {
+                $slides .= '<img loading=lazy src="' . $image . '"' . ($i == 0 ? ' class="bt-slideshow-active"' : '') . ' alt="' . $altTag . '">';
+                $i++;
+            }
+            $buildSlideShow = '';
+
+            $buildSlideShow .= '<section class="bt-slideshow mb-4" data-scale="4:3">';
+            $buildSlideShow .= '<div class="bt-slideshow-viewport" style="display:none;">';
+            $buildSlideShow .= $slides;
+            $buildSlideShow .= '<span><span class="bt-slideshow-current">1</span>/<span class="bt-slideshow-count">' . $slideCount .'</span></span>';
+            $buildSlideShow .= '</span></div></section>';
+
+            return $buildSlideShow;
+        }
+
+/*        public function bdt_shortcode_slideshow() {
+            if(!isset($this->currentVehicle) || $this->currentVehicle === null)
+            {
+                return __('Vehicle not found', 'biltorvet-dealer-tools');
+            }
             wp_enqueue_style('bdt_style');
             wp_enqueue_style('bt_slideshow');
             wp_enqueue_script('bt_slideshow');
@@ -222,7 +276,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             $iconGalleryFullscreen = '<span class="bticon bticon-GalleryFullscreen"></span>';
 
             return '<div class="bdt"><section class="bt-slideshow bt-slideshow-4to3"><div class="bt-slideshow-skidboard d-none"></div><a href="#" class="bt-slideshow-prev">' .$iconGalleryArrowLeft. '</a><a href="#" class="bt-slideshow-next">' .$iconGalleryArrowRight. '</a><div class="bt-slideshow-viewport">' . $slides . '</div><div class="bt-slideshow-controls"><span class="bt-slideshow-bg"><a href="#" class="bt-slideshow-open-fullscreen">' .$iconGalleryFullscreen. '<a href="#" class="bt-slideshow-pause-video"><span class="bticon bticon-Pause"></span></a><span><span class="bt-slideshow-current">1</span>/<span class="bt-slideshow-count">' . $slideCount . '</span></span></span></div></section></div>';
-        }
+        }*/
 
         public function bdt_shortcode_vehiclelabels( $atts ) 
         {
@@ -952,7 +1006,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                                 $price = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'Price', true);
                                 $variant = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'variant', true);
                                 $mileage = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'Mileage', true);
-                                $firstRegistrationDate = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'FirstRegistrationDate', true);
+                                $getFirstRegistrationDate = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'FirstRegistrationDate', true);
+
+                                $firstRegistrationDate = $getFirstRegistrationDate != null && $this->currentVehicle->brandNew == false ? $getFirstRegistrationDate : strval(date("Y-m-d"));
+
                                 $sold = false;
                                 foreach($this->currentVehicle->labels as $label)
                                 {
