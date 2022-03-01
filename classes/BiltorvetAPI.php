@@ -67,10 +67,15 @@
             return $this->Request('/influxdb/vehicledetail/' . TextUtils::Sanitize($id));
         }
 
-    public function SendInfluxDbCampaginData($campaingId, $url)
-    {
-        return $this->Request('/influxdb/campaign', array('externalId' => json_encode($campaingId), 'url' => json_encode($url)));
-    }
+        public function GetBiltorvetBmsDealerInfo()
+        {
+            return $this->Request('/bms/company');
+        }
+
+        public function SendInfluxDbCampaginData($campaingId, $url)
+        {
+            return $this->Request('/influxdb/campaign', array('externalId' => json_encode($campaingId), 'url' => json_encode($url)));
+        }
 
         public function GetVehicleTotalCount($filter)
         {
