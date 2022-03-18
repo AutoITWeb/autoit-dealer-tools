@@ -324,6 +324,22 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt_settings_section_3' // Section
             );
 
+            add_settings_field(
+                'bdt_show_thumbnails_details',
+                __( 'Show thumbnails', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_show_thumbnails_details_callback' ),
+                'bdt-settings-group-3', // Page
+                'bdt_settings_section_3' // Section
+            );
+
+            add_settings_field(
+                'bdt_set_data_scale_details',
+                __( 'Set image aspect ratio', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_set_data_scale_details_callback' ),
+                'bdt-settings-group-3', // Page
+                'bdt_settings_section_3' // Section
+            );
+
             // temp field: add option that is always checked to avoid TypeError: Return Value
             add_settings_field(
                 'bdt_hidden_field_3',
@@ -1112,6 +1128,36 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
         }
 
+        public function bdt_show_thumbnails_details_callback()
+        {
+            echo 'Skal der vises thumbnails i slideshowet på bildetaljen?<br>';
+            printf(
+                '<input type="checkbox" id="bdt_options_3" value="on" name="bdt_options_3[bdt_show_thumbnails_details]"%s />',
+                isset( $this->options_3['bdt_show_thumbnails_details'] ) && $this->options_3['bdt_show_thumbnails_details'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_set_data_scale_details_callback()
+        {
+            $ratios = array(
+                "16:9",
+            );
+
+            $HTML = '<select id="bdt_options_3" value="on" name="bdt_options_3[bdt_set_data_scale_details]"/>';
+            $HTML .= '<option value="4:3">4:3</option>';
+
+            foreach ( $ratios as $ratio) {
+                $selected = isset( $this->options_3['bdt_set_data_scale_details']) && $this->options_3['bdt_set_data_scale_details'] == $ratio;
+                $HTML .= '<option value="' . $ratio . '"';
+                $HTML .= $selected ? 'selected="selected"' : '';
+                $HTML .= '>' . $ratio . '</option>';
+            }
+
+            $HTML .= '</select>';
+
+            echo $HTML;
+        }
+
         public function bdt_hidden_field_3_callback()
         {
             printf(
@@ -1303,8 +1349,12 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
         {
             $companiesFeed = $this->biltorvetAPI->GetCompanies();
 
+            echo '<b>Afdelingsvælger:</b><br>';
             echo 'Brug disse navne som valgmuligheder i dropdown afdelingsvælgeren. Det er vigtigt at navne er helt ens.<br>';
             echo 'Indtast den eller de email adresser der skal sendes mails til, når man vælger afdelingen. Der kan indsættes lige så mange som man ønsker (indtast alle email adresser kun adskilt af , og uden mellemrum ). Eks.: <b>test@autoit.dk,test@biltorvet.dk</b><br><br>';
+
+            echo '<b>Google Maps rutevejledning:</b><br>';
+            echo 'Indsæt link til Google Maps rutevejledning for at vise det på kortet.<br><br>';
 
             $i = 0;
 
@@ -1323,6 +1373,13 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 printf(
                     '<input type="text" id="bdt_options_6" name="bdt_options_6[departments_company_email_' . $company->id . ']" value="%s" size="30" placeholder="Indtast email / emails for afdeling" style="margin-bottom: 5px;" />',
                     isset( $this->options_6['departments_company_email_' . $company->id] ) ? esc_attr($this->options_6['departments_company_email_' . $company->id]) : ''
+                );
+
+                echo '<br>';
+
+                printf(
+                    '<input type="text" id="bdt_options_6" name="bdt_options_6[departments_google_directions_' . $company->id . ']" value="%s" size="30" placeholder="Link til Google rutevejledning" style="margin-bottom: 5px;" />',
+                    isset( $this->options_6['departments_google_directions_' . $company->id] ) ? esc_attr($this->options_6['departments_google_directions_' . $company->id]) : ''
                 );
 
                 $i ++;

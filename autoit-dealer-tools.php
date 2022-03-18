@@ -3,7 +3,7 @@
 Plugin Name: AutoIT Dealer Tools
 Plugin URI:  http://www.autoit.dk/hjemmesider
 Description: Tools providing connection to AutoDesktop, and other Biltorvet services.
-Version:     2.3.9
+Version:     2.4.0
 Author:      Auto IT A/S
 Author URI:  http://www.autoit.dk
 License:     Proprietary
@@ -13,12 +13,8 @@ Domain Path: /languages
 GitHub Plugin URI: AutoITWeb/autoit-dealer-tools
 GitHub Plugin URI: https://github.com/AutoITWeb/autoit-dealer-tools
 
-Biltorvet Dealer Tools is free software: you can redistribute it, but NOT modify it.
+Auto IT Dealer Tools is free software: you can redistribute it, but NOT modify it.
 Changes to the code or attempts on rebranding is NOT allowed.
-
-Biltorvet Dealer Tools is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
 require_once plugin_dir_path( __FILE__ ) . 'enums/ActivityType.php';

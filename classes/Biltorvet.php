@@ -71,7 +71,7 @@ class Biltorvet
             new Ajax($this->biltorvetAPI);
 
             if (!is_admin()) {
-                new BiltorvetShortcodes($this->biltorvetAPI, $this->_options, $this->_options_2, $this->_options_4, $this->_options_5);
+                new BiltorvetShortcodes($this->biltorvetAPI, $this->_options, $this->_options_2, $this->_options_3, $this->_options_4, $this->_options_5);
             }
 
             // Getting the list of companies connected to the API key for use with the department selector used on contactforms
@@ -225,11 +225,11 @@ class Biltorvet
         ?>
         <meta property="og:url" content="<?php echo home_url($wp->request); ?>" />
         <meta property="og:type" content="product"/>
-        <meta property="og:title"content="<?php echo $oVehicle->getMakeName() . ' ' . $oVehicle->getMakeName() . ' ' . $oVehicle->getVariant(); ?>"/>
+        <meta property="og:title"content="<?php echo $oVehicle->getMakeName() . ' ' . $oVehicle->getVariant(); ?>"/>
         <meta property="og:description" content="<?php echo strip_tags($oVehicle->getDescription()); ?>"/>
         <meta property="og:image" content="<?php echo $oVehicle->getImages()[0]; ?>"/>
-        <meta property="og:image:width" content="1024"/>
-        <meta property="og:image:height" content="768"/>
+        <meta property="og:image:width" content="1920"/>
+        <meta property="og:image:height" content="1080"/>
         <?php
 
         // Structured data - requires the product "Structured Data" in the dashboard
@@ -258,25 +258,18 @@ class Biltorvet
     public function bdt_register_scripts()
     {
         wp_register_script( 'bootstrap_slider', plugins_url('scripts/bootstrap-slider.min.js',  dirname(__FILE__) ) , array('jquery'), '1.0.1', true );
-//        wp_register_script( 'bdt_vimeo', 'https://player.vimeo.com/api/player.js', '2.11.0', true );
-//        wp_register_script( 'hammerjs', 'https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js', null, '2.0.8', true );
-
-        //wp_register_script( 'bt_slideshow', 'https://source.autoit.dk/slideshow/v1.0.5/slideshow.min.js', array('hammerjs', 'jquery', 'bdt_vimeo'), '1.0.5', true );
         wp_register_script( 'bdt_script', plugins_url('scripts/biltorvet.min.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
-
-        wp_register_script( 'bt_slideshow', 'https://servicesdev.autoit.dk/MasterGallery.js', true );
-
+        //wp_register_script( 'bt_slideshow', 'https://gallery.autoit.dk/latest/gallery.js', true );
+        wp_register_script( 'bt_slideshow', 'https://gallery.autoit.dk/versions/1.0.0/gallery.js', true );
         wp_localize_script( 'bdt_script', 'ajax_config', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
         wp_register_script( 'search_script', plugins_url('scripts/search.js',  dirname(__FILE__) ) , array('jquery'), '1.0.0', true );
         wp_localize_script( 'search_script', 'ajax_config', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
-
         wp_enqueue_script( 'bdt_widgetconnector', 'https://services.autoit.dk/Embed.js', null, '1.0.0', true);
     }
 
     public function bdt_register_styles()
     {
         wp_register_style( 'bticons', 'https://source.autoit.dk/fonts/biltorvet/v1.0.2/bticons.css', null, '1.0.2' );
-        //wp_register_style( 'bt_slideshow', 'https://source.autoit.dk/slideshow/v1.0.5/slideshow.css', array('bticons'), '1.0.5' );
         wp_register_style( 'bdt_style', plugins_url('css/biltorvet.css',  dirname(__FILE__)), array('bticons'), '1.0.1' );
         wp_register_style('bdt_embed_style', 'https://services.autoit.dk/Embed.css', null, '1.0.1');
         if(isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '')
@@ -304,8 +297,6 @@ class Biltorvet
         $query_vars[] = 'bdt_filter_type';
         $query_vars[] = 'bdt_filter';
         $query_vars[] = 'filter_brand';
-
-//            $query_vars[] = 'filter_make';
 
         return $query_vars;
     }
