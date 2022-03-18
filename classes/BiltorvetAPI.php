@@ -5,7 +5,7 @@
     class BiltorvetAPI {
         private $endpoint = 'https://api-v1.autoit.dk'; // Prod
 //        private $endpoint = 'http://api-v1-staging.autoitweb.dk'; // Staging
-//        private $endpoint = 'http://localhost:61893'; // Local
+//        private $endpoint = 'http://localhost:59852'; // Local
         private $apiKey;
         private $vehicleResultsPageLimit = 30;
         private $errLogFile;
@@ -243,7 +243,6 @@
                     }
 
                     $response = json_decode($body);
-
 
                     if(!property_exists($response, 'status'))
                     {

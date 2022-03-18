@@ -17,8 +17,8 @@ $setTileLayer = isset($this->_options_4['bdt_tile_layer']) && $this->_options_4[
 $markerColor = isset($this->_options_4['bdt_marker_color']) && $this->_options_4['bdt_marker_color'] != '' ? $this->_options_4['bdt_marker_color'] : 'Red';
 $marker = isset($this->_options_4['bdt_custom_marker']) && $this->_options_4['bdt_custom_marker']!= '' ? $this->_options_4['bdt_custom_marker'] : plugin_dir_url( dirname( __FILE__ ) ) . 'includes/img/marker-icon-' . strtolower($markerColor) . '.png';
 
-
 $options = get_option( 'bdt_options' );
+$options_6 = get_option( 'bdt_options_6' );
 
 // Globalmap not to be used on VehicleDetailsPage as it will only show the map data for the current vehicle
 if(isset($atts['detailspage']) && $atts['detailspage'] == 'true') {
@@ -90,7 +90,7 @@ if(isset($atts['detailspage']) && $atts['detailspage'] == 'true') {
     <?php if($company->coordinates->latitude != null) : ?>
 
         L.marker([<?= $company->coordinates->latitude; ?>, <?= $company->coordinates->longitude; ?>], {icon: coloredIcon}).addTo(map)
-            .bindPopup(" <b><?= $company->name; ?></b> <br> <?= $company->address; ?> <br> <?= $company->postNumber; ?> <?= $company->city; ?> <br> <?= $company->phone != 0 ? '<a href=' . 'tel:+45' . $company->phone . '>' . '+45 ' . $company->phone . '</a>' : ""; ?>")
+            .bindPopup(" <b><?= $company->name; ?></b> <br> <?= $company->address; ?> <br> <?= $company->postNumber; ?> <?= $company->city; ?> <br> <?= $company->phone != 0 ? '<a href=' . 'tel:+45' . $company->phone . '>' . '+45 ' . $company->phone . '</a>' : ""; ?> <?= isset($options_6['departments_google_directions_' . $company->id . '']) && !empty($options_6['departments_google_directions_' . $company->id . '']) ? '<br><a href=' . $options_6['departments_google_directions_' . $company->id . ''] . ' target=_blank>Rutevejledning</a>' : ''; ?> ")
 
     <?php endif; ?>
 
@@ -100,7 +100,7 @@ if(isset($atts['detailspage']) && $atts['detailspage'] == 'true') {
     // VehicleDetailsPage marker
     <?php if(isset($atts['detailspage']) && $atts['detailspage'] == 'true') : ?>
         L.marker([<?= $this->currentVehicle->company->coordinates->latitude; ?>, <?=  $this->currentVehicle->company->coordinates->longitude; ?>], {icon: coloredIcon}).addTo(map)
-            .bindPopup(" <b><?=  $this->currentVehicle->company->name; ?></b> <br> <?=  $this->currentVehicle->company->address; ?> <br> <?=  $this->currentVehicle->company->postNumber; ?> <?=  $this->currentVehicle->company->city; ?> <br> <?=  $this->currentVehicle->company->phone != 0 ? '<a href=' . 'tel:+45' .  $this->currentVehicle->company->phone . '>' . '+45 ' .  $this->currentVehicle->company->phone . '</a>' : ""; ?>")
+            .bindPopup(" <b><?=  $this->currentVehicle->company->name; ?></b> <br> <?=  $this->currentVehicle->company->address; ?> <br> <?=  $this->currentVehicle->company->postNumber; ?> <?=  $this->currentVehicle->company->city; ?> <br> <?=  $this->currentVehicle->company->phone != 0 ? '<a href=' . 'tel:+45' .  $this->currentVehicle->company->phone . '>' . '+45 ' .  $this->currentVehicle->company->phone . '</a>' : ""; ?> <?= isset($options_6['departments_google_directions_' . $this->currentVehicle->company->id . '']) && !empty($options_6['departments_google_directions_' . $this->currentVehicle->company->id . '']) ? '<br><a href=' . $options_6['departments_google_directions_' . $this->currentVehicle->company->id . ''] . ' target=_blank>Rutevejledning</a>' : ''; ?> ")
 
     <?php endif; ?>
 

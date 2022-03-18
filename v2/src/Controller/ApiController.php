@@ -152,7 +152,7 @@ class ApiController
                 $this->client->request(
                     $request_method,
                     //$_ENV['API_URL'] . '/' . $resource,
-                    //'http://localhost:61893' . '/' . $resource,
+                    //'http://localhost:59852' . '/' . $resource,
                     'https://api-v1.autoit.dk' . '/' . $resource,
                     //'http://api-v1-staging.autoitweb.dk' . '/' . $resource,
                     ['query' => array_merge($params, ['a' => $this->apiKey])]

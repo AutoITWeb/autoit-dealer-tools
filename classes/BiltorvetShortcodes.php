@@ -12,11 +12,12 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
         public $biltorvetAPI;
         public $_options;
         public $_options_2;
+        public $_options_3;
         public $_options_4;
         public $_options_5;
         public $currentVehicle;
 
-        public function __construct($biltorvetAPI, $options, $options_2, $options_4, $options_5)
+        public function __construct($biltorvetAPI, $options, $options_2, $options_3, $options_4, $options_5)
         {
             if ($options === null) {
                 throw new Exception(__('No options provided.', 'biltorvet-dealer-tools'));
@@ -26,6 +27,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             }
             $this->_options = $options;
             $this->_options_2 = $options_2;
+            $this->_options_3 = $options_3;
             $this->_options_4 = $options_4;
             $this->_options_5 = $options_5;
             $this->biltorvetAPI = $biltorvetAPI;
@@ -214,6 +216,13 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             $slideCount = count($this->currentVehicle->images);
             $slides = '';
             $i = 0;
+
+            $showThumbnails = isset($this->_options_3['bdt_show_thumbnails_details']) ? true : false;
+
+            $setDataScale = isset($this->_options_3['bdt_set_data_scale_details']) ? $this->_options_3['bdt_set_data_scale_details'] : "4:3";
+
+            $setDataShowThumbnails = $showThumbnails == true? 1 : 0;
+
             if(isset($this->currentVehicle->videos))
             {
                 $slideCount += count($this->currentVehicle->videos);
@@ -224,7 +233,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 }
             }
 
-            $altTag = $this->currentVehicle->makeName . " " . $this->currentVehicle->model . " " . $this->currentVehicle->variant;
+            $altTag = "Billede af " . $this->currentVehicle->makeName . " " . $this->currentVehicle->model . " " . $this->currentVehicle->variant;
 
             foreach($this->currentVehicle->images as $image)
             {
@@ -233,51 +242,43 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             }
             $buildSlideShow = '';
 
-            $buildSlideShow .= '<section class="bt-slideshow mb-4" data-scale="4:3">';
+            $buildSlideShow .= '<section class="bt-slideshow mb-4" data-scale="' . $setDataScale . '" data-showthumbnails="' . $setDataShowThumbnails .'">';
             $buildSlideShow .= '<div class="bt-slideshow-viewport" style="display:none;">';
             $buildSlideShow .= $slides;
             $buildSlideShow .= '<span><span class="bt-slideshow-current">1</span>/<span class="bt-slideshow-count">' . $slideCount .'</span></span>';
-            $buildSlideShow .= '</span></div></section>';
+            $buildSlideShow .= '</span></div>';
+
+            // Thumbnails
+            if($showThumbnails)
+            {
+                $j = 0;
+
+                $thumbnails = '';
+
+                if(isset($this->currentVehicle->thumbnails->videos))
+                {
+                    foreach($this->currentVehicle->thumbnails->videos as $video)
+                    {
+                        $thumbnails  .= '<li class="' . ($j == 0 ? 'bt-slideshow-thumbnail-active' : '') .'"><a href="#"><img loading=lazy src="' . $video . '" width="80" alt="' . $altTag . '"></a></li>';
+                        $j++;
+                    }
+                }
+
+                foreach($this->currentVehicle->thumbnails->images as $image)
+                {
+                    $thumbnails  .= '<li class="' . ($j == 0 ? 'bt-slideshow-thumbnail-active' : '') .'"><a href="#"><img loading=lazy src="' . $image . '" width="80" alt="' . $altTag . '"></a></li>';
+                    $j++;
+                }
+
+                $buildSlideShow .= '<div class="bt-slideshow-thumbnails" style="display: none;"><ul>';
+                $buildSlideShow .= $thumbnails;
+                $buildSlideShow .= '</ul></div>';
+            }
+
+            $buildSlideShow .= '</section>';
 
             return $buildSlideShow;
         }
-
-/*        public function bdt_shortcode_slideshow() {
-            if(!isset($this->currentVehicle) || $this->currentVehicle === null)
-            {
-                return __('Vehicle not found', 'biltorvet-dealer-tools');
-            }
-            wp_enqueue_style('bdt_style');
-            wp_enqueue_style('bt_slideshow');
-            wp_enqueue_script('bt_slideshow');
-            $root = dirname(plugin_dir_url( __FILE__ ));
-            $slideCount = count($this->currentVehicle->images);
-            $slides = '';
-            $i = 0;
-            if(isset($this->currentVehicle->videos))
-            {
-                $slideCount += count($this->currentVehicle->videos);
-                foreach($this->currentVehicle->videos as $video)
-                {
-                    $slides .= '<div class="bt-slideshow-video' . ($i == 0 ? ' bt-slideshow-active' : '') . '" >' . '<div class="bt-videoplaceholder" data-vimeo-background="0" data-vimeo-autoplay="0" data-vimeo-loop="0" data-vimeo-muted="0" data-vimeo-id="https://vimeo.com/' . $video->vimeoId . '" id="bdt' . $video->vimeoId . '"></div><a class="bt-slideshow-playpause"><span class="bt-slideshow-centericon"><span class="bticon bticon-Play"></span></span></a></div>';
-                    $i++;
-                }
-            }
-
-            $altTag = $this->currentVehicle->makeName . " " . $this->currentVehicle->model . " " . $this->currentVehicle->variant;
-
-            foreach($this->currentVehicle->images as $image)
-            {
-                $slides .= '<img loading=lazy src="' . $image . '"' . ($i == 0 ? ' class="bt-slideshow-active"' : '') . ' alt="' . $altTag . '">';
-                $i++;
-            }
-            $iconGalleryArrowLeft = '<span class="bticon bticon-GalleryArrowLeft"></span>';
-            $iconGalleryArrowRight = '<span class="bticon bticon-GalleryArrowRight"></span>';
-            $iconGalleryFullscreen = '<span class="bticon bticon-GalleryFullscreen"></span>';
-
-            return '<div class="bdt"><section class="bt-slideshow bt-slideshow-4to3"><div class="bt-slideshow-skidboard d-none"></div><a href="#" class="bt-slideshow-prev">' .$iconGalleryArrowLeft. '</a><a href="#" class="bt-slideshow-next">' .$iconGalleryArrowRight. '</a><div class="bt-slideshow-viewport">' . $slides . '</div><div class="bt-slideshow-controls"><span class="bt-slideshow-bg"><a href="#" class="bt-slideshow-open-fullscreen">' .$iconGalleryFullscreen. '<a href="#" class="bt-slideshow-pause-video"><span class="bticon bticon-Pause"></span></a><span><span class="bt-slideshow-current">1</span>/<span class="bt-slideshow-count">' . $slideCount . '</span></span></span></div></section></div>';
-        }*/
-
         public function bdt_shortcode_vehiclelabels( $atts ) 
         {
             if(!isset($this->currentVehicle) || $this->currentVehicle === null)
