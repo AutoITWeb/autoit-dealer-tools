@@ -19,6 +19,7 @@ jQuery(function ($) {
         BrandNew: null // Bool
     };
 
+    let urlFilterFullTextSearch = null;
     let urlFilterMake = null;
     let urlFilterModel = null;
     let urlFilterPropellant = null;
@@ -32,7 +33,7 @@ jQuery(function ($) {
             .then(function () {
 
                 $.ajax({
-                    url: ajax_config.ajax_url,
+                    url: ajax_config.restUrl + 'autoit-dealer-tools/v1/filteroptions',
                     method: 'POST',
                     dataType: 'json',
                     data: {
@@ -41,6 +42,9 @@ jQuery(function ($) {
                     },
                     cache: false,
                     success: function (filters) {
+
+                        console.log(filters);
+
                         var _vehicleSearch = $('.bdt .vehicle_search');
 
                         if (filters.models !== null) {
@@ -54,6 +58,10 @@ jQuery(function ($) {
                             _modelSelect.find(':not(:first-child)').remove().end().append(modelOptions);
 
                             _modelSelect.removeAttr('disabled');
+                        }
+
+                        if (urlFilterFullTextSearch !== null) {
+                            _vehicleSearch.find('input[name=fullTextSearch]').val(fullTextSearch);
                         }
 
                         if (urlFilterMake !== null) {
@@ -99,7 +107,7 @@ jQuery(function ($) {
 
             })
             .catch(function (error) {
-                console.log(error.message);
+                //console.log(error.message);
             })
     });
 
@@ -111,6 +119,11 @@ jQuery(function ($) {
 
                 if (urlPathElements[2] !== "" && urlPathElements[2] !== filter.Start) {
                     filter.Start = urlPathElements[2];
+                }
+
+                if (urlPathElements[3] === "Fritekst" && urlPathElements[4] !== "" && urlPathElements[4] !== filter.FullTextSearch) {
+                    filter.FullTextSearch = [decodeURIComponent(urlPathElements[4])];
+                    urlFilterMake = urlPathElements[4];
                 }
 
                 if (urlPathElements[3] === "Maerke" && urlPathElements[4] !== "" && urlPathElements[4] !== filter.Makes) {

@@ -116,7 +116,7 @@ function Biltorvet($) {
 
             // We can also pass the url value separately from ajaxurl for front end AJAX implementations
             searchFilterOptionsXHR = $.ajax({
-                url: ajax_config.ajax_url,
+                url: ajax_config.restUrl + 'autoit-dealer-tools/v1/filteroptions',
                 method: 'POST',
                 dataType: 'json',
                 data: {
@@ -304,7 +304,9 @@ function Biltorvet($) {
         var urlPath = window.location.pathname;
         var urlPathElements = urlPath.split('/');
 
-        window.history.replaceState(null, null, '/' + urlPathElements[1]);
+        var setPath = '/' + urlPathElements[1] + '/';
+
+        window.history.replaceState(null, null, setPath);
         SaveFilter();
     }
 
@@ -321,7 +323,7 @@ function Biltorvet($) {
         StartLoadingAnimation();
 
         $.ajax({
-            url: ajax_config.ajax_url,
+            url: ajax_config.restUrl + 'autoit-dealer-tools/v1/filteroptions',
             method: 'POST',
             dataType: 'json',
             data: {
@@ -391,9 +393,15 @@ function Biltorvet($) {
         */
 
         switch (filterKey) {
+            case 'FullTextSearch':
+                urlPathElements[3] = 'Fritekst';
+                urlPathElements[4] = filterValue;
+                urlPathElements[5] = '';
+                break;
             case 'Makes':
                 urlPathElements[3] = 'Maerke';
                 urlPathElements[4] = filterValue;
+                urlPathElements[5] = '';
                 break;
             case 'Propellants':
                 urlPathElements[3] = 'Braendstof';
@@ -431,14 +439,15 @@ function Biltorvet($) {
         // Make sure pagination is set to 1 when setting new filters
         else if (urlPathElements[2] !== ""){
 
-            urlPathElements[2] = 1;
+            urlPathElements[2] = '1';
         }
 
         // Specialcase - Frontpage seach / mini search
         if(frontpageSearch)
         {
             urlPathElements[1] = root_url
-            urlPathElements[2] = 1;
+            // If no filters have been set append a backslash to the pagination to avoid a 301
+            urlPathElements[2] = urlPathElements[3] == undefined ? '1/' : '1';
         }
 
         for (var i = 1; i < urlPathElements.length; i++ ) {

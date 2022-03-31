@@ -65,7 +65,7 @@ $carliteDealerLabel = isset($options_two['carlite_dealer_label']) ? $options_two
 <div class="col-sm-6 col-md-6 col-lg-4">
     <div class="bdt">
         <div class="vehicleCard">
-            <a href="<?= $basePage . "/" . $vehicle->getUri() ?>">
+            <a href="<?= $basePage . "/" . $vehicle->getUri() . '/' ?>">
                 <span class="vehicleThumb">
                     <img src="<?= $vehicle->getVehicleCardImage() ?? $vehicle->getImages()[0] ?>" class="img-responsive" loading="lazy" alt="<?= $vehicle->getMakeName() .' '. $vehicle->getModel() .' '. $vehicle->getVariant() ?>"/>
                         <?php if ($vehicleLabels) : ?>
