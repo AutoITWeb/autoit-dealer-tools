@@ -25,6 +25,7 @@ require_once plugin_dir_path( __FILE__ ) . 'objects/LeadInputObject.php';
 require_once plugin_dir_path( __FILE__ ) . 'objects/NewLeadInputObject.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/PluginSettings.php';
 require_once plugin_dir_path( __FILE__ ) . 'ajax/Ajax.php';
+require_once plugin_dir_path( __FILE__ ) . 'api/CustomApiRoutes.php';
 require_once plugin_dir_path( __FILE__ ) . 'classes/BiltorvetAPI.php';
 require_once plugin_dir_path( __FILE__ ) . 'classes/TextUtils.php';
 require_once plugin_dir_path( __FILE__ ) . 'classes/Biltorvet.php';

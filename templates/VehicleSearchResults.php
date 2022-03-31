@@ -69,6 +69,13 @@
 
         $urlFilter = get_query_var('bdt_filter_type', false);
 
+        if ($urlFilter === "Fritekst") {
+
+            $urlFilterFullTextSearch = get_query_var('bdt_filter', false);
+
+            $filterObject->FullTextSearch = [sanitize_text_field(urldecode($urlFilterFullTextSearch))];
+        }
+
         if ($urlFilter === "Maerke") {
 
             $urlFilterMake = get_query_var('bdt_filter', false);

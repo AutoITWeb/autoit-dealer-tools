@@ -635,8 +635,6 @@ class Vehicle
                     $vehicleLabels[9] = 'Demo';
                 }
 
-
-
                 else {
                     /*
                      * Is the show all labels setting on?

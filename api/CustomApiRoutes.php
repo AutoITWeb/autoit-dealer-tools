@@ -1,7 +1,8 @@
 <?php
+
     if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
-    
-    class Ajax {
+
+    class CustomApiRoutes {
         private $biltorvetAPI;
         private $_options;
         private $_options_2;
@@ -20,16 +21,26 @@
             $this->_options_4 = get_option( 'bdt_options_4' );
             $this->biltorvetAPI = $biltorvetAPI;
 
-            add_action( 'wp_ajax_get_filter_options', array($this, 'bdt_get_filter_options') );
-            add_action( 'wp_ajax_nopriv_get_filter_options',  array($this, 'bdt_get_filter_options') );
-
-            add_action( 'wp_ajax_save_filter', array($this, 'bdt_save_filter') );
-            add_action( 'wp_ajax_nopriv_save_filter',  array($this, 'bdt_save_filter') );
+            add_action( 'rest_api_init', [$this, 'init'] );
         }
-        
-        public function bdt_get_filter_options() {
+
+        function init() {
+            register_rest_route( 'autoit-dealer-tools/v1', '/filteroptions', [
+                'methods' => 'POST',
+                'callback' => array($this, 'get_filter_options'),
+                'permission_callback' => '__return_true',
+            ] );
+
+            register_rest_route( 'autoit-dealer-tools/v1', '/filteroptions/savefilter', [
+                'methods' => 'POST',
+                'callback' => array($this, 'bdt_save_filter'),
+                'permission_callback' => '__return_true',
+            ] );
+        }
+
+        public function get_filter_options() {
             $filterObject = new BDTFilterObject();
-            
+
             if(isset($_SESSION['bdt_filter']))
             {
                 $filterObject = new BDTFilterObject(json_decode($_SESSION['bdt_filter'], true));
@@ -68,13 +79,14 @@
 
             echo json_encode($filterObjectOptions);
 
-            wp_die();
+            die;
         }
 
         public function bdt_save_filter()
         {
             $_SESSION['bdt_filter'] = json_encode($_POST['filter']);
             echo json_encode(array('status' =>'ok'));
-            wp_die();
+            die;
         }
     }
+
