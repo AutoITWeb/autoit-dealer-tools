@@ -127,13 +127,21 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
                 ?>
 
-                <link rel="stylesheet" href="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'css/leaflet.css'; ?>" />
-                <script src="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'scripts/leaflet.js'; ?>"></script>
+                <!--                <link rel="stylesheet" href="--><?php //echo plugin_dir_url( dirname( __FILE__ ) ) . 'css/leaflet.css'; ?><!--" />-->
+                <!--                <script src="--><?php //echo plugin_dir_url( dirname( __FILE__ ) ) . 'scripts/leaflet.js'; ?><!--"></script>-->
+                <!---->
+                <!--                <script src="--><?php //echo plugin_dir_url( dirname( __FILE__ ) ) . 'scripts/leaflet-providers.js'; ?><!--"></script>-->
+                <!---->
+                <!--                <link rel="stylesheet" href="--><?php //echo plugin_dir_url( dirname( __FILE__ ) ) . 'css/leaflet-gesture-handling.min.css'; ?><!--" />-->
+                <!--                <script src="--><?php //echo plugin_dir_url( dirname( __FILE__ ) ) . 'scripts/leaflet-gesture-handling.min.js'; ?><!--"></script>-->
 
-                <script src="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'scripts/leaflet-providers.js'; ?>"></script>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+                <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
 
-                <link rel="stylesheet" href="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'css/leaflet-gesture-handling.min.css'; ?>" />
-                <script src="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'scripts/leaflet-gesture-handling.min.js'; ?>"></script>
+                <script type="application/javascript" src="https://unpkg.com/leaflet-providers@1.13.0/leaflet-providers.js"></script>
+
+                <link rel="stylesheet" href="https://unpkg.com/leaflet-gesture-handling@1.2.2/dist/leaflet-gesture-handling.min.css" />
+                <script type="application/javascript" src="https://unpkg.com/leaflet-gesture-handling@1.2.2/dist/leaflet-gesture-handling.min.js"></script>
 
                 <?php
 
