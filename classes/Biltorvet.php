@@ -258,6 +258,7 @@ class Biltorvet
     public function bdt_register_scripts()
     {
         wp_register_script( 'bootstrap_slider', plugins_url('scripts/bootstrap-slider.min.js',  dirname(__FILE__) ) , array('jquery'), '1.0.1', true );
+        //wp_register_script( 'bdt_script', plugins_url('scripts/biltorvet.min.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
         wp_register_script( 'bdt_script', plugins_url('scripts/biltorvet.min.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
         //wp_register_script( 'bt_slideshow', 'https://gallery.autoit.dk/latest/gallery.js', true );
         wp_register_script( 'bt_slideshow', 'https://gallery.autoit.dk/versions/1.0.0/gallery.js', true );
@@ -404,6 +405,7 @@ class Biltorvet
 
             $vehicledetail = get_page_uri($options['detail_template_page_id']);
             $query = 'index.php?pagename=' . $vehicledetail. '&bdt_vehicle_id=$matches[1]';
+            add_rewrite_rule( '^' . $vehiclesearchresults . '.+((?:AD|BI)[0-9]+)$', $query , 'top' );
             add_rewrite_rule( '^' . $vehiclesearchresults . ' ', $query , 'top' );
         }
         if(isset($options['vehiclesearch_page_id']) && trim($options['vehiclesearch_page_id']) !== '')
