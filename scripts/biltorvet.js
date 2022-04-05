@@ -116,7 +116,8 @@ function Biltorvet($) {
 
             // We can also pass the url value separately from ajaxurl for front end AJAX implementations
             searchFilterOptionsXHR = $.ajax({
-                url: ajax_config.restUrl + 'autoit-dealer-tools/v1/filteroptions',
+                url: ajax_config.ajax_url,
+                //url: ajax_config.restUrl + 'autoit-dealer-tools/v1/filteroptions',
                 method: 'POST',
                 dataType: 'json',
                 data: {
@@ -304,9 +305,7 @@ function Biltorvet($) {
         var urlPath = window.location.pathname;
         var urlPathElements = urlPath.split('/');
 
-        var setPath = '/' + urlPathElements[1] + '/';
-
-        window.history.replaceState(null, null, setPath);
+        window.history.replaceState(null, null, '/' + urlPathElements[1] + '/');
         SaveFilter();
     }
 
@@ -323,7 +322,8 @@ function Biltorvet($) {
         StartLoadingAnimation();
 
         $.ajax({
-            url: ajax_config.restUrl + 'autoit-dealer-tools/v1/filteroptions',
+            url: ajax_config.ajax_url,
+            //url: ajax_config.restUrl + 'autoit-dealer-tools/v1/filteroptions/savefilter',
             method: 'POST',
             dataType: 'json',
             data: {
@@ -393,15 +393,9 @@ function Biltorvet($) {
         */
 
         switch (filterKey) {
-            case 'FullTextSearch':
-                urlPathElements[3] = 'Fritekst';
-                urlPathElements[4] = filterValue;
-                urlPathElements[5] = '';
-                break;
             case 'Makes':
                 urlPathElements[3] = 'Maerke';
                 urlPathElements[4] = filterValue;
-                urlPathElements[5] = '';
                 break;
             case 'Propellants':
                 urlPathElements[3] = 'Braendstof';
