@@ -258,7 +258,7 @@
                     {
                         $active = (isset($currentPage) && intval($currentPage) == $i) || (!isset($currentPage) && $i == 1);
                         $pageSlug = (!isset($_SESSION['bdt_filter']) && $i == 1 ? '' : '/' . $i);
-                        $searchResultsPageUrl = $bdt_root_url . $pageSlug;
+                        $searchResultsPageUrl = $bdt_root_url . $pageSlug . '/';
 
                         ?><li><a <?php echo $active ? ' class="active bdt_bgcolor"' : ''; ?> href="<?php echo $active ? '#' : $searchResultsPageUrl . $urlFilterPaging; ?>"><?php echo $i; ?></a></li><?php
                     }

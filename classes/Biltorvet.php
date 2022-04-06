@@ -69,6 +69,7 @@ class Biltorvet
             $this->biltorvetAPI = new BiltorvetAPI($this->_options['api_key']);
 
             new Ajax($this->biltorvetAPI);
+            new CustomApiRoutes($this->biltorvetAPI);
 
             if (!is_admin()) {
                 new BiltorvetShortcodes($this->biltorvetAPI, $this->_options, $this->_options_2, $this->_options_3, $this->_options_4, $this->_options_5);
@@ -260,11 +261,23 @@ class Biltorvet
         wp_register_script( 'bootstrap_slider', plugins_url('scripts/bootstrap-slider.min.js',  dirname(__FILE__) ) , array('jquery'), '1.0.1', true );
         wp_register_script( 'bdt_script', plugins_url('scripts/biltorvet.min.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
         //wp_register_script( 'bdt_script', plugins_url('scripts/biltorvet.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
-        //wp_register_script( 'bt_slideshow', 'https://gallery.autoit.dk/latest/gallery.js', true );
-        wp_register_script( 'bt_slideshow', 'https://gallery.autoit.dk/versions/1.0.0/gallery.js', true );
-        wp_localize_script( 'bdt_script', 'ajax_config', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+        wp_register_script( 'bt_slideshow', 'https://gallery.autoit.dk/latest/gallery.js', true );
+        //wp_register_script( 'bt_slideshow', 'https://gallery.autoit.dk/versions/1.0.0/gallery.js', true );
         wp_register_script( 'search_script', plugins_url('scripts/search.js',  dirname(__FILE__) ) , array('jquery'), '1.0.0', true );
-        wp_localize_script( 'search_script', 'ajax_config', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+
+        // Depricated admin-ajax config
+        //wp_localize_script( 'search_script', 'ajax_config', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+        //wp_localize_script( 'bdt_script', 'ajax_config', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+
+        // Rest Api config
+        wp_localize_script( 'search_script', 'ajax_config', array (
+            'restUrl' => get_rest_url()
+        ));
+        wp_localize_script( 'bdt_script', 'ajax_config', array(
+            'restUrl' => get_rest_url()
+        ));
+
+        // Good old widget connector - prim. needed for our exchangepricewidget
         wp_enqueue_script( 'bdt_widgetconnector', 'https://services.autoit.dk/Embed.js', null, '1.0.0', true);
     }
 
