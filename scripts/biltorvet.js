@@ -116,8 +116,8 @@ function Biltorvet($) {
 
             // We can also pass the url value separately from ajaxurl for front end AJAX implementations
             searchFilterOptionsXHR = $.ajax({
-                url: ajax_config.ajax_url,
-                //url: ajax_config.restUrl + 'autoit-dealer-tools/v1/filteroptions',
+                // ajax_config.ajax_url,
+                url: ajax_config.restUrl + 'autoit-dealer-tools/v1/filteroptions',
                 method: 'POST',
                 dataType: 'json',
                 data: {
@@ -322,8 +322,8 @@ function Biltorvet($) {
         StartLoadingAnimation();
 
         $.ajax({
-            url: ajax_config.ajax_url,
-            //url: ajax_config.restUrl + 'autoit-dealer-tools/v1/filteroptions/savefilter',
+            //url: ajax_config.ajax_url,
+            url: ajax_config.restUrl + 'autoit-dealer-tools/v1/filteroptions/savefilter',
             method: 'POST',
             dataType: 'json',
             data: {
