@@ -193,7 +193,8 @@
                 }
 
                 $data = false;
-                $transientName = $method . (isset($query) ? md5(implode('_', $query)) : '');
+                //$transientName = $method . (isset($query) ? md5(implode('_', $query)) : '');
+                $transientName = $method . (isset($query) ? json_encode($query) : '');
 
                 if($requestType === 'GET' && !strpos($method, 'influxdb'))
                 {
@@ -266,7 +267,7 @@
 
                     $data = $response->result;
 
-                    set_transient( $transientName, $data, 600);
+                    set_transient( $transientName, $data, 300);
                 }
 
                 return $data;
