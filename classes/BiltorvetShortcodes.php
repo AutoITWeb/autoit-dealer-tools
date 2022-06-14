@@ -56,6 +56,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             add_shortcode('bdt_set_campaign_id', array($this, 'bdt_shortcode_set_campaign_id'));
             add_shortcode('bdt_findleasing_calculator', array($this, 'bdt_shortcode_findleasing_calculator'));
             add_shortcode('bdt_amount_of_biltorvet_ads', array($this, 'bdt_shortcode_amount_of_biltorvet_ads'));
+            add_shortcode('bdt_jyffy_calculator', array($this, 'bdt_jyffy_calculator_dev'));
 
             add_action('wp_head', array(&$this, 'bdt_insert_map_dependencies'), 1000);
         }
@@ -126,14 +127,6 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             if(isset($this->_options_4['activate_map']) && $this->_options_4['activate_map'] === 'on') {
 
                 ?>
-
-                <!--                <link rel="stylesheet" href="--><?php //echo plugin_dir_url( dirname( __FILE__ ) ) . 'css/leaflet.css'; ?><!--" />-->
-                <!--                <script src="--><?php //echo plugin_dir_url( dirname( __FILE__ ) ) . 'scripts/leaflet.js'; ?><!--"></script>-->
-                <!---->
-                <!--                <script src="--><?php //echo plugin_dir_url( dirname( __FILE__ ) ) . 'scripts/leaflet-providers.js'; ?><!--"></script>-->
-                <!---->
-                <!--                <link rel="stylesheet" href="--><?php //echo plugin_dir_url( dirname( __FILE__ ) ) . 'css/leaflet-gesture-handling.min.css'; ?><!--" />-->
-                <!--                <script src="--><?php //echo plugin_dir_url( dirname( __FILE__ ) ) . 'scripts/leaflet-gesture-handling.min.js'; ?><!--"></script>-->
 
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
                 <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
@@ -211,6 +204,22 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             status_header( '404' );
             locate_template( array ( '404.php', 'index.php ' ), TRUE, TRUE );
             exit;
+        }
+
+       public function bdt_jyffy_calculator_dev() {
+            if(!isset($this->currentVehicle) || $this->currentVehicle === null)
+            {
+                return __('Vehicle not found', 'biltorvet-dealer-tools');
+            }
+
+               $price = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'Price', true);
+               $getFirstRegistrationDate = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'FirstRegistrationDate', true);
+
+               $firstRegDateFormatted = "'$getFirstRegistrationDate'";
+
+           $jyffyWidget = '<div data-btcontentid="C61662EE-238C-46D7-943B-0CCE15D20181" data-btsettings-price="' . $price . '" data-btsettings-first-registration-date="' . $firstRegDateFormatted . '" data-btsettings-dealer-id="1615285056784" class="btEmbeddedWidget"></div>';
+
+            return $jyffyWidget;
         }
 
         public function bdt_shortcode_slideshow() {
