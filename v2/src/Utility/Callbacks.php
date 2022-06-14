@@ -145,7 +145,7 @@ class Callbacks
         }
 
         // Remember to add the labels to the list of valid statuscodes AND the switch case: else nothing will be returned!
-        $validStatusCodes = array("Sold", "New", "Leasing", "Warehousesale", "Flexleasing", "Export", "Upcoming", "Rental", "Commission", "Wholesale", "Bus", "NewCar", "Demo", "Carlite Dealer Label", "Trailer");
+        $validStatusCodes = array("Sold", "New", "Leasing", "Warehousesale", "Flexleasing", "Export", "Upcoming", "Rental", "Commission", "Wholesale", "Bus", "NewCar", "Demo", "Carlite Dealer Label", "Trailer", "NoTax");
 
         if(!in_array($setStatusCode, $validStatusCodes))
         {
@@ -168,6 +168,7 @@ class Callbacks
             case "Demo" : $label = 1; break;
             case "Carlite Dealer Label" : $label = 427; break;
             case "Trailer" : $label = 471; break;
+            case "NoTax" : $label = 359; break;
         }
 
         wp_enqueue_style("bdt_style");
