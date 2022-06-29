@@ -7,7 +7,7 @@
 //        private $endpoint = 'http://api-v1-staging.autoitweb.dk'; // Staging
 //        private $endpoint = 'http://localhost:59852'; // Local
         private $apiKey;
-        private $vehicleResultsPageLimit = 30;
+        private $vehicleResultsPageLimit = 15;
         private $errLogFile;
         private $_makes;
 
@@ -88,7 +88,7 @@
             {
                 $filter->Limit = $this->vehicleResultsPageLimit;
             }
-            
+
             return $this->Request('/vehicle', array('filter' => json_encode($filter)));
         }
 

@@ -4699,7 +4699,6 @@ body .bdt select {
 }
 
 .bdt .text-hide {
-    font: 0/0 a;
     color: transparent;
     text-shadow: none;
     background-color: transparent;
@@ -5568,41 +5567,6 @@ a.bdt .badge-dark.focus {
     margin: 0
 }
 
-.bdt .paging li {
-    display: inline-block;
-    padding: 0;
-    margin: 15px
-}
-
-.bdt .paging li a {
-    display: inline-block;
-    border-radius: 50%;
-    width: 3em;
-    height: 3em;
-    text-align: center;
-    line-height: 3em;
-    overflow: hidden;
-    border: 1px solid #ccc
-}
-
-.bdt .paging li a:not(.active) {
-    transition: background-color .5s linear
-}
-
-.bdt .paging li a:hover {
-    background-color: #efefef
-}
-
-.bdt .paging li a.active {
-    background-color: #555;
-    color: #fff;
-    font-weight: 900
-}
-
-.bdt .paging li a.active:hover {
-    cursor: default
-}
-
 .bdt .lds-ring {
     display: inline-block;
     position: absolute;
@@ -5610,7 +5574,7 @@ a.bdt .badge-dark.focus {
     top: 50%;
     margin: -32px;
     width: 64px;
-    height: 64px
+    height: 64px;
 }
 
 .bdt .lds-ring div {
@@ -5644,6 +5608,45 @@ a.bdt .badge-dark.focus {
     }
     100% {
         transform: rotate(360deg)
+    }
+}
+
+.bdt .lds-ring-paging {
+    display: inline-block;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin: -32px;
+    width: 40px;
+    height: 40px;
+}
+.bdt .lds-ring-paging div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 51px;
+    height: 51px;
+    margin: 6px;
+    border: 6px solid #555;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #555 transparent transparent transparent
+}
+.bdt .lds-ring-paging div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+.bdt .lds-ring-paging div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+.bdt .lds-ring-paging div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+@keyframes lds-ring-paging {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
     }
 }
 
