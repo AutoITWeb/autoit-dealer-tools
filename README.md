@@ -163,8 +163,9 @@ Creates a list of cars from status codes set in AutoDesktop (In order to use thi
 <br>Required attribute:  
 * __status__  
 
-<br>Required attribute:  
+<br>Optional attributes:  
 * __status__  
+* __make__  
 
 <br>The following status codes are currently supported:  
 * __Sold__ - Shows all cars with the label "Solgt".  
@@ -192,8 +193,8 @@ Creates a list of cars from their type.
 * __type__
 
 <br>
-Optional attribute:  
-* __state__  
+<br>Optional attributes:  
+* __status__  
 
 <br>The following types are currently supported:  
 * __Car__ - Shows all vehicles of the type "Car".
