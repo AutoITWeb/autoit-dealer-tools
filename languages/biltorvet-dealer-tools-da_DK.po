@@ -136,7 +136,7 @@ msgstr "Tilbage til hjemmesiden"
 
 #: classes/BiltorvetShortcodes.php:473 classes/BiltorvetShortcodes.php:477
 msgid "Back to vehicle search page"
-msgstr "Tilbage til listevisning"
+msgstr "Tilbage til søgeresultat"
 
 #: classes/BiltorvetShortcodes.php:481
 msgid "Back to search results"

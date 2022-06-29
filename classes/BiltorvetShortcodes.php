@@ -56,7 +56,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             add_shortcode('bdt_set_campaign_id', array($this, 'bdt_shortcode_set_campaign_id'));
             add_shortcode('bdt_findleasing_calculator', array($this, 'bdt_shortcode_findleasing_calculator'));
             add_shortcode('bdt_amount_of_biltorvet_ads', array($this, 'bdt_shortcode_amount_of_biltorvet_ads'));
-            add_shortcode('bdt_jyffy_calculator', array($this, 'bdt_jyffy_calculator_dev'));
+            add_shortcode('bdt_jyffi_calculator', array($this, 'bdt_jyffi_calculator_dev'));
 
             add_action('wp_head', array(&$this, 'bdt_insert_map_dependencies'), 1000);
         }
@@ -191,8 +191,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
         }
 
         public function bdt_shortcode_vehicle_search_results( $atts ){
+            wp_enqueue_style("animate");
             wp_enqueue_style("bdt_style");
             wp_enqueue_script("bdt_script");
+            wp_enqueue_script("lazy_load");
             ob_start();
             require Biltorvet::bdt_get_template("VehicleSearchResults.php");
             $contents = ob_get_contents();
@@ -206,20 +208,28 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             exit;
         }
 
-       public function bdt_jyffy_calculator_dev() {
+       public function bdt_jyffi_calculator_dev() {
             if(!isset($this->currentVehicle) || $this->currentVehicle === null)
             {
                 return __('Vehicle not found', 'biltorvet-dealer-tools');
             }
 
-               $price = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'Price', true);
-               $getFirstRegistrationDate = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'FirstRegistrationDate', true);
+           $price = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'Price', true);
 
-               $firstRegDateFormatted = "'$getFirstRegistrationDate'";
+            if($price === "0")
+            {
+                return '<div id="bdt-jyffi-calculator-error" style="display:none;">Vehicle missing cash price</div>';
+            }
 
-           $jyffyWidget = '<div data-btcontentid="C61662EE-238C-46D7-943B-0CCE15D20181" data-btsettings-price="' . $price . '" data-btsettings-first-registration-date="' . $firstRegDateFormatted . '" data-btsettings-dealer-id="1615285056784" class="btEmbeddedWidget"></div>';
+           $getFirstRegistrationDate = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'FirstRegistrationDate', true);
 
-            return $jyffyWidget;
+           $currenteDateMinusOneMonth = date("Y-m-d", strtotime("-1 month"));
+
+           $firstRegDateFormatted = $getFirstRegistrationDate !== null ? "'$getFirstRegistrationDate'" : "'$currenteDateMinusOneMonth'";
+
+           $jyffiWidget = '<div data-btcontentid="C61662EE-238C-46D7-943B-0CCE15D20181" data-btsettings-price="' . $price . '" data-btsettings-first-registration-date="' . $firstRegDateFormatted . '" data-btsettings-dealer-id="1615285056784" class="btEmbeddedWidget"></div>';
+
+           return $jyffiWidget;
         }
 
         public function bdt_shortcode_slideshow() {
@@ -897,7 +907,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             }
             if(isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], get_home_url()) !== false)
             {
-                $content = __('Back to vehicle search page', 'biltorvet-dealer-tools');
+                $content = __('Back to search results', 'biltorvet-dealer-tools');
                 if(preg_match('/\/\d+\/?$/', $_SERVER['HTTP_REFERER']) === 1) // if there is a page number at the end of the url, it is search results
                 {
                     $link = $_SERVER['HTTP_REFERER'];

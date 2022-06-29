@@ -32,7 +32,8 @@
     // The initial filter is only here to hide dropdowns with one value only, so they don't "flash" before Ajax executes.
     // All filter logic should be in JS.
     try{
-        $filterObject = null;
+        $filterObject = new BDTFilterObject();
+
         if(isset($this->_options['hide_sold_vehicles']) && $this->_options['hide_sold_vehicles'] === 'on')
         {
             if($filterObject === null)
@@ -198,6 +199,7 @@
     $showPropellants = (count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->propellants) > 1) ? "" : "style='display: none;'";
 
     ?>
+
     <div class="bdt">
         <div class="vehicle_search"<?php echo $makeIds !== null ? ' data-makeids="'.$makeIds.'"' : '';  ?>>
             <div class="row">

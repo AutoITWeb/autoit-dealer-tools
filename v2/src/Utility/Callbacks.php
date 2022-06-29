@@ -129,6 +129,13 @@ class Callbacks
         );
     }
 
+    /**
+     * Filters vehicles by vehicle type (Car, van, motorcycle or truck)
+     *
+     * @param atts   'status', 'make', 'state'
+     *
+     * @return Status
+     */
     public function get_vehicles_by_status_code_shortcode($atts)
     {
         $searchFilter = new SearchFilter();
@@ -140,9 +147,24 @@ class Callbacks
 
         $setStatusCode = ucfirst($atts['status']);
 
+        // Set make
         if(isset($atts['make'])) {
-            $searchFilter->setMakes(array(ucfirst($atts['make'])));
+            $searchFilter->setSt(array(ucfirst($atts['make'])));
         }
+
+        // Set vehicle state
+        if(isset($atts['state'])) {
+
+            if($atts['state'] == 'Fabriksny' || $atts['state'] == 'Brugt')
+            {
+                $searchFilter->setVehicleStates(array(ucfirst($atts['state'])));
+            }
+            else {
+                return '<b>"' . $atts['state'] . '"</b>' . ' is not a valid state - Please set a valid state.' . '<br><br>' . 'Check the documentation for valid status codes.';
+            }
+        }
+
+        // Set status code
 
         // Remember to add the labels to the list of valid statuscodes AND the switch case: else nothing will be returned!
         $validStatusCodes = array("Sold", "New", "Leasing", "Warehousesale", "Flexleasing", "Export", "Upcoming", "Rental", "Commission", "Wholesale", "Bus", "NewCar", "Demo", "Carlite Dealer Label", "Trailer", "NoTax");
@@ -182,6 +204,13 @@ class Callbacks
         );
     }
 
+    /**
+     * Filters vehicles by vehicle type (Car, van, motorcycle or truck)
+     *
+     * @param atts   'type', 'state'
+     *
+     * @return Status
+     */
     public function get_vehicles_by_type_shortcode(array $atts)
     {
         $searchFilter = new SearchFilter();
