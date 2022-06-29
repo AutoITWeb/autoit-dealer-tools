@@ -427,7 +427,7 @@ Shortcode:
 [bdt_findleasing_calculator] renders a FindLeasing widget if the current vehicle has the relevant leasing calculations from FindLeasing (FindLeasing external id).  
 __Note:__ This widget only works on the vehicle details page
 
-<br><br>
+<br>
 
 __Jyffi__  
 Currently in dev mode.
