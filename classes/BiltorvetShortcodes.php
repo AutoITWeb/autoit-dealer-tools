@@ -216,7 +216,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
            $price = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'Price', true);
 
-            if($price === "0")
+            if($price === "0" || (int) $price < 98999)
             {
                 return '<div id="bdt-jyffi-calculator-error" style="display:none;">Vehicle missing cash price</div>';
             }
