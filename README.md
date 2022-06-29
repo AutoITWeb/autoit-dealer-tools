@@ -164,7 +164,7 @@ Creates a list of cars from status codes set in AutoDesktop (In order to use thi
 * __status__  
 
 <br>Optional attributes:  
-* __status__  
+* __state__  
 * __make__  
 
 <br>The following status codes are currently supported:  
@@ -192,9 +192,8 @@ Creates a list of cars from their type.
 <br>Required attribute:  
 * __type__
 
-<br>
 <br>Optional attributes:  
-* __status__  
+* __make__  
 
 <br>The following types are currently supported:  
 * __Car__ - Shows all vehicles of the type "Car".
@@ -388,8 +387,6 @@ Required attribute:
 * __type__  
 
 Supported widget-types:  
-* Consent - Samtykke widget
-* AutoDesktopLeads - Currently only Book Prøvetur is supported
 * Santander - Santander widget. WORKS ONLY IN VEHICLE DETAIL PAGE.  
 
 
@@ -410,8 +407,6 @@ Example 1: [bdt_widget type="Santander" color="#ff0000"]<br><br>
 
 ![widget](https://www.autoit.dk/media/autoit-dealer-tools/bdt-widget.png)<br><br>
 
-
-
 __Widget type specific attributes__  
 Some widgets allow you to specific attributes.  
 
@@ -419,42 +414,25 @@ __Santander:__
 * hideVehiclePrice="true" - hides the vehicle price in the widget, which is useful in the vehicle detail page, where there's probably price in some other place already.  
 * brandingid - some dealers have a specific branding.  
 
-__AutoDesktopLeads:__
-* title - Main title of the widget, before action is selected. If action is preselected with actiontype parameter (see below), this step will be skipped.
-* color - Main color of the widget.
-* fontcolor - Main font color of the widget.
-* logourl - logo to be used.,
-* vehicletype - preselect the vehicle type
-* vehicletypehide - true or false
-* selectedvehicletype - Personbil or Varebil
-* actiontype - TestDrive, OfferNewCar or Contact
-* make - set the preselected make
-* makehide - true or false
-* selectedmake - make to be preselected.
-* allowedmakes - a JSON object with a list of makes that are allowed. It filters out all other makes, if this attribute is specified. Example: ["Ford","VW","Aston Martin"]
-* model - set the preselected model
-* modelhide - true or false
-* variant - set the preselected variant
-* varianthide - true or false
-* openingtimes - an array of days with opening times ranges. Nees to be put in with single quotes - it's a JSON object. Example value: {"0
-":[null,null],"1":[{"b":900,"e":1200},{"b":1230,"e":1700}],"2":[{"b":900,"e":1200},{"b":1230,"e":1700}],"3":[{"b":900,"e":1200},{"b":1230,"e":17
-00}],"4":[{"b":900,"e":1200},{"b":1230,"e":1700}],"5":[{"b":900,"e":1200},{"b":1230,"e":1700}],"6":[{"b":1000,"e":1700},null]}
-* filterpersonalmodels - a JSON object of personal models to be filtered out. If omitted, all personal models will appear. Example: ["500C"
-,"Cherokee"]
-* filterbusinessmodels - a JSON object of business models to be filtered out. If omitted, all business models will appear. Example: ["500L
-"]  
+<br>
 
+### Partner integrations  
+__FindLeasing__  
+__Jyffi__
 
-__Consent:__
-* consentcategory - samtykke category,
-* requiredconsenttype - required samtykke channel: BySMS, ByEmail or Both,
-* name - pre-filled name of the person giving samtykke,
-* address - pre-filled address of the person giving samtykke,
-* postalcode - pre-filled postal code of the person giving samtykke,
-* city - pre-filled city of the person giving samtykke,
-* email - pre-filled email of the person giving samtykke,
-* mobilephone - pre-filled mobile phone of the person giving samtykke<br><br>
+<br>
 
+__FindLeasing__  
+Shortcode:  
+[bdt_findleasing_calculator] renders a FindLeasing widget if the current vehicle has the relevant leasing calculations from FindLeasing (FindLeasing external id).  
+__Note:__ This widget only works on the vehicle details page
+
+<br><br>
+
+__Jyffi__  
+Currently in dev mode.
+
+<br><br>
 
 ### Building the searchpage / resultlist page and vehicle detailspage  
 How the search, result and detailspage can be build.
