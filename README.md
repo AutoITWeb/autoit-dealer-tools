@@ -164,7 +164,7 @@ Creates a list of cars from status codes set in AutoDesktop (In order to use thi
 * __status__  
 
 <br>
-Optional attribute:  
+Optional attribute:   
 * __state__  
 * __state__  
 
