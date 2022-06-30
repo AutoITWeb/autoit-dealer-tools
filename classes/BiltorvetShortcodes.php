@@ -208,17 +208,24 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             exit;
         }
 
-       public function bdt_jyffi_calculator_dev() {
+       public function bdt_jyffi_calculator_dev($atts) {
             if(!isset($this->currentVehicle) || $this->currentVehicle === null)
             {
                 return __('Vehicle not found', 'biltorvet-dealer-tools');
             }
 
+            $validVehicleTypes = array('Personbil', 'Varebil');
+
            $price = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'Price', true);
 
-            if($price === "0" || (int) $price < 98999)
+            if((int) $price <= 49999)
             {
                 return '<div id="bdt-jyffi-calculator-error" style="display:none;">Vehicle missing cash price</div>';
+            }
+
+            if(!in_array($this->currentVehicle->type, $validVehicleTypes))
+            {
+                return '<div id="bdt-jyffi-calculator-error" style="display:none;">Invalid vehicle type</div>';
             }
 
            $getFirstRegistrationDate = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'FirstRegistrationDate', true);
@@ -227,7 +234,9 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
            $firstRegDateFormatted = $getFirstRegistrationDate !== null ? "'$getFirstRegistrationDate'" : "'$currenteDateMinusOneMonth'";
 
-           $jyffiWidget = '<div data-btcontentid="C61662EE-238C-46D7-943B-0CCE15D20181" data-btsettings-price="' . $price . '" data-btsettings-first-registration-date="' . $firstRegDateFormatted . '" data-btsettings-dealer-id="1615285056784" class="btEmbeddedWidget"></div>';
+           $dealerId = isset($atts['dealer-id']) ? $atts['dealer-id'] : 1615285056784;
+
+           $jyffiWidget = '<div data-btcontentid="C61662EE-238C-46D7-943B-0CCE15D20181" data-btsettings-price="' . $price . '" data-btsettings-first-registration-date="' . $firstRegDateFormatted . '" data-btsettings-dealer-id="' . $dealerId . '" class="btEmbeddedWidget"></div>';
 
            return $jyffiWidget;
         }
