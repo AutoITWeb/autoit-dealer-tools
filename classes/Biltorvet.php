@@ -43,6 +43,9 @@ class Biltorvet
         add_filter('get_canonical_url', array(&$this, 'bdt_vehicledetails_canonical'), 1000);
         add_filter('get_shortlink', array(&$this, 'bdt_vehicledetails_canonical'), 1000);
 
+        // For external users of our plugin
+        add_filter('wp_mail', array(&$this, 'bdt_external_user_lead_append'), 1);
+
         add_action( 'upgrader_process_complete', 'bdt_plugin_updated' );
 
         $this->_options = get_option('bdt_options');
@@ -435,5 +438,51 @@ class Biltorvet
     static function bdt_flushrewriterules()
     {
         flush_rewrite_rules();
+    }
+
+    /**
+     * WP_MAIL filter for external users*
+     * Adds vehicle data to leads for external users
+     *
+     * @param string 	$args			Mail args.
+     */
+    public function bdt_external_user_lead_append( $args )
+    {
+        $product = new ApiController();
+
+        if(ProductHelper::hasAccess("External User", $product->getCompanyProducts()))
+        {
+            if(array_key_exists('headers', $args))
+            {
+                foreach($args['headers'] as $header)
+                {
+                    preg_match('/^Reply-To: ".*" <(.+)>$/', $header, $matches);
+                    if(count($matches) > 1)
+                    {
+                        $replyTo = $matches[1];
+                        break;
+                    }
+                }
+            }
+
+            $query = parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_QUERY);
+            parse_str( $query, $queryParams );
+
+            if(!isset($queryParams) || !isset($queryParams['bdt_vehicle_id']) || !isset($queryParams['bdt_actiontype']))
+            {
+                return $args;
+            }
+
+            try{
+                $vehicle = $this->biltorvetAPI->GetVehicle($queryParams['bdt_vehicle_id']);
+            } catch(Exception $e) {
+                return $e->getMessage();
+            }
+
+            // Append the vehicle info to the WP email.
+            $args['message'] .= "\r\n\r\n" .  sprintf( __('Selected vehicle: %s', 'biltorvet-dealer-tools'), 'En kunde har udvist interesse for bilen ' . $vehicle->makeName . ' ' . $vehicle->model . ' med ID ' . $vehicle->id);
+
+            return $args;
+        }
     }
 }
