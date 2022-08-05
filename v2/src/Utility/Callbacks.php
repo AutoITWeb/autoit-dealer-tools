@@ -108,8 +108,6 @@ class Callbacks
             return $errors;
         }
 
-        var_dump($searchFilter);
-
         $option = get_option('bdt_options');
         $vehicleSearchPageId = $option['vehiclesearch_page_id'];
 
