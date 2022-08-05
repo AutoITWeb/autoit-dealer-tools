@@ -43,7 +43,7 @@ class Callbacks
             $searchFilter->setMakes([ucfirst($atts['make'])]);
         }
         if (isset($atts['model'])) {
-            $searchFilter->setModels([ucfirst($atts['model'])]);
+            $searchFilter->setModels([($atts['model'])]);
         }
         if (isset($atts['propellant'])){
             $searchFilter->setPropellants([ucfirst($atts['propellant'])]);
@@ -107,6 +107,8 @@ class Callbacks
         if($errors != "") {
             return $errors;
         }
+
+        var_dump($searchFilter);
 
         $option = get_option('bdt_options');
         $vehicleSearchPageId = $option['vehiclesearch_page_id'];
