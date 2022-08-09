@@ -227,14 +227,19 @@ class Biltorvet
         //$priceController->getStructuredDataPrice();
 
         ?>
-        <meta property="og:url" content="<?php echo home_url($wp->request); ?>" />
-        <meta property="og:type" content="product"/>
-        <meta property="og:title"content="<?php echo $oVehicle->getMakeName() . ' ' . $oVehicle->getVariant(); ?>"/>
-        <meta property="og:description" content="<?php echo strip_tags($oVehicle->getDescription()); ?>"/>
-        <meta property="og:image" content="<?php echo $oVehicle->getImages()[0]; ?>"/>
-        <meta property="og:image:width" content="1920"/>
-        <meta property="og:image:height" content="1080"/>
+            <meta property="og:url" content="<?php echo home_url($wp->request); ?>" />
+            <meta property="og:type" content="product"/>
+            <meta property="og:title"content="<?php echo $oVehicle->getMakeName() . ' ' . $oVehicle->getVariant(); ?>"/>
+            <meta property="og:description" content="<?php echo strip_tags($oVehicle->getDescription()); ?>"/>
+            <meta property="og:image" content="<?php echo $oVehicle->getImages()[0]; ?>"/>
+            <meta property="og:image:width" content="1920"/>
+            <meta property="og:image:height" content="1080"/>
         <?php
+
+        ?>
+            <meta name="description" content="Hos <?= $oVehicle->getCompany()->getName() ?> har vi altid et stort udvalg af brugte biler til omgående levering. Kig forbi, eller kontakt os i dag for at høre mere.">
+        <?php
+
 
         // Structured data - requires the product "Structured Data" in the dashboard
         if(ProductHelper::hasAccess("Structured Data", $product->getCompanyProducts()) && $priceController->getStructuredDataPrice() != null)
