@@ -424,7 +424,8 @@ class Biltorvet
 
             $vehicledetail = get_page_uri($options['detail_template_page_id']);
             $query = 'index.php?pagename=' . $vehicledetail. '&bdt_vehicle_id=$matches[1]';
-            add_rewrite_rule( '^' . $vehiclesearchresults . '.+((?:AD|BI)[0-9]+)$', $query , 'top' );
+            //add_rewrite_rule( '^' . $vehiclesearchresults . '.+((?:AD|BI)[0-9]+)$', $query , 'top' );
+            add_rewrite_rule( '^' . $vehiclesearchresults . '.+((?:AD|BI)([A-Za-z0-9\-]+))$', $query , 'top' );
         }
         if(isset($options['vehiclesearch_page_id']) && trim($options['vehiclesearch_page_id']) !== '')
         {
