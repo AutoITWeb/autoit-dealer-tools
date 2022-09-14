@@ -533,6 +533,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
 
             add_settings_field(
+                'bdt_pricetypes',
+                __( 'Choose pricetype to show', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_pricetypes_callback' ),
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
                 'bdt_activate_map',
                 __( 'Activate map', 'biltorvet-dealer-tools' ),
                 array( $this, 'bdt_activate_map_callback' ),
@@ -1106,6 +1114,26 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[show_all_labels]"%s />',
                 isset( $this->options_2['show_all_labels'] ) && $this->options_2['show_all_labels'] === 'on' ? ' checked="checked"' : ''
             );
+        }
+
+        // Sets the filter "PriceTypes"
+        public function bdt_pricetypes_callback()
+        {
+            $priceTypeOptions = ["Kontantpris" => "Kontant", "Finansierings pris" => "Finansiering", "Leasing pris" => "Leasing"];
+
+            $HTML = '<select id="bdt_options_2" value="on" name="bdt_options_2[bdt_pricetypes]"/>';
+            $HTML .= '<option value="-1">Vælg pristype</option>';
+
+            foreach ($priceTypeOptions as $key => $value) {
+                $selected = isset($this->options_2['bdt_pricetypes']) && $this->options_2['bdt_pricetypes'] == $value;
+                $HTML .= '<option value="' . $value . '"';
+                $HTML .= $selected ? 'selected="selected"' : '';
+                $HTML .= '>' . $key . '</option>';
+            }
+
+            $HTML .= '</select>';
+
+            echo $HTML;
         }
 
         /**

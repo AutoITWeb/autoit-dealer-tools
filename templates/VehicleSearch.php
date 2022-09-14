@@ -34,7 +34,7 @@
     try{
         $filterObject = new BDTFilterObject();
 
-        if(isset($this->_options['hide_sold_vehicles']) && $this->_options['hide_sold_vehicles'] === 'on')
+        if(isset($this->_options_2['hide_sold_vehicles']) && $this->_options_2['hide_sold_vehicles'] === 'on')
         {
             if($filterObject === null)
             {
@@ -186,6 +186,15 @@
             }
             $filterObject->HideBIVehicles = 'true';
         }
+        if(isset($this->_options_2['bdt_pricetypes']) && $this->_options_2['bdt_pricetypes'] != "-1")
+        {
+            if($filterObject === null)
+            {
+                $filterObject = new BDTFilterObject();
+            }
+            $filterObject->PriceTypes = array($this->_options_2['bdt_pricetypes']);
+        }
+
         $initialFilterOptions = $this->biltorvetAPI->GetFilterOptions($filterObject);
     } catch(Exception $e) {
         die($e->getMessage());
@@ -195,6 +204,7 @@
     $showVehicleStates = (count((array)$initialFilterOptions->vehicleStates) >= 2) ? "" : "style='display: none;'";
     $showMakeModel = (count($initialFilterOptions->makes) >= 1) ? "" : "style='display: none;'";
     $showProductTypes = (count((array)$initialFilterOptions->companies) > 2 || count($initialFilterOptions->productTypes) > 1) ? "" : "style='display: none;'";
+    $showPriceTypes = $initialFilterOptions->priceTypes != null && (count((array)$initialFilterOptions->priceTypes) > 1) && isset($this->_options_2['bdt_pricetypes']) && $this->_options_2['bdt_pricetypes'] === '-1' ? "" : "style='display: none;'";
     $showBodyTypes = (count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->bodyTypes) > 1) ? "" : "style='display: none;'";
     $showPropellants = (count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->propellants) > 1) ? "" : "style='display: none;'";
 
@@ -232,6 +242,12 @@
                 <div class="col-sm-4 mb-1 mb-sm-3" <?= $showMakeModel ?>>
                     <select name="model">
                         <option value=""><?php _e('- Select model -', 'biltorvet-dealer-tools'); ?></option>
+                    </select>
+                </div>
+
+                <div class="col-sm-4 mb-1 mb-sm-3" <?= $showPriceTypes ?>>
+                    <select name="priceType">
+                        <option value=""><?php _e('- Select price type -', 'biltorvet-dealer-tools'); ?></option>
                     </select>
                 </div>
 

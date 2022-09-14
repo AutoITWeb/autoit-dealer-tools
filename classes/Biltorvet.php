@@ -268,8 +268,8 @@ class Biltorvet
     {
         wp_register_script( 'bootstrap_slider', plugins_url('scripts/bootstrap-slider.min.js',  dirname(__FILE__) ) , array('jquery'), '1.0.1', true );
 
-        wp_register_script( 'bdt_script', plugins_url('v3/scripts/vehiclesearchv3.min.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
-        //wp_register_script( 'bdt_script', plugins_url('v3/scripts/vehiclesearchv3.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
+        //wp_register_script( 'bdt_script', plugins_url('v3/scripts/vehiclesearchv3.min.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
+        wp_register_script( 'bdt_script', plugins_url('v3/scripts/vehiclesearchv3.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
 
         // Latest version - use with caution
         //wp_register_script( 'bt_slideshow', 'https://gallery.autoit.dk/latest/gallery.js', true );

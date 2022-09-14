@@ -25,6 +25,7 @@ function Biltorvet($) {
         ProductTypes: null,
         VehicleStates: null,
         FullTextSearch: null,
+        PriceTypes: null,
         PriceMin: null,
         PriceMax: null,
         ConsumptionMin: null,
@@ -126,6 +127,8 @@ function Biltorvet($) {
             // Deactive filters
             DeactivateSearchFields();
 
+            console.log(filter);
+
             // We can also pass the url value separately from ajaxurl for front end AJAX implementations
             searchFilterOptionsXHR = $.ajax({
                 url: ajax_config.restUrl + 'autoit-dealer-tools/v1/filteroptions',
@@ -175,6 +178,10 @@ function Biltorvet($) {
                         if(response.values.vehicleStates && response.values.vehicleStates[0])
                         {
                             vehicleSearch.find('select[name=vehicleState] option[value="' + response.values.vehicleStates[0] + '"]').prop('selected', true);
+                        }
+                        if(response.values.priceTypes && response.values.priceTypes[0])
+                        {
+                            vehicleSearch.find('select[name=priceType] option[value="' + response.values.priceTypes[0] + '"]').prop('selected', true);
                         }
                     }
                 },
@@ -597,6 +604,18 @@ function Biltorvet($) {
         {
             vehicleSearch.find('select[name=productType]').removeAttr('disabled');
         }
+
+        var priceTypes = '';
+        for(var i in response.priceTypes)
+        {
+            priceTypes += '<option value="' + response.priceTypes[i].name + '">' + response.priceTypes[i].name + '</option>';
+        }
+        vehicleSearch.find('select[name=priceType]').find('option:not(:first-child)').remove().end().append(priceTypes);
+        if(priceTypes !== '')
+        {
+            vehicleSearch.find('select[name=priceType]').removeAttr('disabled');
+        }
+
         if(consumptionRangeSlider !== null)
         {
             var crsI = sliderAlternativeNamespace ? consumptionRangeSlider.bootstrapSlider(response.consumptionMin === response.consumptionMax ? "disable" : "enable") : consumptionRangeSlider.slider(response.consumptionMin === response.consumptionMax ? "disable" : "enable");
@@ -640,6 +659,7 @@ function Biltorvet($) {
             BodyTypes: vehicleSearch.find('select[name=bodyType]').val() === '' ? null : [vehicleSearch.find('select[name=bodyType]').val()],
             ProductTypes: vehicleSearch.find('select[name=productType]').val() === '' ? null : [vehicleSearch.find('select[name=productType]').val()],
             VehicleStates: vehicleSearch.find('select[name=vehicleState]').val() === '' ? null : [vehicleSearch.find('select[name=vehicleState]').val()],
+            PriceTypes: vehicleSearch.find('select[name=priceType]').val() === '' ? null : [vehicleSearch.find('select[name=priceType]').val()],
             PriceMin: priceRangeSlider !== null ? (priceRangeSlider.data('slider').getAttribute('min') !== priceMin ? priceMin : null) : null,
             PriceMax: priceRangeSlider !== null ? (priceRangeSlider.data('slider').getAttribute('max') !== priceMax ? priceMax : null) : null,
             ConsumptionMin: consumptionRangeSlider !== null ? (consumptionRangeSlider.data('slider').getAttribute('min') !== consumptionMin ? consumptionMin : null) : null,
@@ -747,6 +767,7 @@ jQuery(function($) {
             vehicleSearch.find('select[name=model]').val('');
             vehicleSearch.find('select[name=bodyType]').val('');
             vehicleSearch.find('select[name=productType]').val('');
+            vehicleSearch.find('select[name=priceType]').val('');
             vehicleSearch.find('select[name=propellant]').val('');
             vehicleSearch.find('select[name=priceMinMax]').val('');
             vehicleSearch.find('select[name=priceMinMax]').val('');
@@ -758,18 +779,22 @@ jQuery(function($) {
 
         // Select fields
         .on('change', '.bdt .vehicle_search select', function(){
+
             var vehicleSearch = $(this).closest('.bdt .vehicle_search');
+
             // Selecting a different make will reset the selected model
             if($(this).attr('name') === 'make')
             {
                 vehicleSearch.find('select[name=model]').val('').trigger('change');
             }
+
             // selecting a new model will reset all other fields.
             if($(this).attr('name') === 'model')
             {
                 vehicleSearch.find('select[name=bodyType]').val('');
                 vehicleSearch.find('select[name=productType]').val('');
                 vehicleSearch.find('select[name=propellant]').val('');
+                vehicleSearch.find('select[name=priceType]').val('');
                 vehicleSearch.find('select[name=priceMinMax]').val('');
                 vehicleSearch.find('select[name=priceMinMax]').val('');
                 vehicleSearch.find('select[name=consumptionMin]').val('');
@@ -783,6 +808,7 @@ jQuery(function($) {
                 vehicleSearch.find('select[name=bodyType]').val('');
                 vehicleSearch.find('select[name=productType]').val('');
                 vehicleSearch.find('select[name=propellant]').val('');
+                vehicleSearch.find('select[name=priceType]').val('');
                 vehicleSearch.find('select[name=priceMinMax]').val('');
                 vehicleSearch.find('select[name=priceMinMax]').val('');
                 vehicleSearch.find('select[name=consumptionMin]').val('');
@@ -797,11 +823,15 @@ jQuery(function($) {
                 vehicleSearch.find('select[name=bodyType]').val('');
                 vehicleSearch.find('select[name=productType]').val('');
                 vehicleSearch.find('select[name=propellant]').val('');
+                vehicleSearch.find('select[name=priceType]').val('');
                 vehicleSearch.find('select[name=priceMinMax]').val('');
                 vehicleSearch.find('select[name=priceMinMax]').val('');
                 vehicleSearch.find('select[name=consumptionMin]').val('');
                 vehicleSearch.find('select[name=consumptionMax]').val('');
             }
+
+            console.log("something was selected...")
+
             bdt.ReloadUserFilterSelection(false);
         })
 });

@@ -48,6 +48,11 @@ class SearchFilter
      */
     public $VehicleStates;
 
+    /**
+     * @var string[]
+     */
+    public $PriceTypes;
+
         /**
      * @var int
      */
@@ -221,6 +226,24 @@ class SearchFilter
     public function setPropellants(array $Propellants): SearchFilter
     {
         $this->Propellants = $Propellants;
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getPriceTypes(): array
+    {
+        return $this->PriceTypes;
+    }
+
+    /**
+     * @param  string[] $PriceTypes
+     * @return SearchFilter
+     */
+    public function setPriceTypes(array $PriceTypes): SearchFilter
+    {
+        $this->PriceTypes = $PriceTypes;
         return $this;
     }
 
