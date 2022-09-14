@@ -521,6 +521,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     }
                     $filterObject->HideBIVehicles = 'true';
                 }
+                if(isset($this->_options_2['bdt_pricetypes']) && $this->_options_2['bdt_pricetypes'] != "-1")
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->PriceTypes = array($this->_options_2['bdt_pricetypes']);
+                }
                 return $this->biltorvetAPI->GetVehicleTotalCount($filterObject);
             } catch(Exception $e) {
                 return $e->getMessage();

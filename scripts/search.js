@@ -7,15 +7,19 @@
  */
 
 jQuery(function ($) {
-
     $(document).ready(function () {
-
         var frontpageSearch = document.getElementById("frontpage_vehicle_search");
 
         if(frontpageSearch == null) {
+
             $('html, body').animate({
                 scrollTop: $('.vehicle_search_results').offset().top - 150
             }, 500);
+            //
+            // if(window.matchMedia('(max-width: 768px)').matches)
+            // {
+            //
+            // }
         }
     });
 });

@@ -355,3 +355,6 @@ msgstr ""
 
 msgid "Unrecognized lead type. Allowed types: %s"
 msgstr ""
+
+msgid "- Select price type -"
+msgstr "- Vælg pristype -"

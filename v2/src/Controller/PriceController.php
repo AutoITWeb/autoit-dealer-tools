@@ -246,7 +246,6 @@ class PriceController
             ];
         }
 
-
         if (!$this->hideFinancingDetails && $this->price->getFinancingValue()) {
             $new_value = $prices['financing'];
             unset($prices['financing']);
@@ -264,7 +263,6 @@ class PriceController
                 }
             }
         }
-
 
         return $prices ?? [0 => ['label' => '', 'price' => '-']];
     }
