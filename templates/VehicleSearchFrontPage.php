@@ -213,8 +213,10 @@ $showCompanies = (isset($this->_options_5)) && (isset($this->_options_5['frontpa
 $showVehicleStates = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_vehiclestate'])) && ($this->_options_5['frontpagesearch_vehiclestate'] === 'on') ? "" : "style='display: none;'";
 $showMakeModel = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_makemodel'])) && ($this->_options_5['frontpagesearch_makemodel'] === 'on') || (!isset($this->_options_5['set_frontpagesearch_column'])) ? "" : "style='display: none;'";
 $showProductTypes = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_producttype'])) && ($this->_options_5['frontpagesearch_producttype'] === 'on') ? "" : "style='display: none;'";
+$showPriceTypes = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_pricetype'])) && ($this->_options_5['frontpagesearch_pricetype'] === 'on') ? "" : "style='display: none;'";;
 $showBodyTypes = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_bodytype'])) && ($this->_options_5['frontpagesearch_bodytype'] === 'on') ? "" : "style='display: none;'";
 $showPropellants = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_propellants'])) && ($this->_options_5['frontpagesearch_propellants'] === 'on') ? "" : "style='display: none;'";
+
 
 ?>
 
@@ -229,22 +231,22 @@ $showPropellants = (isset($this->_options_5)) && (isset($this->_options_5['front
         </div>
         <div class="row justify-content-between">
 
-                <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showCompanies ?>>
-                    <select name="company" id="company_frontpage">
-                        <option value=""><?php _e('- Select department -', 'biltorvet-dealer-tools'); ?></option>
-                    </select>
-                </div>
-
-                <div class="col-sm-<?= $setCol ?> mt-3 mt-sm-0 mb-3" <?= $showVehicleStates ?>>
-                    <select name="vehicleState">
-                        <option value=""><?php _e('- Select vehicle state -', 'biltorvet-dealer-tools'); ?></option>
-                    </select>
-                </div>
-
-                <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showMakeModel ?>>
-                <select name="make" id="make_frontpage">
-                    <option value=""><?php _e('- Select make -', 'biltorvet-dealer-tools'); ?></option>
+            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showCompanies ?>>
+                <select name="company" id="company_frontpage">
+                    <option value=""><?php _e('- Select department -', 'biltorvet-dealer-tools'); ?></option>
                 </select>
+            </div>
+
+            <div class="col-sm-<?= $setCol ?> mt-3 mt-sm-0 mb-3" <?= $showVehicleStates ?>>
+                <select name="vehicleState">
+                    <option value=""><?php _e('- Select vehicle state -', 'biltorvet-dealer-tools'); ?></option>
+                </select>
+            </div>
+
+            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showMakeModel ?>>
+            <select name="make" id="make_frontpage">
+                <option value=""><?php _e('- Select make -', 'biltorvet-dealer-tools'); ?></option>
+            </select>
             </div>
             <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showMakeModel ?>>
                 <select name="model" id="model_frontpage">
@@ -252,23 +254,29 @@ $showPropellants = (isset($this->_options_5)) && (isset($this->_options_5['front
                 </select>
             </div>
 
-                <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showProductTypes ?>>
-                    <select name="productType">
-                        <option value=""><?php _e('- Select vehicle type -', 'biltorvet-dealer-tools'); ?></option>
-                    </select>
-                </div>
+            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showPriceTypes ?>>
+                <select name="priceType">
+                    <option value=""><?php _e('- Select price type -', 'biltorvet-dealer-tools'); ?></option>
+                </select>
+            </div>
 
-                <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showBodyTypes ?>>
-                    <select name="bodyType">
-                        <option value=""><?php _e('- Select body type -', 'biltorvet-dealer-tools'); ?></option>
-                    </select>
-                </div>
+            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showProductTypes ?>>
+                <select name="productType">
+                    <option value=""><?php _e('- Select vehicle type -', 'biltorvet-dealer-tools'); ?></option>
+                </select>
+            </div>
 
-                <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showPropellants ?>>
-                    <select name="propellant">
-                        <option value=""><?php _e('- Select propellant -', 'biltorvet-dealer-tools'); ?></option>
-                    </select>
-                </div>
+            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showBodyTypes ?>>
+                <select name="bodyType">
+                    <option value=""><?php _e('- Select body type -', 'biltorvet-dealer-tools'); ?></option>
+                </select>
+            </div>
+
+            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showPropellants ?>>
+                <select name="propellant">
+                    <option value=""><?php _e('- Select propellant -', 'biltorvet-dealer-tools'); ?></option>
+                </select>
+            </div>
 
             <div class="col-sm-<?= $setCol ?> mt-3 mt-sm-0 mb-3" <?= $showPriceRange ?>>
                 <div class="bdtSliderContainer" >

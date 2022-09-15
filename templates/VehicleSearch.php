@@ -204,7 +204,26 @@
     $showVehicleStates = (count((array)$initialFilterOptions->vehicleStates) >= 2) ? "" : "style='display: none;'";
     $showMakeModel = (count($initialFilterOptions->makes) >= 1) ? "" : "style='display: none;'";
     $showProductTypes = (count((array)$initialFilterOptions->companies) > 2 || count($initialFilterOptions->productTypes) > 1) ? "" : "style='display: none;'";
-    $showPriceTypes = $initialFilterOptions->priceTypes != null && (count((array)$initialFilterOptions->priceTypes) > 1) && isset($this->_options_2['bdt_pricetypes']) && $this->_options_2['bdt_pricetypes'] === '-1' ? "" : "style='display: none;'";
+
+    $showPriceTypes = "";
+    if($initialFilterOptions->priceTypes != null && (count((array)$initialFilterOptions->priceTypes) > 1))
+    {
+        if(isset($this->_options_2['bdt_pricetypes']) && $this->_options_2['bdt_pricetypes'] === '-1')
+        {
+            $showPriceTypes = "";
+        }
+        else if(isset($this->_options_2['bdt_pricetypes']) && $this->_options_2['bdt_pricetypes'] !== '-1')
+        {
+            $showPriceTypes = "style='display: none;'";
+        }
+        else {
+            $showPriceTypes = "";
+        }
+    }
+    else {
+        $showPriceTypes = "style='display: none;'";
+    }
+
     $showBodyTypes = (count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->bodyTypes) > 1) ? "" : "style='display: none;'";
     $showPropellants = (count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->propellants) > 1) ? "" : "style='display: none;'";
 
