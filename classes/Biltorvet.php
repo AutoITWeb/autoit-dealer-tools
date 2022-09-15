@@ -55,7 +55,6 @@ class Biltorvet
         $this->_options_5 = get_option('bdt_options_5');
         $this->_options_6 = get_option('bdt_options_6');
 
-
         /*
         *  Used in conjuction with our divi child theme.
         *  Tells the divi ContactForm.php in our child theme how to handle form submissions.
@@ -87,7 +86,6 @@ class Biltorvet
             } catch (exception $e) {
 
             }
-
         }
 
         if (is_admin()) {
@@ -98,9 +96,7 @@ class Biltorvet
     function bdt_plugin_updated() {
 
         flush_rewrite_rules();
-
     }
-
 
     /*
      * New function to send leads to Autodesktop
@@ -209,24 +205,30 @@ class Biltorvet
 
     public function bdt_meta_tags()
     {
-        $vehicleId = get_query_var('bdt_vehicle_id', -1);
-        if ($vehicleId === -1) {
-            return;
-        }
-        try {
-            $vehicle = $this->biltorvetAPI->GetVehicle($vehicleId);
-        } catch (Exception $e) {
-            return;
-        }
+        $post = get_post();
 
-        global $wp;
-        $oVehicle = VehicleFactory::create(json_decode(json_encode($vehicle), true));
-        $priceController = new PriceController($oVehicle);
-        $product = new ApiController()
+        $vehicledetail = get_post($this->_options['detail_template_page_id']);
 
-        //$priceController->getStructuredDataPrice();
+        if($post->ID === $vehicledetail->ID)
+        {
+            $vehicleId = get_query_var('bdt_vehicle_id', -1);
+            if ($vehicleId === -1) {
+                return;
+            }
+            try {
+                $vehicle = $this->biltorvetAPI->GetVehicle($vehicleId);
+            } catch (Exception $e) {
+                return;
+            }
 
-        ?>
+            global $wp;
+            $oVehicle = VehicleFactory::create(json_decode(json_encode($vehicle), true));
+            $priceController = new PriceController($oVehicle);
+            $product = new ApiController()
+
+            //$priceController->getStructuredDataPrice();
+
+            ?>
             <meta property="og:url" content="<?php echo home_url($wp->request); ?>" />
             <meta property="og:type" content="product"/>
             <meta property="og:title"content="<?php echo $oVehicle->getMakeName() . ' ' . $oVehicle->getVariant(); ?>"/>
@@ -234,21 +236,21 @@ class Biltorvet
             <meta property="og:image" content="<?php echo $oVehicle->getImages()[0]; ?>"/>
             <meta property="og:image:width" content="1920"/>
             <meta property="og:image:height" content="1080"/>
-        <?php
+            <?php
 
-        ?>
-            <meta name="description" content="Hos <?= $oVehicle->getCompany()->getName() ?> har vi altid et stort udvalg af brugte biler til omgående levering. Kig forbi, eller kontakt os i dag for at høre mere.">
-        <?php
-
-
-        // Structured data - requires the product "Structured Data" in the dashboard
-        if(ProductHelper::hasAccess("Structured Data", $product->getCompanyProducts()) && $priceController->getStructuredDataPrice() != null)
-        {
             ?>
-            <script type="application/ld+json">
+            <meta name="description" content="Hos <?= $oVehicle->getCompany()->getName() ?> har vi altid et stort udvalg af brugte biler til omgående levering. Kig forbi, eller kontakt os i dag for at høre mere.">
+            <?php
+
+            // Structured data - requires the product "Structured Data" in the dashboard
+            if(ProductHelper::hasAccess("Structured Data", $product->getCompanyProducts()) && $priceController->getStructuredDataPrice() != null)
+            {
+                ?>
+                <script type="application/ld+json">
                 <?= StructuredDataFactory::VehicleDetails($oVehicle, $priceController->getStructuredDataPrice(), $vehicle->equipment, $this->_options); ?>
             </script>
-            <?php
+                <?php
+            }
         }
     }
 
@@ -268,8 +270,8 @@ class Biltorvet
     {
         wp_register_script( 'bootstrap_slider', plugins_url('scripts/bootstrap-slider.min.js',  dirname(__FILE__) ) , array('jquery'), '1.0.1', true );
 
-        //wp_register_script( 'bdt_script', plugins_url('v3/scripts/vehiclesearchv3.min.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
-        wp_register_script( 'bdt_script', plugins_url('v3/scripts/vehiclesearchv3.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
+        wp_register_script( 'bdt_script', plugins_url('v3/scripts/vehiclesearchv3.min.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
+        //wp_register_script( 'bdt_script', plugins_url('v3/scripts/vehiclesearchv3.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
 
         // Latest version - use with caution
         //wp_register_script( 'bt_slideshow', 'https://gallery.autoit.dk/latest/gallery.js', true );

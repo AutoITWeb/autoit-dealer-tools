@@ -646,6 +646,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
 
             add_settings_field(
+                'frontpagesearch_pricetype',
+                __( 'Activate price types', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_frontpagesearch_pricetype_callback' ),
+                'bdt-settings-group-5', // Page
+                'bdt_settings_section_5' // Section
+            );
+
+            add_settings_field(
                 'frontpagesearch_bodytype',
                 __( 'Activate body types', 'biltorvet-dealer-tools' ),
                 array( $this, 'bdt_frontpagesearch_bodytype_callback' ),
@@ -1326,6 +1334,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             printf(
                 '<input type="checkbox" id="bdt_options_5" value="on" name="bdt_options_5[frontpagesearch_makemodel]"%s />',
                 isset( $this->options_5['frontpagesearch_makemodel'] ) && $this->options_5['frontpagesearch_makemodel'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_frontpagesearch_pricetype_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_5" value="on" name="bdt_options_5[frontpagesearch_pricetype]"%s />',
+                isset( $this->options_5['frontpagesearch_pricetype'] ) && $this->options_5['frontpagesearch_pricetype'] === 'on' ? ' checked="checked"' : ''
             );
         }
 

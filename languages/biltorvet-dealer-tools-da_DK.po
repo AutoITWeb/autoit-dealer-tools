@@ -642,6 +642,9 @@ msgstr "Aktivér mærke og modeller"
 msgid "Activate product types"
 msgstr "Aktivér køretøjstyper"
 
+msgid "Activate price types"
+msgstr "Aktivér pristyper"
+
 msgid "Activate body types"
 msgstr "Aktivér karosserityper"
 
