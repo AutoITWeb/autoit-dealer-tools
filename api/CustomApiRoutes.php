@@ -251,7 +251,6 @@ use Biltorvet\Model\Vehicle;
         {
             $filterObject = new BDTFilterObject();
 
-
             if(isset($_SESSION['bdt_filter']) && !empty($_SESSION['bdt_filter']))
             {
                 $filterObject = new BDTFilterObject(json_decode($_SESSION['bdt_filter'], true));

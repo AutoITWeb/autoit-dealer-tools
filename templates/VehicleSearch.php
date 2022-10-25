@@ -276,7 +276,6 @@
                 </select>
                 </div>
 
-
                 <div class="col-sm-4 mb-1 mb-sm-3" <?= $showBodyTypes ?>>
                 <select name="bodyType">
                     <option value=""><?php _e('- Select body type -', 'biltorvet-dealer-tools'); ?></option>
@@ -288,7 +287,6 @@
                     <option value=""><?php _e('- Select propellant -', 'biltorvet-dealer-tools'); ?></option>
                 </select>
                 </div>
-
             </div>
             <div class="row">
                 <div class="col-sm-4 mt-3 mt-sm-0 mb-3">

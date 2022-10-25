@@ -26,6 +26,7 @@ function Biltorvet($) {
         VehicleStates: null,
         FullTextSearch: null,
         PriceTypes: null,
+        CustomVehicleTypes: null,
         PriceMin: null,
         PriceMax: null,
         ConsumptionMin: null,
@@ -127,8 +128,6 @@ function Biltorvet($) {
             // Deactive filters
             DeactivateSearchFields();
 
-            console.log(filter);
-
             // We can also pass the url value separately from ajaxurl for front end AJAX implementations
             searchFilterOptionsXHR = $.ajax({
                 url: ajax_config.restUrl + 'autoit-dealer-tools/v1/filteroptions',
@@ -197,6 +196,14 @@ function Biltorvet($) {
 
     this.ResetFilters = function()
     {
+        const customVehicleTypeSelected = document.querySelector('#cvt-selected');
+
+        if(customVehicleTypeSelected !== null)
+        {
+            var cvt = customVehicleTypeSelected.dataset.customVehicleTypeSelected;
+            customVehicleTypeSelected.dataset.customVehicleTypeSelected = "";
+        }
+
         return $.ajax({
             url: ajax_config.restUrl + 'autoit-dealer-tools/v1/resetfilteroptions',
             method: 'POST',
@@ -207,7 +214,7 @@ function Biltorvet($) {
             cache: false,
             success: function(response){
 
-                 SetFilters(response);
+                SetFilters(response);
             },
             complete: function()
             {
@@ -227,7 +234,7 @@ function Biltorvet($) {
 
         // The VehicleSearch() function is called directly as we don't want to scrollTop when resetting the filter
         this.ResetFilters().then(VehicleSearch).done(function() {
-            //console.log("done")
+
         });
     }
 
@@ -293,6 +300,17 @@ function Biltorvet($) {
         StopLoadingAnimation();
     }
 
+    this.CustomVehicleTypeSearch = function(customVehicleTypeSelected)
+    {
+        filter = null;
+
+        filter = {
+            CustomVehicleTypes: [customVehicleTypeSelected]
+        }
+
+        SaveFilter();
+    }
+
     this.StartOrderByAndAscDesc = function()
     {
         OrderByAndAscDesc();
@@ -311,6 +329,7 @@ function Biltorvet($) {
 
         filter.OrderBy = vehicleSearchResults.find('select[name=orderBy]').val() === '' ? null : vehicleSearchResults.find('select[name=orderBy]').val();
         filter.Ascending = vehicleSearchResults.find('select[name=ascDesc]').val() === 'asc' ? true : false;
+
 
         $.ajax({
             url: ajax_config.restUrl + 'autoit-dealer-tools/v1/vehiclesearch/search',
@@ -351,16 +370,25 @@ function Biltorvet($) {
 
         // Remove the animate class on all elements to avoid flickering when new vehicles are appended
         currentVehicleCards.forEach(vehicleCard => {
-           vehicleCard.classList.remove('animate__animated');
+            vehicleCard.classList.remove('animate__animated');
         });
 
         // Get paging data from the paging button
         const pagingData = document.querySelector('#paging-button');
 
+        // Get Custom Vehicle Type data
+        const customVehicleTypeSelected = document.querySelector('#cvt-selected');
+
         var currentPage = parseInt(pagingData.dataset.currentPage);
         var amountOfPages = parseInt(pagingData.dataset.amountOfPages);
         var limit = parseInt(pagingData.dataset.limit);
         var start = parseInt(pagingData.dataset.end);
+        var cvt = GetCustomVehicleType();
+
+        if(cvt)
+        {
+            filter.CustomVehicleTypes = [cvt];
+        }
 
         $.ajax({
             url: ajax_config.restUrl + 'autoit-dealer-tools/v1/vehiclesearch/search_paging',
@@ -371,7 +399,7 @@ function Biltorvet($) {
                 'filter': filter,
                 'currentPage': currentPage,
                 'start': start,
-                'limit': limit
+                'limit': limit,
             },
             cache: false,
             success: function(response){
@@ -395,7 +423,7 @@ function Biltorvet($) {
                 // Load stop animation / spinner?
                 StopLoadingAnimationPaging();
             }
-         });
+        });
     }
 
     /**
@@ -418,7 +446,7 @@ function Biltorvet($) {
             cache: false,
             success: function(response){
 
-                window.location.href = root_url + "/";
+                window.location.href = root_url + "/?scroll=true";
             },
             complete: function()
             {
@@ -669,10 +697,28 @@ function Biltorvet($) {
             OrderBy: vehicleSearchResults.find('select[name=orderBy]').val() === '' ? null : vehicleSearchResults.find('select[name=orderBy]').val(),
             Ascending: vehicleSearchResults.find('select[name=ascDesc]').val() === 'asc' ? true : false,
         }
+
+        var cvt = GetCustomVehicleType();
+
+        if(cvt)
+        {
+            filter.CustomVehicleTypes = [cvt];
+        }
     }
 
     // Fire the "Constructor"
     this.Init();
+}
+
+function GetCustomVehicleType()
+{
+    const customVehicleTypeSelected = document.querySelector('#cvt-selected');
+    if(customVehicleTypeSelected !== null)
+    {
+        var cvt = customVehicleTypeSelected.dataset.customVehicleTypeSelected;
+
+        return cvt;
+    }
 }
 
 function FormatPrice(x, suffix)
@@ -755,6 +801,17 @@ jQuery(function($) {
 
             bdt.PagingFetchMore();
         })
+        .on('click', '.car-icon-container', function(e){
+            e.preventDefault();
+
+            const closest = e.target.closest(".car-icon-container");
+            const cvtClicked = closest.dataset.customVehicleType;
+
+            if(cvtClicked)
+            {
+                bdt.CustomVehicleTypeSearch(cvtClicked);
+            }
+        })
 
         // FullTextSearch, input field
         .on('blur', '.fullTextSearch', function(){
@@ -781,6 +838,13 @@ jQuery(function($) {
         .on('change', '.bdt .vehicle_search select', function(){
 
             var vehicleSearch = $(this).closest('.bdt .vehicle_search');
+
+            // Reset Custom Vehicle Type (Frontpage Icon search)
+            const customVehicleTypeSelected = document.querySelector('#cvt-selected');
+            if(customVehicleTypeSelected !== null)
+            {
+                customVehicleTypeSelected.dataset.customVehicleTypeSelected = "";
+            }
 
             // Selecting a different make will reset the selected model
             if($(this).attr('name') === 'make')
@@ -829,8 +893,6 @@ jQuery(function($) {
                 vehicleSearch.find('select[name=consumptionMin]').val('');
                 vehicleSearch.find('select[name=consumptionMax]').val('');
             }
-
-            console.log("something was selected...")
 
             bdt.ReloadUserFilterSelection(false);
         })

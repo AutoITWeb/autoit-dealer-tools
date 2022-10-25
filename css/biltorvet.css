@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body .bdt a img {
     -webkit-box-shadow: none !important;
     box-shadow: none !important
@@ -5869,3 +5873,68 @@ a.bdt .badge-dark.focus {
 }
 
 /*--- AdditionalEquipment styling ends ---*/
+
+/* --- Custom Vehicle Types (Frontpage search) start -- */
+
+:root {
+    --main-icon-color: #00a1b7;
+    --main-bg-color: gray;
+}
+
+.car-model-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.car-icon-container {
+    width: 33.33%;
+}
+.car-icon-container a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.car {
+    margin: 0 15px;
+    height: 32px;
+}
+.car ellipse {
+    fill: rgb(110, 110, 110);
+}
+
+.car-icon-container a:hover .car path {
+    transition: 0.3s;
+    opacity: 0.5;
+}
+.caption {
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+@media screen and (min-width: 500px) {
+    .car {
+        height: 50px;
+        margin: 0 25px;
+    }
+}
+@media screen and (min-width: 768px) {
+    .car-icon-container {
+        width: auto;
+    }
+    .car {
+        height: 32px;
+        margin: 0 15px;
+    }
+}
+@media screen and (min-width: 1024px) {
+    .car {
+        height: 50px;
+        margin: 0 25px;
+    }
+}
+
+/* --- Custom Vehicle Types (Frontpage search) end -- */

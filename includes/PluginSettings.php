@@ -685,6 +685,30 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt_settings_section_5' // Section
             );
 
+            add_settings_field(
+                'frontpagesearch_icon_based_search',
+                __( 'Activate iconbased search', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_frontpagesearch_icon_based_search_callback' ),
+                'bdt-settings-group-5', // Page
+                'bdt_settings_section_5' // Section
+            );
+
+            add_settings_field(
+                'frontpagesearch_iconbased_search_icon_color',
+                __( 'Icon color', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_frontpagesearch_icon_based_search_icon_color_callback' ),
+                'bdt-settings-group-5', // Page
+                'bdt_settings_section_5' // Section
+            );
+
+            add_settings_field(
+                'frontpagesearch_iconbased_search_background_color',
+                __( 'Background color', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_frontpagesearch_icon_based_search_background_color_callback' ),
+                'bdt-settings-group-5', // Page
+                'bdt_settings_section_5' // Section
+            );
+
             /**
              * Deparment setting fields
              */
@@ -1382,6 +1406,38 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             printf(
                 '<input type="checkbox" id="bdt_options_5" value="on" name="bdt_options_5[frontpagesearch_fuelconsumption]"%s />',
                 isset( $this->options_5['frontpagesearch_fuelconsumption'] ) && $this->options_5['frontpagesearch_fuelconsumption'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_frontpagesearch_icon_based_search_callback()
+        {
+            $headerText = "<p><b>Ikonbaseret søgning (Custom Vehicle Types)</b></p>";
+            $subheaderText = "<p>Viser søgeikoner baseret på de typer køretøjer der er til salg. På nuværende tidspunkt understøttes følgende kategorier (ikoner):</p>";
+            $subheaderText .= "<ul><li>Mikro</li>Hatchback<li></li>Familiebil<li></li>Stationcar<li></li>SUV<li></li><li>El & hybrid</li></ul><p><b>Bemærk: Der vises kun ikoner, hvis der er typer der passer i de enkelte kategorier</b></p><br>";
+
+            $header = $headerText . $subheaderText;
+
+            echo $header;
+
+            printf(
+                'Aktivér <input type="checkbox" id="bdt_options_5" value="on" name="bdt_options_5[frontpagesearch_activate_iconbased_search]"%s />',
+                isset( $this->options_5['frontpagesearch_activate_iconbased_search'] ) && $this->options_5['frontpagesearch_activate_iconbased_search'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_frontpagesearch_icon_based_search_icon_color_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_5" name="bdt_options_5[frontpagesearch_iconbased_search_icon_color]" size="30" value="%s" style="margin-bottom: 5px;" placeholder="Skal indeholde # og 6 tegn"/>',
+                isset( $this->options_5['frontpagesearch_iconbased_search_icon_color'] ) ? esc_attr($this->options_5['frontpagesearch_iconbased_search_icon_color']) : ''
+            );
+        }
+
+        public function bdt_frontpagesearch_icon_based_search_background_color_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_5" name="bdt_options_5[frontpagesearch_iconbased_search_background_color]" size="30" value="%s" style="margin-bottom: 5px;" placeholder="Skal indeholde # og 6 tegn"/>',
+                isset( $this->options_5['frontpagesearch_iconbased_search_background_color'] ) ? esc_attr($this->options_5['frontpagesearch_iconbased_search_background_color']) : ''
             );
         }
 
