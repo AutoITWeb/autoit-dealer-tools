@@ -671,3 +671,12 @@ msgstr "Vis alle labels der er sat i AutoDesktop"
 
 msgid "Choose pricetype to show"
 msgstr "Vis kun biler med følgende pristype"
+
+msgid "Activate iconbased search"
+msgstr "Aktivér ikonbaseret forsidesøgning"
+
+msgid "Icon color"
+msgstr "Vælg ikonfarve"
+
+msgid "Background color"
+msgstr "Vælg baggrundsfarve"
