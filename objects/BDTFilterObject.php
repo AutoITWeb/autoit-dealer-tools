@@ -16,6 +16,7 @@
         public $VehicleStates;
         public $FullTextSearch;
         public $PriceTypes;
+        public $CustomVehicleTypes;
         public $Start;
         public $Limit;
         public $OrderBy;

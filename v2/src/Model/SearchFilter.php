@@ -33,6 +33,12 @@ class SearchFilter
      * @var string[]
      */
     public $ProductTypes;
+
+    /**
+     * @var int[]
+     */
+    public $CustomVehicleTypes;
+
     /**
      * @var string[]
      */
@@ -334,6 +340,24 @@ class SearchFilter
     public function setProductTypes(array $ProductTypes): SearchFilter
     {
         $this->ProductTypes = $ProductTypes;
+        return $this;
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getCustomVehicleTypesTypes(): array
+    {
+        return $this->CustomVehicleTypesTypes;
+    }
+
+    /**
+     * @param  int[] $CustomVehicleTypes
+     * @return SearchFilter
+     */
+    public function setCustomVehicleTypes(array $CustomVehicleTypes): SearchFilter
+    {
+        $this->CustomVehicleTypes = $CustomVehicleTypes;
         return $this;
     }
 

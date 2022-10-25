@@ -6,21 +6,22 @@
  *
  */
 
-jQuery(function ($) {
-    $(document).ready(function () {
-        var frontpageSearch = document.getElementById("frontpage_vehicle_search");
+ jQuery(function ($) {
+     $(document).ready(function (e) {
 
-        if(frontpageSearch == null) {
+         var frontpageSearch = document.getElementById("frontpage_vehicle_search");
 
-            $('html, body').animate({
-                scrollTop: $('.vehicle_search_results').offset().top - 150
-            }, 500);
-            //
-            // if(window.matchMedia('(max-width: 768px)').matches)
-            // {
-            //
-            // }
-        }
-    });
+         if(frontpageSearch == null) {
+
+             const params = new URLSearchParams(window.location.search);
+
+             if(params.has('scroll') && params.get('scroll') === 'true')
+             {
+                 $('html, body').animate({
+                     scrollTop: $('.vehicle-row').offset().top - 150
+                 }, 500);
+             }
+         }
+     });
 });
 
