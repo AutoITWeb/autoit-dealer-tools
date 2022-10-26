@@ -446,7 +446,7 @@ function Biltorvet($) {
             cache: false,
             success: function(response){
 
-                window.location.href = root_url + "/?scroll=true";
+                window.location.href = root_url + "/scroll=true";
             },
             complete: function()
             {
@@ -812,7 +812,6 @@ jQuery(function($) {
                 bdt.CustomVehicleTypeSearch(cvtClicked);
             }
         })
-
         // FullTextSearch, input field
         .on('blur', '.fullTextSearch', function(){
             var vehicleSearch = $(this).closest('.bdt .vehicle_search');

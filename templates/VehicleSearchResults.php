@@ -113,7 +113,7 @@
     <span id="cvt-selected" data-custom-vehicle-type-selected="<?= $customVehicleTypesFilterHasValue; ?>"></span>
 
     <div class="bdt">
-        <div id="vehicle_search_results" class="vehicle_search_results vehicleScroll" name="vehicleScroll" data-totalResults="<?= $vehicleFeed->totalResults ?>">
+        <div id="vehicle_search_results" class="vehicle_search_results" data-totalResults="<?= $vehicleFeed->totalResults ?>">
             <div class="row resultsTitle">
                 <div class="col-sm-8">
                     <h4>

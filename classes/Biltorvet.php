@@ -281,7 +281,7 @@ class Biltorvet
 
         // A specific version of the gallery (Very safe)
         wp_register_script( 'bt_slideshow', 'https://gallery.autoit.dk/versions/1.0.2/gallery.js', true );
-        wp_register_script( 'lazy_load', 'https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.2/dist/lazyload.min.js', true );
+        //wp_register_script( 'lazy_load', 'https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.2/dist/lazyload.min.js', true );
 
         wp_register_script( 'search_script', plugins_url('scripts/search.js',  dirname(__FILE__) ) , array('jquery'), '1.0.0', true );
 
