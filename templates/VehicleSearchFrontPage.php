@@ -319,11 +319,6 @@ if(!empty($initialFilterOptions->customVehicleTypes))
                     <option value=""><?php _e('- Select propellant -', 'biltorvet-dealer-tools'); ?></option>
                 </select>
             </div>
-
-            <div>
-                <span id="custom-vehicle-type-selected" class="custom-vehicle-type-selected" data-custom-vehicle-type-selected=""></span>
-            </div>
-
             <div class="col-sm-<?= $setCol ?> mt-3 mt-sm-0 mb-3" <?= $showPriceRange ?>>
                 <div class="bdtSliderContainer" >
                     <label for="priceRange" class="float-left"><?php _e('Price', 'biltorvet-dealer-tools'); ?></label>
