@@ -3,8 +3,8 @@
     if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
     
     class BiltorvetAPI {
-        private $endpoint = 'https://api-v1.autoit.dk'; // Prod
-//        private $endpoint = 'http://api-v1-staging.autoitweb.dk'; // Staging
+//        private $endpoint = 'https://api-v1.autoit.dk'; // Prod
+        private $endpoint = 'http://api-v1-staging.autoitweb.dk'; // Staging
 //        private $endpoint = 'http://localhost:59852'; // Local
         private $apiKey;
         private $vehicleResultsPageLimit = 24;
@@ -90,6 +90,11 @@
             }
 
             return $this->Request('/vehicle', array('filter' => json_encode($filter)));
+        }
+
+        public function GetVehiclesQuickSearch($filter)
+        {
+            return $this->Request('/vehicle/quicksearch', array('filter' => json_encode($filter)));
         }
 
         public function AutodesktopSendLead($lead, $emailReciept = false)
@@ -193,7 +198,6 @@
                 }
 
                 $data = false;
-                //$transientName = $method . (isset($query) ? md5(implode('_', $query)) : '');
                 $transientName = $method . (isset($query) ? json_encode($query) : '');
 
                 if($requestType === 'GET' && !strpos($method, 'influxdb'))
@@ -201,7 +205,7 @@
                     $data = get_transient( $transientName );
                 }
 
-                //delete_transient($transientName);
+                delete_transient($transientName);
 
                 if( false === $data ) {
                     $ch = curl_init($this->endpoint . $method . '?' . ($requestType === 'GET' && isset($query) ? http_build_query($query) . '&'  : '') .'a=' . $this->apiKey );
@@ -267,7 +271,7 @@
 
                     $data = $response->result;
 
-                    set_transient( $transientName, $data, 300);
+                    //set_transient( $transientName, $data, 300);
                 }
 
                 return $data;

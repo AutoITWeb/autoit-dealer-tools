@@ -244,33 +244,33 @@ msgstr "Indtast din AutoIT API-nøgle for at aktivere denne service. For at få 
 
 #: templates/VehicleSearch.php:72
 msgid "- Select department -"
-msgstr "- Vælg afdeling -"
+msgstr "Vælg afdeling"
 
 #: templates/VehicleSearch.php:79
 msgid "- Select make -"
-msgstr "- Vælg mærke -"
+msgstr "Vælg mærke"
 
 #: templates/VehicleSearch.php:85
 msgid "- Select model -"
-msgstr "- Vælg model -"
+msgstr "Vælg model"
 
 #: templates/VehicleSearch.php:92
 msgid "- Select vehicle type -"
-msgstr "- Vælg type -"
+msgstr "Vælg køretøjstype"
 
 #: templates/VehicleSearch.php:99
 msgid "- Select body type -"
-msgstr "- Vælg karrosseri -"
+msgstr "Vælg karrosseri"
 
 #: templates/VehicleSearch.php:106
 msgid "- Select propellant -"
-msgstr "- Vælg brændstof -"
+msgstr "Vælg brændstof"
 
 msgid "- Select vehicle state -"
-msgstr "- Vælg stand -"
+msgstr "Vælg stand"
 
 msgid "- Select price type -"
-msgstr "- Vælg pristype -"
+msgstr "Vælg pristype"
 
 #: templates/VehicleSearch.php:120
 msgid "Consumption"

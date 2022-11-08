@@ -265,59 +265,46 @@ if(!empty($initialFilterOptions->customVehicleTypes))
 <div class="bdt">
     <div id="frontpage_vehicle_search" class="vehicle_search"<?php echo $makeIds !== null ? ' data-makeids="'.$makeIds.'"' : '';  ?>>
         <div class="row">
+
         <?php if(isset($this->_options_5['frontpagesearch_fulltextsearch'])) : ?>
-            <div class="col-sm-12 mb-1 mb-sm-3">
-                <input type="text" class="fullTextSearch" name="fullTextSearch" id="fullTextSearch">
+            <div class="col-sm-12 mb-1 mb-sm-3" id="quicksearch-input">
+                <input class="quicksearch multiple" name="quicksearch" id="quicksearch" multiple="">
             </div>
         <?php endif; ?>
         </div>
+
         <div class="row justify-content-between">
 
             <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showCompanies ?>>
-                <select name="company" id="company_frontpage">
-                    <option value=""><?php _e('- Select department -', 'biltorvet-dealer-tools'); ?></option>
-                </select>
+                <select class="company multiple" multiple="multiple" name="company" id="company" data-contenttype="afdelinger"></select>
+            </div>
+
+            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showMakeModel ?>>
+                <select class="make multiple" multiple="multiple" name="make" id="make" data-contenttype="mærker"></select>
+            </div>
+            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showMakeModel ?>>
+                <select class="model multiple" multiple="multiple" name="model" id="model" data-contenttype="modeller"></select>
             </div>
 
             <div class="col-sm-<?= $setCol ?> mt-3 mt-sm-0 mb-3" <?= $showVehicleStates ?>>
-                <select name="vehicleState">
-                    <option value=""><?php _e('- Select vehicle state -', 'biltorvet-dealer-tools'); ?></option>
-                </select>
-            </div>
-
-            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showMakeModel ?>>
-            <select name="make" id="make_frontpage">
-                <option value=""><?php _e('- Select make -', 'biltorvet-dealer-tools'); ?></option>
-            </select>
-            </div>
-            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showMakeModel ?>>
-                <select name="model" id="model_frontpage">
-                    <option value=""><?php _e('- Select model -', 'biltorvet-dealer-tools'); ?></option>
-                </select>
+                <select class="vehiclestate multiple" multiple="multiple" name="vehicleState" id="vehicleState" data-contenttype="stande"></select>
             </div>
 
             <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showPriceTypes ?>>
-                <select name="priceType">
-                    <option value=""><?php _e('- Select price type -', 'biltorvet-dealer-tools'); ?></option>
-                </select>
+                <select class="pricetype multiple" multiple="multiple" name="priceType" id="priceType" data-contenttype="pristyper"></select>
             </div>
 
             <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showProductTypes ?>>
-                <select name="productType">
-                    <option value=""><?php _e('- Select vehicle type -', 'biltorvet-dealer-tools'); ?></option>
-                </select>
+                <select class="producttype multiple" multiple="multiple" name="productType" id="productType" data-contenttype="køretøjstyper"></select>
             </div>
 
             <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showBodyTypes ?>>
-                <select name="bodyType">
-                    <option value=""><?php _e('- Select body type -', 'biltorvet-dealer-tools'); ?></option>
-                </select>
+                <select class="bodytype multiple" multiple="multiple" name="bodyType" id="bodyType" data-contenttype="karosserityper"></select>
+
             </div>
 
             <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showPropellants ?>>
-                <select name="propellant">
-                    <option value=""><?php _e('- Select propellant -', 'biltorvet-dealer-tools'); ?></option>
-                </select>
+                <select class="propellant multiple" multiple="multiple" name="propellant" id="propellant" data-contenttype="drivmiddeltyper"></select>
             </div>
             <div class="col-sm-<?= $setCol ?> mt-3 mt-sm-0 mb-3" <?= $showPriceRange ?>>
                 <div class="bdtSliderContainer" >

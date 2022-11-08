@@ -170,8 +170,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
         
         public function bdt_shortcode_vehicle_search( $atts ){
             wp_enqueue_style("bdt_style");
+            wp_enqueue_script("select2");
             wp_enqueue_script("bdt_script");
             wp_enqueue_script("search_script");
+
             ob_start();
             require Biltorvet::bdt_get_template("VehicleSearch.php");
             $contents = ob_get_contents();
@@ -181,8 +183,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
         public function bdt_shortcode_vehicle_search_frontpage( $atts ){
             wp_enqueue_style("bdt_style");
+            wp_enqueue_script("select2");
             wp_enqueue_script("bdt_script");
             wp_enqueue_script("search_script");
+
             ob_start();
             require Biltorvet::bdt_get_template("VehicleSearchFrontPage.php");
             $contents = ob_get_contents();

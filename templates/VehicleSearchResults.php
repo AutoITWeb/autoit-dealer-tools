@@ -109,7 +109,9 @@
     $amountOfPages = ceil($vehicleFeed->totalResults / $limit);
 
     $customVehicleTypesFilterHasValue = $filterObject->CustomVehicleTypes != null ? $filterObject->CustomVehicleTypes[0] : "";
+
 ?>
+
     <span id="cvt-selected" data-custom-vehicle-type-selected="<?= $customVehicleTypesFilterHasValue; ?>"></span>
 
     <div class="bdt">
