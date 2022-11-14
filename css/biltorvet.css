@@ -6062,8 +6062,8 @@ a.bdt .badge-dark.focus {
     word-break: keep-all;
 }
 
-.multi-select .select2-container .select2-search--inline .select2-search__field {
-
+.multiple-select .select2-search__field {
+    display: none !important;
 }
 
 .select2-container
@@ -6727,8 +6727,16 @@ b {
     font-weight: bold;
 }
 
-/* --- Multiselect Select2 End -- */
+.selectDropDownLabel {
+    position: absolute;
+    left: 1rem;
+    top: 0.6rem;
+    margin-left: 8px;
+    pointer-events: none;
+    color: #999;
+}
 
+/* --- Multiselect Select2 End -- */
 
 /* --- Quicksearch Select2 Start -- */
 

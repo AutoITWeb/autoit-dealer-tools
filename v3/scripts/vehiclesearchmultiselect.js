@@ -10,30 +10,6 @@ $(document).ready(function(e) {
         //selectionCssClass: ".select2-custom",
     });
 
-    // Loop through all select2 elements and set placeholder value
-    $('.multiple').each(function(i, val)
-    {
-        var contentType = this.dataset.contenttype;
-
-        placeholderValue = SetSelec2PlaceholderValue(contentType);
-
-        $(val).select2({
-            placeholder: placeholderValue
-        });
-    })
-
-    // Disable search functionality
-    $('.multiple').on('select2:opening select2:closing', function(e) {
-        var $searchfield = $(this).parent().find('.select2-search__field');
-        $searchfield.prop('disabled', true);
-        $searchfield.attr('inputmode','none');
-    });
-
-    // This might be needed for mobile / tablets
-/*    $('.multiple').parent().find('.select2-search__field').on('focus', () => {
-        $(this).parent().find('.select2-search__field').prop('disabled', true);
-    });*/
-
     var filter = {
         FullTextSearch: null,
     }
@@ -95,7 +71,12 @@ function Vehicles(vehicle) {
 
     var setPrice = vehicle.cashPrice !== null ? "Kontantpris " + vehicle.cashPrice : vehicle.leasingPrice !== null ? "Leasingpris " + vehicle.leasingPrice : vehicle.financePrice !== null ? "Finansieringspris " + vehicle.financePrice : "Ring for pris";
 
-    console.log(vehicle.cachPrice);
+    var setVariant = vehicle.variant;
+
+    if(setVariant.length > 30)
+    {
+        setVariant = setVariant.slice(0, 27) + "...";
+    }
 
     var markup =
         "<div class='bdt_intellisense-list'>" +
@@ -105,7 +86,7 @@ function Vehicles(vehicle) {
                         "</span>" +
                             "<span class='bdt_intellisense-list-data'>" +
                                 "<span class='bdt_intellisense-list-name'>" + vehicle.makeName + " " + vehicle.model + "<br/>" +
-                                "<span>" + vehicle.variant + "</span>" +
+                                "<span>" + setVariant + "</span>" +
                                 "</span>" +
                                 "<span class='bdt_intellisense-list-price'>" + setPrice ?? '' + "</span>" +
                             "</span>" +
@@ -118,42 +99,6 @@ function Vehicles(vehicle) {
 
 function VehiclesSelection (data) {
     return data.makeModelVariant;
-}
-
-// Returns placeholder value based on contenttype (data attribute)
-function SetSelec2PlaceholderValue(contentType)
-{
-    var placeholderValue = '';
-
-    switch(contentType)
-    {
-        case 'afdelinger':
-            placeholderValue = 'Vælg afdeling';
-            break;
-        case 'stande':
-            placeholderValue = 'Vælg stand';
-            break;
-        case 'mærker':
-            placeholderValue = 'Vælg mærke';
-            break;
-        case 'modeller':
-            placeholderValue = 'Vælg model';
-            break;
-        case 'pristyper':
-            placeholderValue = 'Vælg pristype';
-            break;
-        case 'køretøjstyper':
-            placeholderValue = 'Vælg køretøjstype';
-            break;
-        case 'karosserityper':
-            placeholderValue = 'Vælg karosseri';
-            break;
-        case 'drivmiddeltyper':
-            placeholderValue = 'Vælg brændstof';
-            break;
-    }
-
-    return placeholderValue;
 }
 
 /**
@@ -240,15 +185,14 @@ function Biltorvet($) {
     // Fulltextsearch suffle placeholder
     this.PlaceholderShuffler = function()
     {
-        element = vehicleSearch.find('input[name=fullTextSearch]');
         quickSearch = vehicleSearch.find('input[name=quicksearch]');
 
         var owner = this;
         var placeholders = [
             'Søg på mærke, model, farve, udstyr mm...          ',
-            'Stationcar anhængertræk...                        ',
-            'Hvid varevogn...                                  ',
-            'Diesel SUV...                                     '
+            'Søg på stationcar anhængertræk...                        ',
+            'Søg på hvid varevogn...                                  ',
+            'Søg på diesel SUV...                                     '
         ];
 
         var randomIndex = Math.floor(Math.random() * 4);
@@ -260,8 +204,7 @@ function Biltorvet($) {
                 setTimeout(() => owner.PlaceholderShuffler(), 400)
                 return;
             }
-            element.attr('placeholder', placeholder.substr(0, i +1));
-            quickSearch.attr('placeholder', placeholder.substr(0, i +1));
+            $('.select2-search__field').attr('placeholder', placeholder.substr(0, i +1));
             i++;
         }, 100)
     }
@@ -426,16 +369,11 @@ function Biltorvet($) {
 
                 $('.multiple').each(function(i, element)
                 {
+                    // Reinit placeholders (labels) !!
                     var selectionContainer = $(element).next('.select2-container').find('.select2-selection__rendered');
-                    $(selectionContainer).show();
+
                     $(selectionContainer).parent().find('.select2-selection__label').remove();
-
-                    var contentType = element.dataset.contenttype;
-                    placeholderValue = SetSelec2PlaceholderValue(contentType);
-
-                    $(element).select2({
-                        placeholder: placeholderValue
-                    })
+                    $(element).parent().find('.selectDropDownLabel').show()
                 })
 
             },
@@ -968,16 +906,16 @@ function HandleSelect2SelectionChange(htmlElement, response)
     var selectionContainerChildrenWidth = -40;
 
     // Hide search container and placeholder when filter has active selections
-    /*        if (selectionContainerChildren.length)
-            {
-                $(selectionContainer).parent().find('.select2-search__field').hide();
-                $(htmlElement).parent().find('.selectDropDownLabel').hide()
-            }
-            else
-            {
-                $(selectionContainer).parent().find('.select2-search__field').show();
-                $(htmlElement).parent().find('.selectDropDownLabel').show()
-            }*/
+    if (selectionContainerChildren.length)
+    {
+        $(selectionContainer).parent().find('.select2-search__field').hide();
+        $(htmlElement).parent().find('.selectDropDownLabel').hide()
+    }
+    else
+    {
+        $(selectionContainer).parent().find('.select2-search__field').show();
+        $(htmlElement).parent().find('.selectDropDownLabel').show()
+    }
 
     // Replace selections with a label when selections overflow its container
     $(selectionContainerChildren).each(function ()
@@ -996,12 +934,7 @@ function HandleSelect2SelectionChange(htmlElement, response)
         $(selectionContainer).show();
         $(selectionContainer).parent().find('.select2-selection__label').remove();
 
-        var contentType = htmlElement[0].dataset.contenttype;
-        placeholderValue = SetSelec2PlaceholderValue(contentType);
-
-        $(htmlElement).select2({
-            placeholder: placeholderValue
-        })
+        // Show placeholder labels!!
     }
 }
 
@@ -1042,23 +975,6 @@ function FormatPrice(x, suffix)
         return x;
     }
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + (suffix ? ',-' : '');
-}
-
-function ReinitPlaceholderValues()
-{
-    $('.multiple').each(function(i, element)
-    {
-        // Set element value to null
-        $(element).val(null).trigger('change.select2');
-
-        // Fetch contenttype and reinit placeholder value (If we don't it won't show)
-        var contentType = element.dataset.contenttype;
-        placeholderValue = SetSelec2PlaceholderValue(contentType);
-
-        $(element).select2({
-            placeholder: placeholderValue
-        })
-    });
 }
 
 /**
@@ -1106,6 +1022,7 @@ jQuery(function($) {
         {
             e.preventDefault();
 
+            // Hide selected value to avoid select tag overflow
             var selectionContainer = $(e.target).next('.select2-container').find('.select2-selection__rendered');
             var selectionContainerChildren = $(selectionContainer).children('li');
 
@@ -1113,6 +1030,18 @@ jQuery(function($) {
             {
                 var getLastElementIndex = selectionContainerChildren.length - 1;
                 selectionContainerChildren[getLastElementIndex].style.display = 'none';
+            }
+
+            // Hide / show labels (Placeholder value)
+            if (selectionContainerChildren.length)
+            {
+                $(selectionContainer).parent().find('.select2-search__field').hide();
+                $(e.target).parent().find('.selectDropDownLabel').hide()
+            }
+            else
+            {
+                $(selectionContainer).parent().find('.select2-search__field').show();
+                $(e.target).parent().find('.selectDropDownLabel').show()
             }
 
             // Reset Custom Vehicle Type (Frontpage Icon search)

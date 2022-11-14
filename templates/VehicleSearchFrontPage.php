@@ -275,37 +275,62 @@ if(!empty($initialFilterOptions->customVehicleTypes))
 
         <div class="row justify-content-between">
 
-            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showCompanies ?>>
+            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3 multiple-select" <?= $showCompanies ?>>
                 <select class="company multiple" multiple="multiple" name="company" id="company" data-contenttype="afdelinger"></select>
+                <label class="selectDropDownLabel">
+                    <span class="placeholder-text"><?php _e('- Select department -', 'biltorvet-dealer-tools'); ?></span>
+                </label>
             </div>
 
-            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showMakeModel ?>>
+            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3 multiple-select" <?= $showMakeModel ?>>
                 <select class="make multiple" multiple="multiple" name="make" id="make" data-contenttype="mærker"></select>
+                <label class="selectDropDownLabel">
+                    <span class="placeholder-text"><?php _e('- Select make -', 'biltorvet-dealer-tools'); ?></span>
+                </label>
             </div>
-            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showMakeModel ?>>
+
+            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3 multiple-select" <?= $showMakeModel ?>>
                 <select class="model multiple" multiple="multiple" name="model" id="model" data-contenttype="modeller"></select>
+                <label class="selectDropDownLabel">
+                    <span class="placeholder-text"><?php _e('- Select model -', 'biltorvet-dealer-tools'); ?></span>
+                </label>
             </div>
 
-            <div class="col-sm-<?= $setCol ?> mt-3 mt-sm-0 mb-3" <?= $showVehicleStates ?>>
+            <div class="col-sm-<?= $setCol ?> mt-3 mt-sm-0 mb-3 multiple-select" <?= $showVehicleStates ?>>
                 <select class="vehiclestate multiple" multiple="multiple" name="vehicleState" id="vehicleState" data-contenttype="stande"></select>
+                <label class="selectDropDownLabel">
+                    <span class="placeholder-text"><?php _e('- Select vehicle state -', 'biltorvet-dealer-tools'); ?></span>
+                </label>
             </div>
 
-            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showPriceTypes ?>>
+            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3 multiple-select" <?= $showPriceTypes ?>>
                 <select class="pricetype multiple" multiple="multiple" name="priceType" id="priceType" data-contenttype="pristyper"></select>
+                <label class="selectDropDownLabel">
+                    <span class="placeholder-text"><?php _e('- Select price type -', 'biltorvet-dealer-tools'); ?></span>
+                </label>
             </div>
 
-            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showProductTypes ?>>
+            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3 multiple-select" <?= $showProductTypes ?>>
                 <select class="producttype multiple" multiple="multiple" name="productType" id="productType" data-contenttype="køretøjstyper"></select>
+                <label class="selectDropDownLabel">
+                    <span class="placeholder-text"><?php _e('- Select vehicle type -', 'biltorvet-dealer-tools'); ?></span>
+                </label>
             </div>
 
-            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showBodyTypes ?>>
+            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3 multiple-select" <?= $showBodyTypes ?>>
                 <select class="bodytype multiple" multiple="multiple" name="bodyType" id="bodyType" data-contenttype="karosserityper"></select>
-
+                <label class="selectDropDownLabel">
+                    <span class="placeholder-text"><?php _e('- Select body type -', 'biltorvet-dealer-tools'); ?></span>
+                </label>
             </div>
 
-            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3" <?= $showPropellants ?>>
+            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3 multiple-select" <?= $showPropellants ?>>
                 <select class="propellant multiple" multiple="multiple" name="propellant" id="propellant" data-contenttype="drivmiddeltyper"></select>
+                <label class="selectDropDownLabel">
+                    <span class="placeholder-text"><?php _e('- Select propellant -', 'biltorvet-dealer-tools'); ?></span>
+                </label>
             </div>
+
             <div class="col-sm-<?= $setCol ?> mt-3 mt-sm-0 mb-3" <?= $showPriceRange ?>>
                 <div class="bdtSliderContainer" >
                     <label for="priceRange" class="float-left"><?php _e('Price', 'biltorvet-dealer-tools'); ?></label>
