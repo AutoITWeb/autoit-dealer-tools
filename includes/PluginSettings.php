@@ -820,24 +820,35 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
             $leadOptions = ["Autodesktop" => 0, "Mail" => 1, "Autodesktop & mail" => 2];
 
-            if(!ProductHelper::hasAccess("External User", $api->getCompanyProducts()) && ProductHelper::hasAccess("Leads to ADT", $api->getCompanyProducts())) {
+            $companyProducts = $api->getCompanyProducts();
 
-                $HTML = '<select id="bdt_options" value="on" name="bdt_options[bdt_leads]"/>';
-                $HTML .= '<option value="-1">Vælg hvor leads skal sendes hen</option>';
+            if($companyProducts !== null)
+            {
+                try{
+                    if(!ProductHelper::hasAccess("External User", $companyProducts) && ProductHelper::hasAccess("Leads to ADT", $companyProducts)) {
 
-                foreach($leadOptions as $key => $value) {
-                    $selected = isset( $this->options['bdt_leads']) && $this->options['bdt_leads'] == $value;
-                    $HTML .= '<option value="' . $value . '"';
-                    $HTML .= $selected ? 'selected="selected"' : '';
-                    $HTML .= '>' . $key . '</option>';
+                        $HTML = '<select id="bdt_options" value="on" name="bdt_options[bdt_leads]"/>';
+                        $HTML .= '<option value="-1">Vælg hvor leads skal sendes hen</option>';
+
+                        foreach($leadOptions as $key => $value) {
+                            $selected = isset( $this->options['bdt_leads']) && $this->options['bdt_leads'] == $value;
+                            $HTML .= '<option value="' . $value . '"';
+                            $HTML .= $selected ? 'selected="selected"' : '';
+                            $HTML .= '>' . $key . '</option>';
+                        }
+
+                        $HTML .= '</select>';
+
+                        echo $HTML;
+
+                    } else {
+                        echo "<br>I kan kun modtage leads på mail. <br>Kontakt <a ahref='mail:web@autoit.dk'>AutoIt</a> for at få kunne sende leads til Autodesktop og mail";
+                    }
                 }
-
-                $HTML .= '</select>';
-
-                echo $HTML;
-
-            } else {
-                echo "<br>I kan kun modtage leads på mail. <br>Kontakt <a ahref='mail:web@autoit.dk'>AutoIt</a> for at få kunne sende leads til Autodesktop og mail";
+                catch (Exception $ex)
+                {
+                    echo "<br>I kan kun modtage leads på mail. <br>Kontakt <a ahref='mail:web@autoit.dk'>AutoIt</a> for at få kunne sende leads til Autodesktop og mail";
+                }
             }
         }
 

@@ -235,7 +235,7 @@
             <div class="row">
 
                 <div class="col-sm-12 mb-1 mb-sm-3" id="quicksearch-input">
-                    <input class="quicksearch multiple" name="quicksearch" id="quicksearch" multiple="">
+                    <input class="quicksearch multiple-quicksearch" name="quicksearch" id="quicksearch" multiple="">
                 </div>
 
             </div>
@@ -249,7 +249,7 @@
             </div>-->
             <div class="row">
 
-                <div class="col-sm-4 mb-1 mb-sm-3" <?= $showCompanies ?>>
+                <div class="col-sm-4 mb-1 mb-sm-3" <?= $showCompanies ?> >
                     <select class="company multiple" multiple="multiple" name="company" id="company" data-contenttype="afdelinger"></select>
                 </div>
 

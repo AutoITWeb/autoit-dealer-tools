@@ -268,7 +268,7 @@ if(!empty($initialFilterOptions->customVehicleTypes))
 
         <?php if(isset($this->_options_5['frontpagesearch_fulltextsearch'])) : ?>
             <div class="col-sm-12 mb-1 mb-sm-3" id="quicksearch-input">
-                <input class="quicksearch multiple" name="quicksearch" id="quicksearch" multiple="">
+                <input class="quicksearch multiple-quicksearch" name="quicksearch" id="quicksearch" multiple="">
             </div>
         <?php endif; ?>
         </div>
@@ -326,7 +326,7 @@ if(!empty($initialFilterOptions->customVehicleTypes))
 
             <div class="col-sm-<?= $setCol ?> text-center text-sm-right">
                 <button type="button" data-labelpattern="<?php _e('Show %u vehicles', 'biltorvet-dealer-tools'); ?>" class="et_pb_button bdt_bgcolor" id="vehicle_search_frontpage_button" style="width: 100%;"><?php printf(__('Show %u vehicles', 'biltorvet-dealer-tools'), do_shortcode('[bdt_vehicletotalcount]')); ?></button>
-                <button type="button" class="resetFrontpage bdt_color mt-4 mt-sm-2"><?php _e('Reset', 'biltorvet-dealer-tools'); ?></button>
+                <button type="button" class="reset bdt_color mt-4 mt-sm-2"><?php _e('Reset', 'biltorvet-dealer-tools'); ?></button>
                 <div id="root_url" style="display: none;"><?= $bdt_root_url ?></div>
             </div>
         </div>

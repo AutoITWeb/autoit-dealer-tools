@@ -7,11 +7,8 @@ $(document).ready(function(e) {
     {
         dropdownParent: $('.vehicle_search'),
         containerCssClass: '.multiple',
-        //selectionCssClass: "",
+        //selectionCssClass: ".select2-custom",
     });
-
-    console.log(document.body.style.position);
-    console.log($(document.body).offset());
 
     // Loop through all select2 elements and set placeholder value
     $('.multiple').each(function(i, val)
@@ -24,6 +21,18 @@ $(document).ready(function(e) {
             placeholder: placeholderValue
         });
     })
+
+    // Disable search functionality
+    $('.multiple').on('select2:opening select2:closing', function(e) {
+        var $searchfield = $(this).parent().find('.select2-search__field');
+        $searchfield.prop('disabled', true);
+        $searchfield.attr('inputmode','none');
+    });
+
+    // This might be needed for mobile / tablets
+/*    $('.multiple').parent().find('.select2-search__field').on('focus', () => {
+        $(this).parent().find('.select2-search__field').prop('disabled', true);
+    });*/
 
     var filter = {
         FullTextSearch: null,
@@ -51,7 +60,7 @@ $(document).ready(function(e) {
             },
             cache: true
         },
-        minimumInputLength: 1,
+        minimumInputLength: 2,
         placeholder: "Søg efter køretøjer...",
         //allowClear: true,
         language: {
@@ -59,7 +68,7 @@ $(document).ready(function(e) {
                 return "Søgningen '" + searchInput + "' gav ingen resultater.";
             },
             inputTooShort: function(args) {
-                return "Indtast " + args.minimum + " flere tegn for at starte din søgning";
+                return "Indtast " + args.minimum + " eller flere tegn for at starte din søgning";
             },
             inputTooLong: function(args) {
                 return "Du har indtastet for mange tegn. " + args.maximum + " er maks antal tegn der kan indtastes";
@@ -84,7 +93,26 @@ function Vehicles(vehicle) {
         return "Søger...";
     }
 
-    var markup = "<div><a href='" + vehicle.uri + "'>" + vehicle.makeName + "</a></div>";
+    var setPrice = vehicle.cashPrice !== null ? "Kontantpris " + vehicle.cashPrice : vehicle.leasingPrice !== null ? "Leasingpris " + vehicle.leasingPrice : vehicle.financePrice !== null ? "Finansieringspris " + vehicle.financePrice : "Ring for pris";
+
+    console.log(vehicle.cachPrice);
+
+    var markup =
+        "<div class='bdt_intellisense-list'>" +
+            "<a href='" + vehicle.uri + "'>" +
+                "<span class='bdt_intellisense-list-image'>" +
+                    "<img src='" + vehicle.vehicleImage + "' width='110px' alt='" + vehicle.makeName + "'/>" +
+                        "</span>" +
+                            "<span class='bdt_intellisense-list-data'>" +
+                                "<span class='bdt_intellisense-list-name'>" + vehicle.makeName + " " + vehicle.model + "<br/>" +
+                                "<span>" + vehicle.variant + "</span>" +
+                                "</span>" +
+                                "<span class='bdt_intellisense-list-price'>" + setPrice ?? '' + "</span>" +
+                            "</span>" +
+                "</span>" +
+            "</a>" +
+        "</div>";
+
     return markup;
 }
 
@@ -250,57 +278,6 @@ function Biltorvet($) {
         }
     }*/
 
-    // Select2
-    // When an option is selected calc if the "pill" or some  custom text showing amount of selected options should be shown
-    this.HandleSelect2SelectionChange = function(htmlElement)
-    {
-
-        // Notify Select2 about the change
-        $(htmlElement).trigger('change.select2');
-
-
-        /*var selectionContainer = $(htmlElement).next('.select2-container').find('.select2-selection__rendered');
-        var selectionContainerChildren = $(selectionContainer).children('li');
-
-        // Reset rendering
-        $(selectionContainer).show();
-        $(selectionContainer).parent().find('.select2-selection__label').remove();
-
-        // Initialize widths
-        var selectionContainerWidth = $(selectionContainer).width();
-        var selectionContainerChildrenWidth = -20;
-
-        // Hide search container and placeholder when filter has active selections
-        if (selectionContainerChildren.length)
-        {
-            $(selectionContainer).parent().find('.select2-search__field').hide();
-            $(htmlElement).parent().find('.selectDropDownLabel').hide()
-        }
-        else
-        {
-            $(selectionContainer).parent().find('.select2-search__field').show();
-            $(htmlElement).parent().find('.selectDropDownLabel').show()
-        }
-
-        // Replace selections with a label when selections overflow its container
-        $(selectionContainerChildren).each(function ()
-        {
-            selectionContainerChildrenWidth += 15;
-            selectionContainerChildrenWidth += selectionContainerChildren.outerWidth();
-        })
-
-        if (selectionContainerChildrenWidth > selectionContainerWidth)
-        {
-            $(selectionContainer).hide();
-            $(selectionContainer).parent().append('<span class="select2-selection__label">' + selectionContainerChildren.length + ' valgte ' + $(htmlElement).data('contenttype') + '</span>');
-        }
-        else
-        {
-            $(selectionContainer).show();
-            $(selectionContainer).parent().find('.select2-selection__label').remove();
-        }*/
-    }
-
     /**
      * Starts the "paging" spinner which is also used when a user interacts with the order_by and filter_by selects
      * @param {bool} True = empty filter, false the current filter
@@ -342,6 +319,7 @@ function Biltorvet($) {
                         if(response.values.companyIds && response.values.companyIds[0])
                         {
                             $('#company').val(response.values.companyIds);
+                            HandleSelect2SelectionChange($('#company'));
                         }
                         if(response.values.fullTextSearch && response.values.fullTextSearch[0])
                         {
@@ -350,30 +328,37 @@ function Biltorvet($) {
                         if(response.values.makes && response.values.makes[0])
                         {
                             $('#make').val(response.values.makes);
+                            HandleSelect2SelectionChange($('#make'));
                         }
                         if(response.values.models && response.values.models[0])
                         {
                             $('#model').val(response.values.models);
+                            HandleSelect2SelectionChange($('#model'));
                         }
                         if(response.values.propellants && response.values.propellants[0])
                         {
                             $('#propellant').val(response.values.propellants);
+                            HandleSelect2SelectionChange($('#propellant'));
                         }
                         if(response.values.bodyTypes && response.values.bodyTypes[0])
                         {
                             $('#bodyType').val(response.values.bodyTypes);
+                            HandleSelect2SelectionChange($('#bodyType'));
                         }
                         if(response.values.productTypes && response.values.productTypes[0])
                         {
                             $('#productType').val(response.values.productTypes);
+                            HandleSelect2SelectionChange($('#productType'));
                         }
                         if(response.values.vehicleStates && response.values.vehicleStates[0])
                         {
                             $('#vehicleState').val(response.values.vehicleStates);
+                            HandleSelect2SelectionChange($('#vehicleState'));
                         }
                         if(response.values.priceTypes && response.values.priceTypes[0])
                         {
                             $('#priceType').val(response.values.priceTypes);
+                            HandleSelect2SelectionChange($('#priceType'));
                         }
                     }
                 },
@@ -438,11 +423,25 @@ function Biltorvet($) {
             success: function(response){
 
                 SetFilters(response);
+
+                $('.multiple').each(function(i, element)
+                {
+                    var selectionContainer = $(element).next('.select2-container').find('.select2-selection__rendered');
+                    $(selectionContainer).show();
+                    $(selectionContainer).parent().find('.select2-selection__label').remove();
+
+                    var contentType = element.dataset.contenttype;
+                    placeholderValue = SetSelec2PlaceholderValue(contentType);
+
+                    $(element).select2({
+                        placeholder: placeholderValue
+                    })
+                })
+
             },
             complete: function()
             {
                 StopLoadingAnimation();
-                //StopLoadingAnimationPaging();
             }
         });
     }
@@ -459,17 +458,6 @@ function Biltorvet($) {
         this.ResetFilters().then(VehicleSearch).done(function() {
 
         });
-    }
-
-    this.ResetFrontpageFilter = function()
-    {
-        StartLoadingAnimation();
-
-        DeactivateSearchFields();
-
-        filter = null;
-
-        this.ResetFilters();
     }
 
     this.StartVehicleSearch = function ()
@@ -961,6 +949,62 @@ function Biltorvet($) {
     this.Init();
 }
 
+// Select2
+// When an option is selected calc if the "pill" or some  custom text showing amount of selected options should be shown
+function HandleSelect2SelectionChange(htmlElement, response)
+{
+    // Notify Select2 about the change
+    $(htmlElement).trigger('change.select2');
+
+    var selectionContainer = $(htmlElement).next('.select2-container').find('.select2-selection__rendered');
+    var selectionContainerChildren = $(selectionContainer).children('li');
+
+    // Reset rendering
+    $(selectionContainer).show();
+    $(selectionContainer).parent().find('.select2-selection__label').remove();
+
+    // Initialize widths
+    var selectionContainerWidth = $(selectionContainer).width();
+    var selectionContainerChildrenWidth = -40;
+
+    // Hide search container and placeholder when filter has active selections
+    /*        if (selectionContainerChildren.length)
+            {
+                $(selectionContainer).parent().find('.select2-search__field').hide();
+                $(htmlElement).parent().find('.selectDropDownLabel').hide()
+            }
+            else
+            {
+                $(selectionContainer).parent().find('.select2-search__field').show();
+                $(htmlElement).parent().find('.selectDropDownLabel').show()
+            }*/
+
+    // Replace selections with a label when selections overflow its container
+    $(selectionContainerChildren).each(function ()
+    {
+        //selectionContainerChildrenWidth += 15;
+        selectionContainerChildrenWidth += selectionContainerChildren.outerWidth();
+    })
+
+    if (selectionContainerChildrenWidth > selectionContainerWidth)
+    {
+        $(selectionContainer).hide();
+        $(selectionContainer).parent().append('<span class="select2-selection__label">' + selectionContainerChildren.length + ' valgte ' + $(htmlElement).data('contenttype') + '</span>');
+    }
+    else
+    {
+        $(selectionContainer).show();
+        $(selectionContainer).parent().find('.select2-selection__label').remove();
+
+        var contentType = htmlElement[0].dataset.contenttype;
+        placeholderValue = SetSelec2PlaceholderValue(contentType);
+
+        $(htmlElement).select2({
+            placeholder: placeholderValue
+        })
+    }
+}
+
 function RetrieveSelect2Values(id)
 {
     if ($(id).hasClass("select2-hidden-accessible")) {
@@ -978,10 +1022,6 @@ function RetrieveSelect2Values(id)
 
         return selectValues;
     }
-
-    //$(document).ready(function(e) {
-
-    //});
 }
 
 function GetCustomVehicleType()
@@ -1060,23 +1100,20 @@ jQuery(function($) {
         .on('click', '.bdt .reset', function(e){
             e.preventDefault();
 
-            // Loop through elements to set placeholder values
-            ReinitPlaceholderValues();
-
             bdt.ResetFilter();
-        })
-        .on('click', '.bdt .resetFrontpage', function(e){
-            e.preventDefault();
-
-            //$(this).closest('.bdt .vehicle_search').find('select').val('');
-
-            bdt.HandleSelect2SelectionChange(e.target);
-
-            bdt.ResetFrontpageFilter();
         })
         .on('change', '.bdt .multiple', function (e)
         {
             e.preventDefault();
+
+            var selectionContainer = $(e.target).next('.select2-container').find('.select2-selection__rendered');
+            var selectionContainerChildren = $(selectionContainer).children('li');
+
+            if(selectionContainerChildren.length > 1)
+            {
+                var getLastElementIndex = selectionContainerChildren.length - 1;
+                selectionContainerChildren[getLastElementIndex].style.display = 'none';
+            }
 
             // Reset Custom Vehicle Type (Frontpage Icon search)
             const customVehicleTypeSelected = document.querySelector('#cvt-selected');
@@ -1084,8 +1121,6 @@ jQuery(function($) {
             {
                 customVehicleTypeSelected.dataset.customVehicleTypeSelected = "";
             }
-
-            bdt.HandleSelect2SelectionChange(e.target);
 
             bdt.ReloadUserFilterSelection(false);
         })
@@ -1119,88 +1154,5 @@ jQuery(function($) {
             {
                 bdt.CustomVehicleTypeSearch(cvtClicked);
             }
-        })
-
-        // Select fields
-        .on('change', '.bdt .vehicle_search select', function(e){
-
-            /*var vehicleSearch = $(this).closest('.bdt .vehicle_search');
-
-            // Reset Custom Vehicle Type (Frontpage Icon search)
-            const customVehicleTypeSelected = document.querySelector('#cvt-selected');
-            if(customVehicleTypeSelected !== null)
-            {
-                customVehicleTypeSelected.dataset.customVehicleTypeSelected = "";
-            }
-
-            // selecting a new company will reset all other fields.
-            if($(this).attr('name') === 'company')
-            {
-                vehicleSearch.find('select[name=make]').val('').trigger('change');
-                vehicleSearch.find('select[name=model]').val('').trigger('change');
-                vehicleSearch.find('select[name=vehicleState]').val('').trigger('change');
-                vehicleSearch.find('select[name=make]').val('').trigger('change');
-                vehicleSearch.find('select[name=model]').val('').trigger('change');
-                vehicleSearch.find('select[name=bodyType]').val('').trigger('change');
-                vehicleSearch.find('select[name=productType]').val('').trigger('change');
-                vehicleSearch.find('select[name=propellant]').val('').trigger('change');
-                vehicleSearch.find('select[name=priceType]').val('').trigger('change');
-                vehicleSearch.find('select[name=priceMinMax]').val('').trigger('change');
-                vehicleSearch.find('select[name=priceMinMax]').val('').trigger('change');
-                vehicleSearch.find('select[name=consumptionMin]').val('').trigger('change');
-                vehicleSearch.find('select[name=consumptionMax]').val('').trigger('change');
-            }
-
-           // Selecting a different make will reset the selected model
-            if($(this).attr('name') === 'make')
-            {
-                vehicleSearch.find('select[name=model]').val('').trigger('change');
-                vehicleSearch.find('select[name=vehicleState]').val('').trigger('change');
-                vehicleSearch.find('select[name=bodyType]').val('').trigger('change');
-                vehicleSearch.find('select[name=productType]').val('').trigger('change');
-                vehicleSearch.find('select[name=propellant]').val('').trigger('change');
-                vehicleSearch.find('select[name=priceType]').val('').trigger('change');
-                vehicleSearch.find('select[name=priceMinMax]').val('').trigger('change');
-                vehicleSearch.find('select[name=priceMinMax]').val('').trigger('change');
-                vehicleSearch.find('select[name=consumptionMin]').val('').trigger('change');
-                vehicleSearch.find('select[name=consumptionMax]').val('').trigger('change');
-            }
-
-            // selecting a new model will reset all other fields.
-            if($(this).attr('name') === 'model')
-            {
-                //bdt.HandleSelect2SelectionChange(vehicleSearch.find('select[name=make]'));
-
-                vehicleSearch.find('select[name=vehicleState]').val('');
-                vehicleSearch.find('select[name=bodyType]').val('');
-                vehicleSearch.find('select[name=productType]').val('');
-                vehicleSearch.find('select[name=propellant]').val('');
-                vehicleSearch.find('select[name=priceType]').val('');
-                vehicleSearch.find('select[name=priceMinMax]').val('');
-                vehicleSearch.find('select[name=priceMinMax]').val('');
-                vehicleSearch.find('select[name=consumptionMin]').val('');
-                vehicleSearch.find('select[name=consumptionMax]').val('');
-            }
-
-            // selecting vehicle state will reset all other fields.
-            if($(this).attr('name') === 'vehicleState')
-            {
-                vehicleSearch.find('select[name=make]').val('');
-                vehicleSearch.find('select[name=model]').val('');
-                vehicleSearch.find('select[name=bodyType]').val('');
-                vehicleSearch.find('select[name=productType]').val('');
-                vehicleSearch.find('select[name=propellant]').val('');
-                vehicleSearch.find('select[name=priceType]').val('');
-                vehicleSearch.find('select[name=priceMinMax]').val('');
-                vehicleSearch.find('select[name=priceMinMax]').val('');
-                vehicleSearch.find('select[name=consumptionMin]').val('');
-                vehicleSearch.find('select[name=consumptionMax]').val('');
-            }
-
-            // Loop through elements to set placeholder values
-
-
-            bdt.ReloadUserFilterSelection(false);
-            //ReinitPlaceholderValues();*/
         })
 });

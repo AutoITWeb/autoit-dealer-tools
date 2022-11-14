@@ -205,7 +205,7 @@
                     $data = get_transient( $transientName );
                 }
 
-                delete_transient($transientName);
+                //delete_transient($transientName);
 
                 if( false === $data ) {
                     $ch = curl_init($this->endpoint . $method . '?' . ($requestType === 'GET' && isset($query) ? http_build_query($query) . '&'  : '') .'a=' . $this->apiKey );
@@ -271,7 +271,7 @@
 
                     $data = $response->result;
 
-                    //set_transient( $transientName, $data, 300);
+                    set_transient( $transientName, $data, 300);
                 }
 
                 return $data;

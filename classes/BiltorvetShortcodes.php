@@ -696,6 +696,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 return nl2br('<span class="bdt_vehicle_company_name">'. $this->currentVehicle->company->name . "</span>\r\n" . $this->currentVehicle->company->address . "\r\n" . $this->currentVehicle->company->postNumber . " " . $this->currentVehicle->company->city);
             }
 
+            if($propertyName == 'companyAddress') {
+                return nl2br('<span><span class="bdt_vehicle_company_street">' . $this->currentVehicle->company->address . '</span><span class="bdt_vehicle_company_postalcode_and_city">' . $this->currentVehicle->company->postNumber . " " . $this->currentVehicle->company->city . '</span></span>');
+            }
+
             $value = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, $propertyName, isset($atts['raw']));
 
             // Vehicledetail breadcrumb
