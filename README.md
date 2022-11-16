@@ -166,6 +166,8 @@ Creates a list of cars from status codes set in AutoDesktop (In order to use thi
 <br>Optional attributes:  
 * __state__  
 * __make__  
+* __orderby__  
+* __ascending__  
 
 <br>The following status codes are currently supported:  
 * __Sold__ - Shows all cars with the label "Solgt".  
@@ -387,7 +389,7 @@ Required attribute:
 * __type__  
 
 Supported widget-types:  
-* Santander - Santander widget. WORKS ONLY IN VEHICLE DETAIL PAGE.  
+* Santander - Santander widget. WORKS ONLY ON THE VEHICLE DETAIL PAGE.  
 
 
 The widgets should work without any additional parameters, as the usual clientID parameter is resolved automatically by association to the companyId associated with the current API key. Widgets can be used anywhere in your WordPRess installation, except for Santander widget that can only be used on a vehicle detail page, because it requires some inputs about a vehicle to be displayed.  
