@@ -100,6 +100,7 @@ Print out the search results - list of cars.
 
 __bdt_vehicle_search_frontpage__  
 Specialized search for use on the frontpage (or any other landingpage that is not the main search and result page)  
+(Lots of possible ways to tweak what is shown and how it looks. See the setting "Forsidesøgning" in the plugin settings)
 
 __bdt_vehicle_card__  
 Print out a vehicle "card" - a box with short informations about the vehicle. This is equal to one search result item from the vehicle search results.  
