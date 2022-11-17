@@ -86,13 +86,13 @@ class Callbacks
         }
         if(isset($atts['orderby'])) {
 
-            $orderByValues = array("DateEdited", "Mileage", "FirstRegistrationYear", "Consumption", "Make", "Price");
+            $orderByValues = array("DateEdited", "Mileage", "FirstRegistrationYear", "Consumption", "Make", "Price", "LeasingPrice");
 
             if(in_array($atts['orderby'], $orderByValues)) {
                 $searchFilter->setOrderBy($atts['orderby']);
                 $searchFilter->setAscending(false);
             } else {
-                $errors .= '<b>' . 'Error: ' . '</b>' . 'Incorrect orderby value - Must be one of the following: "DateEdited", "Mileage", "FirstRegistrationYear", "Consumption", "Make", "Price".' . '<br>';
+                $errors .= '<b>' . 'Error: ' . '</b>' . 'Incorrect orderby value - Must be one of the following: "DateEdited", "Mileage", "FirstRegistrationYear", "Consumption", "Make", "Price" or "LeasingPrice".' . '<br>';
             }
         }
         if(isset($atts['ascending'])) {
@@ -132,6 +132,8 @@ class Callbacks
     /**
      * Filters vehicles by vehicle type (Car, van, motorcycle or truck)
      *
+     * This is about to be obsolete! Everything will be moved to the above shortcode
+     *
      * @param atts   'status', 'make', 'state'
      *
      * @return Status
@@ -161,6 +163,26 @@ class Callbacks
             }
             else {
                 return '<b>"' . $atts['state'] . '"</b>' . ' is not a valid state - Please set a valid state.' . '<br><br>' . 'Check the documentation for valid status codes.';
+            }
+        }
+
+        if(isset($atts['orderby'])) {
+
+            $orderByValues = array("DateEdited", "Mileage", "FirstRegistrationYear", "Consumption", "Make", "Price", "LeasingPrice");
+
+            if(in_array($atts['orderby'], $orderByValues)) {
+                $searchFilter->setOrderBy($atts['orderby']);
+                $searchFilter->setAscending(false);
+            } else {
+                return '<b>' . 'Error: ' . '</b>' . 'Incorrect orderby value - Must be one of the following: "DateEdited", "Mileage", "FirstRegistrationYear", "Consumption", "Make", "Price" or "LeasingPrice".' . '<br>';
+            }
+        }
+        if(isset($atts['ascending'])) {
+
+            if($atts['ascending'] == 'true') {
+                $searchFilter->setAscending(true);
+            } else {
+                return '<b>' . 'Error: ' . '</b>' . 'Incorrect ascending value: Must be true (defaults to false if attribute is not set' . '<br>';
             }
         }
 
@@ -275,38 +297,6 @@ class Callbacks
             true
         );
     }
-
-    /**
-     * @TODO: Refactor
-     *
-     * @param  array $args
-     * @return array
-     * @throws Exception
-     */
-//    public function sendLead(array $args)
-//    {
-//        $args['message'] .= "\r\n" . "Email afsendt fra: " . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-//
-//        if (WordpressHelper::isActivityType(WordpressHelper::getQueryParameter('bdt_actiontype'))) {
-//            $vehicle = $this->apiController->getVehicleDetails(WordpressHelper::getQueryParameter('bdt_vehicle_id'));
-//
-//            if ($vehicle === null) {
-//                $args['message'] = MailFormatter::MakeLabelsUppercase($args['message']);
-//                return $args;
-//            }
-//
-//            // Append the vehicle info to the WP email.
-//            $args['message'] .= "\r\n\r\n" .  sprintf(__('Selected vehicle: %s', 'biltorvet-dealer-tools'), $vehicle->getModel() . ' (' . $vehicle->getId() . ')');
-//            // Some e-mail clients don't respect the reply-to header, and then we lose the information about sender. For this reason, we are gluing the sender e-mail back to the e-mail body.
-//            $args['message'] .= "\r\n\r\n" .  sprintf(__('Lead sender: %s', 'biltorvet-dealer-tools'), WordpressHelper::getReplyTo($args));
-//
-//            $this->apiController->sendLead(VehicleLeadFactory::create($vehicle, $args, WordpressHelper::getQueryParameters()));
-//        }
-//
-//        $args['message'] = MailFormatter::MakeLabelsUppercase($args['message']);
-//
-//        return $args;
-//    }
 
     public function debug_page_menu()
     {

@@ -311,6 +311,9 @@ msgstr "Faldende"
 msgid "Leasing price"
 msgstr "Leasingpris"
 
+msgid "LeasingPrice"
+msgstr "Leasingpris"
+
 #: templates/_VehicleCard.php:41 v2/src/Controller/PriceController.php:126
 msgid "Financing price"
 msgstr "Finansieringspris"
