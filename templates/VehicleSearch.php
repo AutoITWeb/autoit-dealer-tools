@@ -227,6 +227,8 @@
     $showBodyTypes = (count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->bodyTypes) > 1) ? "" : "style='display: none;'";
     $showPropellants = (count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->propellants) > 1) ? "" : "style='display: none;'";
 
+    var_dump($this->_options_2['fulltextsearch_or_quicksearch']);
+
     ?>
 
     <div class="bdt"">
@@ -234,9 +236,18 @@
 
             <div class="row">
 
-                <div class="col-sm-12 mb-1 mb-sm-3" id="quicksearch-input">
-                    <input class="quicksearch multiple-quicksearch" name="quicksearch" id="quicksearch" multiple="">
-                </div>
+                <?php if(isset($this->_options_2['fulltextsearch_or_quicksearch']) && $this->_options_2['fulltextsearch_or_quicksearch'] === '1') : ?>
+                    <div class="col-sm-12 mb-3 mb-sm-3" id="quicksearch-input">
+                        <input class="quicksearch multiple-quicksearch" name="quicksearch" id="quicksearch" multiple="">
+                    </div>
+                <?php endif; ?>
+
+                <?php if(!isset($this->_options_2['fulltextsearch_or_quicksearch']) || isset($this->_options_2['fulltextsearch_or_quicksearch']) && $this->_options_2['fulltextsearch_or_quicksearch'] === '0') : ?>
+                    <div class="col-sm-12 mb-1 mb-sm-3">
+                        <input type="text" class="fullTextSearch" name="fullTextSearch" id="fullTextSearch">
+                    </div>
+                <?php endif; ?>
+
             </div>
 
             <div class="row">

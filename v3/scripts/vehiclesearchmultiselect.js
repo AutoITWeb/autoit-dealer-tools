@@ -185,7 +185,8 @@ function Biltorvet($) {
     // Fulltextsearch suffle placeholder
     this.PlaceholderShuffler = function()
     {
-        quickSearch = vehicleSearch.find('input[name=quicksearch]');
+        //quickSearch = vehicleSearch.find('input[name=quicksearch]');
+        fullTextSearch = vehicleSearch.find('input[name=fullTextSearch]');
 
         var owner = this;
         var placeholders = [
@@ -204,7 +205,13 @@ function Biltorvet($) {
                 setTimeout(() => owner.PlaceholderShuffler(), 400)
                 return;
             }
+
+            // Quicksearch
             $('.select2-search__field').attr('placeholder', placeholder.substr(0, i +1));
+
+            // Full-Text Search
+            fullTextSearch.attr('placeholder', placeholder.substr(0, i +1));
+
             i++;
         }, 100)
     }
@@ -1084,4 +1091,10 @@ jQuery(function($) {
                 bdt.CustomVehicleTypeSearch(cvtClicked);
             }
         })
+        .on('blur', '.fullTextSearch', function(){
+        var vehicleSearch = $(this).closest('.bdt .vehicle_search');
+
+
+        bdt.ReloadUserFilterSelection(false);
+    })
 });

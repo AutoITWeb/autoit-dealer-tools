@@ -275,6 +275,12 @@ if(!empty($initialFilterOptions->customVehicleTypes))
         <div class="row">
 
         <?php if(isset($this->_options_5['frontpagesearch_fulltextsearch'])) : ?>
+        <div class="col-sm-12 mb-1 mb-sm-3">
+            <input type="text" class="fullTextSearch" name="fullTextSearch" id="fullTextSearch">
+        </div>
+        <?php endif; ?>
+
+        <?php if(isset($this->_options_5['frontpagesearch_quicksearch'])) : ?>
             <div class="col-sm-12 mb-1 mb-sm-3" id="quicksearch-input">
                 <input class="quicksearch multiple-quicksearch" name="quicksearch" id="quicksearch" multiple="">
             </div>

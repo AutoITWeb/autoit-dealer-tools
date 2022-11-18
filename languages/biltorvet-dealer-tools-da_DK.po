@@ -683,3 +683,9 @@ msgstr "Vælg ikonfarve"
 
 msgid "Background color"
 msgstr "Vælg baggrundsfarve"
+
+msgid "Fulltextsearch or quicksearch"
+msgstr "Vis fritekstsøgning eller hurtigsøgning"
+
+msgid "Activate quicksearch"
+msgstr "Aktivér hurtigsøgning"
