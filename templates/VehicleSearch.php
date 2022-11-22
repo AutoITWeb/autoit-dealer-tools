@@ -226,9 +226,6 @@
 
     $showBodyTypes = (count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->bodyTypes) > 1) ? "" : "style='display: none;'";
     $showPropellants = (count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->propellants) > 1) ? "" : "style='display: none;'";
-
-    var_dump($this->_options_2['fulltextsearch_or_quicksearch']);
-
     ?>
 
     <div class="bdt"">

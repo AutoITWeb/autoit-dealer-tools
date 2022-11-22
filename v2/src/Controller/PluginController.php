@@ -28,7 +28,7 @@ class PluginController
             $this->filters();
             $this->shortcodes();
         } catch (Exception $e) {
-            var_dump($e);
+            //var_dump($e);
         }
     }
 

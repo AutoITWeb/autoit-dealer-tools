@@ -910,7 +910,7 @@ function HandleSelect2SelectionChange(htmlElement, response)
 
     // Initialize widths
     var selectionContainerWidth = $(selectionContainer).width();
-    var selectionContainerChildrenWidth = -40;
+    var selectionContainerChildrenWidth = -20;
 
     // Hide search container and placeholder when filter has active selections
     if (selectionContainerChildren.length)
