@@ -5502,17 +5502,23 @@ a.bdt .badge-dark.focus {
 .bdt .vehicle_search select,
 .bdt .vehicle_search input {
   width: 100%;
-  padding: 16px;
-  border: none;
+  padding: 5px 8px;
+  border: 1px solid #cdcbcb;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
   color: #999;
-  background-color: #eee;
-  font-size: 14px;
+  background-color: #fff;
+  font-size: 1em;
   -webkit-appearance: none;
+  height: 44px;
 }
 
+.bdt .vehicle_search input:focus {
+  border: 1px solid #979797;
+  outline: 0;
+  box-shadow: 0px 0px 7px -1px rgb(0 0 0 / 60%);
+}
 .bdt .vehicle_search .vehicleCategories,
 .bdt .vehicle_search .makes {
   width: 100%;
@@ -6095,9 +6101,6 @@ a.bdt .badge-dark.focus {
   user-select: none;
   -webkit-user-select: none;
 }
-#select2-quicksearch-results .select2-results__option:nth-child(even) {
-  background: #f1f1f1;
-}
 .select2-results__option--selectable {
   cursor: pointer;
   position: relative;
@@ -6404,7 +6407,6 @@ a.bdt .badge-dark.focus {
   outline: 0;
   box-shadow: none;
   -webkit-appearance: textfield;
-  cursor: pointer;
 }
 .select2-container--default .select2-results > .select2-results__options {
   max-height: 200px;
@@ -6759,6 +6761,13 @@ a.bdt .badge-dark.focus {
 
 /* --- Quicksearch Select2 Start -- */
 
+#select2-quicksearch-results .select2-results__option:nth-child(even) {
+  background: #f1f1f1;
+}
+#quicksearch-input .select2-container--default .select2-selection--multiple {
+  background-image: none;
+  cursor: text;
+}
 .bdt_intellisense-list a {
   display: flex;
   column-gap: 15px;
