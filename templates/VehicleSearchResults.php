@@ -125,7 +125,7 @@
                 <div class="col-sm-4 searchFilter">
                     <div class="row">
                         <div class="col">
-                            <select class="results_order_by" name="orderBy">
+                            <select class="results_order_by" name="orderBy" style="">
                                 <option value=""><?php _e('- Order by -', 'biltorvet-dealer-tools'); ?></option>
                                 <?php
                                 foreach($orderByValues as $orderBy) : ?>
@@ -138,7 +138,7 @@
                             </select>
                         </div>
                         <div class="col">
-                            <select name="ascDesc">
+                            <select name="ascDesc" style="">
                                 <option value="desc"<?php echo $filterObject->Ascending !== 'true' || isset($this->_options_2['default_sorting_order']) && isset($this->_options_2['default_sorting_order']) === "Descending" ? ' selected="selected"' : '';  ?>><?php _e('Descending', 'biltorvet-dealer-tools'); ?></option>
                                 <option value="asc"<?php echo $filterObject->Ascending === 'true' || isset($this->_options_2['default_sorting_order']) && isset($this->_options_2['default_sorting_order']) === "Ascending" ? ' selected="selected"' : '';  ?>><?php _e('Ascending', 'biltorvet-dealer-tools'); ?></option>
                             </select>
