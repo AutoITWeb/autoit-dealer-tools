@@ -5542,6 +5542,9 @@ a.bdt .badge-dark.focus {
   width: 100%;
   height: auto;
 }
+#vehicle_search_frontpage_button {
+  cursor: pointer;
+}
 
 .bdt .vehicle_search button.search {
   display: block;
@@ -5553,6 +5556,7 @@ a.bdt .badge-dark.focus {
   color: #555;
   border: none;
   padding: 5px 10px;
+  cursor: pointer;
 }
 
 .bdt .vehicle_search .resetFrontpage {
@@ -5560,9 +5564,32 @@ a.bdt .badge-dark.focus {
   color: #555;
   border: none;
   padding: 5px 10px;
+  cursor: pointer;
 }
 
-.bdt .vehicle_search_results select,
+bdt .vehicle_search_results select,
+.bdt .vehicle_search_results input {
+  width: 100%;
+  padding: 5px 8px;
+  border: 1px solid #cdcbcb;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  color: #999;
+  background-color: #fff;
+  font-size: 1em;
+  -webkit-appearance: none;
+  height: 44px;
+}
+
+bdt .vehicle_search_results select,
+.bdt .vehicle_search_results input:focus {
+  border: 1px solid #979797;
+  outline: 0;
+  box-shadow: 0px 0px 7px -1px rgb(0 0 0 / 60%);
+}
+
+/*.bdt .vehicle_search_results select,
 .bdt .vehicle_search_results input {
   width: 100%;
   padding: 16px;
@@ -5575,7 +5602,7 @@ a.bdt .badge-dark.focus {
   font-size: 14px;
   -webkit-appearance: none;
   margin-bottom: 16px;
-}
+}*/
 
 .bdt .vehicle_search_results .vehicleCategories,
 .bdt .vehicle_search_results .makes {
@@ -5608,13 +5635,45 @@ a.bdt .badge-dark.focus {
 .bdt .vehicle_search_results .resultsTitle {
   margin-bottom: 30px;
 }
+@media screen and (min-width: 768px) {
+  .bdt .vehicle_search_results .resultsTitle {
+    margin-top: 65px;
+  }
+}
 
 .bdt .vehicle_search_results .resultsTitle .searchFilter select {
+  width: 100%;
+  padding: 5px 8px;
+  border: 1px solid #cdcbcb;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  color: #999999;
+  background-color: #fff;
+  font-size: 0.9em;
+  -webkit-appearance: none;
+  height: 44px !important;
+  background: url("../includes/img/br_down.png") #fff no-repeat
+    calc(100% - 10px);
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.bdt .vehicle_search_results .resultsTitle .searchFilter select:focus {
+  border: 1px solid #979797;
+  outline: 0;
+  box-shadow: 0px 0px 7px -1px rgb(0 0 0 / 60%);
+}
+
+.bdt .vehicle_search_results .resultsTitle .searchFilter select option {
+  color: #222222;
+}
+/*.bdt .vehicle_search_results .resultsTitle .searchFilter select {
   padding: 5px 10px;
   color: #000;
   border: 1px solid #efefef;
   background-color: #fff;
-}
+}*/
 
 .bdt .vehicle_search_results .showingResultsXofY {
   font-size: 0.9em;

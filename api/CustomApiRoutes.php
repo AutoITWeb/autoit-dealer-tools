@@ -173,12 +173,12 @@ use Biltorvet\Model\Vehicle;
             <div class="bdt">
             <div id="vehicle_search_results" class="vehicle_search_results" data-totalResults="<?= $vehicleFeed->totalResults ?>">
                 <div class="row resultsTitle">
-                    <div class="col-sm-8">
+                    <div class="col-md-6">
                         <h4>
                             <?php printf(__('Your search returned <span class="bdt_color">%d cars</span>', 'biltorvet-dealer-tools'), $vehicleFeed->totalResults); ?>
                         </h4>
                     </div>
-                    <div class="col-sm-4 searchFilter">
+                    <div class="col-md-6 searchFilter">
                         <div class="row">
                             <div class="col">
                                 <select name="orderBy">
