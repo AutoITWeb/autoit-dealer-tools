@@ -11,6 +11,7 @@ use Biltorvet\Model\Vehicle;
         private $biltorvetAPI;
         private $_options;
         private $_options_2;
+        private $bdt_root_url;
 
         public function __construct($biltorvetAPI)
         {
@@ -18,6 +19,7 @@ use Biltorvet\Model\Vehicle;
             {
                 throw new Exception( __('No Biltorvet API instance provided.', 'biltorvet-dealer-tools') );
             }
+
             $this->_options = get_option( 'bdt_options' );
             $this->_options_2 = get_option( 'bdt_options_2' );
             $this->biltorvetAPI = $biltorvetAPI;
@@ -56,11 +58,19 @@ use Biltorvet\Model\Vehicle;
                 'permission_callback' => '__return_true',
             ] );
 
+            register_rest_route( 'autoit-dealer-tools/v1', '/vehiclesearch/quicksearch', [
+                'methods' => 'POST',
+                'callback' => array($this, 'bdt_vehicle_quicksearch'),
+                'permission_callback' => '__return_true',
+            ] );
+
             register_rest_route( 'autoit-dealer-tools/v1', '/filteroptions/resetsession', [
                 'methods' => 'POST',
                 'callback' => array($this, 'bdt_reset_session'),
                 'permission_callback' => '__return_true',
             ] );
+
+            $this->bdt_root_url = rtrim(get_permalink($this->_options['vehiclesearch_page_id']),'/');
         }
 
         public function reset_filter_options() {
@@ -163,12 +173,12 @@ use Biltorvet\Model\Vehicle;
             <div class="bdt">
             <div id="vehicle_search_results" class="vehicle_search_results" data-totalResults="<?= $vehicleFeed->totalResults ?>">
                 <div class="row resultsTitle">
-                    <div class="col-sm-8">
+                    <div class="col-md-6">
                         <h4>
                             <?php printf(__('Your search returned <span class="bdt_color">%d cars</span>', 'biltorvet-dealer-tools'), $vehicleFeed->totalResults); ?>
                         </h4>
                     </div>
-                    <div class="col-sm-4 searchFilter">
+                    <div class="col-md-6 searchFilter">
                         <div class="row">
                             <div class="col">
                                 <select name="orderBy">
@@ -198,11 +208,11 @@ use Biltorvet\Model\Vehicle;
                     <div id="vehicle-row" class="row vehicle-row">
                         <?php
 
-                            $bdt_root_url = rtrim(get_permalink($this->_options['vehiclesearch_page_id']),'/');
+                            //$bdt_root_url = rtrim(get_permalink($this->_options['vehiclesearch_page_id']),'/');
 
                             foreach($vehicleFeed->vehicles as $oVehicle)
                             {
-                                $link = $bdt_root_url . '/' . $oVehicle->uri;
+                                $link = $this->bdt_root_url . '/' . $oVehicle->uri;
 
                                 // @TODO: Refactor.
                                 // For new we convert the old vehicle object to the new, so it works with the new templates
@@ -212,7 +222,7 @@ use Biltorvet\Model\Vehicle;
                                 $vehicle = VehicleFactory::create(json_decode(json_encode($oVehicle), true));
                                 $vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
                                 $priceController = new PriceController($vehicle);
-                                $basePage = $bdt_root_url;
+                                $basePage = $this->bdt_root_url;
                                 require PLUGIN_ROOT . 'templates/partials/_vehicleCard.php';
                             }
                         ?>
@@ -243,6 +253,36 @@ use Biltorvet\Model\Vehicle;
             session_write_close();
 
             return $content;
+
+            die;
+        }
+
+        // Fetches vehicle used by the quicksearch (The new FullTextSearch filter)
+        public function bdt_vehicle_quicksearch()
+        {
+            $filterObject = new BDTFilterObject();
+
+            if(isset($_POST['q']) && $_POST['q'] != null) {
+                $filterObject->FullTextSearch = $_POST['q'];
+            }
+
+            try {
+
+                $filterObject = $this->UpdateFilterObjectWithValuesFromPluginOptions($filterObject);
+
+                $vehicleFeed = $this->biltorvetAPI->GetVehiclesQuickSearch($filterObject);
+
+            } catch(Exception $e) {
+                return $e->getMessage();
+            }
+
+            // There must be a better way to enrich the vehicle data with the complete vehicle url
+            foreach($vehicleFeed->vehicles as $vehicle)
+            {
+                $vehicle->uri = $this->bdt_root_url . '/' . $vehicle->uri;
+            }
+
+            return $vehicleFeed;
 
             die;
         }

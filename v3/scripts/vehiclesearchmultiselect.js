@@ -1,5 +1,106 @@
 // This script is loaded both on the frontend page and in the Visual Builder.
 
+// Select2 init
+$(document).ready(function(e) {
+
+    $('.multiple').select2(
+    {
+        dropdownParent: $('.vehicle_search'),
+        containerCssClass: '.multiple',
+        //selectionCssClass: ".select2-custom",
+    });
+
+    var filter = {
+        FullTextSearch: null,
+    }
+
+    var searchInput = '';
+
+    $(".quicksearch").select2({
+        ajax: {
+            url: ajax_config.restUrl + 'autoit-dealer-tools/v1/vehiclesearch/quicksearch',
+            method: 'POST',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                searchInput = params.term;
+                return {
+                    action: 'vehicle_quicksearch',
+                    q: [params.term] // Query - will be handled by the endpoint
+                };
+            },
+            processResults: function (response) {
+                return {
+                    results: response.vehicles
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 2,
+        placeholder: "Søg efter køretøjer...",
+        //allowClear: true,
+        language: {
+            noResults: function () {
+                return "Søgningen '" + searchInput + "' gav ingen resultater.";
+            },
+            inputTooShort: function(args) {
+                return "Indtast " + args.minimum + " eller flere tegn for at starte din søgning";
+            },
+            inputTooLong: function(args) {
+                return "Du har indtastet for mange tegn. " + args.maximum + " er maks antal tegn der kan indtastes";
+            },
+            errorLoading: function() {
+                return "Der er desværre sket en fejl - prøv venligst igen";
+            },
+            searching: function() {
+                return "Søger...";
+            }
+        },
+        escapeMarkup: function (markup) { return markup; },
+        templateResult: Vehicles,
+        templateSelection: VehiclesSelection
+    });
+})
+
+function Vehicles(vehicle) {
+
+    if(vehicle.loading)
+    {
+        return "Søger...";
+    }
+
+    var setPrice = vehicle.cashPrice !== null ? "Kontantpris " + vehicle.cashPrice : vehicle.leasingPrice !== null ? "Leasingpris " + vehicle.leasingPrice : vehicle.financePrice !== null ? "Finansieringspris " + vehicle.financePrice : "Ring for pris";
+
+    var setVariant = vehicle.variant;
+
+    if(setVariant.length > 30)
+    {
+        setVariant = setVariant.slice(0, 27) + "...";
+    }
+
+    var markup =
+        "<div class='bdt_intellisense-list'>" +
+            "<a href='" + vehicle.uri + "'>" +
+                "<span class='bdt_intellisense-list-image'>" +
+                    "<img src='" + vehicle.vehicleImage + "' width='110px' alt='" + vehicle.makeName + "'/>" +
+                        "</span>" +
+                            "<span class='bdt_intellisense-list-data'>" +
+                                "<span class='bdt_intellisense-list-name'>" + vehicle.makeName + " " + vehicle.model + "<br/>" +
+                                "<span>" + setVariant + "</span>" +
+                                "</span>" +
+                                "<span class='bdt_intellisense-list-price'>" + setPrice ?? '' + "</span>" +
+                            "</span>" +
+                "</span>" +
+            "</a>" +
+        "</div>";
+
+    return markup;
+}
+
+function VehiclesSelection (data) {
+    return data.makeModelVariant;
+}
+
 /**
  * The main vehicle search script
  *
@@ -84,13 +185,15 @@ function Biltorvet($) {
     // Fulltextsearch suffle placeholder
     this.PlaceholderShuffler = function()
     {
-        element = vehicleSearch.find('input[name=fullTextSearch]');
+        //quickSearch = vehicleSearch.find('input[name=quicksearch]');
+        fullTextSearch = vehicleSearch.find('input[name=fullTextSearch]');
+
         var owner = this;
         var placeholders = [
             'Søg på mærke, model, farve, udstyr mm...          ',
-            'Stationcar anhængertræk...                        ',
-            'Hvid varevogn...                                  ',
-            'Diesel SUV...                                     '
+            'Søg på stationcar anhængertræk...                        ',
+            'Søg på hvid varevogn...                                  ',
+            'Søg på diesel SUV...                                     '
         ];
 
         var randomIndex = Math.floor(Math.random() * 4);
@@ -102,10 +205,28 @@ function Biltorvet($) {
                 setTimeout(() => owner.PlaceholderShuffler(), 400)
                 return;
             }
-            element.attr('placeholder', placeholder.substr(0, i +1));
+
+            // Quicksearch
+            $('.select2-search__field').attr('placeholder', placeholder.substr(0, i +1));
+
+            // Full-Text Search
+            fullTextSearch.attr('placeholder', placeholder.substr(0, i +1));
+
             i++;
         }, 100)
     }
+
+    /*function ResetSelect2Filters(filterToReset, contentTypeChanged)
+    {
+        if(filterToReset.dataset.contenttype !== contentTypeChanged)
+        {
+            $(filterToReset).val(null);
+            var contentType = filterToReset.dataset.contenttype;
+            placeholderValue = SetSelec2PlaceholderValue(contentType);
+
+            $(filterToReset).trigger('change.select2');
+        }
+    }*/
 
     /**
      * Starts the "paging" spinner which is also used when a user interacts with the order_by and filter_by selects
@@ -138,7 +259,6 @@ function Biltorvet($) {
                     'filter': getFromSession ? emptyFilter : filter // On page reload, we prefer to load the session stored filter on the serverside, instead of pushing the current selection
                 },
                 cache: false,
-                //dataType: 'application/json;encoding=utf8',
                 success: function(response){
 
                     SetFilters(response);
@@ -148,7 +268,8 @@ function Biltorvet($) {
                     {
                         if(response.values.companyIds && response.values.companyIds[0])
                         {
-                            vehicleSearch.find('select[name=company] option[value="' + response.values.companyIds[0] + '"]').prop('selected', true);
+                            $('#company').val(response.values.companyIds);
+                            HandleSelect2SelectionChange($('#company'));
                         }
                         if(response.values.fullTextSearch && response.values.fullTextSearch[0])
                         {
@@ -156,31 +277,38 @@ function Biltorvet($) {
                         }
                         if(response.values.makes && response.values.makes[0])
                         {
-                            vehicleSearch.find('select[name=make] option[value="' + response.values.makes[0] + '"]').prop('selected', true);
+                            $('#make').val(response.values.makes);
+                            HandleSelect2SelectionChange($('#make'));
                         }
                         if(response.values.models && response.values.models[0])
                         {
-                            vehicleSearch.find('select[name=model] option[value="' + response.values.models[0] + '"]').prop('selected', true);
+                            $('#model').val(response.values.models);
+                            HandleSelect2SelectionChange($('#model'));
                         }
                         if(response.values.propellants && response.values.propellants[0])
                         {
-                            vehicleSearch.find('select[name=propellant] option[value="' + response.values.propellants[0] + '"]').prop('selected', true);
+                            $('#propellant').val(response.values.propellants);
+                            HandleSelect2SelectionChange($('#propellant'));
                         }
                         if(response.values.bodyTypes && response.values.bodyTypes[0])
                         {
-                            vehicleSearch.find('select[name=bodyType] option[value="' + response.values.bodyTypes[0] + '"]').prop('selected', true);
+                            $('#bodyType').val(response.values.bodyTypes);
+                            HandleSelect2SelectionChange($('#bodyType'));
                         }
                         if(response.values.productTypes && response.values.productTypes[0])
                         {
-                            vehicleSearch.find('select[name=productType] option[value="' + response.values.productTypes[0] + '"]').prop('selected', true);
+                            $('#productType').val(response.values.productTypes);
+                            HandleSelect2SelectionChange($('#productType'));
                         }
                         if(response.values.vehicleStates && response.values.vehicleStates[0])
                         {
-                            vehicleSearch.find('select[name=vehicleState] option[value="' + response.values.vehicleStates[0] + '"]').prop('selected', true);
+                            $('#vehicleState').val(response.values.vehicleStates);
+                            HandleSelect2SelectionChange($('#vehicleState'));
                         }
                         if(response.values.priceTypes && response.values.priceTypes[0])
                         {
-                            vehicleSearch.find('select[name=priceType] option[value="' + response.values.priceTypes[0] + '"]').prop('selected', true);
+                            $('#priceType').val(response.values.priceTypes);
+                            HandleSelect2SelectionChange($('#priceType'));
                         }
                     }
                 },
@@ -192,6 +320,36 @@ function Biltorvet($) {
                 }
             });
         }
+    }
+
+    // Appends select options and selects previous selected options if any
+    function SetFilterValues(id, selectedValues, allValues)
+    {
+        allValues.forEach(value => {
+            let data = {
+                text: value.name ?? value.value,
+                value: value.key ?? value.name
+            }
+
+            let selected = false;
+
+            if(selectedValues !== null && selectedValues.length !== 0)
+            {
+                if(selectedValues.includes(value))
+                {
+                    selected = true;
+                }
+            }
+
+            var newOption = new Option(data.text, data.value, false, selected);
+
+            if($(id).find("option[value='" + data.value + "']").length) {
+
+            }
+            else {
+                $(id).append(newOption).trigger('change.select2');
+            }
+        })
     }
 
     this.ResetFilters = function()
@@ -215,11 +373,20 @@ function Biltorvet($) {
             success: function(response){
 
                 SetFilters(response);
+
+                $('.multiple').each(function(i, element)
+                {
+                    // Reinit placeholders (labels) !!
+                    var selectionContainer = $(element).next('.select2-container').find('.select2-selection__rendered');
+
+                    $(selectionContainer).parent().find('.select2-selection__label').remove();
+                    $(element).parent().find('.selectDropDownLabel').show()
+                })
+
             },
             complete: function()
             {
                 StopLoadingAnimation();
-                //StopLoadingAnimationPaging();
             }
         });
     }
@@ -236,17 +403,6 @@ function Biltorvet($) {
         this.ResetFilters().then(VehicleSearch).done(function() {
 
         });
-    }
-
-    this.ResetFrontpageFilter = function()
-    {
-        StartLoadingAnimation();
-
-        DeactivateSearchFields();
-
-        filter = null;
-
-        this.ResetFilters();
     }
 
     this.StartVehicleSearch = function ()
@@ -446,7 +602,7 @@ function Biltorvet($) {
             cache: false,
             success: function(response){
 
-                window.location.href = root_url + "/scroll=true";
+                window.location.href = root_url + "/?scroll=true";
             },
             complete: function()
             {
@@ -530,6 +686,21 @@ function Biltorvet($) {
         return parseInt(numberSeries);
     }
 
+    // Easy solution to handle duplicate option elements created by Select2 (Root cause not found 2022-02-11)
+    function RemoveDuplicateValues(selectName, responseValues)
+    {
+        var optionsArray = vehicleSearch.find('select[name=' + selectName + ']')[0].options;
+
+        const optionsVal = [...optionsArray].map(el => el.value);
+
+        let findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) != index);
+
+        if(findDuplicates(optionsVal).length > 0 || responseValues.length !== optionsVal.length)
+        {
+            document.getElementById(selectName).options[0].remove();
+        }
+    }
+
     function SetFilters(response)
     {
         // The frontpage search doesn't respect language settings - refactoring needed
@@ -562,6 +733,7 @@ function Biltorvet($) {
             companies += '<option value="' + response.companies[i].key + '">' + response.companies[i].value + '</option>';
         }
         vehicleSearch.find('select[name=company]').find('option:not(:first-child)').remove().end().append(companies);
+        RemoveDuplicateValues('company', response.companies);
 
         if(companies !== '')
         {
@@ -574,6 +746,8 @@ function Biltorvet($) {
             makes += '<option value="' + response.makes[i].name + '">' + response.makes[i].name + '</option>';
         }
         vehicleSearch.find('select[name=make]').find('option:not(:first-child)').remove().end().append(makes);
+        RemoveDuplicateValues('make', response.makes);
+
         if(makes !== '')
         {
             vehicleSearch.find('select[name=make]').removeAttr('disabled');
@@ -585,31 +759,11 @@ function Biltorvet($) {
             models += '<option value="' + response.models[i].name + '">' + response.models[i].name + '</option>';
         }
         vehicleSearch.find('select[name=model]').find('option:not(:first-child)').remove().end().append(models);
+        RemoveDuplicateValues('model', response.models);
+
         if(models !== '')
         {
             vehicleSearch.find('select[name=model]').removeAttr('disabled');
-        }
-
-        var propellants = '';
-        for(var i in response.propellants)
-        {
-            propellants += '<option value="' + response.propellants[i].name + '">' + response.propellants[i].name + '</option>';
-        }
-        vehicleSearch.find('select[name=propellant]').find('option:not(:first-child)').remove().end().append(propellants);
-        if(propellants !== '')
-        {
-            vehicleSearch.find('select[name=propellant]').removeAttr('disabled');
-        }
-
-        var bodyTypes = '';
-        for(var i in response.bodyTypes)
-        {
-            bodyTypes += '<option value="' + response.bodyTypes[i].name + '">' + response.bodyTypes[i].name + '</option>';
-        }
-        vehicleSearch.find('select[name=bodyType]').find('option:not(:first-child)').remove().end().append(bodyTypes);
-        if(bodyTypes !== '')
-        {
-            vehicleSearch.find('select[name=bodyType]').removeAttr('disabled');
         }
 
         var vehicleStates = '';
@@ -618,20 +772,10 @@ function Biltorvet($) {
             vehicleStates += '<option value="' + response.vehicleStates[i].name + '">' + response.vehicleStates[i].name + '</option>';
         }
         vehicleSearch.find('select[name=vehicleState]').find('option:not(:first-child)').remove().end().append(vehicleStates);
+        RemoveDuplicateValues('vehicleState', response.vehicleStates);
         if(vehicleStates !== '')
         {
             vehicleSearch.find('select[name=vehicleState]').removeAttr('disabled');
-        }
-
-        var productTypes = '';
-        for(var i in response.productTypes)
-        {
-            productTypes += '<option value="' + response.productTypes[i].name + '">' + response.productTypes[i].name + '</option>';
-        }
-        vehicleSearch.find('select[name=productType]').find('option:not(:first-child)').remove().end().append(productTypes);
-        if(productTypes !== '')
-        {
-            vehicleSearch.find('select[name=productType]').removeAttr('disabled');
         }
 
         var priceTypes = '';
@@ -640,9 +784,47 @@ function Biltorvet($) {
             priceTypes += '<option value="' + response.priceTypes[i].name + '">' + response.priceTypes[i].name + '</option>';
         }
         vehicleSearch.find('select[name=priceType]').find('option:not(:first-child)').remove().end().append(priceTypes);
+        RemoveDuplicateValues('priceType', response.priceTypes);
         if(priceTypes !== '')
         {
             vehicleSearch.find('select[name=priceType]').removeAttr('disabled');
+        }
+
+        var productTypes = '';
+        for(var i in response.productTypes)
+        {
+            productTypes += '<option value="' + response.productTypes[i].name + '">' + response.productTypes[i].name + '</option>';
+        }
+        vehicleSearch.find('select[name=productType]').find('option:not(:first-child)').remove().end().append(productTypes);
+        RemoveDuplicateValues('productType', response.productTypes);
+        if(productTypes !== '')
+        {
+            vehicleSearch.find('select[name=productType]').removeAttr('disabled');
+        }
+
+        var bodyTypes = '';
+        for(var i in response.bodyTypes)
+        {
+            bodyTypes += '<option value="' + response.bodyTypes[i].name + '">' + response.bodyTypes[i].name + '</option>';
+        }
+        vehicleSearch.find('select[name=bodyType]').find('option:not(:first-child)').remove().end().append(bodyTypes);
+        RemoveDuplicateValues('bodyType', response.bodyTypes);
+        if(bodyTypes !== '')
+        {
+            vehicleSearch.find('select[name=bodyType]').removeAttr('disabled');
+        }
+
+        var propellants = '';
+        for(var i in response.propellants)
+        {
+            propellants += '<option value="' + response.propellants[i].name + '">' + response.propellants[i].name + '</option>';
+        }
+        vehicleSearch.find('select[name=propellant]').find('option:not(:first-child)').remove().end().append(propellants);
+
+        RemoveDuplicateValues('propellant', response.propellants);
+        if(propellants !== '')
+        {
+            vehicleSearch.find('select[name=propellant]').removeAttr('disabled');
         }
 
         if(consumptionRangeSlider !== null)
@@ -680,15 +862,15 @@ function Biltorvet($) {
         var consumptionMax = consumptionRangeSlider.data('slider').getValue()[1];
         consumptionMax = consumptionMax === -1 ? null : consumptionMax;
         filter = {
-            CompanyIds: vehicleSearch.find('select[name=company]').val() === '' ? null : [vehicleSearch.find('select[name=company]').val()],
+            CompanyIds: RetrieveSelect2Values('#company') ?? null,
             FullTextSearch: vehicleSearch.find('input[name=fullTextSearch]').val() === '' ? null : [vehicleSearch.find('input[name=fullTextSearch]').val()],
-            Propellants: vehicleSearch.find('select[name=propellant]').val() === '' ? null : [vehicleSearch.find('select[name=propellant]').val()],
-            Makes: vehicleSearch.find('select[name=make]').val() === '' ? null : [vehicleSearch.find('select[name=make]').val()],
-            Models: vehicleSearch.find('select[name=model]').val() === '' ? null : [vehicleSearch.find('select[name=model]').val()],
-            BodyTypes: vehicleSearch.find('select[name=bodyType]').val() === '' ? null : [vehicleSearch.find('select[name=bodyType]').val()],
-            ProductTypes: vehicleSearch.find('select[name=productType]').val() === '' ? null : [vehicleSearch.find('select[name=productType]').val()],
-            VehicleStates: vehicleSearch.find('select[name=vehicleState]').val() === '' ? null : [vehicleSearch.find('select[name=vehicleState]').val()],
-            PriceTypes: vehicleSearch.find('select[name=priceType]').val() === '' ? null : [vehicleSearch.find('select[name=priceType]').val()],
+            Propellants: RetrieveSelect2Values('#propellant') ?? null,
+            Makes: RetrieveSelect2Values('#make') ?? null,
+            Models: RetrieveSelect2Values('#model') ?? null,
+            BodyTypes: RetrieveSelect2Values('#bodyType') ?? null,
+            ProductTypes: RetrieveSelect2Values('#productType') ?? null,
+            VehicleStates: RetrieveSelect2Values('#vehicleState') ?? null,
+            PriceTypes: RetrieveSelect2Values('#priceType') ?? null,
             PriceMin: priceRangeSlider !== null ? (priceRangeSlider.data('slider').getAttribute('min') !== priceMin ? priceMin : null) : null,
             PriceMax: priceRangeSlider !== null ? (priceRangeSlider.data('slider').getAttribute('max') !== priceMax ? priceMax : null) : null,
             ConsumptionMin: consumptionRangeSlider !== null ? (consumptionRangeSlider.data('slider').getAttribute('min') !== consumptionMin ? consumptionMin : null) : null,
@@ -698,6 +880,7 @@ function Biltorvet($) {
             OrderBy: vehicleSearchResults.find('select[name=orderBy]').val() === '' ? null : vehicleSearchResults.find('select[name=orderBy]').val(),
             Ascending: vehicleSearchResults.find('select[name=ascDesc]').val() === 'asc' ? true : false,
         }
+
 
         var cvt = GetCustomVehicleType();
 
@@ -709,6 +892,76 @@ function Biltorvet($) {
 
     // Fire the "Constructor"
     this.Init();
+}
+
+// Select2
+// When an option is selected calc if the "pill" or some  custom text showing amount of selected options should be shown
+function HandleSelect2SelectionChange(htmlElement, response)
+{
+    // Notify Select2 about the change
+    $(htmlElement).trigger('change.select2');
+
+    var selectionContainer = $(htmlElement).next('.select2-container').find('.select2-selection__rendered');
+    var selectionContainerChildren = $(selectionContainer).children('li');
+
+    // Reset rendering
+    $(selectionContainer).show();
+    $(selectionContainer).parent().find('.select2-selection__label').remove();
+
+    // Initialize widths
+    var selectionContainerWidth = $(selectionContainer).width();
+    var selectionContainerChildrenWidth = -20;
+
+    // Hide search container and placeholder when filter has active selections
+    if (selectionContainerChildren.length)
+    {
+        $(selectionContainer).parent().find('.select2-search__field').hide();
+        $(htmlElement).parent().find('.selectDropDownLabel').hide()
+    }
+    else
+    {
+        $(selectionContainer).parent().find('.select2-search__field').show();
+        $(htmlElement).parent().find('.selectDropDownLabel').show()
+    }
+
+    // Replace selections with a label when selections overflow its container
+    $(selectionContainerChildren).each(function ()
+    {
+        //selectionContainerChildrenWidth += 15;
+        selectionContainerChildrenWidth += selectionContainerChildren.outerWidth();
+    })
+
+    if (selectionContainerChildrenWidth > selectionContainerWidth)
+    {
+        $(selectionContainer).hide();
+        $(selectionContainer).parent().append('<span class="select2-selection__label">' + selectionContainerChildren.length + ' valgte ' + $(htmlElement).data('contenttype') + '</span>');
+    }
+    else
+    {
+        $(selectionContainer).show();
+        $(selectionContainer).parent().find('.select2-selection__label').remove();
+
+        // Show placeholder labels!!
+    }
+}
+
+function RetrieveSelect2Values(id)
+{
+    if ($(id).hasClass("select2-hidden-accessible")) {
+
+        const selectValues = [];
+
+        $(id).select2('data').forEach(values => {
+
+            let data = {
+                val: values.id,
+            }
+
+            selectValues.push(data.val);
+        })
+
+        return selectValues;
+    }
 }
 
 function GetCustomVehicleType()
@@ -730,7 +983,6 @@ function FormatPrice(x, suffix)
     }
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + (suffix ? ',-' : '');
 }
-
 
 /**
  * This part listens to changes in the frontend - .on('click', 'change') etc.
@@ -771,16 +1023,42 @@ jQuery(function($) {
         .on('click', '.bdt .reset', function(e){
             e.preventDefault();
 
-            $(this).closest('.bdt .vehicle_search').find('select').val('');
-
             bdt.ResetFilter();
         })
-        .on('click', '.bdt .resetFrontpage', function(e){
+        .on('change', '.bdt .multiple', function (e)
+        {
             e.preventDefault();
 
-            $(this).closest('.bdt .vehicle_search').find('select').val('');
+            // Hide selected value to avoid select tag overflow
+            var selectionContainer = $(e.target).next('.select2-container').find('.select2-selection__rendered');
+            var selectionContainerChildren = $(selectionContainer).children('li');
 
-            bdt.ResetFrontpageFilter();
+            if(selectionContainerChildren.length > 1)
+            {
+                var getLastElementIndex = selectionContainerChildren.length - 1;
+                selectionContainerChildren[getLastElementIndex].style.display = 'none';
+            }
+
+            // Hide / show labels (Placeholder value)
+            if (selectionContainerChildren.length)
+            {
+                $(selectionContainer).parent().find('.select2-search__field').hide();
+                $(e.target).parent().find('.selectDropDownLabel').hide()
+            }
+            else
+            {
+                $(selectionContainer).parent().find('.select2-search__field').show();
+                $(e.target).parent().find('.selectDropDownLabel').show()
+            }
+
+            // Reset Custom Vehicle Type (Frontpage Icon search)
+            const customVehicleTypeSelected = document.querySelector('#cvt-selected');
+            if(customVehicleTypeSelected !== null)
+            {
+                customVehicleTypeSelected.dataset.customVehicleTypeSelected = "";
+            }
+
+            bdt.ReloadUserFilterSelection(false);
         })
         .on('click', '.bdt .search', function(e){
             e.preventDefault();
@@ -813,87 +1091,10 @@ jQuery(function($) {
                 bdt.CustomVehicleTypeSearch(cvtClicked);
             }
         })
-        // FullTextSearch, input field
         .on('blur', '.fullTextSearch', function(){
-            var vehicleSearch = $(this).closest('.bdt .vehicle_search');
+        var vehicleSearch = $(this).closest('.bdt .vehicle_search');
 
-            // using the fulltext search field will reset all other fields.
-            vehicleSearch.find('select[name=company]').val('');
-            vehicleSearch.find('select[name=vehicleState]').val('');
-            vehicleSearch.find('select[name=make]').val('');
-            vehicleSearch.find('select[name=model]').val('');
-            vehicleSearch.find('select[name=bodyType]').val('');
-            vehicleSearch.find('select[name=productType]').val('');
-            vehicleSearch.find('select[name=priceType]').val('');
-            vehicleSearch.find('select[name=propellant]').val('');
-            vehicleSearch.find('select[name=priceMinMax]').val('');
-            vehicleSearch.find('select[name=priceMinMax]').val('');
-            vehicleSearch.find('select[name=consumptionMin]').val('');
-            vehicleSearch.find('select[name=consumptionMax]').val('');
 
-            bdt.ReloadUserFilterSelection(false);
-        })
-
-        // Select fields
-        .on('change', '.bdt .vehicle_search select', function(){
-
-            var vehicleSearch = $(this).closest('.bdt .vehicle_search');
-
-            // Reset Custom Vehicle Type (Frontpage Icon search)
-            const customVehicleTypeSelected = document.querySelector('#cvt-selected');
-            if(customVehicleTypeSelected !== null)
-            {
-                customVehicleTypeSelected.dataset.customVehicleTypeSelected = "";
-            }
-
-            // Selecting a different make will reset the selected model
-            if($(this).attr('name') === 'make')
-            {
-                vehicleSearch.find('select[name=model]').val('').trigger('change');
-            }
-
-            // selecting a new model will reset all other fields.
-            if($(this).attr('name') === 'model')
-            {
-                vehicleSearch.find('select[name=bodyType]').val('');
-                vehicleSearch.find('select[name=productType]').val('');
-                vehicleSearch.find('select[name=propellant]').val('');
-                vehicleSearch.find('select[name=priceType]').val('');
-                vehicleSearch.find('select[name=priceMinMax]').val('');
-                vehicleSearch.find('select[name=priceMinMax]').val('');
-                vehicleSearch.find('select[name=consumptionMin]').val('');
-                vehicleSearch.find('select[name=consumptionMax]').val('');
-            }
-            // selecting vehicle state will reset all other fields.
-            if($(this).attr('name') === 'vehicleState')
-            {
-                vehicleSearch.find('select[name=make]').val('');
-                vehicleSearch.find('select[name=model]').val('');
-                vehicleSearch.find('select[name=bodyType]').val('');
-                vehicleSearch.find('select[name=productType]').val('');
-                vehicleSearch.find('select[name=propellant]').val('');
-                vehicleSearch.find('select[name=priceType]').val('');
-                vehicleSearch.find('select[name=priceMinMax]').val('');
-                vehicleSearch.find('select[name=priceMinMax]').val('');
-                vehicleSearch.find('select[name=consumptionMin]').val('');
-                vehicleSearch.find('select[name=consumptionMax]').val('');
-            }
-            // selecting a new company will reset all other fields.
-            if($(this).attr('name') === 'company')
-            {
-                vehicleSearch.find('select[name=vehicleState]').val('');
-                vehicleSearch.find('select[name=make]').val('');
-                vehicleSearch.find('select[name=model]').val('');
-                vehicleSearch.find('select[name=bodyType]').val('');
-                vehicleSearch.find('select[name=productType]').val('');
-                vehicleSearch.find('select[name=propellant]').val('');
-                vehicleSearch.find('select[name=priceType]').val('');
-                vehicleSearch.find('select[name=priceMinMax]').val('');
-                vehicleSearch.find('select[name=priceMinMax]').val('');
-                vehicleSearch.find('select[name=consumptionMin]').val('');
-                vehicleSearch.find('select[name=consumptionMax]').val('');
-            }
-
-            bdt.ReloadUserFilterSelection(false);
-        })
+        bdt.ReloadUserFilterSelection(false);
+    })
 });

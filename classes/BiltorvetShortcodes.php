@@ -170,8 +170,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
         
         public function bdt_shortcode_vehicle_search( $atts ){
             wp_enqueue_style("bdt_style");
+            wp_enqueue_script("select2");
             wp_enqueue_script("bdt_script");
             wp_enqueue_script("search_script");
+
             ob_start();
             require Biltorvet::bdt_get_template("VehicleSearch.php");
             $contents = ob_get_contents();
@@ -181,8 +183,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
         public function bdt_shortcode_vehicle_search_frontpage( $atts ){
             wp_enqueue_style("bdt_style");
+            wp_enqueue_script("select2");
             wp_enqueue_script("bdt_script");
             wp_enqueue_script("search_script");
+
             ob_start();
             require Biltorvet::bdt_get_template("VehicleSearchFrontPage.php");
             $contents = ob_get_contents();
@@ -690,6 +694,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             if($propertyName == 'company')
             {
                 return nl2br('<span class="bdt_vehicle_company_name">'. $this->currentVehicle->company->name . "</span>\r\n" . $this->currentVehicle->company->address . "\r\n" . $this->currentVehicle->company->postNumber . " " . $this->currentVehicle->company->city);
+            }
+
+            if($propertyName == 'companyAddress') {
+                return nl2br('<span><span class="bdt_vehicle_company_street">' . $this->currentVehicle->company->address . '</span><span class="bdt_vehicle_company_postalcode_and_city">' . $this->currentVehicle->company->postNumber . " " . $this->currentVehicle->company->city . '</span></span>');
             }
 
             $value = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, $propertyName, isset($atts['raw']));

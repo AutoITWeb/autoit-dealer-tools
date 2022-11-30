@@ -250,6 +250,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
 
             add_settings_field(
+                'fulltextsearch_or_quicksearch',
+                __( 'Fulltextsearch or quicksearch', 'biltorvet-dealer-tools' ),
+                array( $this, 'fulltextsearch_or_quicksearch_callback' ),
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
                 'bdt_default_sorting_value',
                 __( 'Default sorting', 'biltorvet-dealer-tools' ),
                 array( $this, 'default_sorting_value_callback' ),
@@ -614,6 +622,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
 
             add_settings_field(
+                'frontpagesearch_quicksearch',
+                __( 'Activate quicksearch', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_frontpagesearch_quicksearch_callback' ),
+                'bdt-settings-group-5', // Page
+                'bdt_settings_section_5' // Section
+            );
+
+            add_settings_field(
                 'frontpagesearch_company',
                 __( 'Activate companies', 'biltorvet-dealer-tools' ),
                 array( $this, 'bdt_frontpagesearch_company_callback' ),
@@ -820,24 +836,35 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
             $leadOptions = ["Autodesktop" => 0, "Mail" => 1, "Autodesktop & mail" => 2];
 
-            if(!ProductHelper::hasAccess("External User", $api->getCompanyProducts()) && ProductHelper::hasAccess("Leads to ADT", $api->getCompanyProducts())) {
+            $companyProducts = $api->getCompanyProducts();
 
-                $HTML = '<select id="bdt_options" value="on" name="bdt_options[bdt_leads]"/>';
-                $HTML .= '<option value="-1">Vælg hvor leads skal sendes hen</option>';
+            if($companyProducts !== null)
+            {
+                try{
+                    if(!ProductHelper::hasAccess("External User", $companyProducts) && ProductHelper::hasAccess("Leads to ADT", $companyProducts)) {
 
-                foreach($leadOptions as $key => $value) {
-                    $selected = isset( $this->options['bdt_leads']) && $this->options['bdt_leads'] == $value;
-                    $HTML .= '<option value="' . $value . '"';
-                    $HTML .= $selected ? 'selected="selected"' : '';
-                    $HTML .= '>' . $key . '</option>';
+                        $HTML = '<select id="bdt_options" value="on" name="bdt_options[bdt_leads]"/>';
+                        $HTML .= '<option value="-1">Vælg hvor leads skal sendes hen</option>';
+
+                        foreach($leadOptions as $key => $value) {
+                            $selected = isset( $this->options['bdt_leads']) && $this->options['bdt_leads'] == $value;
+                            $HTML .= '<option value="' . $value . '"';
+                            $HTML .= $selected ? 'selected="selected"' : '';
+                            $HTML .= '>' . $key . '</option>';
+                        }
+
+                        $HTML .= '</select>';
+
+                        echo $HTML;
+
+                    } else {
+                        echo "<br>I kan kun modtage leads på mail. <br>Kontakt <a ahref='mail:web@autoit.dk'>AutoIt</a> for at få kunne sende leads til Autodesktop og mail";
+                    }
                 }
-
-                $HTML .= '</select>';
-
-                echo $HTML;
-
-            } else {
-                echo "<br>I kan kun modtage leads på mail. <br>Kontakt <a ahref='mail:web@autoit.dk'>AutoIt</a> for at få kunne sende leads til Autodesktop og mail";
+                catch (Exception $ex)
+                {
+                    echo "<br>I kan kun modtage leads på mail. <br>Kontakt <a ahref='mail:web@autoit.dk'>AutoIt</a> for at få kunne sende leads til Autodesktop og mail";
+                }
             }
         }
 
@@ -892,6 +919,24 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[hide_bi_vehicles]"%s />',
                 isset( $this->options_2['hide_bi_vehicles'] ) && $this->options_2['hide_bi_vehicles'] === 'on' ? ' checked="checked"' : ''
             );
+        }
+
+        public function fulltextsearch_or_quicksearch_callback()
+        {
+            $searchOptions = ["Fritekstsøgning" => 0, "Hurtigsøgning" => 1];
+
+            $HTML = '<select id="bdt_options_2" name="bdt_options_2[fulltextsearch_or_quicksearch]"/>';
+
+            foreach($searchOptions as $key => $value) {
+                $selected = isset( $this->options_2['fulltextsearch_or_quicksearch']) && $this->options_2['fulltextsearch_or_quicksearch'] == $value;
+                $HTML .= '<option value="' . $value . '"';
+                $HTML .= $selected ? 'selected="selected"' : '';
+                $HTML .= '>' . $key . '</option>';
+            }
+
+            $HTML .= '</select>';
+
+            echo $HTML;
         }
 
         public function default_sorting_value_callback()
@@ -1334,6 +1379,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             printf(
                 '<input type="checkbox" id="bdt_options_5" value="on" name="bdt_options_5[frontpagesearch_fulltextsearch]"%s />',
                 isset( $this->options_5['frontpagesearch_fulltextsearch'] ) && $this->options_5['frontpagesearch_fulltextsearch'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_frontpagesearch_quicksearch_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_5" value="on" name="bdt_options_5[frontpagesearch_quicksearch]"%s />',
+                isset( $this->options_5['frontpagesearch_quicksearch'] ) && $this->options_5['frontpagesearch_quicksearch'] === 'on' ? ' checked="checked"' : ''
             );
         }
 

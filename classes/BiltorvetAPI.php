@@ -92,6 +92,11 @@
             return $this->Request('/vehicle', array('filter' => json_encode($filter)));
         }
 
+        public function GetVehiclesQuickSearch($filter)
+        {
+            return $this->Request('/vehicle/quicksearch', array('filter' => json_encode($filter)));
+        }
+
         public function AutodesktopSendLead($lead, $emailReciept = false)
         {
             if(!isset($lead))
@@ -193,7 +198,6 @@
                 }
 
                 $data = false;
-                //$transientName = $method . (isset($query) ? md5(implode('_', $query)) : '');
                 $transientName = $method . (isset($query) ? json_encode($query) : '');
 
                 if($requestType === 'GET' && !strpos($method, 'influxdb'))

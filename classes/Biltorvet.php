@@ -270,20 +270,17 @@ class Biltorvet
     {
         wp_register_script( 'bootstrap_slider', plugins_url('scripts/bootstrap-slider.min.js',  dirname(__FILE__) ) , array('jquery'), '1.0.1', true );
 
-        wp_register_script( 'bdt_script', plugins_url('v3/scripts/vehiclesearchv3.min.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
-        //wp_register_script( 'bdt_script', plugins_url('v3/scripts/vehiclesearchv3.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
+        //wp_register_script( 'bdt_script', plugins_url('v3/scripts/vehiclesearchv3.min.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
+        //wp_register_script( 'bdt_script', plugins_url('v3/scripts/vehiclesearchmultiselect.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
+        wp_register_script( 'bdt_script', plugins_url('v3/scripts/vehiclesearchmultiselect.min.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
 
-        // Latest version - use with caution
-        //wp_register_script( 'bt_slideshow', 'https://gallery.autoit.dk/latest/gallery.js', true );
+        wp_register_script('select2', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', true);
 
-        // Beta gallery
-        //wp_register_script( 'bt_slideshow', 'https://gallery.autoit.dk/beta/gallery.js', true );
-
-        // A specific version of the gallery (Very safe)
         wp_register_script( 'bt_slideshow', 'https://gallery.autoit.dk/latest/gallery.js', true );
-        //wp_register_script( 'lazy_load', 'https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.2/dist/lazyload.min.js', true );
-
         wp_register_script( 'search_script', plugins_url('scripts/search.js',  dirname(__FILE__) ) , array('jquery'), '1.0.0', true );
+
+        // Good old widget connector - prim. needed for our exchangepricewidget
+        wp_enqueue_script( 'bdt_widgetconnector', 'https://services.autoit.dk/Embed.js', null, '1.0.0', true);
 
         // Rest Api config
         wp_localize_script( 'search_script', 'ajax_config', array (
@@ -292,9 +289,6 @@ class Biltorvet
         wp_localize_script( 'bdt_script', 'ajax_config', array(
             'restUrl' => get_rest_url()
         ));
-
-        // Good old widget connector - prim. needed for our exchangepricewidget
-        wp_enqueue_script( 'bdt_widgetconnector', 'https://services.autoit.dk/Embed.js', null, '1.0.0', true);
     }
 
     public function bdt_register_styles()
@@ -304,9 +298,13 @@ class Biltorvet
         //wp_register_style( 'bdt_style', plugins_url('css/biltorvet.css',  dirname(__FILE__)), array('bticons'), '1.0.1' );
         wp_register_style('bdt_embed_style', 'https://services.autoit.dk/Embed.css', null, '1.0.1');
         wp_register_style('animate', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css', null, '4.1.1');
+
         if(isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '')
         {
             wp_add_inline_style( 'bdt_style', ".bdt_cta:not(.donottint) {color:" . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . " !important;} .bdt .slider:not(.slider-disabled) .slider-selection, .bdt .badge.badge-primary {background-color:" . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . " !important;} .bdt_color{color:" . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . " !important;} .bdt_bgcolor, .et_pb_button.bdt_bgcolor:hover {background:" . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . " !important;} .bdt .slider-handle.round, .bdt_bordercolor{border-color:" . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . " !important} .bdt .lds-ring div {border-color:" . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . " transparent transparent transparent !important} .bdt .lds-ring-paging div {border-color:" . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . " transparent transparent transparent !important}" );
+
+            // Select2 multiselect (vehiclesearch)
+            wp_add_inline_style( 'bdt_style', ".select2-container--default .select2-results__option--highlighted.select2-results__option--selectable{ background-color:" . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . "!important; color:white }" );
         }
     }
 
