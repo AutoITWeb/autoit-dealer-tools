@@ -19,23 +19,22 @@ class WordpressHelper
     {
         if($options_number == 2)
         {
-            return get_option('bdt_options_2') ?? [];
+            return get_option('bdt_options_2') != null && get_option('bdt_options_2') != false ? get_option('bdt_options_2') : [];
         }
         else if ($options_number == 3)
         {
-            return get_option('bdt_options_3') ?? [];
+            return get_option('bdt_options_3') != null && get_option('bdt_options_3') != false ? get_option('bdt_options_3') : [];
         }else if ($options_number == 4)
         {
-            return get_option('bdt_options_4') ?? [];
+            return get_option('bdt_options_4') != null && get_option('bdt_options_4') != false ? get_option('bdt_options_4') : [];
         }
         else {
             if(gettype(get_option('bdt_options')) != 'array') {
                 return [];
             }
 
-        return get_option('bdt_options') ?? [];
-
-       }
+            return get_option('bdt_options') != null && get_option('bdt_options') != false ? get_option('bdt_options') : [];
+        }
     }
 
     /**

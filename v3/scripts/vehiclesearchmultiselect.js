@@ -1,67 +1,5 @@
 // This script is loaded both on the frontend page and in the Visual Builder.
 
-// Select2 init
-$(document).ready(function(e) {
-
-    $('.multiple').select2(
-    {
-        dropdownParent: $('.vehicle_search'),
-        containerCssClass: '.multiple',
-        //selectionCssClass: ".select2-custom",
-    });
-
-    var filter = {
-        FullTextSearch: null,
-    }
-
-    var searchInput = '';
-
-    $(".quicksearch").select2({
-        ajax: {
-            url: ajax_config.restUrl + 'autoit-dealer-tools/v1/vehiclesearch/quicksearch',
-            method: 'POST',
-            dataType: 'json',
-            delay: 250,
-            data: function (params) {
-                searchInput = params.term;
-                return {
-                    action: 'vehicle_quicksearch',
-                    q: [params.term] // Query - will be handled by the endpoint
-                };
-            },
-            processResults: function (response) {
-                return {
-                    results: response.vehicles
-                };
-            },
-            cache: true
-        },
-        minimumInputLength: 2,
-        placeholder: "Søg efter køretøjer...",
-        //allowClear: true,
-        language: {
-            noResults: function () {
-                return "Søgningen '" + searchInput + "' gav ingen resultater.";
-            },
-            inputTooShort: function(args) {
-                return "Indtast " + args.minimum + " eller flere tegn for at starte din søgning";
-            },
-            inputTooLong: function(args) {
-                return "Du har indtastet for mange tegn. " + args.maximum + " er maks antal tegn der kan indtastes";
-            },
-            errorLoading: function() {
-                return "Der er desværre sket en fejl - prøv venligst igen";
-            },
-            searching: function() {
-                return "Søger...";
-            }
-        },
-        escapeMarkup: function (markup) { return markup; },
-        templateResult: Vehicles,
-        templateSelection: VehiclesSelection
-    });
-})
-
 function Vehicles(vehicle) {
 
     if(vehicle.loading)
@@ -80,18 +18,18 @@ function Vehicles(vehicle) {
 
     var markup =
         "<div class='bdt_intellisense-list'>" +
-            "<a href='" + vehicle.uri + "'>" +
-                "<span class='bdt_intellisense-list-image'>" +
-                    "<img src='" + vehicle.vehicleImage + "' width='110px' alt='" + vehicle.makeName + "'/>" +
-                        "</span>" +
-                            "<span class='bdt_intellisense-list-data'>" +
-                                "<span class='bdt_intellisense-list-name'>" + vehicle.makeName + " " + vehicle.model + "<br/>" +
-                                "<span>" + setVariant + "</span>" +
-                                "</span>" +
-                                "<span class='bdt_intellisense-list-price'>" + setPrice ?? '' + "</span>" +
-                            "</span>" +
-                "</span>" +
-            "</a>" +
+        "<a href='" + vehicle.uri + "'>" +
+        "<span class='bdt_intellisense-list-image'>" +
+        "<img src='" + vehicle.vehicleImage + "' width='110px' alt='" + vehicle.makeName + "'/>" +
+        "</span>" +
+        "<span class='bdt_intellisense-list-data'>" +
+        "<span class='bdt_intellisense-list-name'>" + vehicle.makeName + " " + vehicle.model + "<br/>" +
+        "<span>" + setVariant + "</span>" +
+        "</span>" +
+        "<span class='bdt_intellisense-list-price'>" + setPrice ?? '' + "</span>" +
+        "</span>" +
+        "</span>" +
+        "</a>" +
         "</div>";
 
     return markup;
@@ -106,6 +44,7 @@ function VehiclesSelection (data) {
  *
  */
 function Biltorvet($) {
+
     var vehicleSearch = $(document).find('.bdt .vehicle_search');
     var vehicleSearchResults = $(document).find('.bdt .vehicle_search_results');
     var root_url = "";
@@ -138,6 +77,68 @@ function Biltorvet($) {
         Ascending: null, // Bool
     };
 
+    // Select2 init
+    $(document).ready(function(e) {
+
+        $('.multiple').select2(
+            {
+                dropdownParent: $('.vehicle_search'),
+                containerCssClass: '.multiple',
+                //selectionCssClass: ".select2-custom",
+            });
+
+        var filter = {
+            FullTextSearch: null,
+        }
+
+        var searchInput = '';
+
+        $(".quicksearch").select2({
+            ajax: {
+                url: ajax_config.restUrl + 'autoit-dealer-tools/v1/vehiclesearch/quicksearch',
+                method: 'POST',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    searchInput = params.term;
+                    return {
+                        action: 'vehicle_quicksearch',
+                        q: [params.term] // Query - will be handled by the endpoint
+                    };
+                },
+                processResults: function (response) {
+                    return {
+                        results: response.vehicles
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 2,
+            placeholder: "Søg efter køretøjer...",
+            //allowClear: true,
+            language: {
+                noResults: function () {
+                    return "Søgningen '" + searchInput + "' gav ingen resultater.";
+                },
+                inputTooShort: function(args) {
+                    return "Indtast " + args.minimum + " eller flere tegn for at starte din søgning";
+                },
+                inputTooLong: function(args) {
+                    return "Du har indtastet for mange tegn. " + args.maximum + " er maks antal tegn der kan indtastes";
+                },
+                errorLoading: function() {
+                    return "Der er desværre sket en fejl - prøv venligst igen";
+                },
+                searching: function() {
+                    return "Søger...";
+                }
+            },
+            escapeMarkup: function (markup) { return markup; },
+            templateResult: Vehicles,
+            templateSelection: VehiclesSelection
+        });
+    })
+
     // To avoid splitting the code up in a frontpage search and main search
     // checks to see if the user is on the frontpage or not are done throughout the code
     if(frontpageSearch)
@@ -146,6 +147,7 @@ function Biltorvet($) {
     }
 
     this.Init = function() {
+
         // There can be a situation, namely with AVADA themes, where there's another .slider bound to the jQuery object. IF that's the case, we'll switch to an alternative namespace.
         // This alternative namespace only exists if there's been a conflict, so it can't be always used by default.
         if($.bootstrapSlider)
@@ -319,6 +321,75 @@ function Biltorvet($) {
                     StopLoadingAnimationPaging();
                 }
             });
+        }
+    }
+
+    // Select 2
+    function RetrieveSelect2Values(id)
+    {
+        if ($(id).hasClass("select2-hidden-accessible")) {
+
+            const selectValues = [];
+
+            $(id).select2('data').forEach(values => {
+
+                let data = {
+                    val: values.id,
+                }
+
+                selectValues.push(data.val);
+            })
+
+            return selectValues;
+        }
+    }
+
+    // Select2
+// When an option is selected calc if the "pill" or some  custom text showing amount of selected options should be shown
+    function HandleSelect2SelectionChange(htmlElement, response)
+    {
+        // Notify Select2 about the change
+        $(htmlElement).trigger('change.select2');
+
+        var selectionContainer = $(htmlElement).next('.select2-container').find('.select2-selection__rendered');
+        var selectionContainerChildren = $(selectionContainer).children('li');
+
+        // Reset rendering
+        $(selectionContainer).show();
+        $(selectionContainer).parent().find('.select2-selection__label').remove();
+
+        // Initialize widths
+        var selectionContainerWidth = $(selectionContainer).width();
+        var selectionContainerChildrenWidth = -20;
+
+        // Hide search container and placeholder when filter has active selections
+        if (selectionContainerChildren.length)
+        {
+            $(selectionContainer).parent().find('.select2-search__field').hide();
+            $(htmlElement).parent().find('.selectDropDownLabel').hide()
+        }
+        else
+        {
+            $(selectionContainer).parent().find('.select2-search__field').show();
+            $(htmlElement).parent().find('.selectDropDownLabel').show()
+        }
+
+        // Replace selections with a label when selections overflow its container
+        $(selectionContainerChildren).each(function ()
+        {
+            //selectionContainerChildrenWidth += 15;
+            selectionContainerChildrenWidth += selectionContainerChildren.outerWidth();
+        })
+
+        if (selectionContainerChildrenWidth > selectionContainerWidth)
+        {
+            $(selectionContainer).hide();
+            $(selectionContainer).parent().append('<span class="select2-selection__label">' + selectionContainerChildren.length + ' valgte ' + $(htmlElement).data('contenttype') + '</span>');
+        }
+        else
+        {
+            $(selectionContainer).show();
+            $(selectionContainer).parent().find('.select2-selection__label').remove();
         }
     }
 
@@ -894,76 +965,6 @@ function Biltorvet($) {
     this.Init();
 }
 
-// Select2
-// When an option is selected calc if the "pill" or some  custom text showing amount of selected options should be shown
-function HandleSelect2SelectionChange(htmlElement, response)
-{
-    // Notify Select2 about the change
-    $(htmlElement).trigger('change.select2');
-
-    var selectionContainer = $(htmlElement).next('.select2-container').find('.select2-selection__rendered');
-    var selectionContainerChildren = $(selectionContainer).children('li');
-
-    // Reset rendering
-    $(selectionContainer).show();
-    $(selectionContainer).parent().find('.select2-selection__label').remove();
-
-    // Initialize widths
-    var selectionContainerWidth = $(selectionContainer).width();
-    var selectionContainerChildrenWidth = -20;
-
-    // Hide search container and placeholder when filter has active selections
-    if (selectionContainerChildren.length)
-    {
-        $(selectionContainer).parent().find('.select2-search__field').hide();
-        $(htmlElement).parent().find('.selectDropDownLabel').hide()
-    }
-    else
-    {
-        $(selectionContainer).parent().find('.select2-search__field').show();
-        $(htmlElement).parent().find('.selectDropDownLabel').show()
-    }
-
-    // Replace selections with a label when selections overflow its container
-    $(selectionContainerChildren).each(function ()
-    {
-        //selectionContainerChildrenWidth += 15;
-        selectionContainerChildrenWidth += selectionContainerChildren.outerWidth();
-    })
-
-    if (selectionContainerChildrenWidth > selectionContainerWidth)
-    {
-        $(selectionContainer).hide();
-        $(selectionContainer).parent().append('<span class="select2-selection__label">' + selectionContainerChildren.length + ' valgte ' + $(htmlElement).data('contenttype') + '</span>');
-    }
-    else
-    {
-        $(selectionContainer).show();
-        $(selectionContainer).parent().find('.select2-selection__label').remove();
-
-        // Show placeholder labels!!
-    }
-}
-
-function RetrieveSelect2Values(id)
-{
-    if ($(id).hasClass("select2-hidden-accessible")) {
-
-        const selectValues = [];
-
-        $(id).select2('data').forEach(values => {
-
-            let data = {
-                val: values.id,
-            }
-
-            selectValues.push(data.val);
-        })
-
-        return selectValues;
-    }
-}
-
 function GetCustomVehicleType()
 {
     const customVehicleTypeSelected = document.querySelector('#cvt-selected');
@@ -1092,9 +1093,8 @@ jQuery(function($) {
             }
         })
         .on('blur', '.fullTextSearch', function(){
-        var vehicleSearch = $(this).closest('.bdt .vehicle_search');
+            var vehicleSearch = $(this).closest('.bdt .vehicle_search');
 
-
-        bdt.ReloadUserFilterSelection(false);
-    })
+            bdt.ReloadUserFilterSelection(false);
+        })
 });

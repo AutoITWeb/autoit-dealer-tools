@@ -271,8 +271,8 @@ class Biltorvet
         wp_register_script( 'bootstrap_slider', plugins_url('scripts/bootstrap-slider.min.js',  dirname(__FILE__) ) , array('jquery'), '1.0.1', true );
 
         //wp_register_script( 'bdt_script', plugins_url('v3/scripts/vehiclesearchv3.min.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
-        //wp_register_script( 'bdt_script', plugins_url('v3/scripts/vehiclesearchmultiselect.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
-        wp_register_script( 'bdt_script', plugins_url('v3/scripts/vehiclesearchmultiselect.min.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
+        wp_register_script( 'bdt_script', plugins_url('v3/scripts/vehiclesearchmultiselect.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
+        //wp_register_script( 'bdt_script', plugins_url('v3/scripts/vehiclesearchmultiselect.min.js',  dirname(__FILE__) ) , array('jquery', 'bootstrap_slider'), '1.0.1', true );
 
         wp_register_script('select2', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', true);
 
@@ -294,8 +294,8 @@ class Biltorvet
     public function bdt_register_styles()
     {
         wp_register_style( 'bticons', 'https://source.autoit.dk/fonts/biltorvet/v1.0.2/bticons.css', null, '1.0.2' );
-        wp_register_style( 'bdt_style', plugins_url('css/biltorvet.min.css',  dirname(__FILE__)), array('bticons'), '1.0.1' );
-        //wp_register_style( 'bdt_style', plugins_url('css/biltorvet.css',  dirname(__FILE__)), array('bticons'), '1.0.1' );
+        //wp_register_style( 'bdt_style', plugins_url('css/biltorvet.min.css',  dirname(__FILE__)), array('bticons'), '1.0.1' );
+        wp_register_style( 'bdt_style', plugins_url('css/biltorvet.css',  dirname(__FILE__)), array('bticons'), '1.0.1' );
         wp_register_style('bdt_embed_style', 'https://services.autoit.dk/Embed.css', null, '1.0.1');
         wp_register_style('animate', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css', null, '4.1.1');
 
