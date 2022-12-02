@@ -272,6 +272,7 @@ if(!empty($initialFilterOptions->customVehicleTypes))
 
 <div class="bdt">
     <div id="frontpage_vehicle_search" class="vehicle_search"<?php echo $makeIds !== null ? ' data-makeids="'.$makeIds.'"' : '';  ?>>
+        <span class="hide-bdt animate__animated animate__fadeIn" id="bdt-loading-filters">
         <div class="row">
 
         <?php if(isset($this->_options_5['frontpagesearch_fulltextsearch'])) : ?>
@@ -521,6 +522,7 @@ if(!empty($initialFilterOptions->customVehicleTypes))
             </div>
 
         </div>
+        </span>
         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
     </div>
 </div>
