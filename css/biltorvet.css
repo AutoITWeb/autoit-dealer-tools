@@ -19,6 +19,11 @@ body .bdt select {
   border-color: #555;
 }
 
+.hide-bdt {
+  display: none;
+}
+
+
 .bdt {
   /*! =========================================================
  * bootstrap-slider.js
