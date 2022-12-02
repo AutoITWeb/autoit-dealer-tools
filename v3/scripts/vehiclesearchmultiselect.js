@@ -48,6 +48,7 @@ function Biltorvet($) {
     var vehicleSearch = $(document).find('.bdt .vehicle_search');
     var vehicleSearchResults = $(document).find('.bdt .vehicle_search_results');
     var root_url = "";
+    var bdt_hidden = document.getElementById("bdt-loading-filters");
     var frontpageSearch = document.getElementById("frontpage_vehicle_search");
     var frontpageSearchButton = document.getElementById("vehicle_search_frontpage_button");
     var searchFilterOptionsXHR = null;
@@ -84,7 +85,6 @@ function Biltorvet($) {
             {
                 dropdownParent: $('.vehicle_search'),
                 containerCssClass: '.multiple',
-                //selectionCssClass: ".select2-custom",
             });
 
         var filter = {
@@ -218,18 +218,6 @@ function Biltorvet($) {
         }, 100)
     }
 
-    /*function ResetSelect2Filters(filterToReset, contentTypeChanged)
-    {
-        if(filterToReset.dataset.contenttype !== contentTypeChanged)
-        {
-            $(filterToReset).val(null);
-            var contentType = filterToReset.dataset.contenttype;
-            placeholderValue = SetSelec2PlaceholderValue(contentType);
-
-            $(filterToReset).trigger('change.select2');
-        }
-    }*/
-
     /**
      * Starts the "paging" spinner which is also used when a user interacts with the order_by and filter_by selects
      * @param {bool} True = empty filter, false the current filter
@@ -319,6 +307,22 @@ function Biltorvet($) {
                     searchFilterOptionsXHR = null;
                     StopLoadingAnimation();
                     StopLoadingAnimationPaging();
+
+                    // Show filters when everything is done loading
+                    bdt_hidden.classList.remove("hide-bdt");
+
+                    // Update query parameters (getting ready for QP searching)
+                    const params = new URLSearchParams(window.location.search);
+
+                    if(params.has('scroll') && params.get('scroll') === 'true')
+                    {
+                        $('html, body').animate({
+                            scrollTop: $('.vehicle-row').offset().top - 150
+                        }, 500);
+
+                        var url = location.href;
+                        window.history.pushState({}, '', url.replace("?scroll=true", ""));
+                    }
                 }
             });
         }
