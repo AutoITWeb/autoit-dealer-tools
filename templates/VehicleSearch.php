@@ -228,9 +228,9 @@
     $showPropellants = (count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->propellants) > 1) ? "" : "style='display: none;'";
     ?>
 
-    <div class="bdt"">
+    <div class="bdt">
         <div class="vehicle_search"<?php echo $makeIds !== null ? ' data-makeids="'.$makeIds.'"' : '';  ?>>
-
+            <span class="hide-bdt animate__animated animate__fadeIn" id="bdt-loading-filters">
             <div class="row">
 
                 <?php if(isset($this->_options_2['fulltextsearch_or_quicksearch']) && $this->_options_2['fulltextsearch_or_quicksearch'] === '1') : ?>
@@ -329,6 +329,7 @@
 
                 </div>
             </div>
+                </span>
             <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
         </div>
     </div>
