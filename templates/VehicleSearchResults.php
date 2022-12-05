@@ -41,7 +41,7 @@
         die('API not set.');
     }
 
-    try {
+ /*   try {
 
         $start = ($currentPage-1) * intval($this->biltorvetAPI->GetVehicleResultsPageLimit());
         $limit = intval($this->biltorvetAPI->GetVehicleResultsPageLimit());
@@ -108,79 +108,9 @@
 
     $amountOfPages = ceil($vehicleFeed->totalResults / $limit);
 
-    $customVehicleTypesFilterHasValue = $filterObject->CustomVehicleTypes != null ? $filterObject->CustomVehicleTypes[0] : "";
+    $customVehicleTypesFilterHasValue = $filterObject->CustomVehicleTypes != null ? $filterObject->CustomVehicleTypes[0] : "";*/
 
 ?>
+    <div class="bdt" id="bdt_vehicle_search_results">
 
-    <span id="cvt-selected" data-custom-vehicle-type-selected="<?= $customVehicleTypesFilterHasValue; ?>"></span>
-
-    <div class="bdt">
-        <div id="vehicle_search_results" class="vehicle_search_results" data-totalResults="<?= $vehicleFeed->totalResults ?>">
-            <div class="row resultsTitle">
-                <div class="col-md-6">
-                    <h4>
-                        <?php printf(__('Your search returned <span class="bdt_color">%d cars</span>', 'biltorvet-dealer-tools'), $vehicleFeed->totalResults); ?>
-                    </h4>
-                </div>
-                <div class="col-md-6 searchFilter">
-                    <div class="row">
-                        <div class="col">
-                            <select class="results_order_by" name="orderBy" style="">
-                                <option value=""><?php _e('- Order by -', 'biltorvet-dealer-tools'); ?></option>
-                                <?php
-                                foreach($orderByValues as $orderBy) : ?>
-                                    <option value="<?php echo $orderBy; ?>"
-                                        <?php if (isset($filterObject->OrderBy) && $filterObject->OrderBy === $orderBy) : ?>
-                                            selected="selected"
-                                        <?php endif; ?>
-                                    ><?= _e($orderBy, 'biltorvet-dealer-tools'); ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="col">
-                            <select name="ascDesc" style="">
-                                <option value="desc"<?php echo $filterObject->Ascending !== 'true' || isset($this->_options_2['default_sorting_order']) && isset($this->_options_2['default_sorting_order']) === "Descending" ? ' selected="selected"' : '';  ?>><?php _e('Descending', 'biltorvet-dealer-tools'); ?></option>
-                                <option value="asc"<?php echo $filterObject->Ascending === 'true' || isset($this->_options_2['default_sorting_order']) && isset($this->_options_2['default_sorting_order']) === "Ascending" ? ' selected="selected"' : '';  ?>><?php _e('Ascending', 'biltorvet-dealer-tools'); ?></option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="lds-ring-paging d-done" style="display: none; opacity: 0;"><div></div><div></div><div></div><div></div></div>
-                <div class="clearfix"></div>
-            </div>
-            <div class="results">
-                <div id="vehicle-row" class="row vehicle-row">
-                    <?php
-                        foreach($vehicleFeed->vehicles as $oVehicle)
-                        {
-                            $link = $bdt_root_url . '/' . $oVehicle->uri;
-
-                            // @TODO: Refactor.
-                            // For new we convert the old vehicle object to the new, so it works with the new templates
-                            // PLUGIN_ROOT refers to the v2 root.
-
-                            /** @var Vehicle $vehicle */
-                            $vehicle = VehicleFactory::create(json_decode(json_encode($oVehicle), true));
-                            $vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
-                            $priceController = new PriceController($vehicle);
-                            $basePage = $bdt_root_url;
-                            require PLUGIN_ROOT . 'templates/partials/_vehicleCard.php';
-                        }
-                    ?>
-                </div>
-            </div>
-            <div class="paging">
-                <?php
-                    $buttonCurrentPage = $currentPage;
-
-                    $newEnd = $currentPage * $limit;
-
-                    if($buttonCurrentPage < $amountOfPages)
-                    {
-                        echo '<button class="paging-button et_pb_button bdt_bgcolor" id="paging-button" data-current-page="' . $buttonCurrentPage . '" data-amount-of-pages="' . $amountOfPages . '" data-end="' . $newEnd .'" data-limit="' . $limit .'">Indlæs flere...</button>';
-                    }
-                ?>
-                <div class="lds-ring-paging d-done" style="display: none; opacity: 0;"><div></div><div></div><div></div><div></div></div>
-            </div>
-        </div>
     </div>

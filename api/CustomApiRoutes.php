@@ -170,7 +170,8 @@ use Biltorvet\Model\Vehicle;
 
             ob_start();
             ?>
-            <div class="bdt">
+
+
             <div id="vehicle_search_results" class="vehicle_search_results" data-totalResults="<?= $vehicleFeed->totalResults ?>">
                 <div class="row resultsTitle">
                     <div class="col-md-6">
@@ -178,10 +179,11 @@ use Biltorvet\Model\Vehicle;
                             <?php printf(__('Your search returned <span class="bdt_color">%d cars</span>', 'biltorvet-dealer-tools'), $vehicleFeed->totalResults); ?>
                         </h4>
                     </div>
+
                     <div class="col-md-6 searchFilter">
                         <div class="row">
                             <div class="col">
-                                <select name="orderBy">
+                                <select name="orderBy" id="select-orderby">
                                     <option value=""><?php _e('- Order by -', 'biltorvet-dealer-tools'); ?></option>
                                     <?php
                                     foreach($orderByValues as $orderBy) : ?>
@@ -194,7 +196,7 @@ use Biltorvet\Model\Vehicle;
                                 </select>
                             </div>
                             <div class="col">
-                                <select name="ascDesc">
+                                <select name="ascDesc" id="select-asc-desc">
                                     <option value="desc"<?php echo $filterObject->Ascending !== 'true' || isset($this->_options_2['default_sorting_order']) && isset($this->_options_2['default_sorting_order']) === "Descending" ? ' selected="selected"' : '';  ?>><?php _e('Descending', 'biltorvet-dealer-tools'); ?></option>
                                     <option value="asc"<?php echo $filterObject->Ascending === 'true' || isset($this->_options_2['default_sorting_order']) && isset($this->_options_2['default_sorting_order']) === "Ascending" ? ' selected="selected"' : '';  ?>><?php _e('Ascending', 'biltorvet-dealer-tools'); ?></option>
                                 </select>
@@ -242,7 +244,6 @@ use Biltorvet\Model\Vehicle;
                             <div class="lds-ring-paging d-done" style="display: none; opacity: 0;"><div></div><div></div><div></div><div></div></div>
                         </div>
                     </div>
-                </div>
             <?php
             $content = ob_get_contents();
             ob_end_clean();

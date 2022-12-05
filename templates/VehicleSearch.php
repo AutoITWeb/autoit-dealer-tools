@@ -23,12 +23,6 @@
         $bdt_root_url = rtrim($bdt_root_url,'/');
     }
 
-    $makeIds = null;
-    if(isset($atts) && isset($atts['makeids']) && trim($atts['makeids']) !== '')
-    {
-        $makeIds = $atts['makeids'];
-    }
-
     // The initial filter is only here to hide dropdowns with one value only, so they don't "flash" before Ajax executes.
     // All filter logic should be in JS.
     try{
@@ -227,14 +221,10 @@
     $showBodyTypes = (count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->bodyTypes) > 1) ? "" : "style='display: none;'";
     $showPropellants = (count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->propellants) > 1) ? "" : "style='display: none;'";
 
-
-
-
-
     ?>
 
     <div class="bdt">
-        <div class="vehicle_search"<?php echo $makeIds !== null ? ' data-makeids="'.$makeIds.'"' : '';  ?>>
+        <div class="vehicle_search">
             <span class="hide-bdt animate__animated animate__fadeIn" id="bdt-loading-filters">
                 <div class="car-model-container">
                     <?php

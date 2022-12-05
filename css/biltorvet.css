@@ -6058,6 +6058,14 @@ bdt .vehicle_search_results select,
   }
 }
 
+.cvt-selected {
+  background-color: black;
+}
+
+.cvt-disable-clicking {
+  pointer-events: none;
+}
+
 /* --- Custom Vehicle Types (Frontpage search) end -- */
 
 /* --- Multiselect Select2 Start -- */

@@ -50,8 +50,6 @@ if(!empty($initialFilterOptions->customVehicleTypes))
 }
 
 ?>
-
-
     <div class="car-icon-container" data-custom-vehicle-type="0" <?= $customVehicleTypeMicro ?>>
         <a href="/" id="cvt-micro"
         ><svg
