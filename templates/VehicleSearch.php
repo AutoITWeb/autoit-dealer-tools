@@ -226,11 +226,23 @@
 
     $showBodyTypes = (count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->bodyTypes) > 1) ? "" : "style='display: none;'";
     $showPropellants = (count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->propellants) > 1) ? "" : "style='display: none;'";
+
+
+
+
+
     ?>
 
     <div class="bdt">
         <div class="vehicle_search"<?php echo $makeIds !== null ? ' data-makeids="'.$makeIds.'"' : '';  ?>>
             <span class="hide-bdt animate__animated animate__fadeIn" id="bdt-loading-filters">
+                <div class="car-model-container">
+                    <?php
+
+                        require Biltorvet::bdt_get_template("/partials/_customVehicleTypes.php");
+
+                    ?>
+                </div>
             <div class="row">
 
                 <?php if(isset($this->_options_2['fulltextsearch_or_quicksearch']) && $this->_options_2['fulltextsearch_or_quicksearch'] === '1') : ?>
