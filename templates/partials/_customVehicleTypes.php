@@ -4,7 +4,7 @@
 // Custom Vehicle Types (Icon based search)
 
 // Custom color selected?
-$customVehicleTypeIconColor = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_iconbased_search_icon_color'])) && $this->_options_5['frontpagesearch_iconbased_search_icon_color'] !== '' ? $this->_options_5['frontpagesearch_iconbased_search_icon_color'] : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? $this->_options['primary_color'] : "#00a1b7");
+$customVehicleTypeIconColor = (isset($this->_options_2)) && (isset($this->_options_2['frontpagesearch_iconbased_search_icon_color'])) && $this->_options_2['frontpagesearch_iconbased_search_icon_color'] !== '' ? $this->_options_2['frontpagesearch_iconbased_search_icon_color'] : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? $this->_options['primary_color'] : "#00a1b7");
 
 $customVehicleTypeMicro = "style='display: none;'";;
 $customVehicleTypeHatchback = "style='display: none;'";;
@@ -67,6 +67,7 @@ if(!empty($initialFilterOptions->customVehicleTypes))
             </svg>
             <span class="caption" style="color: <?= $customVehicleTypeIconColor; ?>;">Mikrobil</span>
         </a>
+        <span class="cvt-checkmark" style="display: none;" name="cvt-checkmark-0"></span>
     </div>
     <div class="car-icon-container" data-custom-vehicle-type="1" <?= $customVehicleTypeHatchback ?>>
         <a href="/" id="cvt-hatchback"
@@ -85,6 +86,7 @@ if(!empty($initialFilterOptions->customVehicleTypes))
             </svg>
             <span class="caption" style="color: <?= $customVehicleTypeIconColor; ?>;">Hatchback</span>
         </a>
+        <span class="cvt-checkmark" style="display: none;" name="cvt-checkmark-1"></span>
     </div>
     <div class="car-icon-container" data-custom-vehicle-type="2" <?= $customVehicleTypeFamilyCar ?>>
         <a href="/" id="cvt-familycar">
@@ -103,6 +105,7 @@ if(!empty($initialFilterOptions->customVehicleTypes))
             </svg>
             <span class="caption" style="color: <?= $customVehicleTypeIconColor; ?>;">Familiebil</span>
         </a>
+        <span class="cvt-checkmark" style="display: none;" name="cvt-checkmark-2"></span>
     </div>
     <div class="car-icon-container" data-custom-vehicle-type="3" <?= $customVehicleTypeStationcar ?>>
         <a href="/" id="cvt-stationwagon">
@@ -121,6 +124,7 @@ if(!empty($initialFilterOptions->customVehicleTypes))
             </svg>
             <span class="caption" style="color: <?= $customVehicleTypeIconColor; ?>;">Stationcar</span>
         </a>
+        <span class="cvt-checkmark" style="display: none;" name="cvt-checkmark-3"></span>
     </div>
     <div class="car-icon-container" data-custom-vehicle-type="4" <?= $customVehicleTypeSuv ?>>
         <a href="/" id="cvt-suv">
@@ -141,6 +145,7 @@ if(!empty($initialFilterOptions->customVehicleTypes))
             </svg>
             <span class="caption" style="color: <?= $customVehicleTypeIconColor; ?>;">SUV</span>
         </a>
+        <span class="cvt-checkmark" style="display: none;" name="cvt-checkmark-4"></span>
     </div>
     <div class="car-icon-container" data-custom-vehicle-type="5" <?= $customVehicleTypeElectricAndHybrid ?>>
         <a href="" id="cvt-electricandhybrid" >
@@ -159,6 +164,7 @@ if(!empty($initialFilterOptions->customVehicleTypes))
             </svg>
             <span class="caption" style="color: <?= $customVehicleTypeIconColor; ?>;">El og hybrid</span>
         </a>
+        <span class="cvt-checkmark" style="display: none;" name="cvt-checkmark-5"></span>
     </div>
 
     <div class="car-icon-container" data-custom-vehicle-type="6" <?= $customVehicleTypeVan ?>>
@@ -177,6 +183,7 @@ if(!empty($initialFilterOptions->customVehicleTypes))
             </svg>
             <span class="caption" style="color: <?= $customVehicleTypeIconColor; ?>;">Varebil</span>
         </a>
+        <span class="cvt-checkmark" style="display: none;" name="cvt-checkmark-6"></span>
     </div>
 
     <div class="car-icon-container" data-custom-vehicle-type="7" <?= $customVehicleTypeTruck ?>>
@@ -195,5 +202,6 @@ if(!empty($initialFilterOptions->customVehicleTypes))
             </svg>
             <span class="caption" style="color: <?= $customVehicleTypeIconColor; ?>;">Lastbil</span>
         </a>
+        <span class="cvt-checkmark" style="display: none;" name="cvt-checkmark-7"></span>
     </div>
 

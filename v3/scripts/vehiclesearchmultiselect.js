@@ -254,6 +254,7 @@ function Biltorvet($) {
 
                     SetFilters(response);
 
+
                     // Select the previously selected values
                     if(response.values)
                     {
@@ -271,35 +272,56 @@ function Biltorvet($) {
                             $('#make').val(response.values.makes);
                             HandleSelect2SelectionChange($('#make'));
                         }
+                        else {
+                            ReinitSelect2Placeholders('#make');
+                        }
                         if(response.values.models && response.values.models[0])
                         {
                             $('#model').val(response.values.models);
                             HandleSelect2SelectionChange($('#model'));
+                        }
+                        else {
+                            ReinitSelect2Placeholders('#model');
                         }
                         if(response.values.propellants && response.values.propellants[0])
                         {
                             $('#propellant').val(response.values.propellants);
                             HandleSelect2SelectionChange($('#propellant'));
                         }
+                        else {
+                            ReinitSelect2Placeholders('#propellant');
+                        }
                         if(response.values.bodyTypes && response.values.bodyTypes[0])
                         {
                             $('#bodyType').val(response.values.bodyTypes);
                             HandleSelect2SelectionChange($('#bodyType'));
+                        }
+                        else {
+                            ReinitSelect2Placeholders('#bodyType');
                         }
                         if(response.values.productTypes && response.values.productTypes[0])
                         {
                             $('#productType').val(response.values.productTypes);
                             HandleSelect2SelectionChange($('#productType'));
                         }
+                        else {
+                            ReinitSelect2Placeholders('#productType');
+                        }
                         if(response.values.vehicleStates && response.values.vehicleStates[0])
                         {
                             $('#vehicleState').val(response.values.vehicleStates);
                             HandleSelect2SelectionChange($('#vehicleState'));
                         }
+                        else {
+                            ReinitSelect2Placeholders('#vehicleState');
+                        }
                         if(response.values.priceTypes && response.values.priceTypes[0])
                         {
                             $('#priceType').val(response.values.priceTypes);
                             HandleSelect2SelectionChange($('#priceType'));
+                        }
+                        else {
+                            ReinitSelect2Placeholders('#priceType');
                         }
                         if(response.values.customVehicleTypes && response.values.customVehicleTypes)
                         {
@@ -345,6 +367,13 @@ function Biltorvet($) {
         }
     }
 
+    function ReinitSelect2Placeholders(HtmlElement)
+    {
+        var selectionContainer = $(HtmlElement).next('.select2-container').find('.select2-selection__rendered');
+        $(selectionContainer).parent().find('.select2-search__field').show();
+        $(HtmlElement).parent().find('.selectDropDownLabel').show();
+    }
+
     // Select 2
     function RetrieveSelect2Values(id)
     {
@@ -366,7 +395,7 @@ function Biltorvet($) {
     }
 
     // Select2
-// When an option is selected calc if the "pill" or some  custom text showing amount of selected options should be shown
+    // When an option is selected, calc if the "pill" or some  custom text showing amount of selected options should be shown
     function HandleSelect2SelectionChange(htmlElement, response)
     {
         // Notify Select2 about the change
@@ -466,7 +495,6 @@ function Biltorvet($) {
                     $(selectionContainer).parent().find('.select2-selection__label').remove();
                     $(element).parent().find('.selectDropDownLabel').show()
                 })
-
             },
             complete: function()
             {
@@ -1140,11 +1168,16 @@ jQuery(function($) {
             // When a CVT is selected, all other filters needs to be reset
             const cvtClicked = e.target.closest(".car-icon-container");
             const cvtClickedDataSet = cvtClicked.dataset.customVehicleType;
+
+            const cvtSpanName = "cvt-checkmark-" + cvtClickedDataSet;
+            const cvtCheckmark = $('[name="'  + cvtSpanName + '"]');
+
             const getcvtClickedClassList = cvtClicked.classList;
 
             // CVT needs to be unselected
             if(getcvtClickedClassList.value.includes("cvt-selected"))
             {
+                cvtCheckmark[0].style.display = 'none';
                 cvtClicked.classList.remove("cvt-selected")
             }
             // CVT needs to be selected
@@ -1154,9 +1187,15 @@ jQuery(function($) {
 
                 if(cvtPreviouslySelected.length > 0)
                 {
+                    const cvtcvtPreviouslySelectedDataSet = cvtPreviouslySelected[0].dataset.customVehicleType;
+                    const cvtcvtPreviouslySelectedSpanName = "cvt-checkmark-" + cvtcvtPreviouslySelectedDataSet;
+                    const cvtcvtPreviouslySelectedCheckmark = $('[name="'  + cvtcvtPreviouslySelectedSpanName + '"]');
+
+                    cvtcvtPreviouslySelectedCheckmark[0].style.display = 'none';
                     cvtPreviouslySelected[0].classList.remove("cvt-selected");
                 }
 
+                cvtCheckmark[0].style.display = '';
                 cvtClicked.classList.add("cvt-selected")
             }
 
@@ -1164,21 +1203,21 @@ jQuery(function($) {
             //cvtSelectedResetOtherFilters();
             var vehicleSearch = $(this).closest('.bdt .vehicle_search');
 
-            vehicleSearch.find('select[name=company]').val('').trigger('change');
-            vehicleSearch.find('select[name=vehicleState]').val('').trigger('change');
-            vehicleSearch.find('select[name=make]').val('').trigger('change');
-            vehicleSearch.find('select[name=model]').val('').trigger('change');
-            vehicleSearch.find('select[name=bodyType]').val('').trigger('change');
-            vehicleSearch.find('select[name=productType]').val('').trigger('change');
-            vehicleSearch.find('select[name=priceType]').val('').trigger('change');
-            vehicleSearch.find('select[name=propellant]').val('').trigger('change');
-            vehicleSearch.find('select[name=priceMinMax]').val('').trigger('change');
-            vehicleSearch.find('select[name=priceMinMax]').val('').trigger('change');
-            vehicleSearch.find('select[name=consumptionMin]').val('').trigger('change');
-            vehicleSearch.find('select[name=consumptionMax]').val('').trigger('change');
+            vehicleSearch.find('input[name=fullTextSearch]').val('');
+            vehicleSearch.find('select[name=company]').val('');
+            vehicleSearch.find('select[name=vehicleState]').val('');
+            vehicleSearch.find('select[name=make]').val('');
+            vehicleSearch.find('select[name=model]').val('');
+            vehicleSearch.find('select[name=bodyType]').val('');
+            vehicleSearch.find('select[name=productType]').val('');
+            vehicleSearch.find('select[name=priceType]').val('');
+            vehicleSearch.find('select[name=propellant]').val('');
+            vehicleSearch.find('select[name=priceMinMax]').val('');
+            vehicleSearch.find('select[name=priceMinMax]').val('');
+            vehicleSearch.find('select[name=consumptionMin]').val('');
+            vehicleSearch.find('select[name=consumptionMax]').val('');
 
             bdt.ReloadUserFilterSelection(false);
-
         })
         .on('blur', '.fullTextSearch', function(){
 

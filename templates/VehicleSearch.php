@@ -221,12 +221,15 @@
     $showBodyTypes = (count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->bodyTypes) > 1) ? "" : "style='display: none;'";
     $showPropellants = (count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->propellants) > 1) ? "" : "style='display: none;'";
 
-    ?>
+    // Custom Vehicle Types - variables only related to the frontpage search
+    $showCustomVehicleTypesSection = (isset($this->_options_2)) && (isset($this->_options_2['vehiclesearch_activate_iconbased_search'])) && ($this->_options_2['vehiclesearch_activate_iconbased_search'] === 'on') ? "" : "display: none;";
+
+?>
 
     <div class="bdt">
         <div class="vehicle_search">
             <span class="hide-bdt animate__animated animate__fadeIn" id="bdt-loading-filters">
-                <div class="car-model-container">
+                <div class="car-model-container" style="<?= $showCustomVehicleTypesSection; ?>">
                     <?php
 
                         require Biltorvet::bdt_get_template("/partials/_customVehicleTypes.php");
