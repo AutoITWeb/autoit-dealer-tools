@@ -6095,7 +6095,7 @@ bdt .vehicle_search_results select,
 .car-icon-container .cvt-checkmark {
   display: block;
   position: absolute;
-  top: 10px;
+  top: 6px;
   left: 44%;
   width: 24px;
   height: 24px;
@@ -6108,18 +6108,25 @@ bdt .vehicle_search_results select,
 }
 @media screen and (min-width: 500px) {
   .car-icon-container .cvt-checkmark {
-    top: 24px;
+    top: 16px;
     left: 46%;
   }
 }
 @media screen and (min-width: 768px) {
   .car-icon-container .cvt-checkmark {
-    top: 2px;
+    top: 0px;
     left: 36%;
+  }
+  #frontpage_vehicle_search .car-icon-container .cvt-checkmark {
+    top: 2px;
   }
 }
 @media screen and (min-width: 1024px) {
   .car-icon-container .cvt-checkmark {
+    top: 8px;
+    left: 34%;
+  }
+  #frontpage_vehicle_search .car-icon-container .cvt-checkmark {
     top: 24px;
     left: 46%;
   }
