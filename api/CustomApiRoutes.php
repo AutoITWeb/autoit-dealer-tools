@@ -87,26 +87,36 @@ use Biltorvet\Model\Vehicle;
 
             if($getApiKey !== null && $getApiKey === $this->_options['api_key'])
             {
-                // Get pageId of the vehicledetailspage
+                // Get pageId of the vehicledetailspage and the vehicle search page
                 $detailsPageId = isset($this->_options['detail_template_page_id']) ? intval($this->_options['detail_template_page_id']) : 0;
+                $searchPageId = isset($this->_options['vehiclesearch_page_id']) ? intval($this->_options['vehiclesearch_page_id']) : 0;
 
                 $vehicleDetailsPageUrl = get_permalink($detailsPageId);
+                $vehicleSearchPageUrl = get_permalink($searchPageId);
 
-                $pages_to_clean_preload = [
-                    $vehicleDetailsPageUrl
+                $pages_to_clean = [
+                    $vehicleDetailsPageUrl,
+                    $vehicleSearchPageUrl
                 ];
 
-                if(count($pages_to_clean_preload) > 0)
+                $pages_to_preload = [
+                    $vehicleSearchPageUrl
+                ];
+
+                if(count($pages_to_clean) > 0)
                 {
                     try{
 
                         // Clear and preload WP Rocket Cache for pages added to $pages_to_clean_preload
                         if ( function_exists( 'rocket_clean_post' ) ) {
 
-                            foreach( $pages_to_clean_preload as $page_to_clean) {
+                            foreach( $pages_to_clean as $page_to_clean) {
                                 rocket_clean_post( url_to_postid ( $page_to_clean ) );
                             }
                         }
+
+                        // Response message (Mostly for debugging)
+                        $apiResponse = "";
 
                         if ( function_exists( 'get_rocket_option' ) ) {
 
@@ -120,26 +130,29 @@ use Biltorvet\Model\Vehicle;
                                 }
 
                                 // Preload desktop pages/posts.
-                                rocket_preload_page( $pages_to_clean_preload, $args );
+                                $responseDesktop = "Desktop:" . $this->rocket_preload_page($pages_to_preload, $args);
 
+                                $apiResponse .= ' ' . $responseDesktop;
+
+                                // It's nothing we are currently doing - we'll keep it here in case we want to do it
                                 if( 1 == get_rocket_option( 'do_caching_mobile_files' ) ) {
                                     $args[ 'headers' ][ 'user-agent' ] 	= 'Mozilla/5.0 (Linux; Android 8.0.0;) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Mobile Safari/537.36';
 
                                     // Preload mobile pages/posts.
-                                    rocket_preload_page(  $pages_to_clean_preload, $args );
+                                    $this->rocket_preload_page(  $pages_to_preload, $args );
                                 }
                             }
                         }
 
-                        // Preload pages in list
-                        function rocket_preload_page ( $pages_to_preload, $args ){
-
-                            foreach( $pages_to_preload as $page_to_preload ) {
-                                wp_remote_get( esc_url_raw ( $page_to_preload ), $args );
-                            }
+                        if(strpos($apiResponse, "error") !== false)
+                        {
+                            http_response_code(400);
+                            echo $apiResponse;
+                            exit;
                         }
 
                         http_response_code(200);
+                        echo $apiResponse;
                         exit;
                     }
                     catch (Exception $e)
@@ -462,6 +475,27 @@ use Biltorvet\Model\Vehicle;
             }
 
             return $filterObject;
+        }
+
+        // Preload pages in list
+        public function rocket_preload_page ( $pages_to_preload, $args ){
+
+            $responseToReturn = "";
+
+            foreach( $pages_to_preload as $page_to_preload ) {
+                $response = wp_remote_get( esc_url_raw ( $page_to_preload ), $args );
+
+                if(is_wp_error($response) || !isset($response['response']))
+                {
+                    $responseToReturn .= " " . $response->get_error_message() . " URL:" . $page_to_preload . ".";
+                }
+                else
+                {
+                    $responseToReturn .= " " . $response['response']['code'] . " URL:" . $page_to_preload . ".";
+                }
+            }
+
+            return $responseToReturn;
         }
     }
 
