@@ -53,11 +53,11 @@ if(!empty($initialFilterOptions->customVehicleTypes))
     <div class="car-icon-container" data-custom-vehicle-type="0" <?= $customVehicleTypeMicro ?>>
         <a href="/" id="cvt-micro"
         ><svg
-                viewBox="0 0 143 105"
+                viewBox="0 0 143 160"
                 class="car"
                 xmlns="http://www.w3.org/2000/svg"
             >
-                <g transform="matrix(1, 0, 0, 1, -212.374512, -83.815002)">
+                <g transform="matrix(1, 0, 0, 1, -212.374512, -35)">
                     <title>Micro</title>
                     <ellipse cx="281.555" cy="186.74" rx="65.541" ry="2.075" />
                     <path style="fill: <?= $customVehicleTypeIconColor; ?>;"
@@ -72,11 +72,11 @@ if(!empty($initialFilterOptions->customVehicleTypes))
     <div class="car-icon-container" data-custom-vehicle-type="1" <?= $customVehicleTypeHatchback ?>>
         <a href="/" id="cvt-hatchback"
         ><svg
-                viewBox="0 0 210 105"
+                viewBox="0 0 210 160"
                 class="car"
                 xmlns="http://www.w3.org/2000/svg"
             >
-                <g transform="matrix(1, 0, 0, 1, -211.265366, -83.815002)">
+                <g transform="matrix(1, 0, 0, 1, -211.265366, -35)">
                     <title>Hatchback</title>
                     <ellipse cx="316.937" cy="186.115" rx="100.922" ry="2.3" />
                     <path style="fill: <?= $customVehicleTypeIconColor; ?>;"
@@ -91,11 +91,11 @@ if(!empty($initialFilterOptions->customVehicleTypes))
     <div class="car-icon-container" data-custom-vehicle-type="2" <?= $customVehicleTypeFamilyCar ?>>
         <a href="/" id="cvt-familycar">
             <svg
-                viewBox="0 0 219 105"
+                viewBox="0 0 219 160"
                 class="car"
                 xmlns="http://www.w3.org/2000/svg"
             >
-                <g transform="matrix(1, 0, 0, 1, -210.975739, -83.815002)">
+                <g transform="matrix(1, 0, 0, 1, -210.975739, -35)">
                     <title>Sedan</title>
                     <ellipse cx="320.879" cy="186.539" rx="104.865" ry="2.276" />
                     <path style="fill: <?= $customVehicleTypeIconColor; ?>;"
@@ -110,11 +110,11 @@ if(!empty($initialFilterOptions->customVehicleTypes))
     <div class="car-icon-container" data-custom-vehicle-type="3" <?= $customVehicleTypeStationcar ?>>
         <a href="/" id="cvt-stationwagon">
             <svg style="fill: <?= $customVehicleTypeIconColor; ?>;"
-                 viewBox="0 0 220 105"
+                 viewBox="0 0 220 160"
                  class="car"
                  xmlns="http://www.w3.org/2000/svg"
             >
-                <g transform="matrix(1, 0, 0, 1, -209.585358, -83.815002)">
+                <g transform="matrix(1, 0, 0, 1, -209.585358, -35)">
                     <title>Station wagon</title>
                     <ellipse cx="320.879" cy="186.539" rx="104.865" ry="2.276" />
                     <path
@@ -129,12 +129,12 @@ if(!empty($initialFilterOptions->customVehicleTypes))
     <div class="car-icon-container" data-custom-vehicle-type="4" <?= $customVehicleTypeSuv ?>>
         <a href="/" id="cvt-suv">
             <svg style="fill: <?= $customVehicleTypeIconColor; ?>;"
-                 viewBox="0 0 250 105"
+                 viewBox="0 0 250 160"
                  class="car"
                  xmlns="http://www.w3.org/2000/svg"
             >
                 <g
-                    transform="matrix(1.133006, 0, 0, 1.268357, -237.856247, -139.941116)"
+                    transform="matrix(1.133006, 0, 0, 1.268357, -237.856247, -90)"
                 >
                     <title>SUV</title>
                     <ellipse cx="320.879" cy="190.994" rx="104.865" ry="2.276" />
@@ -150,11 +150,11 @@ if(!empty($initialFilterOptions->customVehicleTypes))
     <div class="car-icon-container" data-custom-vehicle-type="5" <?= $customVehicleTypeElectricAndHybrid ?>>
         <a href="" id="cvt-electricandhybrid" >
             <svg style="fill: <?= $customVehicleTypeIconColor; ?>;"
-                 viewBox="0 0 236 105"
+                 viewBox="0 0 236 160"
                  class="car"
                  xmlns="http://www.w3.org/2000/svg"
             >
-                <g transform="matrix(1, 0, 0, 1, -213.815369, -92.225006)">
+                <g transform="matrix(1, 0, 0, 1, -213.815369, -40)">
                     <title>El og hybrid</title>
                     <ellipse cx="320.879" cy="194.539" rx="104.865" ry="2.276" />
                     <path
@@ -170,11 +170,11 @@ if(!empty($initialFilterOptions->customVehicleTypes))
     <div class="car-icon-container" data-custom-vehicle-type="6" <?= $customVehicleTypeVan ?>>
         <a href="/" id="cvt-van">
             <svg style="fill: <?= $customVehicleTypeIconColor; ?>;"
-                 viewBox="0 0 225 105"
-                 class="car"
+                 viewBox="0 0 225 160"
+                 class="car van"
                  xmlns="http://www.w3.org/2000/svg"
             >
-                <g transform="translate(-212.26 -84.21)">
+                <g transform="translate(-212.26 -35)">
                     <title>Varebil</title>
                     <ellipse cx="320.88" cy="186.54" rx="104.86" ry="2.28" />
                     <path
@@ -190,10 +190,10 @@ if(!empty($initialFilterOptions->customVehicleTypes))
         <a href="/" id="cvt-truck">
             <svg style="fill: <?= $customVehicleTypeIconColor; ?>;"
                  viewBox="0 0 300 160"
-                 class="car"
+                 class="car truck"
                  xmlns="http://www.w3.org/2000/svg"
             >
-                <g transform="translate(-210.43 -33.64)">
+                <g transform="translate(-210.43 -35)">
                     <title>Lastbil</title>
                     <ellipse cx="359.64" cy="191.44" rx="142.08" ry="1.79" />
                     <path
