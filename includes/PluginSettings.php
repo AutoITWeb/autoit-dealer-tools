@@ -559,7 +559,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             add_settings_field(
                 'frontpagesearch_iconbased_search_icon_color',
                 __( 'Icon color', 'biltorvet-dealer-tools' ),
-                array( $this, 'bdt_frontpagesearch_icon_based_search_icon_color_callback' ),
+                array( $this, 'bdt_vehiclesearch_icon_based_search_icon_color_callback' ),
                 'bdt-settings-group-2', // Page
                 'bdt_settings_section_2' // Section
             );
@@ -724,6 +724,15 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt-settings-group-5', // Page
                 'bdt_settings_section_5' // Section
             );
+
+            add_settings_field(
+                'frontpagesearch_iconbased_search_icon_color',
+                __( 'Icon color', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_frontpagesearch_icon_based_search_icon_color_callback' ),
+                'bdt-settings-group-5', // Page
+                'bdt_settings_section_5' // Section
+            );
+
 
             add_settings_field(
                 'frontpagesearch_iconbased_search_background_color',
@@ -1236,7 +1245,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
         }
 
-        public function bdt_frontpagesearch_icon_based_search_icon_color_callback()
+        public function bdt_vehiclesearch_icon_based_search_icon_color_callback()
         {
             printf(
                 '<input type="text" id="bdt_options_2" name="bdt_options_2[frontpagesearch_iconbased_search_icon_color]" size="30" value="%s" style="margin-bottom: 5px;" placeholder="Skal indeholde # og 6 tegn"/>',
@@ -1506,6 +1515,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             printf(
                 'Aktivér <input type="checkbox" id="bdt_options_5" value="on" name="bdt_options_5[frontpagesearch_activate_iconbased_search]"%s />',
                 isset( $this->options_5['frontpagesearch_activate_iconbased_search'] ) && $this->options_5['frontpagesearch_activate_iconbased_search'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_frontpagesearch_icon_based_search_icon_color_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_5" name="bdt_options_5[frontpagesearch_iconbased_search_icon_color]" size="30" value="%s" style="margin-bottom: 5px;" placeholder="Skal indeholde # og 6 tegn"/>',
+                isset( $this->options_5['frontpagesearch_iconbased_search_icon_color'] ) ? esc_attr($this->options_5['frontpagesearch_iconbased_search_icon_color']) : ''
             );
         }
 

@@ -3,9 +3,6 @@
 
 // Custom Vehicle Types (Icon based search)
 
-// Custom color selected?
-$customVehicleTypeIconColor = (isset($this->_options_2)) && (isset($this->_options_2['frontpagesearch_iconbased_search_icon_color'])) && $this->_options_2['frontpagesearch_iconbased_search_icon_color'] !== '' ? $this->_options_2['frontpagesearch_iconbased_search_icon_color'] : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? $this->_options['primary_color'] : "#00a1b7");
-
 $customVehicleTypeMicro = "style='display: none;'";;
 $customVehicleTypeHatchback = "style='display: none;'";;
 $customVehicleTypeFamilyCar = "style='display: none;'";;
