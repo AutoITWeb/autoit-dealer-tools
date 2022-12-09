@@ -323,7 +323,7 @@ function Biltorvet($) {
                         else {
                             ReinitSelect2Placeholders('#priceType');
                         }
-                        if(response.values.customVehicleTypes && response.values.customVehicleTypes)
+                        if(response.values.customVehicleTypes && response.values.customVehicleTypes[0])
                         {
                             // Custom Vehicle Types
                             var cvtElements = document.getElementsByClassName("car-icon-container")
@@ -334,6 +334,11 @@ function Biltorvet($) {
 
                                     if(response.values.customVehicleTypes[0] === cvt.dataset.customVehicleType)
                                     {
+                                        const cvtcvtPreviouslySelectedSpanName = "cvt-checkmark-" + cvt.dataset.customVehicleType;
+                                        const cvtcvtPreviouslySelectedCheckmark = $('[name="'  + cvtcvtPreviouslySelectedSpanName + '"]');
+
+                                        cvtcvtPreviouslySelectedCheckmark[0].style.display = '';
+
                                         cvt.classList.add("cvt-selected");
                                     }
                                 });
@@ -516,6 +521,12 @@ function Biltorvet($) {
 
         if(customVehicleTypeSelected !== null)
         {
+            const cvtcvtPreviouslySelectedDataSet = customVehicleTypeSelected.dataset.customVehicleType;
+            const cvtcvtPreviouslySelectedSpanName = "cvt-checkmark-" + cvtcvtPreviouslySelectedDataSet;
+            const cvtcvtPreviouslySelectedCheckmark = $('[name="'  + cvtcvtPreviouslySelectedSpanName + '"]');
+
+            cvtcvtPreviouslySelectedCheckmark[0].style.display = 'none';
+
             customVehicleTypeSelected.classList.remove("cvt-selected");
         }
 
