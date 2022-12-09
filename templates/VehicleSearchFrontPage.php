@@ -226,6 +226,13 @@ $customVehicleTypeBackgroundColor = (isset($this->_options_5)) && (isset($this->
 <div class="bdt">
     <div id="frontpage_vehicle_search" class="vehicle_search"<?php echo $makeIds !== null ? ' data-makeids="'.$makeIds.'"' : '';  ?>>
         <span class="hide-bdt animate__animated animate__fadeIn" id="bdt-loading-filters">
+        
+        <!-- Icon-based search aka Custom Vehicle Types -->
+        <div class="car-model-container" style="<?= $showCustomVehicleTypesSection; ?> background-color: <?= $customVehicleTypeBackgroundColor; ?>;">
+            <?php
+            require Biltorvet::bdt_get_template("/partials/_customVehicleTypes.php");
+            ?>
+        </div>
 
         <div class="row">
 
@@ -324,16 +331,7 @@ $customVehicleTypeBackgroundColor = (isset($this->_options_5)) && (isset($this->
                 <div id="root_url" style="display: none;"><?= $bdt_root_url ?></div>
             </div>
         </div>
-            <!-- Icon-based search aka Custom Vehicle Types -->
-
-            <div class="car-model-container" style="<?= $showCustomVehicleTypesSection; ?> background-color: <?= $customVehicleTypeBackgroundColor; ?>;">
-                <?php
-
-                require Biltorvet::bdt_get_template("/partials/_customVehicleTypes.php");
-
-                ?>
-
-            </div>
+            
         </span>
         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
     </div>
