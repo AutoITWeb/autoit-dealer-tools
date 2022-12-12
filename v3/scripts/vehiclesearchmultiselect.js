@@ -263,6 +263,9 @@ function Biltorvet($) {
                             $('#company').val(response.values.companyIds);
                             HandleSelect2SelectionChange($('#company'));
                         }
+                        else {
+                            ReinitSelect2Placeholders('#company');
+                        }
                         if(response.values.fullTextSearch && response.values.fullTextSearch[0])
                         {
                             vehicleSearch.find('input[name=fullTextSearch]').val(response.values.fullTextSearch[0]);
@@ -376,6 +379,10 @@ function Biltorvet($) {
     {
         var selectionContainer = $(HtmlElement).next('.select2-container').find('.select2-selection__rendered');
         $(selectionContainer).parent().find('.select2-search__field').show();
+
+        // Remove special label
+        $(selectionContainer).parent().find('.select2-selection__label').remove();
+
         $(HtmlElement).parent().find('.selectDropDownLabel').show();
     }
 
@@ -494,6 +501,8 @@ function Biltorvet($) {
 
                 $('.multiple').each(function(i, element)
                 {
+                    console.log("hit?");
+
                     // Reinit placeholders (labels) !!
                     var selectionContainer = $(element).next('.select2-container').find('.select2-selection__rendered');
 
