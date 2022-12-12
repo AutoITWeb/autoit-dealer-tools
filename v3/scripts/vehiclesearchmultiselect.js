@@ -182,6 +182,7 @@ function Biltorvet($) {
         }
         this.ReloadUserFilterSelection(true);
         this.PlaceholderShuffler();
+        this.VehicleSearch(true);
     }
 
     // Fulltextsearch suffle placeholder
@@ -253,6 +254,7 @@ function Biltorvet($) {
 
                     SetFilters(response);
 
+
                     // Select the previously selected values
                     if(response.values)
                     {
@@ -260,6 +262,9 @@ function Biltorvet($) {
                         {
                             $('#company').val(response.values.companyIds);
                             HandleSelect2SelectionChange($('#company'));
+                        }
+                        else {
+                            ReinitSelect2Placeholders('#company');
                         }
                         if(response.values.fullTextSearch && response.values.fullTextSearch[0])
                         {
@@ -270,35 +275,77 @@ function Biltorvet($) {
                             $('#make').val(response.values.makes);
                             HandleSelect2SelectionChange($('#make'));
                         }
+                        else {
+                            ReinitSelect2Placeholders('#make');
+                        }
                         if(response.values.models && response.values.models[0])
                         {
                             $('#model').val(response.values.models);
                             HandleSelect2SelectionChange($('#model'));
+                        }
+                        else {
+                            ReinitSelect2Placeholders('#model');
                         }
                         if(response.values.propellants && response.values.propellants[0])
                         {
                             $('#propellant').val(response.values.propellants);
                             HandleSelect2SelectionChange($('#propellant'));
                         }
+                        else {
+                            ReinitSelect2Placeholders('#propellant');
+                        }
                         if(response.values.bodyTypes && response.values.bodyTypes[0])
                         {
                             $('#bodyType').val(response.values.bodyTypes);
                             HandleSelect2SelectionChange($('#bodyType'));
+                        }
+                        else {
+                            ReinitSelect2Placeholders('#bodyType');
                         }
                         if(response.values.productTypes && response.values.productTypes[0])
                         {
                             $('#productType').val(response.values.productTypes);
                             HandleSelect2SelectionChange($('#productType'));
                         }
+                        else {
+                            ReinitSelect2Placeholders('#productType');
+                        }
                         if(response.values.vehicleStates && response.values.vehicleStates[0])
                         {
                             $('#vehicleState').val(response.values.vehicleStates);
                             HandleSelect2SelectionChange($('#vehicleState'));
                         }
+                        else {
+                            ReinitSelect2Placeholders('#vehicleState');
+                        }
                         if(response.values.priceTypes && response.values.priceTypes[0])
                         {
                             $('#priceType').val(response.values.priceTypes);
                             HandleSelect2SelectionChange($('#priceType'));
+                        }
+                        else {
+                            ReinitSelect2Placeholders('#priceType');
+                        }
+                        if(response.values.customVehicleTypes && response.values.customVehicleTypes[0])
+                        {
+                            // Custom Vehicle Types
+                            var cvtElements = document.getElementsByClassName("car-icon-container")
+
+                            if(cvtElements.length > 0)
+                            {
+                                Array.from(cvtElements).forEach(function(cvt) {
+
+                                    if(response.values.customVehicleTypes[0] === cvt.dataset.customVehicleType)
+                                    {
+                                        const cvtcvtPreviouslySelectedSpanName = "cvt-checkmark-" + cvt.dataset.customVehicleType;
+                                        const cvtcvtPreviouslySelectedCheckmark = $('[name="'  + cvtcvtPreviouslySelectedSpanName + '"]');
+
+                                        cvtcvtPreviouslySelectedCheckmark[0].style.display = '';
+
+                                        cvt.classList.add("cvt-selected");
+                                    }
+                                });
+                            }
                         }
                     }
                 },
@@ -328,6 +375,17 @@ function Biltorvet($) {
         }
     }
 
+    function ReinitSelect2Placeholders(HtmlElement)
+    {
+        var selectionContainer = $(HtmlElement).next('.select2-container').find('.select2-selection__rendered');
+        $(selectionContainer).parent().find('.select2-search__field').show();
+
+        // Remove special label
+        $(selectionContainer).parent().find('.select2-selection__label').remove();
+
+        $(HtmlElement).parent().find('.selectDropDownLabel').show();
+    }
+
     // Select 2
     function RetrieveSelect2Values(id)
     {
@@ -349,7 +407,7 @@ function Biltorvet($) {
     }
 
     // Select2
-// When an option is selected calc if the "pill" or some  custom text showing amount of selected options should be shown
+    // When an option is selected, calc if the "pill" or some  custom text showing amount of selected options should be shown
     function HandleSelect2SelectionChange(htmlElement, response)
     {
         // Notify Select2 about the change
@@ -429,14 +487,6 @@ function Biltorvet($) {
 
     this.ResetFilters = function()
     {
-        const customVehicleTypeSelected = document.querySelector('#cvt-selected');
-
-        if(customVehicleTypeSelected !== null)
-        {
-            var cvt = customVehicleTypeSelected.dataset.customVehicleTypeSelected;
-            customVehicleTypeSelected.dataset.customVehicleTypeSelected = "";
-        }
-
         return $.ajax({
             url: ajax_config.restUrl + 'autoit-dealer-tools/v1/resetfilteroptions',
             method: 'POST',
@@ -451,13 +501,14 @@ function Biltorvet($) {
 
                 $('.multiple').each(function(i, element)
                 {
+                    console.log("hit?");
+
                     // Reinit placeholders (labels) !!
                     var selectionContainer = $(element).next('.select2-container').find('.select2-selection__rendered');
 
                     $(selectionContainer).parent().find('.select2-selection__label').remove();
                     $(element).parent().find('.selectDropDownLabel').show()
                 })
-
             },
             complete: function()
             {
@@ -474,8 +525,22 @@ function Biltorvet($) {
 
         filter = null;
 
+        // Custom Vehicle Types
+        const customVehicleTypeSelected = document.querySelector('.cvt-selected');
+
+        if(customVehicleTypeSelected !== null)
+        {
+            const cvtcvtPreviouslySelectedDataSet = customVehicleTypeSelected.dataset.customVehicleType;
+            const cvtcvtPreviouslySelectedSpanName = "cvt-checkmark-" + cvtcvtPreviouslySelectedDataSet;
+            const cvtcvtPreviouslySelectedCheckmark = $('[name="'  + cvtcvtPreviouslySelectedSpanName + '"]');
+
+            cvtcvtPreviouslySelectedCheckmark[0].style.display = 'none';
+
+            customVehicleTypeSelected.classList.remove("cvt-selected");
+        }
+
         // The VehicleSearch() function is called directly as we don't want to scrollTop when resetting the filter
-        this.ResetFilters().then(VehicleSearch).done(function() {
+        this.ResetFilters().then(this.VehicleSearch).done(function() {
 
         });
     }
@@ -485,7 +550,7 @@ function Biltorvet($) {
         StartLoadingAnimation();
 
         // Fetch results, append to dom and then scrollTop
-        $.when(VehicleSearch()).then(function(){
+        $.when(this.VehicleSearch()).then(function(){
             $('html, body').animate({
                 scrollTop: $('.vehicle-row').offset().top - 150
             }, 500);
@@ -497,7 +562,7 @@ function Biltorvet($) {
      * @return {response} - replaces the current vehicles with the ones from this result
      *
      */
-    function VehicleSearch()
+    this.VehicleSearch = function(getFromSession)
     {
         return $.ajax({
             url: ajax_config.restUrl + 'autoit-dealer-tools/v1/vehiclesearch/search',
@@ -505,12 +570,12 @@ function Biltorvet($) {
             dataType: 'json',
             data: {
                 'action': 'vehicle_search',
-                'filter': filter
+                'filter': getFromSession ? emptyFilter : filter
             },
             cache: false,
             success: function(response){
 
-                $('#vehicle_search_results').html(response);
+                $('#bdt_vehicle_search_results').html(response);
 
             },
             complete: function()
@@ -531,17 +596,6 @@ function Biltorvet($) {
         StopLoadingAnimation();
     }
 
-    this.CustomVehicleTypeSearch = function(customVehicleTypeSelected)
-    {
-        filter = null;
-
-        filter = {
-            CustomVehicleTypes: [customVehicleTypeSelected]
-        }
-
-        SaveFilter();
-    }
-
     this.StartOrderByAndAscDesc = function()
     {
         OrderByAndAscDesc();
@@ -558,9 +612,8 @@ function Biltorvet($) {
 
         GetUserFilterSettings();
 
-        filter.OrderBy = vehicleSearchResults.find('select[name=orderBy]').val() === '' ? null : vehicleSearchResults.find('select[name=orderBy]').val();
-        filter.Ascending = vehicleSearchResults.find('select[name=ascDesc]').val() === 'asc' ? true : false;
-
+        filter.OrderBy = $('#select-orderby').val() ===  null ? null : $('#select-orderby').val();
+        filter.Ascending = $('#select-asc-desc').val() === 'asc' ? true : false;
 
         $.ajax({
             url: ajax_config.restUrl + 'autoit-dealer-tools/v1/vehiclesearch/search',
@@ -697,6 +750,16 @@ function Biltorvet($) {
             priceRangeSlider.slider("disable");
         }
         vehicleSearch.find('select').prop('disabled', true);
+
+        // Custom Vehicle Types
+        var cvtElements = document.getElementsByClassName("car-icon-container")
+
+        if(cvtElements.length > 0)
+        {
+            Array.from(cvtElements).forEach(function(cvt) {
+                cvt.classList.add("cvt-disable-clicking")
+            });
+        }
     }
 
     /**
@@ -727,7 +790,9 @@ function Biltorvet($) {
      */
     function StartLoadingAnimationPaging()
     {
-        var loadingAnimationPaging = vehicleSearchResults.find('.lds-ring-paging');
+
+        var vehicleSearchResultsLoading = $(document).find('.bdt .vehicle_search_results');
+        var loadingAnimationPaging = vehicleSearchResultsLoading.find('.lds-ring-paging');
 
         if(loadingAnimationPaging.hasClass('d-none'))
         {
@@ -742,7 +807,8 @@ function Biltorvet($) {
      */
     function StopLoadingAnimationPaging()
     {
-        var loadingAnimationPaging = vehicleSearchResults.find('.lds-ring-paging');
+        var vehicleSearchResultsLoading = $(document).find('.bdt .vehicle_search_results');
+        var loadingAnimationPaging = vehicleSearchResultsLoading.find('.lds-ring-paging');
 
         loadingAnimationPaging.animate({opacity: 0}, 200, function(){ $(this).css('display', 'none').addClass('d-none'); });
     }
@@ -918,6 +984,16 @@ function Biltorvet($) {
                 .setAttribute('max', response.priceMax)
                 .setValue([response.values.priceMin === null ? response.priceMin : response.values.priceMin, response.values.priceMax === null ? response.priceMax : response.values.priceMax], true, true);
         }
+
+        // Custom Vehicle Types
+        var cvtElements = document.getElementsByClassName("car-icon-container")
+
+        if(cvtElements.length > 0)
+        {
+            Array.from(cvtElements).forEach(function(cvt) {
+                cvt.classList.remove("cvt-disable-clicking")
+            });
+        }
     }
 
     /**
@@ -956,7 +1032,6 @@ function Biltorvet($) {
             Ascending: vehicleSearchResults.find('select[name=ascDesc]').val() === 'asc' ? true : false,
         }
 
-
         var cvt = GetCustomVehicleType();
 
         if(cvt)
@@ -971,10 +1046,10 @@ function Biltorvet($) {
 
 function GetCustomVehicleType()
 {
-    const customVehicleTypeSelected = document.querySelector('#cvt-selected');
+    const customVehicleTypeSelected = document.querySelector('.cvt-selected');
     if(customVehicleTypeSelected !== null)
     {
-        var cvt = customVehicleTypeSelected.dataset.customVehicleTypeSelected;
+        var cvt = customVehicleTypeSelected.dataset.customVehicleType;
 
         return cvt;
     }
@@ -989,12 +1064,41 @@ function FormatPrice(x, suffix)
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + (suffix ? ',-' : '');
 }
 
+
+
 /**
  * This part listens to changes in the frontend - .on('click', 'change') etc.
  *
  */
 jQuery(function($) {
     var bdt = new Biltorvet($);
+
+    function cvtSelectedResetOtherFilters()
+    {
+        var vehicleSearch = $(this).closest('.bdt .vehicle_search');
+
+        vehicleSearch.find('select[name=company]').val('');
+        vehicleSearch.find('select[name=vehicleState]').val('');
+        vehicleSearch.find('select[name=make]').val('');
+        vehicleSearch.find('select[name=model]').val('');
+        vehicleSearch.find('select[name=bodyType]').val('');
+        vehicleSearch.find('select[name=productType]').val('');
+        vehicleSearch.find('select[name=priceType]').val('');
+        vehicleSearch.find('select[name=propellant]').val('');
+        vehicleSearch.find('select[name=priceMinMax]').val('');
+        vehicleSearch.find('select[name=priceMinMax]').val('');
+        vehicleSearch.find('select[name=consumptionMin]').val('');
+        vehicleSearch.find('select[name=consumptionMax]').val('');
+
+        $('.multiple').each(function(i, element)
+        {
+            // Reinit placeholders (labels) !!
+            var selectionContainer = $(element).next('.select2-container').find('.select2-selection__rendered');
+
+            $(selectionContainer).parent().find('.select2-selection__label').remove();
+            $(element).parent().find('.selectDropDownLabel').show()
+        })
+    }
 
     $(document)
         .on('change', '.bdtSlider', function(e){
@@ -1056,13 +1160,6 @@ jQuery(function($) {
                 $(e.target).parent().find('.selectDropDownLabel').show()
             }
 
-            // Reset Custom Vehicle Type (Frontpage Icon search)
-            const customVehicleTypeSelected = document.querySelector('#cvt-selected');
-            if(customVehicleTypeSelected !== null)
-            {
-                customVehicleTypeSelected.dataset.customVehicleTypeSelected = "";
-            }
-
             bdt.ReloadUserFilterSelection(false);
         })
         .on('click', '.bdt .search', function(e){
@@ -1085,19 +1182,64 @@ jQuery(function($) {
 
             bdt.PagingFetchMore();
         })
-        .on('click', '.car-icon-container', function(e){
+        .on('click', '.bdt .car-icon-container', function(e){
             e.preventDefault();
 
-            const closest = e.target.closest(".car-icon-container");
-            const cvtClicked = closest.dataset.customVehicleType;
+            // When a CVT is selected, all other filters needs to be reset
+            const cvtClicked = e.target.closest(".car-icon-container");
+            const cvtClickedDataSet = cvtClicked.dataset.customVehicleType;
 
-            if(cvtClicked)
+            const cvtSpanName = "cvt-checkmark-" + cvtClickedDataSet;
+            const cvtCheckmark = $('[name="'  + cvtSpanName + '"]');
+
+            const getcvtClickedClassList = cvtClicked.classList;
+
+            // CVT needs to be unselected
+            if(getcvtClickedClassList.value.includes("cvt-selected"))
             {
-                bdt.CustomVehicleTypeSearch(cvtClicked);
+                cvtCheckmark[0].style.display = 'none';
+                cvtClicked.classList.remove("cvt-selected")
             }
+            // CVT needs to be selected
+            else {
+                // Remove preveiously selected CVT and select the newly clicked CVT
+                const cvtPreviouslySelected = document.getElementsByClassName("cvt-selected")
+
+                if(cvtPreviouslySelected.length > 0)
+                {
+                    const cvtcvtPreviouslySelectedDataSet = cvtPreviouslySelected[0].dataset.customVehicleType;
+                    const cvtcvtPreviouslySelectedSpanName = "cvt-checkmark-" + cvtcvtPreviouslySelectedDataSet;
+                    const cvtcvtPreviouslySelectedCheckmark = $('[name="'  + cvtcvtPreviouslySelectedSpanName + '"]');
+
+                    cvtcvtPreviouslySelectedCheckmark[0].style.display = 'none';
+                    cvtPreviouslySelected[0].classList.remove("cvt-selected");
+                }
+
+                cvtCheckmark[0].style.display = '';
+                cvtClicked.classList.add("cvt-selected")
+            }
+
+            // Update filters
+            //cvtSelectedResetOtherFilters();
+            var vehicleSearch = $(this).closest('.bdt .vehicle_search');
+
+            vehicleSearch.find('input[name=fullTextSearch]').val('');
+            vehicleSearch.find('select[name=company]').val('');
+            vehicleSearch.find('select[name=vehicleState]').val('');
+            vehicleSearch.find('select[name=make]').val('');
+            vehicleSearch.find('select[name=model]').val('');
+            vehicleSearch.find('select[name=bodyType]').val('');
+            vehicleSearch.find('select[name=productType]').val('');
+            vehicleSearch.find('select[name=priceType]').val('');
+            vehicleSearch.find('select[name=propellant]').val('');
+            vehicleSearch.find('select[name=priceMinMax]').val('');
+            vehicleSearch.find('select[name=priceMinMax]').val('');
+            vehicleSearch.find('select[name=consumptionMin]').val('');
+            vehicleSearch.find('select[name=consumptionMax]').val('');
+
+            bdt.ReloadUserFilterSelection(false);
         })
         .on('blur', '.fullTextSearch', function(){
-            var vehicleSearch = $(this).closest('.bdt .vehicle_search');
 
             bdt.ReloadUserFilterSelection(false);
         })

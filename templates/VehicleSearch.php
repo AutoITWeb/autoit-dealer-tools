@@ -23,12 +23,6 @@
         $bdt_root_url = rtrim($bdt_root_url,'/');
     }
 
-    $makeIds = null;
-    if(isset($atts) && isset($atts['makeids']) && trim($atts['makeids']) !== '')
-    {
-        $makeIds = $atts['makeids'];
-    }
-
     // The initial filter is only here to hide dropdowns with one value only, so they don't "flash" before Ajax executes.
     // All filter logic should be in JS.
     try{
@@ -226,11 +220,25 @@
 
     $showBodyTypes = (count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->bodyTypes) > 1) ? "" : "style='display: none;'";
     $showPropellants = (count((array)$initialFilterOptions->companies) > 1 || count($initialFilterOptions->propellants) > 1) ? "" : "style='display: none;'";
-    ?>
+
+    // Custom Vehicle Types - variables only related to the frontpage search
+    $showCustomVehicleTypesSection = (isset($this->_options_2)) && (isset($this->_options_2['vehiclesearch_activate_iconbased_search'])) && ($this->_options_2['vehiclesearch_activate_iconbased_search'] === 'on') ? "" : "display: none;";
+
+    // Custom color selected?
+    $customVehicleTypeIconColor = (isset($this->_options_2)) && (isset($this->_options_2['frontpagesearch_iconbased_search_icon_color'])) && $this->_options_2['frontpagesearch_iconbased_search_icon_color'] !== '' ? $this->_options_2['frontpagesearch_iconbased_search_icon_color'] : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? $this->_options['primary_color'] : "#00a1b7");
+
+?>
 
     <div class="bdt">
-        <div class="vehicle_search"<?php echo $makeIds !== null ? ' data-makeids="'.$makeIds.'"' : '';  ?>>
+        <div class="vehicle_search">
             <span class="hide-bdt animate__animated animate__fadeIn" id="bdt-loading-filters">
+                <div class="car-model-container" style="<?= $showCustomVehicleTypesSection; ?>">
+                    <?php
+
+                        require Biltorvet::bdt_get_template("/partials/_customVehicleTypes.php");
+
+                    ?>
+                </div>
             <div class="row">
 
                 <?php if(isset($this->_options_2['fulltextsearch_or_quicksearch']) && $this->_options_2['fulltextsearch_or_quicksearch'] === '1') : ?>

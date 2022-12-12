@@ -41,7 +41,7 @@
         die('API not set.');
     }
 
-    try {
+  try {
 
         $start = ($currentPage-1) * intval($this->biltorvetAPI->GetVehicleResultsPageLimit());
         $limit = intval($this->biltorvetAPI->GetVehicleResultsPageLimit());
@@ -111,11 +111,8 @@
     $customVehicleTypesFilterHasValue = $filterObject->CustomVehicleTypes != null ? $filterObject->CustomVehicleTypes[0] : "";
 
 ?>
-
-    <span id="cvt-selected" data-custom-vehicle-type-selected="<?= $customVehicleTypesFilterHasValue; ?>"></span>
-
-    <div class="bdt">
-        <div id="vehicle_search_results" class="vehicle_search_results" data-totalResults="<?= $vehicleFeed->totalResults ?>">
+    <div class="bdt" id="bdt_vehicle_search_results">
+        <div id="vehicle_search_results" class="vehicle_search_results hide-bdt" data-totalResults="<?= $vehicleFeed->totalResults ?>">
             <div class="row resultsTitle">
                 <div class="col-md-6">
                     <h4>
@@ -151,34 +148,34 @@
             <div class="results">
                 <div id="vehicle-row" class="row vehicle-row">
                     <?php
-                        foreach($vehicleFeed->vehicles as $oVehicle)
-                        {
-                            $link = $bdt_root_url . '/' . $oVehicle->uri;
+                    foreach($vehicleFeed->vehicles as $oVehicle)
+                    {
+                        $link = $bdt_root_url . '/' . $oVehicle->uri;
 
-                            // @TODO: Refactor.
-                            // For new we convert the old vehicle object to the new, so it works with the new templates
-                            // PLUGIN_ROOT refers to the v2 root.
+                        // @TODO: Refactor.
+                        // For new we convert the old vehicle object to the new, so it works with the new templates
+                        // PLUGIN_ROOT refers to the v2 root.
 
-                            /** @var Vehicle $vehicle */
-                            $vehicle = VehicleFactory::create(json_decode(json_encode($oVehicle), true));
-                            $vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
-                            $priceController = new PriceController($vehicle);
-                            $basePage = $bdt_root_url;
-                            require PLUGIN_ROOT . 'templates/partials/_vehicleCard.php';
-                        }
+                        /** @var Vehicle $vehicle */
+                        $vehicle = VehicleFactory::create(json_decode(json_encode($oVehicle), true));
+                        $vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
+                        $priceController = new PriceController($vehicle);
+                        $basePage = $bdt_root_url;
+                        require PLUGIN_ROOT . 'templates/partials/_vehicleCard.php';
+                    }
                     ?>
                 </div>
             </div>
             <div class="paging">
                 <?php
-                    $buttonCurrentPage = $currentPage;
+                $buttonCurrentPage = $currentPage;
 
-                    $newEnd = $currentPage * $limit;
+                $newEnd = $currentPage * $limit;
 
-                    if($buttonCurrentPage < $amountOfPages)
-                    {
-                        echo '<button class="paging-button et_pb_button bdt_bgcolor" id="paging-button" data-current-page="' . $buttonCurrentPage . '" data-amount-of-pages="' . $amountOfPages . '" data-end="' . $newEnd .'" data-limit="' . $limit .'">Indlæs flere...</button>';
-                    }
+                if($buttonCurrentPage < $amountOfPages)
+                {
+                    echo '<button class="paging-button et_pb_button bdt_bgcolor" id="paging-button" data-current-page="' . $buttonCurrentPage . '" data-amount-of-pages="' . $amountOfPages . '" data-end="' . $newEnd .'" data-limit="' . $limit .'">Indlæs flere...</button>';
+                }
                 ?>
                 <div class="lds-ring-paging d-done" style="display: none; opacity: 0;"><div></div><div></div><div></div><div></div></div>
             </div>

@@ -516,6 +516,9 @@ msgstr "Redigér indstillinger for kort"
 msgid "EngineAndPerformance"
 msgstr "Motor og ydelse"
 
+msgid "TruckSpecific"
+msgstr "Lastbils specifikke data"
+
 msgid "SecurityAndEconomy"
 msgstr "Sikkerhed og økonomi"
 

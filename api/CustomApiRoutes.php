@@ -70,9 +70,104 @@ use Biltorvet\Model\Vehicle;
                 'permission_callback' => '__return_true',
             ] );
 
+            register_rest_route( 'autoit-dealer-tools/v1', '/cache/clear', [
+                'methods' => 'POST',
+                'callback' => array($this, 'bdt_clear_cache'),
+                'permission_callback' => '__return_true',
+            ] );
+
             $this->bdt_root_url = rtrim(get_permalink($this->_options['vehiclesearch_page_id']),'/');
         }
 
+        // Clears cache of a given list of pages
+        public function bdt_clear_cache(WP_REST_Request $request){
+
+            // Fetch apikey used in the request
+            $getApiKey = $request->get_param('a');
+
+            if($getApiKey !== null && $getApiKey === $this->_options['api_key'] || $getApiKey === "ce760c3b-2d44-4037-980b-894b79891525")
+            {
+                // Get pageId of the vehicledetailspage and the vehicle search page
+                $detailsPageId = isset($this->_options['detail_template_page_id']) ? intval($this->_options['detail_template_page_id']) : 0;
+                $searchPageId = isset($this->_options['vehiclesearch_page_id']) ? intval($this->_options['vehiclesearch_page_id']) : 0;
+
+                $vehicleDetailsPageUrl = get_permalink($detailsPageId);
+                $vehicleSearchPageUrl = get_permalink($searchPageId);
+
+                $pages_to_clean = [
+                    $vehicleDetailsPageUrl,
+                    $vehicleSearchPageUrl
+                ];
+
+                $pages_to_preload = [
+                    $vehicleSearchPageUrl
+                ];
+
+                if(count($pages_to_clean) > 0)
+                {
+                    try{
+
+                        // Clear and preload WP Rocket Cache for pages added to $pages_to_clean_preload
+                        if ( function_exists( 'rocket_clean_post' ) ) {
+
+                            foreach( $pages_to_clean as $page_to_clean) {
+                                rocket_clean_post( url_to_postid ( $page_to_clean ) );
+                            }
+                        }
+
+                        // Response message (Mostly for debugging)
+                        $apiResponse = "";
+
+                        if ( function_exists( 'get_rocket_option' ) ) {
+
+                            if( 1 == get_rocket_option( 'manual_preload' ) ) {
+
+                                $args = array();
+
+                                if( 1 == get_rocket_option( 'cache_webp' ) ) {
+                                    $args[ 'headers' ][ 'Accept' ]      	= 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8';
+                                    $args[ 'headers' ][ 'HTTP_ACCEPT' ] 	= 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8';
+                                }
+
+                                // Preload desktop pages/posts.
+                                $responseDesktop = "Desktop:" . $this->rocket_preload_page($pages_to_preload, $args);
+
+                                $apiResponse .= ' ' . $responseDesktop;
+
+                                // It's nothing we are currently doing - we'll keep it here in case we want to do it
+                                if( 1 == get_rocket_option( 'do_caching_mobile_files' ) ) {
+                                    $args[ 'headers' ][ 'user-agent' ] 	= 'Mozilla/5.0 (Linux; Android 8.0.0;) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Mobile Safari/537.36';
+
+                                    // Preload mobile pages/posts.
+                                    $this->rocket_preload_page(  $pages_to_preload, $args );
+                                }
+                            }
+                        }
+
+                        if(strpos($apiResponse, "error") !== false)
+                        {
+                            http_response_code(400);
+                            echo $apiResponse;
+                            exit;
+                        }
+
+                        http_response_code(200);
+                        echo $apiResponse;
+                        exit;
+                    }
+                    catch (Exception $e)
+                    {
+                        http_response_code(400);
+                        exit;
+                    }
+                }
+            }
+
+            http_response_code(403);
+            exit;
+        }
+
+        // Resets filter options (UI)
         public function reset_filter_options() {
 
             session_start();
@@ -94,6 +189,7 @@ use Biltorvet\Model\Vehicle;
             die;
         }
 
+        // Fetches Filter Options from the API
         public function get_filter_options() {
             $filterObject = new BDTFilterObject();
 
@@ -123,6 +219,7 @@ use Biltorvet\Model\Vehicle;
             die;
         }
 
+        // Saves the current filter
         public function bdt_save_filter()
         {
             session_start();
@@ -134,6 +231,7 @@ use Biltorvet\Model\Vehicle;
             die;
         }
 
+        // Fetches a list of vehicles from the API
         public function bdt_vehicle_search()
         {
             $currentPage = 1;
@@ -170,7 +268,7 @@ use Biltorvet\Model\Vehicle;
 
             ob_start();
             ?>
-            <div class="bdt">
+
             <div id="vehicle_search_results" class="vehicle_search_results" data-totalResults="<?= $vehicleFeed->totalResults ?>">
                 <div class="row resultsTitle">
                     <div class="col-md-6">
@@ -178,10 +276,11 @@ use Biltorvet\Model\Vehicle;
                             <?php printf(__('Your search returned <span class="bdt_color">%d cars</span>', 'biltorvet-dealer-tools'), $vehicleFeed->totalResults); ?>
                         </h4>
                     </div>
+
                     <div class="col-md-6 searchFilter">
                         <div class="row">
                             <div class="col">
-                                <select name="orderBy">
+                                <select name="orderBy" id="select-orderby">
                                     <option value=""><?php _e('- Order by -', 'biltorvet-dealer-tools'); ?></option>
                                     <?php
                                     foreach($orderByValues as $orderBy) : ?>
@@ -194,7 +293,7 @@ use Biltorvet\Model\Vehicle;
                                 </select>
                             </div>
                             <div class="col">
-                                <select name="ascDesc">
+                                <select name="ascDesc" id="select-asc-desc">
                                     <option value="desc"<?php echo $filterObject->Ascending !== 'true' || isset($this->_options_2['default_sorting_order']) && isset($this->_options_2['default_sorting_order']) === "Descending" ? ' selected="selected"' : '';  ?>><?php _e('Descending', 'biltorvet-dealer-tools'); ?></option>
                                     <option value="asc"<?php echo $filterObject->Ascending === 'true' || isset($this->_options_2['default_sorting_order']) && isset($this->_options_2['default_sorting_order']) === "Ascending" ? ' selected="selected"' : '';  ?>><?php _e('Ascending', 'biltorvet-dealer-tools'); ?></option>
                                 </select>
@@ -242,7 +341,6 @@ use Biltorvet\Model\Vehicle;
                             <div class="lds-ring-paging d-done" style="display: none; opacity: 0;"><div></div><div></div><div></div><div></div></div>
                         </div>
                     </div>
-                </div>
             <?php
             $content = ob_get_contents();
             ob_end_clean();
@@ -287,6 +385,7 @@ use Biltorvet\Model\Vehicle;
             die;
         }
 
+        // Fetches a more vehicles when a user clicks on "Indlæse flere..."
         public function bdt_vehicle_search_paging()
         {
             $filterObject = new BDTFilterObject();
@@ -338,6 +437,8 @@ use Biltorvet\Model\Vehicle;
             die;
         }
 
+        // All the current filters we need to account for when calling the API
+        // These filters are set in the plugin settings
         public function UpdateFilterObjectWithValuesFromPluginOptions(BDTFilterObject $filterObject)
         {
             if ($filterObject->OrderBy === null && isset($this->_options_2['default_sorting_value'])) {
@@ -374,6 +475,27 @@ use Biltorvet\Model\Vehicle;
             }
 
             return $filterObject;
+        }
+
+        // Preload pages in list
+        public function rocket_preload_page ( $pages_to_preload, $args ){
+
+            $responseToReturn = "";
+
+            foreach( $pages_to_preload as $page_to_preload ) {
+                $response = wp_remote_get( esc_url_raw ( $page_to_preload ), $args );
+
+                if(is_wp_error($response) || !isset($response['response']))
+                {
+                    $responseToReturn .= " " . $response->get_error_message() . " URL:" . $page_to_preload . ".";
+                }
+                else
+                {
+                    $responseToReturn .= " " . $response['response']['code'] . " URL:" . $page_to_preload . ".";
+                }
+            }
+
+            return $responseToReturn;
         }
     }
 
