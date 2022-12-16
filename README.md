@@ -458,28 +458,7 @@ Example 1: __demo1.biltorvet.as/brugte-biler__ - Everything will work justfine.
 Example 2: __demo1.biltorvet.as/out-new-homepage/brugte-biler__ - Filtering options, pagination and such won't work as it should.  
 <br>
 Be sure to remember this when creating a website using this plugin.  
-<br>
-__Share links with predefined searchfilters__  
-The URL are build to make it easy to share pages with predefined searchfilters. The url build like this:  
-__/paging/Filter-type/Filter__  
-__/paging/Filter-type/Filter/Model (special case when searching for a model)__  
-<br>
-
-__Valid filter types:__  
-* Afdeling (Takes a company id as filter - check the plugin settings "Afdelinger" to get a departments companyid)
-* Stand
-* Maerke
-* Type
-* Karrosseri
-* Braendstof
-
-<br>
-
-The first paramater is the pagination number, the second parameter is the filter type, the third parameter is the filter (and a fourth is the vehicles model).  
-<br>
-Example 1: __/1/Maerke/Audi/__ - Will show the searchpage with all the Audi's for sale  
-Example 2: __/1/Maerke/Audi/A5__ - Will show the searchpage with all the Audi A5's for sale<br><br>
-
+<br>  
 
 ### ShortCodes list for easy implemention  
 __Car search / resultlist__  
