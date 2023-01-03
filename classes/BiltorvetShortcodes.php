@@ -53,7 +53,6 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             add_shortcode('bdt_sharethis', array($this, 'bdt_shortcode_sharethis'));
             add_shortcode('bdt_map', array($this, 'bdt_shortcode_map'));
             add_shortcode('bdt_get_vehicleid', array($this, 'bdt_shortcode_vehicleid'));
-            add_shortcode('bdt_set_campaign_id', array($this, 'bdt_shortcode_set_campaign_id'));
             add_shortcode('bdt_findleasing_calculator', array($this, 'bdt_shortcode_findleasing_calculator'));
             add_shortcode('bdt_amount_of_biltorvet_ads', array($this, 'bdt_shortcode_amount_of_biltorvet_ads'));
             add_shortcode('bdt_jyffi_calculator', array($this, 'bdt_jyffi_calculator_dev'));
@@ -71,32 +70,6 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 }
             } catch(Exception $e) {
                 return $e->getMessage();
-            }
-        }
-
-        public function bdt_shortcode_set_campaign_id() {
-            parse_str( $_SERVER['QUERY_STRING'], $queryParams );
-
-            $query_campaign = $queryParams['bdt_campaign'] ?? null;
-
-            if($query_campaign != null) {
-                if (session_id() == '')
-                    session_start();
-
-                if(!isset($_SESSION['externalId'])) {
-
-                    $_SESSION['externalId'] = $query_campaign . '-' . uniqid() . '-' . date("D-M-d-Y");
-
-                    /**
-                     * Tracking of hits to the campaign landingpage
-                     */
-                    if(isset($_SERVER['HTTP_USER_AGENT']) && !preg_match('/bot|crawl|slurp|spider|facebook|semrush|bing|ecosia|yandex|duckduck|AdsBot|slack|twitter|whatsapp|mediapartners/i', $_SERVER['HTTP_USER_AGENT'])) {
-
-                        $url = $_SERVER['SERVER_NAME'];
-
-                        $this->biltorvetAPI->SendInfluxDbCampaginData($_SESSION['externalId'], $url);
-                    }
-                }
             }
         }
 
