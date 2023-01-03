@@ -99,9 +99,9 @@ use Biltorvet\Model\Vehicle;
                     $vehicleSearchPageUrl
                 ];
 
-                $pages_to_preload = [
-                    $vehicleSearchPageUrl
-                ];
+                // Pages that'll be preloaded by WPRocket or cached by the CarLite Api
+                $pages_to_preload = $this->biltorvetAPI->GetKeyEndpointsForCachePreload();
+                array_push($pages_to_preload, $vehicleSearchPageUrl);
 
                 if(count($pages_to_clean) > 0)
                 {

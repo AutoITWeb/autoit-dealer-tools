@@ -4,8 +4,8 @@
     
     class BiltorvetAPI {
         private $endpoint = 'https://api-v1.autoit.dk'; // Prod
-//        private $endpoint = 'http://api-v1-staging.autoitweb.dk'; // Staging
-//        private $endpoint = 'http://localhost:59852'; // Local
+ //       private $endpoint = 'https://api-v2.autoitweb.dk'; // Staging
+ //       private $endpoint = 'http://localhost:5085'; // Local
         private $apiKey;
         private $vehicleResultsPageLimit = 24;
         private $errLogFile;
@@ -15,6 +15,19 @@
         {
             $this->errLogFile = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR .'log'. DIRECTORY_SEPARATOR .'errors.log';
             $this->apiKey = $apiKey;
+        }
+
+        public function GetKeyEndpointsForCachePreload()
+        {
+            $endpoints = array(
+                $this->endpoint . '/vehicle/filteroptions' . '?a=' . $this->apiKey,
+                $this->endpoint . '/vehicle/orderbyvalues' . '?a=' . $this->apiKey,
+                $this->endpoint . '/vehicle/count' . '?a=' . $this->apiKey,
+                $this->endpoint . '/companies' . '?a=' . $this->apiKey,
+                $this->endpoint . '/products' . '?a=' . $this->apiKey,
+            );
+
+            return $endpoints;
         }
 
         public function GetFilterOptions($filter = null)
@@ -70,11 +83,6 @@
         public function GetBiltorvetBmsDealerInfo()
         {
             return $this->Request('/bms/company');
-        }
-
-        public function SendInfluxDbCampaginData($campaingId, $url)
-        {
-            return $this->Request('/influxdb/campaign', array('externalId' => json_encode($campaingId), 'url' => json_encode($url)));
         }
 
         public function GetVehicleTotalCount($filter)

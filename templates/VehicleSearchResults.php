@@ -58,12 +58,6 @@
             $filterObject->Makes = explode(',', $atts['makes']);
         }
 
-        $make = get_query_var('bdt_vehicle_make', -1);
-        if($make !== -1)
-        {
-            $filterObject->Makes = array($this->biltorvetAPI->GetMakeFromSlug($make));
-        }
-
         if ($filterObject->OrderBy === null && isset($this->_options_2['default_sorting_value'])) {
             $filterObject->OrderBy = $this->_options_2['default_sorting_value'];
         }
