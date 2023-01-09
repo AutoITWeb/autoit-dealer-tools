@@ -61,6 +61,7 @@ class Biltorvet
         */
 
         isset($this->_options['bdt_leads']) ? (define ('leads', $this->_options['bdt_leads'])) : (define ('leads', "-1"));
+
         add_action('call_get_vehicle_data', array($this, 'get_vehicle_data'), 10, 2);
         add_action('call_AutodesktopSendLead', array($this, 'bdt_send_adt_lead'), 10, 6);
         add_action('call_create_lead', array($this, 'bdt_create_lead'), 10, 10);
@@ -146,7 +147,6 @@ class Biltorvet
 
     public function bdt_create_lead($message, $email, $name, $phoneNumber, $address, $postalcode, $city, $companyId, $externalId, $query_source)
     {
-
         $getCompanies = $this->biltorvetAPI->GetCompanies();
 
         $newLead = new NewLeadInputObject();
@@ -158,7 +158,7 @@ class Biltorvet
             $sendLead = $this->biltorvetAPI->CreateLead($lead, $sendLeadTo);
 
         } catch (Exception $e) {
-            error_log(date('Y-m-d H:i:s') . '' . $e->getMessage(), $this->errLogFile);
+            error_log($e->getMessage() . ' Tried to send lead to ' . $sendLeadTo);
 
             // the api handles all exceptions (more or less....) Check the api log if something fails
             // the user should still get a success message and the lead will be saved in Divi DB - But why would it ever fail? ;-)

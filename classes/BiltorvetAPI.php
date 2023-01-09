@@ -5,7 +5,7 @@
     class BiltorvetAPI {
         private $endpoint = 'https://api-v1.autoit.dk'; // Prod
  //       private $endpoint = 'https://api-v2.autoitweb.dk'; // Staging
- //       private $endpoint = 'http://localhost:5085'; // Local
+//        private $endpoint = 'http://localhost:5085'; // Local
         private $apiKey;
         private $vehicleResultsPageLimit = 24;
         private $errLogFile;
@@ -115,7 +115,7 @@
             return $this->Request('/autodesktop/sendlead', array('leadInput' => json_encode($lead), 'emailReciept' => $emailReciept === true ? 'true' : 'false'), 'POST');
         }
 
-        public function CreateLead($lead, $companyId)
+ /*       public function CreateLead($lead, $companyId)
         {
             if(!isset($lead))
             {
@@ -123,6 +123,16 @@
             }
 
             return $this->Request('/leadimporter/createlead/' . $companyId, array('leadObject' => json_encode($lead)), 'POST');
+        }*/
+
+        public function CreateLead($lead, $companyId)
+        {
+            if(!isset($lead))
+            {
+                throw new Exception("BT API: No lead specified");
+            }
+
+            return $this->Request('/leadimporter/createlead/' . $companyId, array('leadObject' => json_encode($lead)));
         }
 
         public function GetVehicleResultsPageLimit()
@@ -251,6 +261,7 @@
                                 break;
                             default:
                                 throw new Exception(sprintf( __('Biltorvet API: unexpected response code (%u)', 'biltorvet-dealer-tools'), intval($httpCode)));
+                                //throw new Exception(sprintf( __('Biltorvet API: unexpected response code (%u), %s', 'biltorvet-dealer-tools'), intval($httpCode), $this->endpoint . $method . '?a=' . $this->apiKey . '&' . http_build_query($query)));
                                 break;
                         endswitch;
                     }
