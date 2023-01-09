@@ -115,7 +115,7 @@
             return $this->Request('/autodesktop/sendlead', array('leadInput' => json_encode($lead), 'emailReciept' => $emailReciept === true ? 'true' : 'false'), 'POST');
         }
 
- /*       public function CreateLead($lead, $companyId)
+/*        public function CreateLead($lead, $companyId)
         {
             if(!isset($lead))
             {
@@ -218,7 +218,7 @@
                 $data = false;
                 $transientName = $method . (isset($query) ? json_encode($query) : '');
 
-                if($requestType === 'GET' && !strpos($method, 'influxdb'))
+                if($requestType === 'GET' && !strpos($method, 'influxdb') && !strpos($method, 'createlead'))
                 {
                     $data = get_transient( $transientName );
                 }
@@ -227,6 +227,9 @@
 
                 if( false === $data ) {
                     $ch = curl_init($this->endpoint . $method . '?' . ($requestType === 'GET' && isset($query) ? http_build_query($query) . '&'  : '') .'a=' . $this->apiKey );
+
+                    error_log($ch);
+
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
                     curl_setopt($ch, CURLOPT_TIMEOUT, 10);
