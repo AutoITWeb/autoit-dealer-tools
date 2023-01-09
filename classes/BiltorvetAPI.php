@@ -218,7 +218,7 @@
                 $data = false;
                 $transientName = $method . (isset($query) ? json_encode($query) : '');
 
-                if($requestType === 'GET' && !strpos($method, 'influxdb'))
+                if($requestType === 'GET' && !strpos($method, 'influxdb') && !strpos($method, 'createlead'))
                 {
                     $data = get_transient( $transientName );
                 }
