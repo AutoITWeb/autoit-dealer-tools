@@ -5,7 +5,7 @@
     class BiltorvetAPI {
         private $endpoint = 'https://api-v1.autoit.dk'; // Prod
  //       private $endpoint = 'https://api-v2.autoitweb.dk'; // Staging
-//        private $endpoint = 'http://localhost:5085'; // Local
+ //       private $endpoint = 'http://localhost:5085'; // Local
         private $apiKey;
         private $vehicleResultsPageLimit = 24;
         private $errLogFile;
@@ -125,6 +125,28 @@
             return $this->Request('/leadimporter/createlead/' . $companyId, array('leadObject' => json_encode($lead)), 'POST');
         }*/
 
+        // New simple lead creator!
+        public function CreateSimpleLead($lead, $companyId)
+        {
+            $endpoint = $this->endpoint . '/leadimporter/createsimplelead/' . $companyId . '?a=' . $this->apiKey;
+
+            $body = wp_json_encode( $lead );
+
+            $options = [
+                'method' => 'POST',
+                'body'        => $body,
+                'headers'     => [
+                    'Content-Type' => 'application/json',
+                ],
+                'timeout'     => 10,
+                'data_format' => 'body',
+            ];
+
+            $response = wp_remote_post( $endpoint, $options );
+
+            return $response;
+        }
+
         public function CreateLead($lead, $companyId)
         {
             if(!isset($lead))
@@ -228,8 +250,6 @@
                 if( false === $data ) {
                     $ch = curl_init($this->endpoint . $method . '?' . ($requestType === 'GET' && isset($query) ? http_build_query($query) . '&'  : '') .'a=' . $this->apiKey );
 
-                    error_log($ch);
-
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
                     curl_setopt($ch, CURLOPT_TIMEOUT, 10);
@@ -263,8 +283,8 @@
                                 throw new Exception(__('Biltorvet API: method not found', 'biltorvet-dealer-tools'));
                                 break;
                             default:
-                                throw new Exception(sprintf( __('Biltorvet API: unexpected response code (%u)', 'biltorvet-dealer-tools'), intval($httpCode)));
-                                //throw new Exception(sprintf( __('Biltorvet API: unexpected response code (%u), %s', 'biltorvet-dealer-tools'), intval($httpCode), $this->endpoint . $method . '?a=' . $this->apiKey . '&' . http_build_query($query)));
+                                //throw new Exception(sprintf( __('Biltorvet API: unexpected response code (%u)', 'biltorvet-dealer-tools'), intval($httpCode)));
+                                throw new Exception(sprintf( __('Biltorvet API: unexpected response code (%u), %s', 'biltorvet-dealer-tools'), intval($httpCode), $this->endpoint . $method . '?a=' . $this->apiKey . '&' . http_build_query($query)));
                                 break;
                         endswitch;
                     }

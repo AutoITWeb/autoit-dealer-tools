@@ -149,6 +149,44 @@ class Biltorvet
     {
         $getCompanies = $this->biltorvetAPI->GetCompanies();
 
+        // Get first name and last name
+        $nameArray = explode(' ', $name, 2);
+
+        $current_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+        $lead = array(
+            'firstName' => $nameArray[0],
+            'lastName' => !empty($nameArray[1]) ? $nameArray[1] : "Ukendt efternavn",
+            'email' => !empty($email) ? $email : null,
+            'phonenumber' => !empty($phoneNumber) ? $phoneNumber : null,
+            'description' => $message,
+            'subject' => null,
+            'leadType' => "Lead fra hjemmeside",
+            'url' => !empty($current_url) ? $current_url : "Ukendt url"
+        );
+
+        $sendLeadTo = $companyId != 0 ? $companyId : $getCompanies->companies[0]->id;
+
+        try {
+            $response = $this->biltorvetAPI->CreateSimpleLead($lead, $sendLeadTo);
+
+            if ( is_wp_error( $response ) || $response['response']['code'] !== 200 ) {
+
+                error_log($response->get_error_message() . ' . Response code: ' .  $response['response']['code'] . ' Tried to send lead to ' . $sendLeadTo);
+            }
+
+        } catch (Exception $e) {
+            error_log($e->getMessage() . ' Tried to send lead to ' . $sendLeadTo);
+
+            // the api handles all exceptions (more or less....) Check the api log if something fails
+            // the user should still get a success message and the lead will be saved in Divi DB - But why would it ever fail? ;-)
+        }
+    }
+
+    /*public function bdt_create_lead($message, $email, $name, $phoneNumber, $address, $postalcode, $city, $companyId, $externalId, $query_source)
+    {
+        $getCompanies = $this->biltorvetAPI->GetCompanies();
+
         $newLead = new NewLeadInputObject();
         $lead = $newLead->CreateLead($newLead, $message, $email, $name, $phoneNumber, $address, $postalcode, $city, $externalId, $query_source);
 
@@ -164,7 +202,7 @@ class Biltorvet
             // the user should still get a success message and the lead will be saved in Divi DB - But why would it ever fail? ;-)
         }
 
-    }
+    }*/
 
     public function bdt_parse_request($request)
     {
