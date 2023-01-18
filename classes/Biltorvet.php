@@ -172,7 +172,7 @@ class Biltorvet
 
             if ( is_wp_error( $response ) || $response['response']['code'] !== 200 ) {
 
-                error_log($response->get_error_message() . ' . Response code: ' .  $response['response']['code'] . ' Tried to send lead to ' . $sendLeadTo);
+                //error_log($response->get_error_message() . ' . Response code: ' .  $response['response']['code'] . ' Tried to send lead to ' . $sendLeadTo);
             }
 
         } catch (Exception $e) {
@@ -182,27 +182,6 @@ class Biltorvet
             // the user should still get a success message and the lead will be saved in Divi DB - But why would it ever fail? ;-)
         }
     }
-
-    /*public function bdt_create_lead($message, $email, $name, $phoneNumber, $address, $postalcode, $city, $companyId, $externalId, $query_source)
-    {
-        $getCompanies = $this->biltorvetAPI->GetCompanies();
-
-        $newLead = new NewLeadInputObject();
-        $lead = $newLead->CreateLead($newLead, $message, $email, $name, $phoneNumber, $address, $postalcode, $city, $externalId, $query_source);
-
-        $sendLeadTo = $companyId != 0 ? $companyId : $getCompanies->companies[0]->id;
-
-        try {
-            $sendLead = $this->biltorvetAPI->CreateLead($lead, $sendLeadTo);
-
-        } catch (Exception $e) {
-            error_log($e->getMessage() . ' Tried to send lead to ' . $sendLeadTo);
-
-            // the api handles all exceptions (more or less....) Check the api log if something fails
-            // the user should still get a success message and the lead will be saved in Divi DB - But why would it ever fail? ;-)
-        }
-
-    }*/
 
     public function bdt_parse_request($request)
     {
