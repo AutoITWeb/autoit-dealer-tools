@@ -115,16 +115,6 @@
             return $this->Request('/autodesktop/sendlead', array('leadInput' => json_encode($lead), 'emailReciept' => $emailReciept === true ? 'true' : 'false'), 'POST');
         }
 
-/*        public function CreateLead($lead, $companyId)
-        {
-            if(!isset($lead))
-            {
-                throw new Exception("BT API: No lead specified");
-            }
-
-            return $this->Request('/leadimporter/createlead/' . $companyId, array('leadObject' => json_encode($lead)), 'POST');
-        }*/
-
         // New simple lead creator!
         public function CreateSimpleLead($lead, $companyId)
         {
