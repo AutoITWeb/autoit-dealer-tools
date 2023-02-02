@@ -16,12 +16,6 @@ $root = dirname(dirname(dirname(plugin_dir_url( __FILE__ ))));
 
 $bdt_root_url = rtrim(get_page_link($this->_options['vehiclesearch_page_id']),'/');
 
-$makeIds = null;
-if(isset($atts) && isset($atts['makeids']) && trim($atts['makeids']) !== '')
-{
-    $makeIds = $atts['makeids'];
-}
-
 // The initial filter is only here to hide dropdowns with one value only, so they don't "flash" before Ajax executes.
 // All filter logic should be in JS.
 
@@ -224,11 +218,10 @@ $customVehicleTypeBackgroundColor = (isset($this->_options_5)) && (isset($this->
 // Custom color selected?
 $customVehicleTypeIconColor = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_iconbased_search_icon_color'])) && $this->_options_5['frontpagesearch_iconbased_search_icon_color'] !== '' ? $this->_options_5['frontpagesearch_iconbased_search_icon_color'] : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? $this->_options['primary_color'] : "#00a1b7");
 
-
 ?>
 
 <div class="bdt">
-    <div id="frontpage_vehicle_search" class="vehicle_search"<?php echo $makeIds !== null ? ' data-makeids="'.$makeIds.'"' : '';  ?>>
+    <div id="frontpage_vehicle_search" class="vehicle_search">
         <span class="hide-bdt animate__animated animate__fadeIn" id="bdt-loading-filters">
         
         <!-- Icon-based search aka Custom Vehicle Types -->

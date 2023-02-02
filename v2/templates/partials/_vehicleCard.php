@@ -19,7 +19,13 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 /** @var string $basePage */
 /** @var Vehicle $vehicle */
 /** @var Property[] $vehicleProperties */
-/** @var PriceController $priceController */
+/** @var string $primaryPriceType */
+
+// Has as primary price type been selected (via a shortcode)
+if(!isset($primaryPriceType))
+{
+    $primaryPriceType = null;
+}
 
 $options_two = get_option('bdt_options_2');
 $basePage = rtrim(get_permalink(get_option('bdt_options')['vehiclesearch_page_id']),'/');
@@ -94,9 +100,13 @@ $carliteDealerLabel = isset($options_two['carlite_dealer_label']) ? $options_two
                 </span>
                 <span class="vehicleDescription">
                     <span class="vehicleTitle"><?= $vehicle->getMakeName() .' '. $vehicle->getModel() .' '. $vehicle->getVariant() ?></span>
-                    <span class="price bdt_color"><?= $priceController->getCardPrioritizedPrice() ?></span>
-                    <span class="priceLabel bdt_color"><?= $priceController->getCardLabel() ?></span>
-                    <span class="bdt_price_small_cashprice_vehicle_card"><?= $priceController->showCashPriceFinanceAndLeasing() ?></span>
+
+                    <?php
+
+                    $priceController = new PriceController($vehicle);
+                    require PLUGIN_ROOT . 'templates/partials/_vehicleCardPrice.php';
+
+                    ?>
                     <span class="row">
                         <span class="col-4">
                             <?= Vehicle::getVehicleParam($paramValueColumnOne, $vehicleProperties, $vehicle) ?>

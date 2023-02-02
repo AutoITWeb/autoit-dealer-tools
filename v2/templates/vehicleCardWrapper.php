@@ -12,11 +12,12 @@
 
 use Biltorvet\Controller\PriceController;
 use Biltorvet\Helper\DataHelper;
-use Biltorvet\Helper\WordpressHelper;
 use Biltorvet\Model\Property;
 use Biltorvet\Model\Vehicle;
 
 if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
+
+/** @var string $primaryPriceType */
 
 ?>
 
@@ -30,7 +31,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     foreach ($vehicles as $vehicle)  {
                         /** @var Property[] $vehicleProperties */
                         $vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
-                        $priceController = new PriceController($vehicle);
+                        //$priceController = new PriceController($vehicle);
                         include 'partials/_vehicleCard.php';
                     }
                 ?>

@@ -4,8 +4,8 @@
     
     class BiltorvetAPI {
         private $endpoint = 'https://api-v1.autoit.dk'; // Prod
- //       private $endpoint = 'https://api-v2.autoitweb.dk'; // Staging
- //       private $endpoint = 'http://localhost:5085'; // Local
+//        private $endpoint = 'https://api-v2.autoitweb.dk'; // Staging
+//        private $endpoint = 'http://localhost:5085'; // Local
         private $apiKey;
         private $vehicleResultsPageLimit = 24;
         private $errLogFile;
@@ -20,6 +20,7 @@
         public function GetKeyEndpointsForCachePreload()
         {
             $endpoints = array(
+                $this->endpoint . '/v2/vehicle' . '?a=' . $this->apiKey,
                 $this->endpoint . '/vehicle/filteroptions' . '?a=' . $this->apiKey,
                 $this->endpoint . '/vehicle/orderbyvalues' . '?a=' . $this->apiKey,
                 $this->endpoint . '/vehicle/count' . '?a=' . $this->apiKey,
@@ -72,7 +73,7 @@
 
         public function GetVehicle($id)
         {
-            return $this->Request('/vehicle/detail/' . TextUtils::Sanitize($id));
+            return $this->Request('/v2/vehicle/detail/' . TextUtils::Sanitize($id));
         }
 
         public function SendInfluxDbVehicleData($id)
@@ -97,7 +98,7 @@
                 $filter->Limit = $this->vehicleResultsPageLimit;
             }
 
-            return $this->Request('/vehicle', array('filter' => json_encode($filter)));
+            return $this->Request('/v2/vehicle', array('filter' => json_encode($filter)));
         }
 
         public function GetVehiclesQuickSearch($filter)
@@ -204,12 +205,12 @@
 
         public function GetRecommendedVehicles($vehicleId, $amount)
         {
-            return $this->Request('/vehicle/recommended' . (isset($vehicleId) && $vehicleId !== null ? '/' . TextUtils::Sanitize($vehicleId) : ''), isset($amount) ? array('amount' => intval($amount)) : null);
+            return $this->Request('/v2/vehicle/recommended' . (isset($vehicleId) && $vehicleId !== null ? '/' . TextUtils::Sanitize($vehicleId) : ''), isset($amount) ? array('amount' => intval($amount)) : null);
         }
 
         public function GetFeaturedVehicles($amount, $vehicleType)
         {
-            $return =  $this->Request('/vehicle/featured', isset($amount) ? array('amount' => intval($amount), 'vehicleType' => $vehicleType) : null);
+            $return =  $this->Request('/v2/vehicle/featured', isset($amount) ? array('amount' => intval($amount), 'vehicleType' => $vehicleType) : null);
 
             return $return;
         }

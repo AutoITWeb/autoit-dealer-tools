@@ -517,22 +517,6 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
 
             add_settings_field(
-                'bdt_hide_leasing_prices_cards',
-                __( 'Do not show leasing prices on vehicle cards', 'biltorvet-dealer-tools' ),
-                array( $this, 'bdt_hide_leasing_prices_card_callback' ),
-                'bdt-settings-group-2', // Page
-                'bdt_settings_section_2' // Section
-            );
-
-            add_settings_field(
-                'bdt_hide_financing_prices_cards',
-                __( 'Do not show financing prices on vehicle cards', 'biltorvet-dealer-tools' ),
-                array( $this, 'bdt_hide_financing_prices_card_callback' ),
-                'bdt-settings-group-2', // Page
-                'bdt_settings_section_2' // Section
-            );
-
-            add_settings_field(
                 'bdt_show_all_labels',
                 __( 'Show all labels set in Autodesktop', 'biltorvet-dealer-tools' ),
                 array( $this, 'bdt_show_all_labels_callback' ),
@@ -541,9 +525,57 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
 
             add_settings_field(
+                'bdt_hide_leasing_prices_card',
+                __( 'Do not show leasing prices on vehicle cards', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_hide_leasing_prices_card_callback' ),
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
+                'bdt_hide_financing_prices_card',
+                __( 'Do not show financing prices on vehicle cards', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_hide_financing_prices_card_callback' ),
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
+                'bdt_hide_cashprices_card',
+                __( 'Skjul kontantpriser (bilkort)', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_hide_cashprices_card_callback' ),
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
                 'bdt_pricetypes',
                 __( 'Choose pricetype to show', 'biltorvet-dealer-tools' ),
                 array( $this, 'bdt_pricetypes_callback' ),
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
+                'no_price_label',
+                __( 'Sæt label tekst ved manglende kontantpris' ),
+                array( $this, 'bdt_no_price_label_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
+                'bdt_prioritized_price',
+                __( 'Vælg prisprioritering'),
+                array( $this, 'bdt_prioritized_price_callback' ),
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
+                'bdt_hide_secondary_price',
+                __( 'Skjul sekundær pris', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_hide_secondary_price_callback' ),
                 'bdt-settings-group-2', // Page
                 'bdt_settings_section_2' // Section
             );
@@ -1057,6 +1089,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
         }
 
+        public function bdt_hide_cashprices_card_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[bdt_hide_cashprices_card]"%s />',
+                isset( $this->options_2['bdt_hide_cashprices_card'] ) && $this->options_2['bdt_hide_cashprices_card'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
         public function bdt_hide_leasing_prices_card_callback()
         {
             printf(
@@ -1209,16 +1249,54 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
         }
 
+
+
         // Sets the filter "PriceTypes"
         public function bdt_pricetypes_callback()
         {
-            $priceTypeOptions = ["Kontantpris" => "Kontant", "Finansierings pris" => "Finansiering", "Leasing pris" => "Leasing"];
+            $priceTypeOptions = ["Kontantpris" => "Kontant", "Finansieringspris" => "Finansiering", "Leasingpris" => "Leasing"];
 
             $HTML = '<select id="bdt_options_2" value="on" name="bdt_options_2[bdt_pricetypes]"/>';
             $HTML .= '<option value="-1">Vælg pristype</option>';
 
             foreach ($priceTypeOptions as $key => $value) {
                 $selected = isset($this->options_2['bdt_pricetypes']) && $this->options_2['bdt_pricetypes'] == $value;
+                $HTML .= '<option value="' . $value . '"';
+                $HTML .= $selected ? 'selected="selected"' : '';
+                $HTML .= '>' . $key . '</option>';
+            }
+
+            $HTML .= '</select>';
+
+            echo $HTML;
+        }
+
+        public function bdt_no_price_label_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_2" name="bdt_options_2[bdt_no_price_label]" value="%s" size="30"/>',
+                isset( $this->options_2['bdt_no_price_label'] ) ? esc_attr( $this->options_2['bdt_no_price_label']) : ''
+            );
+        }
+
+        // Hides / shows the secondary price
+        public function bdt_hide_secondary_price_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[bdt_hide_secondary_price]"%s />',
+                isset( $this->options_2['bdt_hide_secondary_price'] ) && $this->options_2['bdt_hide_secondary_price'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_prioritized_price_callback()
+        {
+            $priceTypeOptions = ["Kontantpris" => "Kontant", "Finansieringspris" => "Finansiering", "Leasingpris" => "Leasing"];
+
+            $HTML = '<select id="bdt_options_2" value="on" name="bdt_options_2[bdt_prioritized_price]"/>';
+            $HTML .= '<option value="-1">Vælg prioritering</option>';
+
+            foreach ($priceTypeOptions as $key => $value) {
+                $selected = isset($this->options_2['bdt_prioritized_price']) && $this->options_2['bdt_prioritized_price'] == $value;
                 $HTML .= '<option value="' . $value . '"';
                 $HTML .= $selected ? 'selected="selected"' : '';
                 $HTML .= '>' . $key . '</option>';

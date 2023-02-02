@@ -5401,12 +5401,11 @@ a.bdt .badge-dark.focus {
 .bdt .vehicleCard .priceLabel {
   text-align: center;
   color: #000;
-  font-weight: 700;
   font-size: 0.8em;
   position: absolute;
   left: 0;
   right: 0;
-  margin-top: -2.4em;
+  margin-top: -2rem;
 }
 
 .bdt .vehicleCard .vehicleDescription {
@@ -5781,11 +5780,22 @@ bdt .vehicle_search_results select,
 }
 
 .bdt_price_small_cashprice_vehicle_card {
+  font-size: 1em;
+  text-align: center;
+  margin-top: -0.3rem;
+  margin-bottom: 0.2rem;
+}
+.bdt .vehicleCard .bdt_price_small_cashprice_vehicle_card_label {
+  text-align: center;
+  color: #000;
   font-size: 0.8em;
   text-align: center;
-  margin-top: -0.6rem;
+  left: 0;
+  right: 0;
+  margin-top: -0.7rem;
   margin-bottom: 0.4rem;
 }
+
 
 .bdt_price_big {
   font-size: 2rem;

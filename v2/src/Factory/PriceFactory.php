@@ -40,6 +40,78 @@ class PriceFactory
             $price->setPriceValue($relatedPriceProperties['Price']->getValue());
         }
 
+        $price = self::GetVehiclePrices($price, $vehicle);
+
+        return $price;
+    }
+
+    /**
+     * @param Price $price
+     * @param Vehicle $vehicle
+     * @return Price     */
+    private static function GetVehiclePrices(price $price, Vehicle $vehicle): Price
+    {
+        $price = self::getCashPrice($vehicle->getCashPrice(), $price);
+        $price = self::getLeasingPrice($vehicle->getLeasingPrice(), $price);
+        $price = self::getFinancingPrice($vehicle->getFinancingPrice(), $price);
+        return $price;
+    }
+
+    /**
+     * @param Price $cashPrice
+     * @return Price     */
+    private static function getCashPrice(?array $cashPrice, Price $price): Price
+    {
+        if($cashPrice !== null || !empty($cashPrice))
+        {
+            $price->setCashPriceFormatted($cashPrice['priceFormatted']);
+            $price->setCashPriceLabel($cashPrice['priceLabel']);
+            $price->setHasCashPrice(true);
+
+            return $price;
+        }
+
+        $price->setHasCashPrice(false);
+
+        return $price;
+    }
+
+    /**
+     * @param Price $leasingPrice
+     * @return Price
+     */
+    private static function getLeasingPrice(?array $leasingPrice, Price $price): Price
+    {
+        if($leasingPrice !== null || !empty($leasingPrice))
+        {
+            $price->setLeasingPriceFormatted($leasingPrice['priceFormatted']);
+            $price->setleasingPriceLabel($leasingPrice['priceLabel']);
+            $price->setHasLeasingPrice(true);
+
+            return $price;
+        }
+
+        $price->setHasLeasingPrice(false);
+
+        return $price;
+    }
+
+    /**
+     * @param Price $financingPrice
+     * @return Price     */
+    private static function getFinancingPrice(?array $financingPrice, Price $price): Price
+    {
+        if($financingPrice !== null || !empty($financingPrice))
+        {
+            $price->setFinancingPriceFormatted($financingPrice['priceFormatted']);
+            $price->setFinancingPriceLabel($financingPrice['priceLabel']);
+            $price->setHasfinancingPrice(true);
+
+            return $price;
+        }
+
+        $price->setHasFinancingPrice(false);
+
         return $price;
     }
 

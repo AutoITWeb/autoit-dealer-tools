@@ -117,6 +117,14 @@ class Callbacks
             return 'Vi har solgt alle biler af denne type' . '<br><br>' . 'Se alle vores biler ' . '<a href="' . get_site_url() . '/' . get_page_uri($page = $vehicleSearchPageId) . '">her</a>';
         }
 
+        $primaryPriceType = null;
+
+        if(isset($atts['primarypricetype']))
+        {
+            if ($atts['primarypricetype'] === 'cashPrice' || $atts['primarypricetype'] === 'leasingPrice' || $atts['primarypricetype'] === 'financingPrice') {
+                $primaryPriceType = $atts['primarypricetype'];
+            }
+        }
 
         wp_enqueue_style("bdt_style");
         return $this->templateController->load(
@@ -125,6 +133,7 @@ class Callbacks
                 'vehicles' => $this->apiController->getVehicles($searchFilter),
                 'basePage' => WordpressHelper::getOptions(1)['vehiclesearch_page_id']
             ],
+            $primaryPriceType,
             true
         );
     }
@@ -136,7 +145,7 @@ class Callbacks
      *
      * @param atts   'status', 'make', 'state'
      *
-     * @return Status
+     * @return bool/false/string
      */
     public function get_vehicles_by_status_code_shortcode($atts)
     {
@@ -215,6 +224,15 @@ class Callbacks
             case "NoTax" : $label = 359; break;
         }
 
+        $primaryPriceType = null;
+
+        if(isset($atts['primarypricetype']))
+        {
+            if ($atts['primarypricetype'] === 'cashPrice' || $atts['primarypricetype'] === 'leasingPrice' || $atts['primarypricetype'] === 'financingPrice') {
+                $primaryPriceType = $atts['primarypricetype'];
+            }
+        }
+
         wp_enqueue_style("bdt_style");
         return $this->templateController->load(
             'vehicleCardWrapper.php',
@@ -222,6 +240,7 @@ class Callbacks
                 'vehicles' => DataHelper::filterVehiclesByLabel($this->apiController->getVehicles($searchFilter), $label),
                 'basePage' => WordpressHelper::getOptions(1)['vehiclesearch_page_id'],
             ],
+            $primaryPriceType,
             true
         );
     }
@@ -231,7 +250,7 @@ class Callbacks
      *
      * @param atts   'type', 'state'
      *
-     * @return Status
+     * @return bool/false/string
      */
     public function get_vehicles_by_type_shortcode(array $atts)
     {
@@ -260,6 +279,15 @@ class Callbacks
             case 'Truck' : $typeId = 4; break;
         }
 
+        $primaryPriceType = null;
+
+        if(isset($atts['primarypricetype']))
+        {
+            if ($atts['primarypricetype'] === 'cashPrice' || $atts['primarypricetype'] === 'leasingPrice' || $atts['primarypricetype'] === 'financingPrice') {
+                $primaryPriceType = $atts['primarypricetype'];
+            }
+        }
+
         if(isset($atts['state'])){
 
             $setState = ucfirst($atts['state']);
@@ -283,6 +311,7 @@ class Callbacks
                     'vehicles' => DataHelper::filterVehiclesByTypeAndState($this->apiController->getVehicles($searchFilter), $typeId, $brandNew),
                     'basePage' => WordpressHelper::getOptions(1)['vehiclesearch_page_id'],
                 ],
+                $primaryPriceType,
                 true
             );
         }
@@ -294,6 +323,7 @@ class Callbacks
                 'vehicles' => DataHelper::filterVehiclesByType($this->apiController->getVehicles($searchFilter), $typeId),
                 'basePage' => WordpressHelper::getOptions(1)['vehiclesearch_page_id'],
             ],
+            $primaryPriceType,
             true
         );
     }
