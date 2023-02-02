@@ -19,13 +19,17 @@ class PriceController
     /**
      * @var boolean
      */
+    private $hideCashCards;
+
+    /**
+     * @var boolean
+     */
     private $hideFinancingCards;
 
     /**
      * @var boolean
      */
     private $hideFinancingDetails;
-
     /**
      * @var boolean
      */
@@ -49,7 +53,25 @@ class PriceController
     /**
      * @var string
      */
-    private $prioritizedPriceType;
+    private $primaryPriceType;
+    /**
+     * @var string
+     */
+    private $secondaryPriceType;
+
+    /**
+     * @var string
+     */
+    private $tertiaryPriceType;
+
+    /**
+     * @var string
+     */
+    private $prioritizedPriceFromOptions;
+    /**
+     * @var string
+     */
+    private $customNoCashPriceLabel;
 
     /**
      * @var Vehicle
@@ -70,45 +92,433 @@ class PriceController
 
         $this->price = PriceFactory::create($vehicle);
 
+        // Get settings
+        $this->hideFinancingCards =
+            WordpressHelper::getOption(2,'dt_hide_cashprices_card') == 'on' ? true : false;
+
         $this->hideFinancingCards =
             WordpressHelper::getOption(2,'bdt_hide_financing_prices_card') == 'on' ? true : false;
+
         $this->hideFinancingDetails =
             WordpressHelper::getOption(3,'bdt_hide_financing_prices_details') == 'on' ? true : false;
+
         $this->hideLeasingCards =
             WordpressHelper::getOption(2,'bdt_hide_leasing_prices_card') == 'on' ? true : false;
+
         $this->hideLeasingDetails =
-            WordpressHelper::getOption(3,'bdt_hide_leasing_prices_details') == 'on' ? true : false;
+            WordpressHelper::getOption(3,'bdt_hide_leasing_prices_details') == 'on';
+
+        // Set prioritized custom no-price label from options
+        $getCustomNoPriceLabel =
+            WordpressHelper::getOption(2,'bdt_no_price_label');
+
+        // Set prioritized price from options
+        $getPrioritizedPrice = WordpressHelper::getOption(2, 'bdt_prioritized_price');
+
+        // Set custom no-price label
+        switch($getCustomNoPriceLabel)
+        {
+            case '':
+                $this->customNoCashPriceLabel = 'Ring for pris';
+                break;
+            default:
+                $this->customNoCashPriceLabel = $getCustomNoPriceLabel;
+        }
+
+        // Set prioritized price from options
+        switch($getPrioritizedPrice)
+        {
+            case '-1':
+                $this->prioritizedPriceFromOptions = null;
+                break;
+            case "Kontant":
+                $this->prioritizedPriceFromOptions = "cashPrice";
+                break;
+            case "Finansiering":
+                $this->prioritizedPriceFromOptions = "financingPrice";
+                break;
+            case "Leasing":
+                $this->prioritizedPriceFromOptions = "leasingPrice";
+                break;
+            default:
+                $this->prioritizedPriceFromOptions = null;
+        }
     }
 
     /**
+     * Decides which price to show as the primary price
+     * @param  string $type
      * @return string
      */
-    public function getCardPrioritizedPrice()
+    public function GetPrimaryPrice(string $type, string $primaryPriceTypeFromStatusCode = null)
     {
-        if (!$this->hideFinancingCards && $this->price->getFinancingValue()) {
-            $this->prioritizedPriceType = 'financing';
-            return $this->formatValue($this->price->getFinancingValue()) . $this->monthlyPostFix;
-        } else {
-            if (!$this->hideLeasingCards && $this->price->getLeasingPriceValue()) {
-                $this->prioritizedPriceType = 'leasing';
-                if ($this->price->getIsBusinessLeasing()) {
-                    return $this->formatValue(
-                        $this->price->getLeasingPriceValue()
-                    ) . $this->monthlyPostFix;
-                } else if($this->price->getIsPrivateLeasing()) {
-                    return $this->formatValue($this->price->getLeasingPriceValue()) . $this->monthlyPostFix;
-                } else {
-                    return $this->formatValue($this->price->getLeasingPriceValue()) . $this->monthlyPostFix;
+        // Set classes
+        $priceCssClass = $type === 'card' ? 'price bdt_color primary-price-card' : 'bdt_price_big primary-price-details';
+        $priceLabelCssClass = $type === 'card' ? 'priceLabel primary-price-label-card' : 'bdt_price_mainlabel primary-price-label-details';
+
+        /*
+         * A prioritized price has been selected from the plugin settings or via a shortcode
+         * Basic logic:
+         * 1. Selected prioritized price will be selected
+         * 2. If pricetype is null cash price -> leasing price -> financing price -> no price will be selected in that order
+         */
+
+        if($primaryPriceTypeFromStatusCode !== null)
+        {
+            $this->prioritizedPriceFromOptions = $primaryPriceTypeFromStatusCode;
+        }
+
+        if($this->prioritizedPriceFromOptions !== null)
+        {
+            if($this->prioritizedPriceFromOptions === 'cashPrice')
+            {
+                // Cash price set as prioritized price
+                return $this->CashPriceSelectedAsPrioritizedPrice($priceCssClass, $priceLabelCssClass, $type);
+            }
+            else if($this->prioritizedPriceFromOptions === 'leasingPrice')
+            {
+                // Leasing price set as prioritized price
+                return $this->LeasingPriceSelectedAsPrioritizedPrice($priceCssClass, $priceLabelCssClass, $type);
+            }
+            else
+            {
+                // Financing price set as prioritized price
+                return $this->FinancingPriceSelectedAsPrioritizedPrice($priceCssClass, $priceLabelCssClass, $type);
+            }
+        }
+        else
+        {
+            /*
+             * Basic prio:
+             * 1. Leasing price
+             * 2. Financing price
+             * 3. Cash price
+             * 4. No price (Set custom "no price" label in the plugin settings
+             */
+
+            // Prioritized price has NOT been selected in the plugin settings
+            if (!$this->hideLeasingCards && $this->price->getHasLeasingPrice())
+            {
+                // Show leasing price as prioritized price
+                $this->primaryPriceType = 'leasingPrice';
+                $setLeasingPrice = $this->ReturnLeasingPrice($priceCssClass, $priceLabelCssClass, $type);
+                return $setLeasingPrice;
+            }
+            else if(!$this->hideFinancingCards && $this->price->getHasFinancingPrice())
+            {
+                // Show financing price as prioritized price
+                $this->primaryPriceType = 'financingPrice';
+                $setFinancingPrice = $this->ReturnFinancingPrice($priceCssClass, $priceLabelCssClass, $type);
+                return $setFinancingPrice;
+            }
+            else
+            {
+                if(!$this->hideCashCards && $this->price->getHasCashPrice())
+                {
+                    // Show cash price as prioritized price
+                    $this->primaryPriceType = 'cashPrice';
+                    $setCashPrice = $this->ReturnCashPrice($priceCssClass, $priceLabelCssClass, $type);
+                    return $setCashPrice;
                 }
-            } else {
-                if ($this->price->getPriceValue()) {
-                    $this->prioritizedPriceType = 'cash';
-                    return $this->formatValue($this->price->getPriceValue());
+                else
+                {
+                    // No price available for the current vehicle
+                    $setNoPrice = $this->ReturnNoCashPrice($priceCssClass, $priceLabelCssClass, $type);
+                    return $setNoPrice;
                 }
             }
         }
+    }
 
-        return $this->noPriceValue;
+    /**
+     * Decides whether to show and which price to show as the secondary price
+     * @param  string $type
+     * @return string
+     */
+    public function GetSecondaryPrice(string $type, $hideSecondaryPrice = false)
+    {
+        // Return empty string
+        if($hideSecondaryPrice === true)
+        {
+            return '';
+        }
+
+        // This is what we'll eventually return
+        $noSecondaryPriceToReturn = $type === 'card' ? '<span style="margin-top: 5.0rem;"></span>' : '';
+        $priceCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card secondary-price-card' : 'bdt_price_big secondary-price-details';
+        $priceLabelCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card_label secondary-price-label-card' : 'bdt_price_mainlabel secondary-price-label-details';
+
+        // Leasing / financing is the prioritized price
+        if (!$this->hideLeasingCards && $this->primaryPriceType === 'leasingPrice' || !$this->hideFinancingCards && $this->primaryPriceType === 'financingPrice')
+        {
+            if($this->price->getHasCashPrice())
+            {
+                // Show cash price as secondary price
+                $this->secondaryPriceType = 'cashPrice';
+                $setCashPrice = $this->ReturnCashPrice($priceCssClass, $priceLabelCssClass, $type);
+                return $setCashPrice;
+            }
+            else if(!$this->primaryPriceType === 'leasingPrice' && !$this->hideLeasingCards && $this->price->getHasLeasingPrice())
+            {
+                // Show leasing price as secondary price
+                $this->secondaryPriceType = 'leasingPrice';
+                $setLeasingPrice = $this->ReturnLeasingPrice($priceCssClass, $priceLabelCssClass, $type);
+                return $setLeasingPrice;
+            }
+            else if(!$this->primaryPriceType === 'financingPrice' && !$this->hideFinancingCards && $this->price->getHasFinancingPrice())
+            {
+                // Show financing price as secondary price
+                $this->secondaryPriceType = 'financingPrice';
+                $setFinancingPrice = $this->ReturnFinancingPrice($priceCssClass, $priceLabelCssClass, $type);
+                return $setFinancingPrice;
+            }
+            else
+            {
+                // No secondary price to show
+                return $noSecondaryPriceToReturn;
+            }
+        }
+        else
+        {
+            // Cash price is prioritized price
+            if(!$this->hideLeasingCards && $this->price->getHasLeasingPrice())
+            {
+                // Show leasing price as secondary price
+                $this->secondaryPriceType = 'leasingPrice';
+                $setLeasingPrice = $this->ReturnLeasingPrice($priceCssClass, $priceLabelCssClass, $type);
+                return $setLeasingPrice;
+            }
+            else if(!$this->hideFinancingCards && $this->price->getHasFinancingPrice())
+            {
+                // Show cash price as secondary price
+                $this->secondaryPriceType = 'financingPrice';
+                $setFinancingPrice = $this->ReturnFinancingPrice($priceCssClass, $priceLabelCssClass, $type);
+                return $setFinancingPrice;
+            }
+            else
+            {
+                // No secondary price to show
+                return $noSecondaryPriceToReturn;
+            }
+        }
+    }
+
+    public function GetTertiaryPrice(string $type, bool $hideTertiaryPrice = false)
+    {
+        // This is what we'll eventually return
+        $noTertiaryPriceToReturn = '';
+        $priceCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card secondary-price-card' : 'bdt_price_big secondary-price-details';
+        $priceLabelCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card_label secondary-price-label-card' : 'bdt_price_mainlabel secondary-price-label-details';
+
+        if($this->primaryPriceType !== 'cashPrice' && $this->secondaryPriceType !== 'cashPrice' && $this->price->getHasCashPrice())
+        {
+            // Return cash price if any
+            $this->tertiaryPriceTypePriceType = 'cashPrice';
+            $setCashPrice = $this->ReturnCashPrice($priceCssClass, $priceLabelCssClass, $type);
+            return $setCashPrice;
+        }
+        else if($this->primaryPriceType !== 'leasingPrice' && $this->secondaryPriceType !== 'leasingPrice' && $this->price->getHasLeasingPrice())
+        {
+            // Return leasing price if any
+            $this->tertiaryPriceTypePriceType = 'leasingPrice';
+            $setLeasingPrice = $this->ReturnLeasingPrice($priceCssClass, $priceLabelCssClass, $type);
+            return $setLeasingPrice;
+        }
+        else if($this->primaryPriceType !== 'financingPrice' && $this->secondaryPriceType !== 'financingPrice' && $this->price->getHasfinancingPrice())
+        {
+            // Return financing price if any
+            $this->tertiaryPriceTypePriceType = 'financingPrice';
+            $setFinancingPrice = $this->ReturnFinancingPrice($priceCssClass, $priceLabelCssClass, $type);
+            return $setFinancingPrice;
+        }
+        else
+        {
+            // No tertiary price
+            return $noTertiaryPriceToReturn;
+        }
+    }
+
+    /**
+     * Creates the price and pricelabel markup
+     * @param  string $cssClass
+     * @param  string $data
+     * @return string
+     */
+    public function CreateHtmlMarkUp(string $cssClass, string $data, string $type)
+    {
+        $htmlMarkUpToReturn = '';
+
+        switch ($type)
+        {
+            case 'card':
+                $htmlMarkUpToReturn = '<span class="' . $cssClass . '">' . $data . '</span>';
+                break;
+            case 'details':
+                $htmlMarkUpToReturn = '<span class="' . $cssClass . '">' . $data . '</span><br>';
+                break;
+            default:
+                $htmlMarkUpToReturn = '<span class="' . $cssClass . '">' . $data . '</span><br>';
+        }
+
+        return $htmlMarkUpToReturn;
+    }
+
+    /**
+     * Cash price as prioritized price logic
+     * @param  string $priceCssClass
+     * @param  string $priceLabelCssClass
+     * @return string
+     */
+    public function CashPriceSelectedAsPrioritizedPrice(string $priceCssClass, string $priceLabelCssClass, string $type)
+    {
+        if($this->price->getHasCashPrice())
+        {
+            $this->primaryPriceType = 'cashPrice';
+            $setCashPrice = $this->ReturnCashPrice($priceCssClass, $priceLabelCssClass, $type);
+            return $setCashPrice;
+        }
+        else if($this->price->getHasLeasingPrice())
+        {
+            $this->primaryPriceType = 'leasingPrice';
+            $setLeasingPrice = $this->ReturnLeasingPrice($priceCssClass, $priceLabelCssClass, $type);
+            return $setLeasingPrice;
+        }
+        else if($this->price->getHasfinancingPrice())
+        {
+            $this->primaryPriceType = 'financingPrice';
+            $setfinancingPrice = $this->ReturnFinancingPrice($priceCssClass, $priceLabelCssClass, $type);
+            return $setfinancingPrice;
+        }
+        else
+        {
+            // No price available for the current vehicle
+            $setNoPrice = $this->ReturnNoCashPrice($priceCssClass, $priceLabelCssClass, $type);
+            return $setNoPrice;
+        }
+    }
+
+    /**
+     * Leasing price as prioritized price logic
+     * @param  string $priceCssClass
+     * @param  string $priceLabelCssClass
+     * @return string
+     */
+    public function LeasingPriceSelectedAsPrioritizedPrice(string $priceCssClass, string $priceLabelCssClass, string $type)
+    {
+        if($this->price->getHasLeasingPrice())
+        {
+            $this->primaryPriceType = 'leasingPrice';
+            $setLeasingPrice = $this->ReturnLeasingPrice($priceCssClass, $priceLabelCssClass, $type);
+            return $setLeasingPrice;
+        }
+        else if($this->price->getHasCashPrice())
+        {
+            $this->primaryPriceType = 'cashPrice';
+            $setCashPrice = $this->ReturnCashPrice($priceCssClass, $priceLabelCssClass, $type);
+            return $setCashPrice;
+        }
+        else if($this->price->getHasfinancingPrice())
+        {
+            $this->primaryPriceType = 'financingPrice';
+            $setfinancingPrice = $this->ReturnFinancingPrice($priceCssClass, $priceLabelCssClass, $type);
+            return $setfinancingPrice;
+        }
+        else
+        {
+            // No price available for the current vehicle
+            $setNoPrice = $this->ReturnNoCashPrice($priceCssClass, $priceLabelCssClass, $type);
+            return $setNoPrice;
+        }
+    }
+
+    /**
+     * Cash price as prioritized price logic
+     * @param  string $priceCssClass
+     * @param  string $priceLabelCssClass
+     * @return string
+     */
+    public function FinancingPriceSelectedAsPrioritizedPrice(string $priceCssClass, string $priceLabelCssClass, string $type)
+    {
+        if($this->price->getHasfinancingPrice())
+        {
+            $this->primaryPriceType = 'financingPrice';
+            $setfinancingPrice = $this->ReturnFinancingPrice($priceCssClass, $priceLabelCssClass, $type);
+            return $setfinancingPrice;
+        }
+        else if($this->price->getHasCashPrice())
+        {
+            $this->primaryPriceType = 'cashPrice';
+            $setCashPrice = $this->ReturnCashPrice($priceCssClass, $priceLabelCssClass, $type);
+            return $setCashPrice;
+        }
+        else if($this->price->getHasLeasingPrice())
+        {
+            $this->primaryPriceType = 'leasingPrice';
+            $setLeasingPrice = $this->ReturnLeasingPrice($priceCssClass, $priceLabelCssClass, $type);
+            return $setLeasingPrice;
+        }
+        else
+        {
+            // No price available for the current vehicle
+            $setNoPrice = $this->ReturnNoCashPrice($priceCssClass, $priceLabelCssClass, $type);
+            return $setNoPrice;
+        }
+    }
+
+    /**
+     * Creates the no-price and no-pricelabel markup
+     * @param  string $priceCssClass
+     * @param  string $priceLabelCssClass
+     * @return string
+     */
+    public function ReturnNoCashPrice(string $priceCssClass, string $priceLabelCssClass, string $type) : string
+    {
+        $prioritizedCardPriceToReturn = $this->CreateHtmlMarkUp($priceCssClass, '-', $type);
+        $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $this->customNoCashPriceLabel, $type);
+
+        return $prioritizedCardPriceToReturn;
+    }
+
+    /**
+     * Creates the no-price and no-pricelabel markup
+     * @param  string $priceCssClass
+     * @param  string $priceLabelCssClass
+     * @return string
+     */
+    public function ReturnCashPrice(string $priceCssClass, string $priceLabelCssClass, string $type) : string
+    {
+        $prioritizedCardPriceToReturn = $this->CreateHtmlMarkUp($priceCssClass, $this->price->getCashPriceFormatted(), $type);
+        $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $this->price->getCashPriceLabel(), $type);
+
+        return $prioritizedCardPriceToReturn;
+    }
+
+    /**
+     * Creates the no-price and no-pricelabel markup
+     * @param  string $priceCssClass
+     * @param  string $priceLabelCssClass
+     * @return string
+     */
+    public function ReturnFinancingPrice(string $priceCssClass, string $priceLabelCssClass, string $type) : string
+    {
+        $prioritizedCardPriceToReturn = $this->CreateHtmlMarkUp($priceCssClass, $this->price->getfinancingPriceFormatted(), $type);
+        $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $this->price->getfinancingPriceLabel(), $type);
+
+        return $prioritizedCardPriceToReturn;
+    }
+
+    /**
+     * Creates the no-price and no-pricelabel markup
+     * @param  string $priceCssClass
+     * @param  string $priceLabelCssClass
+     * @return string
+     */
+    public function ReturnLeasingPrice(string $priceCssClass, string $priceLabelCssClass, string $type) : string
+    {
+        $prioritizedCardPriceToReturn = $this->CreateHtmlMarkUp($priceCssClass, $this->price->getLeasingPriceFormatted(), $type);
+        $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $this->price->getLeasingPriceLabel(), $type);
+
+        return $prioritizedCardPriceToReturn;
     }
 
     /**
@@ -122,11 +532,11 @@ class PriceController
         }
 
         if (!$this->hideFinancingCards && $this->price->getFinancingValue()) {
-            $this->prioritizedPriceType = 'financing';
+            $this->primaryPriceType = 'financing';
             return $this->price->getFinancingValue();
         } else {
             if (!$this->hideLeasingCards && $this->price->getLeasingPriceValue()) {
-                $this->prioritizedPriceType = 'leasing';
+                $this->primaryPriceType = 'leasing';
                 if ($this->price->getIsBusinessLeasing()) {
                     return $this->price->getLeasingPriceValue();
                 } else if($this->price->getIsPrivateLeasing()) {
@@ -136,7 +546,7 @@ class PriceController
                 }
             } else {
                 if ($this->price->getPriceValue()) {
-                    $this->prioritizedPriceType = 'cash';
+                    $this->primaryPriceType = 'cash';
                     return $this->price->getPriceValue();
                 }
             }
@@ -146,150 +556,11 @@ class PriceController
     }
 
     /**
-     * @return string
-     */
-    public function showCashPriceFinanceAndLeasing()
-    {
-        if (!$this->hideFinancingCards && $this->price->getFinancingValue()) {
-            if($this->prioritizedPriceType = 'financing' && $this->price->getPriceValue() != null)
-            {
-                return _e('Cash price', 'biltorvet-dealer-tools') . ': ' . $this->formatValue($this->price->getPriceValue());
-            }
-            else {
-                return "<br>";
-            }
-        }
-        else if (!$this->hideLeasingCards && $this->price->getLeasingPriceValue()) {
-            // Private leasing
-            if($this->prioritizedPriceType = 'leasing' && $this->price->getIsPrivateLeasing() && $this->price->getPriceValue() != null)
-            {
-                return _e('Cash price', 'biltorvet-dealer-tools') . ': ' . $this->formatValue($this->price->getPriceValue());
-            }
-            // Business leasing supports vehicles with and without Taxes (VAT)
-            else if($this->prioritizedPriceType = 'leasing' && $this->price->getIsBusinessLeasing() && $this->price->getPriceValue() != null)
-            {
-                if($this->price->getIsBusinessPrice() == true) {
-                    return _e('Cash price', 'biltorvet-dealer-tools') . ' (' . __('Excl. VAT', 'biltorvet-dealer-tools') . ')' . ': ' . $this->formatValue($this->price->getPriceValue());
-                }
-
-                return _e('Cash price', 'biltorvet-dealer-tools') . ': ' . $this->formatValue($this->price->getPriceValue());
-            }
-            else {
-                return "<br>";
-            }
-        }
-        else {
-            return "<br>";
-        }
-    }
-
-    /**
      * @param float $value
      * @return string
      */
     private function formatValue(float $value): string
     {
         return (string)number_format($value, 0, ',', '.') . ',-';
-    }
-
-    /**
-     * @return string
-     */
-    public function getCardLabel()
-    {
-        switch ($this->prioritizedPriceType) {
-            case 'financing':
-                return __('Financing price', 'biltorvet-dealer-tools');
-                break;
-            case 'leasing':
-                if ($this->price->getIsBusinessLeasing()) {
-                    return __('Leasing price (ex. VAT)', 'biltorvet-dealer-tools');
-                } else if($this->price->getIsPrivateLeasing()) {
-                    return __('Leasing price', 'biltorvet-dealer-tools');
-                } else {
-                return __('Leasing price', 'biltorvet-dealer-tools');
-                }
-                break;
-            default:
-                if ($this->price->getIsBusinessPrice() && $this->vehicle->getType() === 'Varebil') {
-                    return __('Excl. VAT', 'biltorvet-dealer-tools');
-                }
-                break;
-        }
-    }
-
-    /**
-     * @TODO: refactor
-     *
-     * @return mixed
-     */
-    public function getDetailsPrioritizedPrices()
-    {
-        if (!$this->hideFinancingDetails && $this->price->getFinancingValue()) {
-            $prices['financing'] = [
-                'price' => $this->formatValue($this->price->getFinancingValue()),
-                'label' => $this->getDetailsLabel('financing')
-            ];
-        }
-
-        if (!$this->hideLeasingDetails && $this->price->getLeasingPriceValue()) {
-            $prices['leasing'] = [
-                'price' => $this->formatValue($this->price->getLeasingPriceValue()),
-                'label' => $this->getDetailsLabel('leasing')
-            ];
-        }
-
-        if ($this->price->getPriceValue()) {
-            $prices['cash'] = [
-                'price' => $this->formatValue($this->price->getPriceValue()),
-                'label' => $this->getDetailsLabel('cash')
-            ];
-        }
-
-        if (!$this->hideFinancingDetails && $this->price->getFinancingValue()) {
-            $new_value = $prices['financing'];
-            unset($prices['financing']);
-            array_unshift($prices, $new_value);
-        } else {
-            if (!$this->hideLeasingDetails && $this->price->getLeasingPriceValue()) {
-                $new_value = $prices['leasing'];
-                unset($prices['leasing']);
-                array_unshift($prices, $new_value);
-            } else {
-                if ($this->price->getPriceValue()) {
-                    $new_value = $prices['cash'];
-                    unset($prices['cash']);
-                    array_unshift($prices, $new_value);
-                }
-            }
-        }
-
-        return $prices ?? [0 => ['label' => '', 'price' => '-']];
-    }
-
-    public function getDetailsLabel(string $prioritizedPriceType)
-    {
-
-        switch ($prioritizedPriceType) {
-            case 'financing':
-                return __('Financing price pr. m.', 'biltorvet-dealer-tools');
-                break;
-            case 'leasing':
-                if ($this->price->getIsBusinessLeasing()) {
-                    return __('Leasing price pr. m. (ex. VAT)', 'biltorvet-dealer-tools');
-                } else if ($this->price->getIsPrivateLeasing()) {
-                    return __('Leasing price pr. m.', 'biltorvet-dealer-tools');
-                } else {
-                    return __('Leasing price pr. m.', 'biltorvet-dealer-tools');
-                }
-                break;
-            default:
-                if ($this->price->getIsBusinessPrice() && $this->vehicle->getType() === 'Varebil') {
-                    return __('Excl. VAT', 'biltorvet-dealer-tools');
-                } else {
-                    return __('Cash price', 'biltorvet-dealer-tools');
-                }
-                break;
-        }
     }
 }

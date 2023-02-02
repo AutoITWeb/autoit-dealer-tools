@@ -10,7 +10,6 @@
      */
     if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
-    use Biltorvet\Controller\PriceController;
     use Biltorvet\Factory\VehicleFactory;
     use Biltorvet\Helper\DataHelper;
     use Biltorvet\Model\Vehicle;
@@ -153,7 +152,6 @@
                         /** @var Vehicle $vehicle */
                         $vehicle = VehicleFactory::create(json_decode(json_encode($oVehicle), true));
                         $vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
-                        $priceController = new PriceController($vehicle);
                         $basePage = $bdt_root_url;
                         require PLUGIN_ROOT . 'templates/partials/_vehicleCard.php';
                     }

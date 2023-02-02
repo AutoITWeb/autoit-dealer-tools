@@ -603,35 +603,22 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             }
 
             /**
-             * Tracking of hits to the detailspage - sends a call to our influx db endpoint
+             * Tracking of hits on the detailspage - sends a call to our influx db endpoint
              */
             if(isset($_SERVER['HTTP_USER_AGENT']) && !preg_match('/bot|crawl|slurp|spider|facebook|semrush|bing|ecosia|yandex|duckduck|AdsBot|slack|twitter|whatsapp|mediapartners/i', $_SERVER['HTTP_USER_AGENT'])) {
 
                 $this->biltorvetAPI->SendInfluxDbVehicleData($this->currentVehicle->documentId);
             }
 
-            $showPrice = '';
-            // @TODO: refactor
             $priceController = new PriceController(VehicleFactory::create(json_decode(json_encode($this->currentVehicle), true)));
-            $i = 0;
-            foreach ($priceController->getDetailsPrioritizedPrices() as $price) {
-                if ($i === 0) {
-                    $showPrice = '<span class="bdt_price_mainLabel">' . $price['label'] . '</span>';
-                    $showPrice .= '<br/><big class="bdt_price_big">' . $price['price'] . '</big>';
-                } else {
-                    if(preg_match("/{$price['label']}/i", "Kontantpris"))
-                    {
-                    $showPrice .= '<br/><span class="bdt_price_small">' . $price['label'] . ': ' . $price['price'] . '<br/>' . '('.  __('Incl. delivery costs', 'biltorvet-dealer-tools') . ')' . '</span>';
-                    }
-                    else
-                    {
-                        $showPrice .= '<br/><span class="bdt_price_small">' . $price['label'] . ': ' . $price['price'] . '</span>';
-                    }
-                }
-                    $i++;
-            }
 
-            return '<span class="bdt_price_container">'. $showPrice .'</span>';
+            $showPrice = '<span class="bdt_price_container">';
+            $showPrice .= '<span class="primary-price">' .$priceController->GetPrimaryPrice('details') .'</span>';
+            $showPrice .= '<span class="secondary-price">'. $priceController->GetSecondaryPrice('details') .'</span>';
+            $showPrice .= '<span class="tertiary-price">' . $priceController->GetTertiaryPrice('details') .'</span>';
+            $showPrice .= '</span>';
+
+            return $showPrice;
         }
 
         public function bdt_shortcode_vehicleid($atts)
@@ -800,6 +787,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 <div class="vehicle_search_results">
                     <div class="row">
                         <?php
+
                         $bdt_root_url = rtrim(get_permalink($this->_options['vehiclesearch_page_id']),'/');
 
                         $iVehicle = 1;
@@ -874,7 +862,6 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                                 /** @var Vehicle $vehicle */
                                 $vehicle = VehicleFactory::create(json_decode(json_encode($oVehicle), true));
                                 $vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
-                                $priceController = new PriceController($vehicle);
                                 $basePage = $bdt_root_url;
                                 require PLUGIN_ROOT . 'templates/partials/_vehicleCard.php';
 

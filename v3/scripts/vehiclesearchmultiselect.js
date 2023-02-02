@@ -1,44 +1,3 @@
-// This script is loaded both on the frontend page and in the Visual Builder.
-
-function Vehicles(vehicle) {
-
-    if(vehicle.loading)
-    {
-        return "Søger...";
-    }
-
-    var setPrice = vehicle.cashPrice !== null ? "Kontantpris " + vehicle.cashPrice : vehicle.leasingPrice !== null ? "Leasingpris " + vehicle.leasingPrice : vehicle.financePrice !== null ? "Finansieringspris " + vehicle.financePrice : "Ring for pris";
-
-    var setVariant = vehicle.variant;
-
-    if(setVariant.length > 30)
-    {
-        setVariant = setVariant.slice(0, 27) + "...";
-    }
-
-    var markup =
-        "<div class='bdt_intellisense-list'>" +
-        "<a href='" + vehicle.uri + "'>" +
-        "<span class='bdt_intellisense-list-image'>" +
-        "<img src='" + vehicle.vehicleImage + "' width='110px' alt='" + vehicle.makeName + "'/>" +
-        "</span>" +
-        "<span class='bdt_intellisense-list-data'>" +
-        "<span class='bdt_intellisense-list-name'>" + vehicle.makeName + " " + vehicle.model + "<br/>" +
-        "<span>" + setVariant + "</span>" +
-        "</span>" +
-        "<span class='bdt_intellisense-list-price'>" + setPrice ?? '' + "</span>" +
-        "</span>" +
-        "</span>" +
-        "</a>" +
-        "</div>";
-
-    return markup;
-}
-
-function VehiclesSelection (data) {
-    return data.makeModelVariant;
-}
-
 /**
  * The main vehicle search script
  *
@@ -148,6 +107,8 @@ function Biltorvet($) {
 
     this.Init = function() {
 
+
+
         // There can be a situation, namely with AVADA themes, where there's another .slider bound to the jQuery object. IF that's the case, we'll switch to an alternative namespace.
         // This alternative namespace only exists if there's been a conflict, so it can't be always used by default.
         if($.bootstrapSlider)
@@ -180,9 +141,10 @@ function Biltorvet($) {
             };
             consumptionRangeSlider = sliderAlternativeNamespace ? $('#consumptionRange').bootstrapSlider(crsC) : $('#consumptionRange').slider(crsC);
         }
+
         this.ReloadUserFilterSelection(true);
-        this.PlaceholderShuffler();
         this.VehicleSearch(true);
+        this.PlaceholderShuffler();
     }
 
     // Fulltextsearch suffle placeholder
@@ -236,7 +198,6 @@ function Biltorvet($) {
             StartLoadingAnimation();
             // Get the current filters set by the user
             GetUserFilterSettings();
-
             // Deactive filters
             DeactivateSearchFields();
 
@@ -487,34 +448,26 @@ function Biltorvet($) {
 
     this.ResetFilters = function()
     {
-        return $.ajax({
-            url: ajax_config.restUrl + 'autoit-dealer-tools/v1/resetfilteroptions',
-            method: 'POST',
-            dataType: 'json',
-            data: {
-                'action': 'reset_filter_options'
-            },
-            cache: false,
-            success: function(response){
+        return fetch(ajax_config.restUrl + 'autoit-dealer-tools/v1/resetfilteroptions')
+            .then((response) => response.json())
+                .then((data) => {
 
-                SetFilters(response);
+                        SetFilters(data);
 
-                $('.multiple').each(function(i, element)
-                {
-                    console.log("hit?");
+                        $('.multiple').each(function(i, element)
+                        {
+                            // Reinit placeholders (labels) !!
+                            var selectionContainer = $(element).next('.select2-container').find('.select2-selection__rendered');
 
-                    // Reinit placeholders (labels) !!
-                    var selectionContainer = $(element).next('.select2-container').find('.select2-selection__rendered');
+                            $(selectionContainer).parent().find('.select2-selection__label').remove();
+                            $(element).parent().find('.selectDropDownLabel').show()
+                        })
 
-                    $(selectionContainer).parent().find('.select2-selection__label').remove();
-                    $(element).parent().find('.selectDropDownLabel').show()
                 })
-            },
-            complete: function()
-            {
-                StopLoadingAnimation();
-            }
-        });
+                .then((response) => {
+
+                    this.VehicleSearch();
+            });
     }
 
     this.ResetFilter = function()
@@ -540,9 +493,7 @@ function Biltorvet($) {
         }
 
         // The VehicleSearch() function is called directly as we don't want to scrollTop when resetting the filter
-        this.ResetFilters().then(this.VehicleSearch).done(function() {
-
-        });
+        this.ResetFilters();
     }
 
     this.StartVehicleSearch = function ()
@@ -564,6 +515,20 @@ function Biltorvet($) {
      */
     this.VehicleSearch = function(getFromSession)
     {
+       /*const filterParam = new URLSearchParams({
+            filter: getFromSession ? emptyFilter : filter
+        })
+
+        let response = await fetch(ajax_config.restUrl + 'autoit-dealer-tools/v1/vehiclesearch/search', filterParam);
+
+        var data = await response.text();
+        console.log(data);
+
+        $('#bdt_vehicle_search_results').html(data);
+
+        StopLoadingAnimationPaging();
+        StopLoadingAnimation();*/
+
         return $.ajax({
             url: ajax_config.restUrl + 'autoit-dealer-tools/v1/vehiclesearch/search',
             method: 'POST',
@@ -1064,7 +1029,44 @@ function FormatPrice(x, suffix)
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + (suffix ? ',-' : '');
 }
 
+function Vehicles(vehicle) {
 
+    if(vehicle.loading)
+    {
+        return "Søger...";
+    }
+
+    var setPrice = vehicle.cashPrice !== null ? "Kontantpris " + vehicle.cashPrice : vehicle.leasingPrice !== null ? "Leasingpris " + vehicle.leasingPrice : vehicle.financePrice !== null ? "Finansieringspris " + vehicle.financePrice : "Ring for pris";
+
+    var setVariant = vehicle.variant;
+
+    if(setVariant.length > 30)
+    {
+        setVariant = setVariant.slice(0, 27) + "...";
+    }
+
+    var markup =
+        "<div class='bdt_intellisense-list'>" +
+        "<a href='" + vehicle.uri + "'>" +
+        "<span class='bdt_intellisense-list-image'>" +
+        "<img src='" + vehicle.vehicleImage + "' width='110px' alt='" + vehicle.makeName + "'/>" +
+        "</span>" +
+        "<span class='bdt_intellisense-list-data'>" +
+        "<span class='bdt_intellisense-list-name'>" + vehicle.makeName + " " + vehicle.model + "<br/>" +
+        "<span>" + setVariant + "</span>" +
+        "</span>" +
+        "<span class='bdt_intellisense-list-price'>" + setPrice ?? '' + "</span>" +
+        "</span>" +
+        "</span>" +
+        "</a>" +
+        "</div>";
+
+    return markup;
+}
+
+function VehiclesSelection (data) {
+    return data.makeModelVariant;
+}
 
 /**
  * This part listens to changes in the frontend - .on('click', 'change') etc.

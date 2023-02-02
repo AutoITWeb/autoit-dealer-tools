@@ -50,7 +50,7 @@ class TemplateController
      * @param  bool   $return
      * @return bool|false|string
      */
-    public function load(string $tpl, array $arr = array(), bool $return = false)
+    public function load(string $tpl, array $arr = array(), ?string $primaryPriceType, bool $return = false)
     {
         if (file_exists($this->templateUri . $tpl)) {
             $templatePath = $this->templateUri . $tpl;

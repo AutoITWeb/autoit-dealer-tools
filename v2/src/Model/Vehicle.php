@@ -113,22 +113,70 @@ class Vehicle
      * @var string|null
      */
     private $vin;
+    /**
+     * @var array|null
+     */
+    private $cashPrice;
+    /**
+     * @var array|null
+     */
+    private $leasingPrice;
+    /**
+     * @var array|null
+     */
+    private $financingPrice;
 
     /**
-     * @return Equipment[]|null
+     * @return string[]|null
      */
-    public function getEquipment(): ?array
+    public function getCashPrice(): ?array
     {
-        return $this->equipment;
+        return $this->cashPrice;
     }
 
     /**
-     * @param  Equipment[]|null $equipment
+     * @param  string[]|null $cashPrice
      * @return Vehicle
      */
-    public function setEquipment(?array $equipment): Vehicle
+    public function setCashPrice(?array $cashPrice): Vehicle
     {
-        $this->equipment = $equipment;
+        $this->cashPrice = $cashPrice;
+        return $this;
+    }
+
+    /**
+     * @return string[]|null
+     */
+    public function getLeasingPrice(): ?array
+    {
+        return $this->leasingPrice;
+    }
+
+    /**
+     * @param  string[]|null $leasingPrice
+     * @return Vehicle
+     */
+    public function setleasingPrice(?array $leasingPrice): Vehicle
+    {
+        $this->leasingPrice = $leasingPrice;
+        return $this;
+    }
+
+    /**
+     * @return string[]|null
+     */
+    public function getFinancingPrice(): ?array
+    {
+        return $this->financingPrice;
+    }
+
+    /**
+     * @param  string[]|null $financingPrice
+     * @return Vehicle
+     */
+    public function setFinancingPrice(?array $financingPrice): Vehicle
+    {
+        $this->financingPrice = $financingPrice;
         return $this;
     }
 
@@ -147,6 +195,24 @@ class Vehicle
     public function setCompany(?Company $company): Vehicle
     {
         $this->company = $company;
+        return $this;
+    }
+
+    /**
+     * @return Equipment[]|null
+     */
+    public function getEquipment(): ?array
+    {
+        return $this->equipment;
+    }
+
+    /**
+     * @param  Equipment[]|null $equipment
+     * @return Vehicle
+     */
+    public function setEquipment(?array $equipment): Vehicle
+    {
+        $this->equipment = $equipment;
         return $this;
     }
 

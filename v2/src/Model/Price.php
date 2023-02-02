@@ -55,6 +55,165 @@ class Price
     private $isBusinessPrice;
 
     /**
+     *
+     * @var boolean|null
+     */
+    private $hasCashPrice;
+
+    /**
+     * @var string|null
+     */
+    private $cashPriceFormatted;
+    /**
+     *
+     * @var string|null
+     */
+    private $cashPriceLabel;
+
+    /**
+     *
+     * @var boolean|null
+     */
+    private $hasLeasingPrice;
+
+    /**
+     * @var string|null
+     */
+    private $leasingPriceFormatted;
+
+    /**
+     *
+     * @var string|null
+     */
+    private $leasingPriceLabel;
+
+    /**
+     *
+     * @var boolean|null
+     */
+    private $hasFinancingPrice;
+
+    /**
+     * @var string|null
+     */
+    private $financingPriceFormatted;
+
+    /**
+     *
+     * @var string|null
+     */
+    private $financingPriceLabel;
+
+    /**
+     * @return string|null
+     */
+    public function getfinancingPriceFormatted(): ?string
+    {
+        return $this->financingPriceFormatted;
+    }
+
+    /**
+     * @param string|null $financingPriceFormatted
+     * @return Price
+     */
+    public function setfinancingPriceFormatted(?string $financingPriceFormatted): Price
+    {
+        $this->financingPriceFormatted = $financingPriceFormatted;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getfinancingPriceLabel(): ?string
+    {
+        return $this->financingPriceLabel;
+    }
+
+    /**
+     * @param string|null $financingPriceLabel
+     * @return Price
+     */
+    public function setfinancingPriceLabel(?string $financingPriceLabel): Price
+    {
+        $this->financingPriceLabel = $financingPriceLabel;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLeasingPriceFormatted(): ?string
+    {
+        return $this->leasingPriceFormatted;
+    }
+
+    /**
+     * @param string|null $leasingPriceFormatted
+     * @return Price
+     */
+    public function setLeasingPriceFormatted(?string $leasingPriceFormatted): Price
+    {
+        $this->leasingPriceFormatted = $leasingPriceFormatted;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLeasingPriceLabel(): ?string
+    {
+        return $this->leasingPriceLabel;
+    }
+
+    /**
+     * @param string|null $leasingPriceLabel
+     * @return Price
+     */
+    public function setleasingPriceLabel(?string $leasingPriceLabel): Price
+    {
+        $this->leasingPriceLabel = $leasingPriceLabel;
+        return $this;
+    }
+
+
+    /**
+     * @return string|null
+     */
+    public function getCashPriceFormatted(): ?string
+    {
+        return $this->cashPriceFormatted;
+    }
+
+    /**
+     * @param string|null $cashPriceFormatted
+     * @return Price
+     */
+    public function setCashPriceFormatted(?string $priceFormatted): Price
+    {
+        $this->cashPriceFormatted = $priceFormatted;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCashPriceLabel(): ?string
+    {
+        return $this->cashPriceLabel;
+    }
+
+    /**
+     * @param string|null $cashPriceLabel
+     * @return Price
+     */
+    public function setCashPriceLabel(?string $cashPriceLabel): Price
+    {
+        $this->cashPriceLabel = $cashPriceLabel;
+        return $this;
+    }
+
+    /**
      * @return float|null
      */
     public function getLeasingVatValue(): ?float
@@ -177,6 +336,60 @@ class Price
     public function setIsBusinessPrice(?bool $isBusinessPrice): Price
     {
         $this->isBusinessPrice = $isBusinessPrice;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getHasCashPrice(): ?bool
+    {
+        return $this->hasCashPrice;
+    }
+
+    /**
+     * @param bool|null $hasCashPrice
+     * @return Price
+     */
+    public function setHasCashPrice(?bool $hasCashPrice): Price
+    {
+        $this->hasCashPrice = $hasCashPrice;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getHasLeasingPrice(): ?bool
+    {
+        return $this->hasLeasingPrice;
+    }
+
+    /**
+     * @param bool|null $hasLeasingPrice
+     * @return Price
+     */
+    public function setHasLeasingPrice(?bool $hasLeasingPrice): Price
+    {
+        $this->hasLeasingPrice = $hasLeasingPrice;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getHasfinancingPrice(): ?bool
+    {
+        return $this->hasFinancingPrice;
+    }
+
+    /**
+     * @param bool|null $hasFinancingPrice
+     * @return Price
+     */
+    public function setHasfinancingPrice(?bool $hasFinancingPrice): Price
+    {
+        $this->hasFinancingPrice = $hasFinancingPrice;
         return $this;
     }
 

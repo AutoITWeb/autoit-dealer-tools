@@ -52,7 +52,7 @@ class ApiController
     public function getVehicles($filter)
     {
         try {
-            return $this->requestApi('vehicle', ['filter' => json_encode($filter)]);
+            return $this->requestApi('v2/vehicle', ['filter' => json_encode($filter)]);
         } catch (Exception $e) {
         }
     }
@@ -65,7 +65,7 @@ class ApiController
     {
         try {
             return $this->requestApi(
-                'vehicle/detail/' . filter_var($vehicleId, FILTER_SANITIZE_STRING),
+                'v2/vehicle/detail/' . filter_var($vehicleId, FILTER_SANITIZE_STRING),
                 [],
                 'vehicleDetail'
             );

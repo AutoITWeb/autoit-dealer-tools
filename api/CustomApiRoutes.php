@@ -34,8 +34,14 @@ use Biltorvet\Model\Vehicle;
                 'permission_callback' => '__return_true',
             ] );
 
-            register_rest_route( 'autoit-dealer-tools/v1', '/resetfilteroptions', [
+/*            register_rest_route( 'autoit-dealer-tools/v1', '/resetfilteroptions', [
                 'methods' => 'POST',
+                'callback' => array($this, 'reset_filter_options'),
+                'permission_callback' => '__return_true',
+            ] );*/
+
+            register_rest_route( 'autoit-dealer-tools/v1', '/resetfilteroptions', [
+                'methods' => 'GET',
                 'callback' => array($this, 'reset_filter_options'),
                 'permission_callback' => '__return_true',
             ] );
@@ -51,6 +57,12 @@ use Biltorvet\Model\Vehicle;
                 'callback' => array($this, 'bdt_vehicle_search'),
                 'permission_callback' => '__return_true',
             ] );
+
+/*            register_rest_route( 'autoit-dealer-tools/v1', '/vehiclesearch/search', [
+                'methods' => 'GET',
+                'callback' => array($this, 'bdt_vehicle_search'),
+                'permission_callback' => '__return_true',
+            ] );*/
 
             register_rest_route( 'autoit-dealer-tools/v1', '/vehiclesearch/search_paging', [
                 'methods' => 'POST',
@@ -92,16 +104,16 @@ use Biltorvet\Model\Vehicle;
                 $searchPageId = isset($this->_options['vehiclesearch_page_id']) ? intval($this->_options['vehiclesearch_page_id']) : 0;
 
                 $vehicleDetailsPageUrl = get_permalink($detailsPageId);
-                $vehicleSearchPageUrl = get_permalink($searchPageId);
+                //$vehicleSearchPageUrl = get_permalink($searchPageId);
 
                 $pages_to_clean = [
                     $vehicleDetailsPageUrl,
-                    $vehicleSearchPageUrl
+                    //$vehicleSearchPageUrl
                 ];
 
                 // Pages that'll be preloaded by WPRocket or cached by the CarLite Api
                 $pages_to_preload = $this->biltorvetAPI->GetKeyEndpointsForCachePreload();
-                array_push($pages_to_preload, $vehicleSearchPageUrl);
+                //array_push($pages_to_preload, $vehicleSearchPageUrl);
 
                 if(count($pages_to_clean) > 0)
                 {
@@ -170,7 +182,10 @@ use Biltorvet\Model\Vehicle;
         // Resets filter options (UI)
         public function reset_filter_options() {
 
-            session_start();
+            if (session_status() == PHP_SESSION_NONE)
+            {
+                session_start();
+            }
             $_SESSION['bdt_filter'] = '';
             session_write_close();
 
@@ -193,7 +208,10 @@ use Biltorvet\Model\Vehicle;
         public function get_filter_options() {
             $filterObject = new BDTFilterObject();
 
-            session_start();
+            if (session_status() == PHP_SESSION_NONE)
+            {
+                session_start();
+            }
 
             if(isset($_SESSION['bdt_filter']) && !empty($_SESSION['bdt_filter']))
             {
@@ -203,6 +221,7 @@ use Biltorvet\Model\Vehicle;
             session_write_close();
 
             if(isset($_POST['filter']) && $_POST['filter'] != null) {
+
                 $filterObject = new BDTFilterObject(sanitize_post($_POST['filter']));
             }
 
@@ -222,7 +241,10 @@ use Biltorvet\Model\Vehicle;
         // Saves the current filter
         public function bdt_save_filter()
         {
-            session_start();
+            if (session_status() == PHP_SESSION_NONE)
+            {
+                session_start();
+            }
             $_SESSION['bdt_filter'] = json_encode($_POST['filter']);
             session_write_close();
 
@@ -346,7 +368,11 @@ use Biltorvet\Model\Vehicle;
             ob_end_clean();
 
             // Save filter in session
-            session_start();
+            if (session_status() == PHP_SESSION_NONE)
+            {
+                session_start();
+            }
+
             $_SESSION['bdt_filter'] = json_encode($filterObject);
             session_write_close();
 
