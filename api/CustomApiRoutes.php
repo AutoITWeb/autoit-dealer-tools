@@ -35,13 +35,13 @@ use Biltorvet\Model\Vehicle;
             ] );
 
 /*            register_rest_route( 'autoit-dealer-tools/v1', '/resetfilteroptions', [
-                'methods' => 'POST',
+                'methods' => 'GET',
                 'callback' => array($this, 'reset_filter_options'),
                 'permission_callback' => '__return_true',
             ] );*/
 
             register_rest_route( 'autoit-dealer-tools/v1', '/resetfilteroptions', [
-                'methods' => 'GET',
+                'methods' => 'POST',
                 'callback' => array($this, 'reset_filter_options'),
                 'permission_callback' => '__return_true',
             ] );

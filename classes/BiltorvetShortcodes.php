@@ -1020,6 +1020,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                                 $variant = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'variant', true);
                                 $mileage = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'Mileage', true);
                                 $getFirstRegistrationDate = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'FirstRegistrationDate', true);
+                                $paymentTerms = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'FinancingRunTime', true) ?? '';
 
                                 $firstRegistrationDate = $getFirstRegistrationDate != null && $this->currentVehicle->brandNew == false ? $getFirstRegistrationDate : strval(date("Y-m-d"));
 
@@ -1068,13 +1069,12 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                                     'data-btsettings-variant="' . $variant . '" ' .
                                     'data-btsettings-mileage="' . $mileage . '" ' .
                                     'data-btsettings-firstRegistrationDate="' . $firstRegistrationDate . '" ' .
+                                    'data-btsettings-paymentTerms="' . $paymentTerms . '" ' .
                                     ($sold ? 'data-btsettings-isVehicleSold="true" ' : '') .
                                     (isset($atts['brandingid']) ? 'data-btsettings-brandingId="' . intval($atts['brandingid']) . '" ' : '') .
                                     (isset($atts['hidevehicleprice']) ? 'data-btsettings-hideVehiclePrice="true" ' : '') .
-                                    (isset($atts['downpaymentratio']) ?  'data-btsettings-dataDownPayment="' . (intval($atts['downpaymentratio'])*intval($price)) . '" ' : '' ) .
-                                    (isset($atts['paymentterms']) ? 'data-btsettings-paymentTerms="' . intval($atts['paymentterms']) . '" ' : '');
+                                    (isset($atts['downpaymentratio']) ?  'data-btsettings-dataDownPayment="' . (intval($atts['downpaymentratio'])*intval($price)) . '" ' : '' );
                             }
-
                         }
                     }
 
