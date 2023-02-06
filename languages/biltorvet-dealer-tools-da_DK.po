@@ -481,7 +481,10 @@ msgid "PropellantType"
 msgstr "Drivmiddel"
 
 msgid "DateEdited"
-msgstr "Nyeste  biler"
+msgstr "Senest rettet"
+
+msgid "DateCreated"
+msgstr "Nyeste"
 
 msgid "EngineDisplacementCcm"
 msgstr "Motorstr."

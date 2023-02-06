@@ -6964,3 +6964,15 @@ bdt .vehicle_search_results select,
 }
 
 /* --- Quicksearch Select2 End -- */
+
+/* -- Old vehicle details price styling quickfix --*/
+@media (min-width: 980px) {
+  .col-6.carDetailModule{
+    width:100% !important;
+    display: inline-block;
+  }
+  .priceBox .ctaCarDetail {
+    width: 32%!important;
+    display: inline-block;
+  }
+}

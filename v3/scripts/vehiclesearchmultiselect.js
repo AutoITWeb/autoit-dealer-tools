@@ -448,26 +448,33 @@ function Biltorvet($) {
 
     this.ResetFilters = function()
     {
-        return fetch(ajax_config.restUrl + 'autoit-dealer-tools/v1/resetfilteroptions')
-            .then((response) => response.json())
-                .then((data) => {
+        return $.ajax({
+            url: ajax_config.restUrl + 'autoit-dealer-tools/v1/resetfilteroptions',
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                'action': 'reset_filter_options'
+            },
+            cache: false,
+            success: function(response){
 
-                        SetFilters(data);
+                SetFilters(response);
 
-                        $('.multiple').each(function(i, element)
-                        {
-                            // Reinit placeholders (labels) !!
-                            var selectionContainer = $(element).next('.select2-container').find('.select2-selection__rendered');
+                $('.multiple').each(function(i, element)
+                {
+                    // Reinit placeholders (labels) !!
+                    var selectionContainer = $(element).next('.select2-container').find('.select2-selection__rendered');
 
-                            $(selectionContainer).parent().find('.select2-selection__label').remove();
-                            $(element).parent().find('.selectDropDownLabel').show()
-                        })
-
+                    $(selectionContainer).parent().find('.select2-selection__label').remove();
+                    $(element).parent().find('.selectDropDownLabel').show()
                 })
-                .then((response) => {
 
-                    this.VehicleSearch();
-            });
+            },
+            complete: function()
+            {
+                StopLoadingAnimation();
+            }
+        });
     }
 
     this.ResetFilter = function()
