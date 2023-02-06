@@ -143,6 +143,7 @@ Attributes:
 * __minprice__  
 * __maxprice__  
 * __orderby__  
+* __show__ (Max amount of vehicles to show)  
 * __ascending__ (true, defaults to false)  
 
 Both minprice and maxprice are needed in order to use the price filter (See example 4) and both values needs to be integers.  
@@ -167,6 +168,7 @@ Creates a list of cars from status codes set in AutoDesktop (In order to use thi
 <br>Optional attributes:  
 * __state__  
 * __make__  
+* __show__ (Max amount of vehicles to show)  
 * __orderby__  
 * __ascending__  
 
@@ -194,6 +196,7 @@ __bdt_get_vehicles_by_type__
 Creates a list of cars from their type.  
 <br>Required attribute:  
 * __type__
+* __show__ (Max amount of vehicles to show) 
 
 <br>Optional attributes:  
 * __make__  
