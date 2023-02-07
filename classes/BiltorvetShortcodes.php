@@ -1020,7 +1020,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                                 $variant = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'variant', true);
                                 $mileage = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'Mileage', true);
                                 $getFirstRegistrationDate = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'FirstRegistrationDate', true);
-                                $paymentTerms = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'FinancingRunTime', true) ?? '';
+                                //$paymentTerms = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'FinancingRunTime', true) ?? '';
 
                                 $firstRegistrationDate = $getFirstRegistrationDate != null && $this->currentVehicle->brandNew == false ? $getFirstRegistrationDate : strval(date("Y-m-d"));
 
@@ -1061,6 +1061,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                                 {
                                     return "<!-- BDT: Santander widget not loaded: firstRegistrationDate not set -->";
                                 }
+
                                 $widgetAttributes = $productKeyAttribute . ' ' .
                                     (isset($atts['color']) && trim($atts['color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($atts['color']) . '" ' : (isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '' ? ' data-btsettings-color="' . TextUtils::SanitizeHTMLColor($this->_options['primary_color']) . '" ' : '')) .
                                     'data-btsettings-price="' . $price . '" ' .
@@ -1069,7 +1070,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                                     'data-btsettings-variant="' . $variant . '" ' .
                                     'data-btsettings-mileage="' . $mileage . '" ' .
                                     'data-btsettings-firstRegistrationDate="' . $firstRegistrationDate . '" ' .
-                                    'data-btsettings-paymentTerms="' . $paymentTerms . '" ' .
+                                    ($this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'FinancingRunTime', true) !== null ? 'data-btsettings-paymentTerms="' . intval($this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'FinancingRunTime', true)) . '" ' : '') .
                                     ($sold ? 'data-btsettings-isVehicleSold="true" ' : '') .
                                     (isset($atts['brandingid']) ? 'data-btsettings-brandingId="' . intval($atts['brandingid']) . '" ' : '') .
                                     (isset($atts['hidevehicleprice']) ? 'data-btsettings-hideVehiclePrice="true" ' : '') .
