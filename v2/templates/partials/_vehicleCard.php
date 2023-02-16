@@ -99,7 +99,10 @@ $carliteDealerLabel = isset($options_two['carlite_dealer_label']) ? $options_two
                         <?php endif; ?>
                 </span>
                 <span class="vehicleDescription">
-                    <span class="vehicleTitle"><?= $vehicle->getMakeName() .' '. $vehicle->getModel() .' '. $vehicle->getVariant() ?></span>
+                    <span class="vehicleTitle">
+                        <span class="make-model"><?= $vehicle->getMakeName() .' '. $vehicle->getModel() ?></span>
+                        <span class="variant"><?= $vehicle->getVariant() ?></span>
+                    </span>
 
                     <?php
 

@@ -244,7 +244,7 @@ class PriceController
         }
 
         // This is what we'll eventually return
-        $noSecondaryPriceToReturn = $type === 'card' ? '<span style="margin-top: 5.0rem;"></span>' : '';
+        $noSecondaryPriceToReturn = '';
         $priceCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card secondary-price-card' : 'bdt_price_big secondary-price-details';
         $priceLabelCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card_label secondary-price-label-card' : 'bdt_price_mainlabel secondary-price-label-details';
 
@@ -307,8 +307,14 @@ class PriceController
     {
         // This is what we'll eventually return
         $noTertiaryPriceToReturn = '';
-        $priceCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card secondary-price-card' : 'bdt_price_big secondary-price-details';
-        $priceLabelCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card_label secondary-price-label-card' : 'bdt_price_mainlabel secondary-price-label-details';
+        $priceCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card tertiary-price-card' : 'bdt_price_big tertiary-price-details';
+        $priceLabelCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card_label tertiary-price-label-card' : 'bdt_price_mainlabel tertiary-price-label-details';
+
+        // Return empty string
+        if($hideTertiaryPrice === true)
+        {
+            return '';
+        }
 
         if($this->primaryPriceType !== 'cashPrice' && $this->secondaryPriceType !== 'cashPrice' && $this->price->getHasCashPrice())
         {
@@ -354,10 +360,10 @@ class PriceController
                 $htmlMarkUpToReturn = '<span class="' . $cssClass . '">' . $data . '</span>';
                 break;
             case 'details':
-                $htmlMarkUpToReturn = '<span class="' . $cssClass . '">' . $data . '</span><br>';
+                $htmlMarkUpToReturn = '<span class="' . $cssClass . '">' . $data . '</span>';
                 break;
             default:
-                $htmlMarkUpToReturn = '<span class="' . $cssClass . '">' . $data . '</span><br>';
+                $htmlMarkUpToReturn = '<span class="' . $cssClass . '">' . $data . '</span>';
         }
 
         return $htmlMarkUpToReturn;
