@@ -65,7 +65,8 @@ class PriceFactory
         if($cashPrice !== null || !empty($cashPrice))
         {
             $price->setCashPriceFormatted($cashPrice['priceFormatted']);
-            $price->setCashPriceLabel($cashPrice['priceLabel']);
+            $price->setCashPriceLabelVehicleCards($cashPrice['priceLabelVehicleCards']);
+            $price->setCashPriceLabelDetailsPage($cashPrice['priceLabelDetailsPage']);
             $price->setHasCashPrice(true);
 
             return $price;
@@ -85,7 +86,8 @@ class PriceFactory
         if($leasingPrice !== null || !empty($leasingPrice))
         {
             $price->setLeasingPriceFormatted($leasingPrice['priceFormatted']);
-            $price->setleasingPriceLabel($leasingPrice['priceLabel']);
+            $price->setLeasingPriceLabelVehicleCards($leasingPrice['priceLabelVehicleCards']);
+            $price->setLeasingPriceLabelDetailsPage($leasingPrice['priceLabelDetailsPage']);
             $price->setHasLeasingPrice(true);
 
             return $price;
@@ -104,7 +106,8 @@ class PriceFactory
         if($financingPrice !== null || !empty($financingPrice))
         {
             $price->setFinancingPriceFormatted($financingPrice['priceFormatted']);
-            $price->setFinancingPriceLabel($financingPrice['priceLabel']);
+            $price->setfinancingPriceLabelVehicleCards($financingPrice['priceLabelVehicleCards']);
+            $price->setfinancingpriceLabelDetailsPage($financingPrice['priceLabelDetailsPage']);
             $price->setHasfinancingPrice(true);
 
             return $price;

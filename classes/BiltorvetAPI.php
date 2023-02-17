@@ -3,8 +3,8 @@
     if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
     
     class BiltorvetAPI {
-        private $endpoint = 'https://api-v1.autoit.dk'; // Prod
-//        private $endpoint = 'https://api-v2.autoitweb.dk'; // Staging
+//        private $endpoint = 'https://api-v1.autoit.dk'; // Prod
+        private $endpoint = 'https://api-v2.autoitweb.dk'; // Staging
 //        private $endpoint = 'http://localhost:5085'; // Local
         private $apiKey;
         private $vehicleResultsPageLimit = 24;

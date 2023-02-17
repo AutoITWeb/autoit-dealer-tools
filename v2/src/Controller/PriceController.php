@@ -493,8 +493,11 @@ class PriceController
      */
     public function ReturnCashPrice(string $priceCssClass, string $priceLabelCssClass, string $type) : string
     {
+        // We want to display a special price label on the details page
+        $selectedPriceLabel = $type === 'details' ? $this->price->getCashPriceLabelDetailsPage() : $this->price->getCashPriceLabelVehicleCards();
+
         $prioritizedCardPriceToReturn = $this->CreateHtmlMarkUp($priceCssClass, $this->price->getCashPriceFormatted(), $type);
-        $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $this->price->getCashPriceLabel(), $type);
+        $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $selectedPriceLabel, $type);
 
         return $prioritizedCardPriceToReturn;
     }
@@ -508,7 +511,7 @@ class PriceController
     public function ReturnFinancingPrice(string $priceCssClass, string $priceLabelCssClass, string $type) : string
     {
         $prioritizedCardPriceToReturn = $this->CreateHtmlMarkUp($priceCssClass, $this->price->getfinancingPriceFormatted(), $type);
-        $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $this->price->getfinancingPriceLabel(), $type);
+        $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $this->price->getFinancingPriceLabelVehicleCards(), $type);
 
         return $prioritizedCardPriceToReturn;
     }
@@ -522,7 +525,7 @@ class PriceController
     public function ReturnLeasingPrice(string $priceCssClass, string $priceLabelCssClass, string $type) : string
     {
         $prioritizedCardPriceToReturn = $this->CreateHtmlMarkUp($priceCssClass, $this->price->getLeasingPriceFormatted(), $type);
-        $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $this->price->getLeasingPriceLabel(), $type);
+        $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $this->price->getLeasingPriceLabelVehicleCards(), $type);
 
         return $prioritizedCardPriceToReturn;
     }
