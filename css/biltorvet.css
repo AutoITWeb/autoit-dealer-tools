@@ -7003,24 +7003,19 @@ bdt .vehicle_search_results select,
 .bdt_price_container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   flex-direction: column;
-  padding: 10px;
   padding: 10px 0;
 }
 .bdt_price_container .primary-price {
   display: flex;
+  flex-direction: column;
 }
 .bdt_price_container .secondary-price {
   padding-top: 15px;
 }
 .bdt_price_container .secondary-price,
 .bdt_price_container .tertiary-price {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: center;
-  align-items: baseline;
-  color: #414141;
+
   font-style: italic;
   opacity: 0.8;
   line-height: 1.3;
