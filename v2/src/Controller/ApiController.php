@@ -151,8 +151,8 @@ class ApiController
                     $request_method,
                     //$_ENV['API_URL'] . '/' . $resource,
                     //'http://localhost:5085' . '/' . $resource,
-                    //'https://api-v1.autoit.dk' . '/' . $resource,
-                    'https://api-v2.autoitweb.dk' . '/' . $resource,
+                    'https://api-v1.autoit.dk' . '/' . $resource,
+                    //'https://api-v2.autoitweb.dk' . '/' . $resource,
                     ['query' => array_merge($params, ['a' => $this->apiKey])]
                 ),
                 $response_type
