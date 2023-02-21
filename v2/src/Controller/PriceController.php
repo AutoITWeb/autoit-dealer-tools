@@ -244,7 +244,7 @@ class PriceController
         }
 
         // This is what we'll eventually return
-        $noSecondaryPriceToReturn = $type === 'card' ? '<span style="margin-top: 5.0rem;"></span>' : '';
+        $noSecondaryPriceToReturn = '';
         $priceCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card secondary-price-card' : 'bdt_price_big secondary-price-details';
         $priceLabelCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card_label secondary-price-label-card' : 'bdt_price_mainlabel secondary-price-label-details';
 
@@ -307,8 +307,14 @@ class PriceController
     {
         // This is what we'll eventually return
         $noTertiaryPriceToReturn = '';
-        $priceCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card secondary-price-card' : 'bdt_price_big secondary-price-details';
-        $priceLabelCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card_label secondary-price-label-card' : 'bdt_price_mainlabel secondary-price-label-details';
+        $priceCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card tertiary-price-card' : 'bdt_price_big tertiary-price-details';
+        $priceLabelCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card_label tertiary-price-label-card' : 'bdt_price_mainlabel tertiary-price-label-details';
+
+        // Return empty string
+        if($hideTertiaryPrice === true)
+        {
+            return '';
+        }
 
         if($this->primaryPriceType !== 'cashPrice' && $this->secondaryPriceType !== 'cashPrice' && $this->price->getHasCashPrice())
         {
@@ -354,10 +360,10 @@ class PriceController
                 $htmlMarkUpToReturn = '<span class="' . $cssClass . '">' . $data . '</span>';
                 break;
             case 'details':
-                $htmlMarkUpToReturn = '<span class="' . $cssClass . '">' . $data . '</span><br>';
+                $htmlMarkUpToReturn = '<span class="' . $cssClass . '">' . $data . '</span>';
                 break;
             default:
-                $htmlMarkUpToReturn = '<span class="' . $cssClass . '">' . $data . '</span><br>';
+                $htmlMarkUpToReturn = '<span class="' . $cssClass . '">' . $data . '</span>';
         }
 
         return $htmlMarkUpToReturn;
@@ -487,8 +493,11 @@ class PriceController
      */
     public function ReturnCashPrice(string $priceCssClass, string $priceLabelCssClass, string $type) : string
     {
+        // We want to display a special price label on the details page
+        $selectedPriceLabel = $type === 'details' ? $this->price->getCashPriceLabelDetailsPage() : $this->price->getCashPriceLabelVehicleCards();
+
         $prioritizedCardPriceToReturn = $this->CreateHtmlMarkUp($priceCssClass, $this->price->getCashPriceFormatted(), $type);
-        $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $this->price->getCashPriceLabel(), $type);
+        $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $selectedPriceLabel, $type);
 
         return $prioritizedCardPriceToReturn;
     }
@@ -502,7 +511,7 @@ class PriceController
     public function ReturnFinancingPrice(string $priceCssClass, string $priceLabelCssClass, string $type) : string
     {
         $prioritizedCardPriceToReturn = $this->CreateHtmlMarkUp($priceCssClass, $this->price->getfinancingPriceFormatted(), $type);
-        $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $this->price->getfinancingPriceLabel(), $type);
+        $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $this->price->getFinancingPriceLabelVehicleCards(), $type);
 
         return $prioritizedCardPriceToReturn;
     }
@@ -516,7 +525,7 @@ class PriceController
     public function ReturnLeasingPrice(string $priceCssClass, string $priceLabelCssClass, string $type) : string
     {
         $prioritizedCardPriceToReturn = $this->CreateHtmlMarkUp($priceCssClass, $this->price->getLeasingPriceFormatted(), $type);
-        $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $this->price->getLeasingPriceLabel(), $type);
+        $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $this->price->getLeasingPriceLabelVehicleCards(), $type);
 
         return $prioritizedCardPriceToReturn;
     }

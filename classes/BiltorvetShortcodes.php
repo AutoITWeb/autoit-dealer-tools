@@ -613,9 +613,15 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             $priceController = new PriceController(VehicleFactory::create(json_decode(json_encode($this->currentVehicle), true)));
 
             $showPrice = '<span class="bdt_price_container">';
-            $showPrice .= '<span class="primary-price">' .$priceController->GetPrimaryPrice('details') .'</span>';
-            $showPrice .= '<span class="secondary-price">'. $priceController->GetSecondaryPrice('details') .'</span>';
-            $showPrice .= '<span class="tertiary-price">' . $priceController->GetTertiaryPrice('details') .'</span>';
+            if ($priceController->GetPrimaryPrice('details')) {
+                $showPrice .='<span class="primary-price">' .$priceController->GetPrimaryPrice('details') .'</span>';
+            }
+            if ($priceController->GetSecondaryPrice('details')) {
+                $showPrice .= '<span class="secondary-price">'. $priceController->GetSecondaryPrice('details') .'</span>';
+            }
+            if ($priceController->GetTertiaryPrice('details')) {
+                $showPrice .= '<span class="tertiary-price">' . $priceController->GetTertiaryPrice('details') .'</span>';
+            }
             $showPrice .= '</span>';
 
             return $showPrice;

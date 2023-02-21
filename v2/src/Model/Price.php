@@ -64,11 +64,16 @@ class Price
      * @var string|null
      */
     private $cashPriceFormatted;
+
     /**
-     *
      * @var string|null
      */
-    private $cashPriceLabel;
+    private $cashPriceLabelVehicleCards;
+
+    /**
+     * @var string|null
+     */
+    private $cashPriceLabelDetailsPage;
 
     /**
      *
@@ -85,7 +90,13 @@ class Price
      *
      * @var string|null
      */
-    private $leasingPriceLabel;
+    private $leasingPriceLabelVehicleCards;
+
+    /**
+     *
+     * @var string|null
+     */
+    private $leasingPriceLabelDetailsPage;
 
     /**
      *
@@ -102,7 +113,13 @@ class Price
      *
      * @var string|null
      */
-    private $financingPriceLabel;
+    private $financingPriceLabelVehicleCards;
+
+    /**
+     *
+     * @var string|null
+     */
+    private $financingPriceLabelDetailsPage;
 
     /**
      * @return string|null
@@ -116,7 +133,7 @@ class Price
      * @param string|null $financingPriceFormatted
      * @return Price
      */
-    public function setfinancingPriceFormatted(?string $financingPriceFormatted): Price
+    public function setFinancingPriceFormatted(?string $financingPriceFormatted): Price
     {
         $this->financingPriceFormatted = $financingPriceFormatted;
         return $this;
@@ -125,18 +142,36 @@ class Price
     /**
      * @return string|null
      */
-    public function getfinancingPriceLabel(): ?string
+    public function getFinancingPriceLabelVehicleCards(): ?string
     {
-        return $this->financingPriceLabel;
+        return $this->financingPriceLabelVehicleCards;
     }
 
     /**
-     * @param string|null $financingPriceLabel
+     * @param string|null $financingPriceLabelVehicleCards
      * @return Price
      */
-    public function setfinancingPriceLabel(?string $financingPriceLabel): Price
+    public function setfinancingPriceLabelVehicleCards(?string $financingPriceLabelVehicleCards): Price
     {
-        $this->financingPriceLabel = $financingPriceLabel;
+        $this->financingPriceLabelVehicleCards = $financingPriceLabelVehicleCards;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFinancingPriceLabelDetailsPage(): ?string
+    {
+        return $this->financingPriceLabelVehicleCards;
+    }
+
+    /**
+     * @param string|null $financingPriceLabelDetailsPage
+     * @return Price
+     */
+    public function setfinancingpriceLabelDetailsPage(?string $financingPriceLabelDetailsPage): Price
+    {
+        $this->financingPriceLabelDetailsPage = $financingPriceLabelDetailsPage;
         return $this;
     }
 
@@ -161,18 +196,36 @@ class Price
     /**
      * @return string|null
      */
-    public function getLeasingPriceLabel(): ?string
+    public function getLeasingPriceLabelVehicleCards(): ?string
     {
-        return $this->leasingPriceLabel;
+        return $this->leasingPriceLabelVehicleCards;
     }
 
     /**
-     * @param string|null $leasingPriceLabel
+     * @param string|null $leasingPriceLabelVehicleCards
      * @return Price
      */
-    public function setleasingPriceLabel(?string $leasingPriceLabel): Price
+    public function setLeasingPriceLabelVehicleCards(?string $leasingPriceLabelVehicleCards): Price
     {
-        $this->leasingPriceLabel = $leasingPriceLabel;
+        $this->leasingPriceLabelVehicleCards = $leasingPriceLabelVehicleCards;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLeasingPriceLabelDetailsPage(): ?string
+    {
+        return $this->leasingPriceLabelDetailsPage;
+    }
+
+    /**
+     * @param string|null $leasingPriceLabelDetailsPage
+     * @return Price
+     */
+    public function setLeasingPriceLabelDetailsPage(?string $leasingPriceLabelDetailsPage): Price
+    {
+        $this->leasingPriceLabelDetailsPage = $leasingPriceLabelDetailsPage;
         return $this;
     }
 
@@ -198,18 +251,36 @@ class Price
     /**
      * @return string|null
      */
-    public function getCashPriceLabel(): ?string
+    public function getCashPriceLabelVehicleCards(): ?string
     {
-        return $this->cashPriceLabel;
+        return $this->cashPriceLabelVehicleCards;
     }
 
     /**
-     * @param string|null $cashPriceLabel
+     * @param string|null $cashPriceLabelVehicleCards
      * @return Price
      */
-    public function setCashPriceLabel(?string $cashPriceLabel): Price
+    public function setCashPriceLabelVehicleCards(?string $cashPriceLabelVehicleCards): Price
     {
-        $this->cashPriceLabel = $cashPriceLabel;
+        $this->cashPriceLabelVehicleCards = $cashPriceLabelVehicleCards;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCashPriceLabelDetailsPage(): ?string
+    {
+        return $this->cashPriceLabelDetailsPage;
+    }
+
+    /**
+     * @param string|null $cashPriceLabelDetailsPage
+     * @return Price
+     */
+    public function setCashPriceLabelDetailsPage(?string $cashPriceLabelDetailsPage): Price
+    {
+        $this->cashPriceLabelDetailsPage = $cashPriceLabelDetailsPage;
         return $this;
     }
 
