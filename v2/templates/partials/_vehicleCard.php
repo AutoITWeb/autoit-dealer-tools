@@ -66,13 +66,15 @@ else {
 
 $carliteDealerLabel = isset($options_two['carlite_dealer_label']) ? $options_two['carlite_dealer_label'] : null;
 
+$hasVideo = $vehicle->getHasVideo() === true ? ' hasVideo' : '';
+
 ?>
 
 <div class="col-sm-6 col-md-6 col-lg-4">
     <div class="bdt">
         <div class="vehicleCard animate__animated animate__fadeIn animate__slow">
             <a href="<?= $basePage . "/" . $vehicle->getUri() ?>">
-                <span class="vehicleThumb">
+                <span class="vehicleThumb<?= $hasVideo; ?>">
                     <img src="<?= $vehicle->getVehicleCardImage() ?? $vehicle->getImages()[0] ?>" class="img-responsive" loading="lazy" alt="<?= $vehicle->getMakeName() .' '. $vehicle->getModel() .' '. $vehicle->getVariant() ?>"/>
                         <?php if ($vehicleLabels) : ?>
 

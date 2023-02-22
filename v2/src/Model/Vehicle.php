@@ -125,6 +125,10 @@ class Vehicle
      * @var array|null
      */
     private $financingPrice;
+    /**
+     * @var bool|null
+     */
+    private $hasVideo;
 
     /**
      * @return string[]|null
@@ -375,6 +379,24 @@ class Vehicle
     public function setAutomatic(?bool $automatic): Vehicle
     {
         $this->automatic = $automatic;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getHasVideo(): ?bool
+    {
+        return $this->hasVideo;
+    }
+
+    /**
+     * @param  bool|null $hasVideo
+     * @return Vehicle
+     */
+    public function setHasVideo(?bool $hasVideo): Vehicle
+    {
+        $this->hasVideo = $hasVideo;
         return $this;
     }
 
