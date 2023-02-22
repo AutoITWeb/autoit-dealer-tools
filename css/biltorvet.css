@@ -5455,6 +5455,24 @@ a.bdt .badge-dark.focus {
   overflow: hidden;
 }
 
+.bdt .vehicleCard .vehicleThumb.hasVideo:after {
+  background-color: transparent;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  height: 100%;
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  content: "";
+  background-image: url("../includes/img/play-icon.svg");
+  background-size: 35%;
+}
+.bdt .vehicleCard a:hover .vehicleThumb.hasVideo:after {
+  opacity: 0.75;
+}
 .bdt .vehicleCard .vehicleParamValue {
   font-size: 0.8em;
   color: #000;
@@ -7015,7 +7033,6 @@ bdt .vehicle_search_results select,
 }
 .bdt_price_container .secondary-price,
 .bdt_price_container .tertiary-price {
-
   font-style: italic;
   opacity: 0.8;
   line-height: 1.3;

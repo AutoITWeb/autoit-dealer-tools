@@ -3,8 +3,8 @@
     if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
     
     class BiltorvetAPI {
-        private $endpoint = 'https://api-v1.autoit.dk'; // Prod
-//        private $endpoint = 'https://api-v2.autoitweb.dk'; // Staging
+        private $endpoint = 'https://carlite-api.autoitweb.dk'; // Prod
+//        private $endpoint = 'https://carlite-api-dev.autoitweb.dk'; // Dev
 //        private $endpoint = 'http://localhost:5085'; // Local
         private $apiKey;
         private $vehicleResultsPageLimit = 24;
@@ -21,11 +21,11 @@
         {
             $endpoints = array(
                 $this->endpoint . '/v2/vehicle' . '?a=' . $this->apiKey,
-                $this->endpoint . '/vehicle/filteroptions' . '?a=' . $this->apiKey,
-                $this->endpoint . '/vehicle/orderbyvalues' . '?a=' . $this->apiKey,
-                $this->endpoint . '/vehicle/count' . '?a=' . $this->apiKey,
-                $this->endpoint . '/companies' . '?a=' . $this->apiKey,
-                $this->endpoint . '/products' . '?a=' . $this->apiKey,
+                $this->endpoint . '/v1/vehicle/filteroptions' . '?a=' . $this->apiKey,
+                $this->endpoint . '/v1/vehicle/orderbyvalues' . '?a=' . $this->apiKey,
+                $this->endpoint . '/v1/vehicle/count' . '?a=' . $this->apiKey,
+                $this->endpoint . '/v1/companies' . '?a=' . $this->apiKey,
+                $this->endpoint . '/v1/products' . '?a=' . $this->apiKey,
             );
 
             return $endpoints;
@@ -33,31 +33,31 @@
 
         public function GetFilterOptions($filter = null)
         {
-            return $this->Request('/vehicle/filteroptions', (isset($filter) && $filter !== null ? array('filter' => json_encode($filter)) : null));
+            return $this->Request('/v1/vehicle/filteroptions', (isset($filter) && $filter !== null ? array('filter' => json_encode($filter)) : null));
         }
 
         public function GetMakes()
         {
-            return $this->Request('/vehicle/make');
+            return $this->Request('/v1/vehicle/make');
         }
 
         public function GetBodyTypes()
         {
-            return $this->Request('/vehicle/bodytypes');
+            return $this->Request('/v1/vehicle/bodytypes');
         }
 
         public function GetCompanies()
         {
-            return $this->Request('/companies');
+            return $this->Request('/v1/companies');
         }
 
         public function GetModels($make = null)
         {
-            return $this->Request('/vehicle/make' . (isset($make) && trim($make) !== '' ? '/' . TextUtils::Sanitize($make) : '') );
+            return $this->Request('/v1/vehicle/make' . (isset($make) && trim($make) !== '' ? '/' . TextUtils::Sanitize($make) : '') );
         }
 
         public function GetPropellantTypes() {
-            $propellantsRaw = $this->Request('/vehicle/propellant');
+            $propellantsRaw = $this->Request('/v1/vehicle/propellant');
             $propellants = array();
             foreach($propellantsRaw as $propellant)
             {
@@ -68,7 +68,7 @@
 
         public function GetTypes()
         {
-            return $this->Request('/vehicle/type');
+            return $this->Request('/v1/vehicle/type');
         }
 
         public function GetVehicle($id)
@@ -78,17 +78,17 @@
 
         public function SendInfluxDbVehicleData($id)
         {
-            return $this->Request('/influxdb/vehicledetail/' . TextUtils::Sanitize($id));
+            return $this->Request('/v1/influxdb/vehicledetail/' . TextUtils::Sanitize($id));
         }
 
         public function GetBiltorvetBmsDealerInfo()
         {
-            return $this->Request('/bms/company');
+            return $this->Request('/v1/bms/company');
         }
 
         public function GetVehicleTotalCount($filter)
         {
-            return $this->Request('/vehicle/count', isset($filter) && $filter !== null ? array('filter' => json_encode($filter)) : null);
+            return $this->Request('/v1/vehicle/count', isset($filter) && $filter !== null ? array('filter' => json_encode($filter)) : null);
         }
 
         public function GetVehicles($filter)
@@ -103,7 +103,7 @@
 
         public function GetVehiclesQuickSearch($filter)
         {
-            return $this->Request('/vehicle/quicksearch', array('filter' => json_encode($filter)));
+            return $this->Request('/v1/vehicle/quicksearch', array('filter' => json_encode($filter)));
         }
 
         public function AutodesktopSendLead($lead, $emailReciept = false)
@@ -113,13 +113,13 @@
                 throw new Exception("BT API: No lead specified");
             }
 
-            return $this->Request('/autodesktop/sendlead', array('leadInput' => json_encode($lead), 'emailReciept' => $emailReciept === true ? 'true' : 'false'), 'POST');
+            return $this->Request('/v1/autodesktop/sendlead', array('leadInput' => json_encode($lead), 'emailReciept' => $emailReciept === true ? 'true' : 'false'), 'POST');
         }
 
         // New simple lead creator!
         public function CreateSimpleLead($lead, $companyId)
         {
-            $endpoint = $this->endpoint . '/leadimporter/createsimplelead/' . $companyId . '?a=' . $this->apiKey;
+            $endpoint = $this->endpoint . '/v1/leadimporter/createsimplelead/' . $companyId . '?a=' . $this->apiKey;
 
             $body = wp_json_encode( $lead );
 
@@ -145,7 +145,7 @@
                 throw new Exception("BT API: No lead specified");
             }
 
-            return $this->Request('/leadimporter/createlead/' . $companyId, array('leadObject' => json_encode($lead)));
+            return $this->Request('/v1/leadimporter/createlead/' . $companyId, array('leadObject' => json_encode($lead)));
         }
 
         public function GetVehicleResultsPageLimit()
@@ -155,7 +155,7 @@
 
         public function GetOrderByValues()
         {
-            return $this->Request('/vehicle/orderbyvalues');
+            return $this->Request('/v1/vehicle/orderbyvalues');
         }
 
         public function GetPropertyValue($vehicle, $propertyName, $raw = false)
@@ -217,7 +217,7 @@
 
         public function GetProducts()
         {
-            return $this->Request('/products');
+            return $this->Request('/v1/products');
         }
 
         private function Request($method, $query = null, $requestType = 'GET')
