@@ -76,7 +76,7 @@ class ApiController
     public function getOrderByValues()
     {
         try {
-            return $this->requestApi('vehicle/orderbyvalues', [], 'orderbyValues');
+            return $this->requestApi('v1/vehicle/orderbyvalues', [], 'orderbyValues');
         } catch (Exception $e) {
         }
     }
@@ -110,7 +110,7 @@ class ApiController
     public function sendLead(VehicleLead $lead)
     {
         $respone = $this->requestApi(
-            'autodesktop/sendlead',
+            'v1/autodesktop/sendlead',
             [
             'leadInput' => DataHelper::createLeadObject($lead),
             'emailReciept' => WordpressHelper::getOption(1,'adt_email_receipt') === 'ja'
@@ -127,7 +127,7 @@ class ApiController
      * @throws Exception
      */
     public function getCompanyProducts() {
-        return $this->requestApi('products', [], 'products');
+        return $this->requestApi('v1/products', [], 'products');
     }
 
     /**
@@ -151,8 +151,8 @@ class ApiController
                     $request_method,
                     //$_ENV['API_URL'] . '/' . $resource,
                     //'http://localhost:5085' . '/' . $resource,
-                    'https://api-v1.autoit.dk' . '/' . $resource,
-                    //'https://api-v2.autoitweb.dk' . '/' . $resource,
+                    'https://carlite-api.autoitweb.dk' . '/' . $resource,
+                    //'https://carlite-api-dev.autoitweb.dk' . '/' . $resource,
                     ['query' => array_merge($params, ['a' => $this->apiKey])]
                 ),
                 $response_type
