@@ -151,8 +151,8 @@ class ApiController
                     $request_method,
                     //$_ENV['API_URL'] . '/' . $resource,
                     //'http://localhost:5085' . '/' . $resource,
-                    'https://carlite-api.autoitweb.dk' . '/' . $resource,
-                    //'https://carlite-api-dev.autoitweb.dk' . '/' . $resource,
+                    'https://vehicle-api.autoitweb.dk' . '/' . $resource,
+                    //'https://vehicle-api-dev.autoitweb.dk' . '/' . $resource,
                     ['query' => array_merge($params, ['a' => $this->apiKey])]
                 ),
                 $response_type
