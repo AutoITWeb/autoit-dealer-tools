@@ -3,8 +3,8 @@
     if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
     
     class BiltorvetAPI {
-        private $endpoint = 'https://vehicle-api.autoitweb.dk'; // Prod
-//        private $endpoint = 'https://vehicle-api-dev.autoitweb.dk'; // Dev
+//        private $endpoint = 'https://vehicle-api.autoitweb.dk'; // Prod
+        private $endpoint = 'https://vehicle-api-dev.autoitweb.dk'; // Dev
 //        private $endpoint = 'http://localhost:5085'; // Local
         private $apiKey;
         private $vehicleResultsPageLimit = 24;
@@ -231,10 +231,10 @@
                 $data = false;
                 $transientName = $method . (isset($query) ? json_encode($query) : '');
 
-                if($requestType === 'GET' && !strpos($method, 'influxdb') && !strpos($method, 'createlead'))
+/*                if($requestType === 'GET' && !strpos($method, 'influxdb') && !strpos($method, 'createlead'))
                 {
                     $data = get_transient( $transientName );
-                }
+                }*/
 
                 //delete_transient($transientName);
 
@@ -269,14 +269,11 @@
                         switch($httpCode):
                             case 401:
                                 throw new Exception(__('Biltorvet API: not authorized','biltorvet-dealer-tools'));
-                                break;
                             case 404:
                                 throw new Exception(__('Biltorvet API: method not found', 'biltorvet-dealer-tools'));
-                                break;
                             default:
-                                //throw new Exception(sprintf( __('Biltorvet API: unexpected response code (%u)', 'biltorvet-dealer-tools'), intval($httpCode)));
-                                throw new Exception(sprintf( __('Biltorvet API: unexpected response code (%u), %s', 'biltorvet-dealer-tools'), intval($httpCode), $this->endpoint . $method . '?a=' . $this->apiKey . '&' . http_build_query($query)));
-                                break;
+                                throw new Exception(sprintf( __('Biltorvet API: unexpected response code (%u)', 'biltorvet-dealer-tools'), intval($httpCode)));
+                                //throw new Exception(sprintf( __('Biltorvet API: unexpected response code (%u), %s', 'biltorvet-dealer-tools'), intval($httpCode), $this->endpoint . $method . '?a=' . $this->apiKey . '&' . http_build_query($query)));
                         endswitch;
                     }
 
@@ -304,7 +301,7 @@
 
                     $data = $response->result;
 
-                    set_transient( $transientName, $data, 300);
+                    //set_transient( $transientName, $data, 300);
                 }
 
                 return $data;
