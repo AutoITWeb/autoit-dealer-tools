@@ -34,12 +34,6 @@ use Biltorvet\Model\Vehicle;
                 'permission_callback' => '__return_true',
             ] );
 
-/*            register_rest_route( 'autoit-dealer-tools/v1', '/resetfilteroptions', [
-                'methods' => 'GET',
-                'callback' => array($this, 'reset_filter_options'),
-                'permission_callback' => '__return_true',
-            ] );*/
-
             register_rest_route( 'autoit-dealer-tools/v1', '/resetfilteroptions', [
                 'methods' => 'POST',
                 'callback' => array($this, 'reset_filter_options'),
@@ -57,12 +51,6 @@ use Biltorvet\Model\Vehicle;
                 'callback' => array($this, 'bdt_vehicle_search'),
                 'permission_callback' => '__return_true',
             ] );
-
-/*            register_rest_route( 'autoit-dealer-tools/v1', '/vehiclesearch/search', [
-                'methods' => 'GET',
-                'callback' => array($this, 'bdt_vehicle_search'),
-                'permission_callback' => '__return_true',
-            ] );*/
 
             register_rest_route( 'autoit-dealer-tools/v1', '/vehiclesearch/search_paging', [
                 'methods' => 'POST',
@@ -91,49 +79,101 @@ use Biltorvet\Model\Vehicle;
             $this->bdt_root_url = rtrim(get_permalink($this->_options['vehiclesearch_page_id']),'/');
         }
 
+        public function get_all_pages_and_posts()
+        {
+            // Get all Pages
+            $listOfPagesAndPosts = array();
+
+            $allPages = get_pages();
+
+            foreach($allPages as $page)
+            {
+                array_push($listOfPagesAndPosts, get_permalink($page->ID));
+            }
+
+            // Get all posts
+            $allPosts = get_posts();
+
+            foreach($allPosts as $post)
+            {
+                array_push($listOfPagesAndPosts, get_permalink($post->ID));
+            }
+
+            return $listOfPagesAndPosts;
+        }
+
         // Clears cache of a given list of pages
         public function bdt_clear_cache(WP_REST_Request $request){
 
-            // Fetch apikey used in the request
+            // Fetch params
             $getApiKey = $request->get_param('a');
+            $getCacheType = $request->get_param('type');
 
+            // A valid api key is needed - for the moment the Forhandler Web demo key will work on very CarLite page
             if($getApiKey !== null && $getApiKey === $this->_options['api_key'] || $getApiKey === "ce760c3b-2d44-4037-980b-894b79891525")
             {
-                // Get pageId of the vehicledetailspage and the vehicle search page
-                $detailsPageId = isset($this->_options['detail_template_page_id']) ? intval($this->_options['detail_template_page_id']) : 0;
-                $searchPageId = isset($this->_options['vehiclesearch_page_id']) ? intval($this->_options['vehiclesearch_page_id']) : 0;
-
-                $vehicleDetailsPageUrl = get_permalink($detailsPageId);
-                //$vehicleSearchPageUrl = get_permalink($searchPageId);
-
-                $pages_to_clean = [
-                    $vehicleDetailsPageUrl,
-                    //$vehicleSearchPageUrl
-                ];
-
-                // Pages that'll be preloaded by WPRocket or cached by the CarLite Api
-                $pages_to_preload = $this->biltorvetAPI->GetKeyEndpointsForCachePreload();
-                //array_push($pages_to_preload, $vehicleSearchPageUrl);
-
-                if(count($pages_to_clean) > 0)
+                // "type" parameter is required
+                if($getCacheType !== null)
                 {
-                    try{
+                    // instantiate arrays needed
+                    $pages_to_clear = array();
+                    $pages_to_preload = array();
 
-                        // Clear and preload WP Rocket Cache for pages added to $pages_to_clean_preload
-                        if ( function_exists( 'rocket_clean_post' ) ) {
+                    // Vehicle details page
+                    if($getCacheType === 'detail')
+                    {
+                        // Get pageId of the vehicledetailspage and the vehicle search page
+                        $detailsPageId = isset($this->_options['detail_template_page_id']) ? intval($this->_options['detail_template_page_id']) : 0;
 
-                            foreach( $pages_to_clean as $page_to_clean) {
-                                rocket_clean_post( url_to_postid ( $page_to_clean ) );
-                            }
+                        $vehicleDetailsPageUrl = get_permalink($detailsPageId);
+
+                        array_push($pages_to_clear, $vehicleDetailsPageUrl);
+
+                        // Pages that'll be preloaded by WPRocket or cached by the CarLite Api
+                        $preloadPages = $this->biltorvetAPI->GetKeyEndpointsForCachePreload();
+
+                        foreach($preloadPages as $preloadPage)
+                        {
+                            array_push($pages_to_preload, $preloadPage);
                         }
+                    }
 
-                        // Response message (Mostly for debugging)
-                        $apiResponse = "";
+                    /*
+                        All pages
+                        Array of pages and posts will be used both for clearing the cache and preloading
+                    */
+                    if($getCacheType === 'all')
+                    {
+                        $pagesAndPostsToClearAndPreload = $this->get_all_pages_and_posts();
 
-                        if ( function_exists( 'get_rocket_option' ) ) {
+                        // Add all pages and posts to arrays
+                        foreach($pagesAndPostsToClearAndPreload as $pageAndPost)
+                        {
+                            array_push($pages_to_clear, $pageAndPost); // To be cleared
+                            array_push($pages_to_preload, $pageAndPost); // To be preloaded
+                        }
+                    }
 
-                            if( 1 == get_rocket_option( 'manual_preload' ) ) {
+                    // Clear cache and preload pages / posts
+                    if(count($pages_to_clear) > 0)
+                    {
+                        try
+                        {
+                            // Clear cache
+                            if ( function_exists( 'rocket_clean_post' ) )
+                            {
+                                foreach( $pages_to_clear as $page_to_clear) {
+                                    rocket_clean_post( url_to_postid ( $page_to_clear ) );
+                                }
+                            }
 
+                            // Preload WP Rocket Cache for pages added to $pages_to_clean_preload
+
+                            // Response message (Mostly for debugging)
+                            $apiResponse = array();
+
+                            if ( function_exists( 'get_rocket_option' ) )
+                            {
                                 $args = array();
 
                                 if( 1 == get_rocket_option( 'cache_webp' ) ) {
@@ -142,46 +182,41 @@ use Biltorvet\Model\Vehicle;
                                 }
 
                                 // Preload desktop pages/posts.
-                                $responseDesktop = "Desktop:" . $this->rocket_preload_page($pages_to_preload, $args);
-
-                                $apiResponse .= ' ' . $responseDesktop;
+                                $apiResponse = $this->rocket_preload_page($pages_to_preload, $args, $getCacheType);
 
                                 // It's nothing we are currently doing - we'll keep it here in case we want to do it
                                 if( 1 == get_rocket_option( 'do_caching_mobile_files' ) ) {
                                     $args[ 'headers' ][ 'user-agent' ] 	= 'Mozilla/5.0 (Linux; Android 8.0.0;) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Mobile Safari/537.36';
 
                                     // Preload mobile pages/posts.
-                                    $this->rocket_preload_page(  $pages_to_preload, $args );
+                                    $this->rocket_preload_page(  $pages_to_preload, $args, $getCacheType );
                                 }
+                                // Manuel Prelaod = "Activate Preloading"
+                                //if( 1 == get_rocket_option( 'manual_preload' ) ) {
+                                //}
                             }
-                        }
 
-                        if(strpos($apiResponse, "error") !== false)
-                        {
-                            http_response_code(400);
-                            echo $apiResponse;
+                            http_response_code(200);
+                            print_r($apiResponse);
                             exit;
                         }
-
-                        http_response_code(200);
-                        echo $apiResponse;
-                        exit;
-                    }
-                    catch (Exception $e)
-                    {
-                        http_response_code(400);
-                        exit;
+                        catch (Exception $e)
+                        {
+                            http_response_code(400);
+                            exit;
+                        }
                     }
                 }
             }
 
+            // Api key not valid or params missing
             http_response_code(403);
             exit;
         }
 
         // Resets filter options (UI)
-        public function reset_filter_options() {
-
+        public function reset_filter_options()
+        {
             if (session_status() == PHP_SESSION_NONE)
             {
                 session_start();
@@ -205,7 +240,8 @@ use Biltorvet\Model\Vehicle;
         }
 
         // Fetches Filter Options from the API
-        public function get_filter_options() {
+        public function get_filter_options()
+        {
             $filterObject = new BDTFilterObject();
 
             if (session_status() == PHP_SESSION_NONE)
@@ -504,20 +540,35 @@ use Biltorvet\Model\Vehicle;
         }
 
         // Preload pages in list
-        public function rocket_preload_page ( $pages_to_preload, $args ){
+        public function rocket_preload_page ( $pages_to_preload, $args, $type)
+        {
 
-            $responseToReturn = "";
+            $responseToReturn = array();
 
-            foreach( $pages_to_preload as $page_to_preload ) {
+            foreach( $pages_to_preload as $page_to_preload )
+            {
                 $response = wp_remote_get( esc_url_raw ( $page_to_preload ), $args );
+
+                $message = null;
 
                 if(is_wp_error($response) || !isset($response['response']))
                 {
-                    $responseToReturn .= " " . $response->get_error_message() . " URL:" . $page_to_preload . ".";
+                    $message = $response->get_error_message() . " " . $page_to_preload . ".";
                 }
                 else
                 {
-                    $responseToReturn .= " " . $response['response']['code'] . " URL:" . $page_to_preload . ".";
+                    $message = $response['response']['code'] . " " . $page_to_preload . ".";
+                }
+
+                if($message !== null)
+                {
+                    array_push($responseToReturn, $message);
+                }
+
+                // To avoid DDOS'ing ourselves we wait a moment before sending the next preload request (Only for type 'all')
+                if($type === 'all')
+                {
+                    sleep(1);
                 }
             }
 
