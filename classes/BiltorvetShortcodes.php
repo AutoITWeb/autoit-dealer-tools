@@ -1001,7 +1001,6 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     array_push($santanderWidgets, $product);
                 }
             }
-
             foreach ($products as $product)
             {
                 if($product->type === 'Widget' && $product->name === TextUtils::Sanitize($atts['type']))
@@ -1081,6 +1080,8 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                                     (isset($atts['brandingid']) ? 'data-btsettings-brandingId="' . intval($atts['brandingid']) . '" ' : '') .
                                     (isset($atts['hidevehicleprice']) ? 'data-btsettings-hideVehiclePrice="true" ' : '') .
                                     (isset($atts['downpaymentratio']) ?  'data-btsettings-dataDownPayment="' . (intval($atts['downpaymentratio'])*intval($price)) . '" ' : '' );
+
+                                var_dump($widgetAttributes);
                             }
                         }
                     }

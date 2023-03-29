@@ -536,6 +536,7 @@ use Biltorvet\Model\Vehicle;
                 $filterObject->PriceTypes = array($this->_options_2['bdt_pricetypes']);
             }
 
+
             return $filterObject;
         }
 
