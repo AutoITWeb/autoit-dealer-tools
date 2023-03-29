@@ -1080,8 +1080,6 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                                     (isset($atts['brandingid']) ? 'data-btsettings-brandingId="' . intval($atts['brandingid']) . '" ' : '') .
                                     (isset($atts['hidevehicleprice']) ? 'data-btsettings-hideVehiclePrice="true" ' : '') .
                                     (isset($atts['downpaymentratio']) ?  'data-btsettings-dataDownPayment="' . (intval($atts['downpaymentratio'])*intval($price)) . '" ' : '' );
-
-                                var_dump($widgetAttributes);
                             }
                         }
                     }
