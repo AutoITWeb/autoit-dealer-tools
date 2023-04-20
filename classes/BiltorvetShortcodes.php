@@ -56,6 +56,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             add_shortcode('bdt_findleasing_calculator', array($this, 'bdt_shortcode_findleasing_calculator'));
             add_shortcode('bdt_amount_of_biltorvet_ads', array($this, 'bdt_shortcode_amount_of_biltorvet_ads'));
             add_shortcode('bdt_jyffi_calculator', array($this, 'bdt_jyffi_calculator_dev'));
+            add_shortcode('bdt_print_gallery', array($this, 'bdt_shortcode_print_gallery'));
 
             add_action('wp_head', array(&$this, 'bdt_insert_map_dependencies'), 1000);
         }
@@ -972,6 +973,31 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     return $findLeasingCalculator;
                 }
             }
+        }
+
+        public function bdt_shortcode_print_gallery() {
+            if(!isset($this->currentVehicle) || $this->currentVehicle === null)
+            {
+                return __('Vehicle not found', 'biltorvet-dealer-tools');
+            }
+
+            $slides = '';
+            $i = 0;
+
+            $altTag = "Billede af " . $this->currentVehicle->makeName . " " . $this->currentVehicle->model . " " . $this->currentVehicle->variant;
+
+            foreach($this->currentVehicle->images as $image )
+            {
+                if ($i < 2) {
+                    $slides .= '<img loading=lazy src="' . $image . '" alt="' . $altTag . '">';
+                    $i++;
+                }
+               
+            }
+            $buildSlideShow = '';
+            $buildSlideShow .= $slides;
+
+            return $buildSlideShow;
         }
 
         public function bdt_shortcode_widget( $atts, $content = null )
