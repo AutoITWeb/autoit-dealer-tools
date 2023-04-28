@@ -310,21 +310,21 @@ class PriceController
         $priceCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card tertiary-price-card' : 'bdt_price_big tertiary-price-details';
         $priceLabelCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card_label tertiary-price-label-card' : 'bdt_price_mainlabel tertiary-price-label-details';
 
-        if($this->primaryPriceType !== 'cashPrice' && $this->secondaryPriceType !== 'cashPrice' && $this->price->getHasCashPrice())
+        if($this->primaryPriceType !== 'cashPrice' && $this->secondaryPriceType !== 'cashPrice' && $this->price->getHasCashPrice() && !$this->hideCashCards)
         {
             // Return cash price if any
             $this->tertiaryPriceTypePriceType = 'cashPrice';
             $setCashPrice = $this->ReturnCashPrice($priceCssClass, $priceLabelCssClass, $type);
             return $setCashPrice;
         }
-        else if($this->primaryPriceType !== 'leasingPrice' && $this->secondaryPriceType !== 'leasingPrice' && $this->price->getHasLeasingPrice())
+        else if($this->primaryPriceType !== 'leasingPrice' && $this->secondaryPriceType !== 'leasingPrice' && $this->price->getHasLeasingPrice() && !$this->hideLeasingCards)
         {
             // Return leasing price if any
             $this->tertiaryPriceTypePriceType = 'leasingPrice';
             $setLeasingPrice = $this->ReturnLeasingPrice($priceCssClass, $priceLabelCssClass, $type);
             return $setLeasingPrice;
         }
-        else if($this->primaryPriceType !== 'financingPrice' && $this->secondaryPriceType !== 'financingPrice' && $this->price->getHasfinancingPrice())
+        else if($this->primaryPriceType !== 'financingPrice' && $this->secondaryPriceType !== 'financingPrice' && $this->price->getHasfinancingPrice() && !$this->hideFinancingCards)
         {
             // Return financing price if any
             $this->tertiaryPriceTypePriceType = 'financingPrice';
