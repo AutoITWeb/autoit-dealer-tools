@@ -18,6 +18,6 @@ $hideSecondaryPrice = isset($options_two['bdt_hide_secondary_price']) && $option
     
     <?php if($priceController->GetSecondaryPrice('card', $hideSecondaryPrice)) { echo("<span class='secondary-price'>" . $priceController->GetSecondaryPrice('card', $hideSecondaryPrice) . "</span>"); }?>
 
-    <?php if($priceController->GetTertiaryPrice('card', $hideSecondaryPrice)) { echo("<span class='tertiary-price'>" . $priceController->GetTertiaryPrice('card') . "</span>"); }?>
+    <?php if($priceController->GetTertiaryPrice('card')) { echo("<span class='tertiary-price'>" . $priceController->GetTertiaryPrice('card') . "</span>"); }?>
 </span>
 

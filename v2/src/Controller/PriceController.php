@@ -93,8 +93,8 @@ class PriceController
         $this->price = PriceFactory::create($vehicle);
 
         // Get settings
-        $this->hideFinancingCards =
-            WordpressHelper::getOption(2,'dt_hide_cashprices_card') == 'on' ? true : false;
+        $this->hideCashCards =
+            WordpressHelper::getOption(2,'bdt_hide_cashprices_card') == 'on' ? true : false;
 
         $this->hideFinancingCards =
             WordpressHelper::getOption(2,'bdt_hide_financing_prices_card') == 'on' ? true : false;
@@ -251,7 +251,7 @@ class PriceController
         // Leasing / financing is the prioritized price
         if (!$this->hideLeasingCards && $this->primaryPriceType === 'leasingPrice' || !$this->hideFinancingCards && $this->primaryPriceType === 'financingPrice')
         {
-            if($this->price->getHasCashPrice())
+            if($this->price->getHasCashPrice() && !$this->hideCashCards)
             {
                 // Show cash price as secondary price
                 $this->secondaryPriceType = 'cashPrice';
@@ -303,18 +303,12 @@ class PriceController
         }
     }
 
-    public function GetTertiaryPrice(string $type, bool $hideTertiaryPrice = false)
+    public function GetTertiaryPrice(string $type)
     {
         // This is what we'll eventually return
         $noTertiaryPriceToReturn = '';
         $priceCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card tertiary-price-card' : 'bdt_price_big tertiary-price-details';
         $priceLabelCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card_label tertiary-price-label-card' : 'bdt_price_mainlabel tertiary-price-label-details';
-
-        // Return empty string
-        if($hideTertiaryPrice === true)
-        {
-            return '';
-        }
 
         if($this->primaryPriceType !== 'cashPrice' && $this->secondaryPriceType !== 'cashPrice' && $this->price->getHasCashPrice())
         {
