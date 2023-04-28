@@ -574,7 +574,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
             add_settings_field(
                 'bdt_hide_secondary_price',
-                __( 'Skjul sekundær pris', 'biltorvet-dealer-tools' ),
+                __( 'Skjul sekundær og tertiær pris', 'biltorvet-dealer-tools' ),
                 array( $this, 'bdt_hide_secondary_price_callback' ),
                 'bdt-settings-group-2', // Page
                 'bdt_settings_section_2' // Section
