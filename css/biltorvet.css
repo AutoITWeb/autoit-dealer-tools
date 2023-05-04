@@ -5403,9 +5403,10 @@ a.bdt .badge-dark.focus {
   padding-bottom: 5px;
 }
 .bdt .vehicleCard .secondary-price-card {
-  font-size: 1.5em;
-  line-height: 28px;
-  padding-bottom: 3px;
+  font-size: 1.7em;
+  font-weight: 600;
+  line-height: 26px;
+  padding-bottom: 5px;
 }
 .bdt .vehicleCard .tertiary-price-card {
   font-size: 0.75em;
