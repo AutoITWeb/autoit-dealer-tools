@@ -148,6 +148,16 @@ class SearchFilter
      * @var boolean
      */
     public $HideTrailerVehicles; // Bool
+	
+    /**
+     * @var boolean
+     */
+    public $HideClassicVehicles; // Bool
+
+    /**
+     * @var boolean
+     */
+    public $HideTractorVehicles; // Bool
 
     /**
      * @var boolean
@@ -718,6 +728,42 @@ class SearchFilter
     public function setHideWTrailerVehicles(bool $HideTrailerVehicles): SearchFilter
     {
         $this->HideTrailerVehicles = $HideTrailerVehicles;
+        return $this;
+    }
+	
+    /**
+     * @return bool
+     */
+    public function isHideClassicVehicles(): bool
+    {
+        return $this->HideClassicVehicles;
+    }
+
+    /**
+     * @param  bool $HideClassicVehicles
+     * @return SearchFilter
+     */
+    public function setHideClassicVehicles(bool $HideClassicVehicles): SearchFilter
+    {
+        $this->HideClassicVehicles = $HideClassicVehicles;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideTractorVehicles(): bool
+    {
+        return $this->HideTractorVehicles;
+    }
+
+    /**
+     * @param  bool $HideTractorVehicles
+     * @return SearchFilter
+     */
+    public function setHideTractorVehicles(bool $HideTractorVehicles): SearchFilter
+    {
+        $this->HideTractorVehicles = $HideTractorVehicles;
         return $this;
     }
 

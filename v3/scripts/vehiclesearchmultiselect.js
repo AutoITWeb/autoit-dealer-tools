@@ -1252,4 +1252,47 @@ jQuery(function($) {
 
             bdt.ReloadUserFilterSelection(false);
         })
+		
+
+//dynamic scroll pagination
+$(document).ready(function() {
+  let button = $('.paging-button-scroll')[0];
+  let observer = null;
+
+  function handleButtonClick() {
+    bdt.PagingFetchMore();
+  }
+
+  function handleIntersection(entries) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        handleButtonClick();
+      }
+    });
+  }
+
+  function updateObserverTarget() {
+    const newButton = $('.paging-button-scroll')[0];
+    if (newButton !== button) {
+      // If the button has changed, disconnect the previous observer
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
+      button = newButton;
+      if (button) {
+        observer = new IntersectionObserver(handleIntersection, {
+          threshold: 0.5,
+        });
+        observer.observe(button);
+      }
+    }
+  }
+
+  updateObserverTarget();
+  $(window).on('scroll', updateObserverTarget);
+  $(button).on('click', handleButtonClick);
+});
+
+
 });

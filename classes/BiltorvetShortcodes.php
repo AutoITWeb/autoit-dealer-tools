@@ -57,6 +57,9 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             add_shortcode('bdt_amount_of_biltorvet_ads', array($this, 'bdt_shortcode_amount_of_biltorvet_ads'));
             add_shortcode('bdt_jyffi_calculator', array($this, 'bdt_jyffi_calculator_dev'));
             add_shortcode('bdt_print_gallery', array($this, 'bdt_shortcode_print_gallery'));
+			add_shortcode('bdt_get_status_sold', array($this, 'bdt_shortcode_status_sold'));
+			add_shortcode('bdt_get_status_onlinekoeb', array($this, 'bdt_shortcode_status_onlinekoeb'));
+			add_shortcode('bdt_car_tracking_using_datalayer', array($this, 'bdt_shortcode_car_tracking_using_datalayer'));
 
             add_action('wp_head', array(&$this, 'bdt_insert_map_dependencies'), 1000);
         }
@@ -293,12 +296,127 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
             return $buildSlideShow;
         }
+		
+		public static function sortVehicleLabelsBTS(?array $labels, ?string $showAllLabes) : array
+		{
+			$vehicleLabels = array();
+			
+			if ($labels) {
+				foreach($labels as $labelBTS) {
+					
+					// DealerSpecificLabel
+					if($labelBTS->key == 427)
+					{
+						$vehicleLabels[1] = $labelBTS->value;
+					}
+					
+					if($labelBTS->key == 443)
+					{
+						$vehicleLabels[2] = 'Online køb';
+					}
+
+					if($labelBTS->key == 11)
+					{
+						$vehicleLabels[3] = 'Nyhed';
+					}
+
+					if($labelBTS->key == 5)
+					{
+						$vehicleLabels[4] = 'Solgt';
+					}
+
+					if($labelBTS->key == 99999)
+					{
+						$vehicleLabels[5] = 'Fabriksny';
+					}
+
+					if($labelBTS->key == 12)
+					{
+						$vehicleLabels[6] = 'Leasing';
+					}
+
+					if($labelBTS->key == 9)
+					{
+						$vehicleLabels[7] = 'Kun engros';
+					}
+
+					if($labelBTS->key == 382)
+					{
+						$vehicleLabels[8] = 'Eksport';
+					}
+
+					if($labelBTS->key == 26)
+					{
+						$vehicleLabels[9] = 'Lagersalg';
+					}
+					if($labelBTS->key == 1)
+					{
+						$vehicleLabels[10] = 'Demonstration';
+					}
+					else {
+						/*
+						 * Is the show all labels setting on?
+						 */
+
+						if($showAllLabes != null) {
+
+							if(!in_array($labelBTS->value, $vehicleLabels)) {
+								array_push($vehicleLabels, $labelBTS->value);
+
+							}
+						}
+					}				
+
+				}
+			}
+
+			// We need the array in ascending order
+			ksort($vehicleLabels);
+
+			return $vehicleLabels;
+		}		
+		
         public function bdt_shortcode_vehiclelabels( $atts ) 
         {
             if(!isset($this->currentVehicle) || $this->currentVehicle === null)
             {
                 return __('Vehicle not found', 'biltorvet-dealer-tools');
             }
+			
+			$options_two = get_option('bdt_options_2');
+
+			$vehicleLabelsBTS = self::sortVehicleLabelsBTS($this->currentVehicle->labels, isset($options_two['show_all_labels']) ?? null);			
+
+			$vehiclePropellant = $this->currentVehicle->propellant;
+			if ($vehiclePropellant == "EL" && !isset($options_two['hide_elbil_label']))
+			{
+			  array_unshift($vehicleLabelsBTS, "Elbil");
+			}
+			else if ($vehiclePropellant == "Hybrid (B/EL)" && !isset($options_two['hide_hybrid_label']))
+			{
+			  array_unshift($vehicleLabelsBTS, "Hybrid");
+			}
+			else if ($vehiclePropellant == "Hybrid (D/EL)" && !isset($options_two['hide_hybrid_label']))
+			{
+			  array_unshift($vehicleLabelsBTS, "Hybrid");
+			}
+			else if ($vehiclePropellant == "Diesel" && isset($options_two['show_diesel_label']) ? $options_two['show_diesel_label'] : null)
+			{
+			  array_unshift($vehicleLabelsBTS, "Diesel");
+			}
+			else if ($vehiclePropellant == "Benzin" && isset($options_two['show_benzin_label']) ? $options_two['show_benzin_label'] : null)
+			{
+			  array_unshift($vehicleLabelsBTS, "Benzin");
+			}
+			else 
+			{
+				//do nothing
+			}			
+
+			if(count($vehicleLabelsBTS) > 5) {
+				$vehicleLabelsBTS = array_slice($vehicleLabelsBTS, 0, 5);
+			}		
+			
             wp_enqueue_style("bdt_style");
             $allowedLabels = null;
             if(isset($atts['allowed']) && trim($atts['allowed']) !== '')
@@ -306,38 +424,97 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 $allowedLabels = explode(',', $atts['allowed']);
             }
             $labels = '';
-            foreach($this->currentVehicle->labels as $label)
+
+            foreach($vehicleLabelsBTS as $label)
             {
                 if($allowedLabels !== null)
                 {
-                    if(!in_array($label->value, $allowedLabels))
+                    if(!in_array($label, $allowedLabels))
                     {
                         continue;
                     }
                 }
-                $badgeType = 'badge-primary';
-                switch($label->key)
-                {
-                    // "Solgt"
-                    case 5: $badgeType = 'badge-danger'; break;
-                    // "Nyhed"
-                    case 11: $badgeType = 'badge-success'; break;
-                    // "Leasing"
-                    case 12: $badgeType = 'badge-info'; break;
-                    // "Eksport"
-                    case 382: $badgeType = 'badge-warning'; break;
-                    // "Uden afgift"
-                    case 359: $badgeType = 'badge-dark'; break;
-                    // "Fabriksny"
-                    case 99999: $badgeType = 'badge-purple'; break;
-                    // "Lagersalg"
-                    case 26: $badgeType = 'badge-secondary'; break;
-                    // "I fokus"
-                    case 10: $badgeType = 'badge-orange'; break;
-                    // "Kun engros
-                    case 9: $badgeType = 'badge-lightblue'; break;
-                }
-                $labels .= '<span class="badge ' . $badgeType. ' mr-2 mb-1">' . $label->value . '</span>';
+				//Is the special carlite dealer label in use or the other special label fields?
+				$carliteDealerLabel = isset($options_two['carlite_dealer_label']) ? $options_two['carlite_dealer_label'] : null;
+				$carliteOnlineKoebLabel = isset($options_two['carlite_onlinekoeb_label']) ? $options_two['carlite_onlinekoeb_label'] : null;
+				$carliteNyhedLabel = isset($options_two['carlite_nyhed_label']) ? $options_two['carlite_nyhed_label'] : null;
+				$carliteSolgtLabel = isset($options_two['carlite_solgt_label']) ? $options_two['carlite_solgt_label'] : null;
+				$carliteFabriksnyLabel = isset($options_two['carlite_fabriksny_label']) ? $options_two['carlite_fabriksny_label'] : null;
+				$carliteLeasingLabel = isset($options_two['carlite_leasing_label']) ? $options_two['carlite_leasing_label'] : null;
+				$carliteKunEngrosLabel = isset($options_two['carlite_kun_engros_label']) ? $options_two['carlite_kun_engros_label'] : null;
+				$carliteEksportLabel = isset($options_two['carlite_eksport_label']) ? $options_two['carlite_eksport_label'] : null;
+				$carliteLagersalgLabel = isset($options_two['carlite_lagersalg_label']) ? $options_two['carlite_lagersalg_label'] : null;
+				$carliteDemonstrationLabel = isset($options_two['carlite_demonstration_label']) ? $options_two['carlite_demonstration_label'] : null;
+				if($label == 'Carlite Forhandler Label' && $carliteDealerLabel != null) 
+				{
+					$dealerSpecificLabel = str_replace("Carlite Forhandler Label", $carliteDealerLabel, $label);
+					$labels .= '<span class="badge ' . $label. ' mr-2 mb-1">' . $dealerSpecificLabel . '</span>';
+					
+				}
+				else if($label == 'Online køb' && $carliteOnlineKoebLabel != null) 
+				{
+					$OnlineKoebLabel = str_replace("Online køb", $carliteOnlineKoebLabel, $label);
+					$labels .= '<span class="badge ' . $label. ' mr-2 mb-1">' . $OnlineKoebLabel . '</span>';
+					
+				}
+				else if($label == 'Nyhed' && $carliteNyhedLabel != null) 
+				{
+					$NyhedLabel = str_replace("Nyhed", $carliteNyhedLabel, $label);
+					$labels .= '<span class="badge ' . $label. ' mr-2 mb-1">' . $NyhedLabel . '</span>';
+					
+				}
+				else if($label == 'Solgt' && $carliteSolgtLabel != null) 
+				{
+					$SolgtLabel = str_replace("Solgt", $carliteSolgtLabel, $label);
+					$labels .= '<span class="badge ' . $label. ' mr-2 mb-1">' . $SolgtLabel . '</span>';
+					
+				}
+				else if($label == 'Fabriksny' && $carliteFabriksnyLabel != null)
+				{
+					$FabriksnyLabel = str_replace("Fabriksny", $carliteFabriksnyLabel, $label);
+					$labels .= '<span class="badge ' . $label. ' mr-2 mb-1">' . $FabriksnyLabel . '</span>';
+					
+				}
+				else if($label == 'Leasing' && $carliteLeasingLabel != null) 
+				{
+					$LeasingLabel = str_replace("Leasing", $carliteLeasingLabel, $label);
+					$labels .= '<span class="badge ' . $label. ' mr-2 mb-1">' . $LeasingLabel . '</span>';
+					
+				}
+				else if($label == 'Kun engros' && $carliteKunEngrosLabel != null) 
+				{
+					$KunEngrosLabel = str_replace("Kun engros", $carliteKunEngrosLabel, $label);
+					$labels .= '<span class="badge ' . $label. ' mr-2 mb-1">' . $KunEngrosLabel . '</span>';
+					
+				}
+				else if($label == 'Eksport' && $carliteEksportLabel != null) 
+				{
+					$EksportLabel = str_replace("Eksport", $carliteEksportLabel, $label);
+					$labels .= '<span class="badge ' . $label. ' mr-2 mb-1">' . $EksportLabel . '</span>';
+					
+				}
+				else if($label == 'Lagersalg' && $carliteLagersalgLabel != null) 
+				{
+					$LagersalgLabel = str_replace("Lagersalg", $carliteLagersalgLabel, $label);
+					$labels .= '<span class="badge ' . $label. ' mr-2 mb-1">' . $LagersalgLabel . '</span>';
+					
+				}
+				else if($label == 'Demonstration' && $carliteDemonstrationLabel != null) 
+				{
+					$DemonstrationLabel = str_replace("Demonstration", $carliteDemonstrationLabel, $label);
+					$labels .= '<span class="badge ' . $label. ' mr-2 mb-1">' . $DemonstrationLabel . '</span>';
+					
+				}
+				else if($label == 'Demonstration' && $carliteDemonstrationLabel == null) 
+				{
+					$DemonstrationLabel = str_replace("Demonstration", "Demo", $label);
+					$labels .= '<span class="badge ' . $label. ' mr-2 mb-1">' . $DemonstrationLabel . '</span>';
+					
+				}				
+				else 
+				{
+					$labels .= '<span class="badge ' . $label. ' mr-2 mb-1">' . $label . '</span>';
+				}
             }
 
             return '<div class="bdt">' . $labels . '</div>';
@@ -435,6 +612,22 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     }
                     $filterObject->HideTrailerVehicles = 'true';
                 }
+                if(isset($this->_options_2['hide_classic_vehicles']) && $this->_options_2['hide_classic_vehicles'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideClassicVehicles = 'true';
+                }
+                if(isset($this->_options_2['hide_tractor_vehicles']) && $this->_options_2['hide_tractor_vehicles'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideTractorVehicles = 'true';
+                }				
                 if(isset($this->_options_2['hide_typecar_vehicles']) && $this->_options_2['hide_typecar_vehicles'] === 'on')
                 {
                     if($filterObject === null)
@@ -522,6 +715,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
             global $ActivityType;
             $root = dirname(plugin_dir_url( __FILE__ ));
+			
+			$statusSold = $this->bdt_shortcode_status_sold();
+			$statusOnlinekoeb = $this->bdt_shortcode_status_onlinekoeb();
+			
             if(!isset($atts['type']))
             {
                 return __('Shortcode\'s CTA type has not been set.', 'biltorvet-dealer-tools');
@@ -540,16 +737,30 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             if($content == null)
             {
                 switch($atts['type']):
-                    case 'TestDrive':
-                        $content = '<span class="bticon bticon-TestDrive"></span><br>' . __('Testdrive', 'biltorvet-dealer-tools');
-                    break;
+					case 'TestDrive':
+						if(!$statusSold)
+						{
+							$content = '<span class="bticon bticon-TestDrive"></span><br>' . __('Testdrive', 'biltorvet-dealer-tools');
+						}
+						else
+						{
+							$content = '<span class="bticon bticon-TestDrive disable-grey"></span><br>' . __('Testdrive', 'biltorvet-dealer-tools');
+						}
+                    break;					
                     case 'Email':
                         $content = '<span class="bticon bticon-WriteUs"></span><br>' . __('Write us', 'biltorvet-dealer-tools');
                     break;
-                    case 'Purchase':
-                        $content = '<span class="bticon bticon-BuyCar"></span><br>' . __('Buy this car', 'biltorvet-dealer-tools');
-                    break;
-                    case 'Contact':
+					case 'Purchase':
+						if(!$statusSold)
+						{					
+							$content = '<span class="bticon bticon-BuyCar"></span><br>' . __('Buy this car', 'biltorvet-dealer-tools');
+						}
+						else
+						{
+							$content = '<span class="bticon bticon-BuyCar disable-grey"></span><br>' . __('Buy this car', 'biltorvet-dealer-tools');
+						}
+                    break;					
+					case 'Contact':
                         if($this->currentVehicle->company->phone != null) {
                             $content = '<span class="bticon bticon-CallUs"></span><br>' . $this->currentVehicle->company->phone;
                         }
@@ -584,6 +795,18 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     return (isset($style) ? $style : '') . '<a id="'. $id .'" href="tel:' . $this->currentVehicle->company->phone . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
                 }
             }
+			
+			if($atts['type'] === 'TestDrive' || $atts['type'] === 'Purchase')
+			{
+				if(!$statusSold)
+				{
+					return (isset($style) ? $style : '') . '<a id="'. $id .'" href="'. $root . '?'. http_build_query(array('bdt_actiontype' => $atts['type'], 'bdt_vehicle_id' => $this->currentVehicle->documentId)) . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+				}
+				else
+				{
+					return (isset($style) ? $style : '') . '<a id="'. $id .'-disabled" href="#" class="bdt_cta disable-grey '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+				}
+			}
 
             return (isset($style) ? $style : '') . '<a id="'. $id .'" href="'. $root . '?'. http_build_query(array('bdt_actiontype' => $atts['type'], 'bdt_vehicle_id' => $this->currentVehicle->documentId)) . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
         }
@@ -1129,4 +1352,90 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
         {
             return get_query_var('bdt_vehicle_id', -1);
         }
+		
+		public function bdt_shortcode_status_sold()
+		{
+			$sold = false;
+			foreach($this->currentVehicle->labels as $label)
+			{
+				if($label->key === 5)
+				{
+					$sold = true;
+					break;
+				}
+			}
+			return $sold;
+		}
+
+		public function bdt_shortcode_status_onlinekoeb()
+		{
+			$onlinekoeb = false;
+			foreach($this->currentVehicle->labels as $label)
+			{
+				if($label->key === 443)
+				{
+					$onlinekoeb = true;
+					break;
+				}
+			}
+			return $onlinekoeb;
+		}		
+		
+		public function bdt_shortcode_car_tracking_using_datalayer()
+		{
+			$vehicle = VehicleFactory::create(json_decode(json_encode($this->currentVehicle), true));
+			$vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
+			$transmissionvalue = $this->currentVehicle->automatic;
+			if ($transmissionvalue) 
+			{
+				$transmission = 'Automatic';
+			} 
+			else 
+			{
+				$transmission = 'Manual';
+			}
+			
+			$brandNewvalue = $this->currentVehicle->brandNew;
+			if ($brandNewvalue) 
+			{
+				$brandNewOrUsed = 'Ny';
+			} 
+			else 
+			{
+				$brandNewOrUsed = 'Brugt';
+			}
+
+			?>
+				
+                <script>
+                    jQuery( document ).ready(function() {
+						window.dataLayer.push({
+								event: 'car details',
+								eventCategory: 'car details showings',
+								eventAction: "car-details show",
+								content_type: 'vehicle',
+								content_ids: ['<?php echo($this->currentVehicle->documentId); ?>'],
+								postal_code: '<?php echo($this->currentVehicle->company->postNumber); ?>',
+								country: 'Denmark',
+								make: '<?php echo($this->currentVehicle->makeName); ?>',
+								model: '<?php echo($this->currentVehicle->model); ?>',
+								variant: '<?php echo($this->currentVehicle->variant); ?>',
+								year: '<?php echo($vehicleProperties['ModelYear']->getValue()); ?>',
+								state_of_vehicle: '<?php echo($brandNewOrUsed); ?>',
+								exterior_color: '<?php echo($vehicleProperties['Color']->getValue()); ?>',
+								transmission: '<?php echo($transmission); ?>',
+								body_style: '<?php echo($vehicleProperties['BodyType']->getValue()); ?>',
+								fuel_type: '<?php echo($this->currentVehicle->propellant); ?>',
+								drivetrain: 'n/a',
+								price: <?php echo($this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'Price', true)); ?>,
+								currency: 'DKK',
+								preferred_price_range: 'n/a'
+							});
+                    });
+                </script>
+
+            <?php
+
+			return;
+		}			
     }

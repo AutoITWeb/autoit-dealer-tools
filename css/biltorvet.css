@@ -4734,14 +4734,15 @@ body .bdt select {
 
 .bdt .badge {
   display: inline-block;
-  padding: 0.25em 0.4em;
-  font-size: 75%;
+  padding: 1em 1em;
+  font-size: 80%;
+  text-transform: uppercase;
   font-weight: 700;
   line-height: 1;
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
-  border-radius: 0.25rem;
+  border-radius: 0rem;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -5502,46 +5503,203 @@ a.bdt .badge-dark.focus {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
 
-.bdt .vehicleCard .vehicleLabel.Nyhed {
-  background-color: #28a745;
+/* label start */
+span.vehicleLabel.Demonstration, .badge.Demonstration {
+  background-color: orange;
+  color: white;
 }
 
-.bdt .vehicleCard .vehicleLabel.Solgt {
+span.vehicleLabel.Udlejning, .badge.Udlejning {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.På.vej.ind, .badge.På.vej.ind {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.Solgt, .badge.Solgt {
   background-color: #dc3545;
+  color: white;
 }
 
-.bdt .vehicleCard .vehicleLabel.Fabriksny {
-  background-color: #4b0082;
+span.vehicleLabel.Reserveret, .badge.Reserveret {
+  background-color: orange;
+  color: white;
 }
 
-.bdt .vehicleCard .vehicleLabel.Leasing {
+span.vehicleLabel.Klargjort, .badge.Klargjort {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.Uklargjort, .badge.Uklargjort {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.Kun.engros, .badge.Kun.engros {
+  background-color: #bde0eb;
+  color: white;
+}
+
+span.vehicleLabel.I.fokus, .badge.I.fokus {
+  background-color: #ff9900;
+  color: white;
+}
+
+span.vehicleLabel.Nyhed, .badge.Nyhed {
+  background-color: #28a745;
+  color: white;
+}
+
+span.vehicleLabel.Leasing, .badge.Leasing {
   background-color: #17a2b8;
+  color: white;
 }
+
+span.vehicleLabel.Afhentning, .badge.Afhentning {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.Lagersalg, .badge.Lagersalg {
+  background-color: #6c757d;
+  color: white;
+}
+
+span.vehicleLabel.Kommision, .badge.Kommision {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.Kampagne, .badge.Kampagne {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.Flexleasing, .badge.Flexleasing {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.Udlejning.Mekanisk\(værksted\), .badge.Udlejning.Mekanisk\(værksted\) {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.Udlejning.Skadecenter, .badge.Udlejning.Skadecenter {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.Uden.afgift, .badge.Uden.afgift {
+  background-color: #343a40;
+  color: white;
+}
+
+span.vehicleLabel.Eksport, .badge.Eksport {
+  background-color: #ffc107;
+  color: white;
+}
+
+span.vehicleLabel.Carlite.Forhandler.Label, .badge.Carlite.Forhandler.Label, .bdt .vehicleCard .vehicleLabel.DealerSpecificLabel {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.Online.køb, .badge.Online.køb {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.Onlinerabat.\33 000kr, .badge.Onlinerabat.\33 000kr {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.Onlinerabat, .badge.Onlinerabat {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.Skjul.fra.webshop, .badge.Skjul.fra.webshop {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.RentLog.\-.ekstern, .badge.RentLog.\-.ekstern {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.RentLog.\-.intern, .badge.RentLog.\-.intern {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.Trailer, .badge.Trailer {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.Klassiker, .badge.Klassiker {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.Traktor, .badge.Traktor {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.Fabriksny, .badge.Fabriksny {
+  background-color: #663399;
+  color: white;
+}
+
+span.vehicleLabel.Udelad.fra.Onlinesalg, .badge.Udelad.fra.Onlinesalg {
+  background-color: orange;
+  color: white;
+}
+
+span.vehicleLabel.Elbil, .badge.Elbil {
+  background-color: #018939;
+  color: white;
+}
+
+span.vehicleLabel.Hybrid, .badge.Hybrid {
+  background-color: #018939;
+  color: white;
+}
+
+span.vehicleLabel.Diesel, .badge.Diesel {
+  background-color: #ffdf01;
+  color: white;
+}
+
+span.vehicleLabel.Benzin, .badge.Benzin {
+  background-color: #ffdf01;
+  color: white;
+}
+
+.disable-grey {
+  color: #aaa !important;
+  cursor: not-allowed;
+}
+#TestDrive-disabled.disable-grey, #Purchase-disabled.disable-grey {
+  color: #aaa !important;
+  cursor: not-allowed;
+}
+/* label slut */
 
 .bdt .vehicleCard .vehicleLabel.Engros {
   background-color: #bde0eb;
 }
 
-.bdt .vehicleCard .vehicleLabel.Eksport {
-  background-color: #ffc107;
-}
-
-.bdt .vehicleCard .vehicleLabel.Lagersalg {
-  background-color: #6c757d;
-}
-
 .bdt .vehicleCard .vehicleLabel.Demo {
   background-color: #00008b;
-}
-
-.bdt .vehicleCard .vehicleLabel.DealerSpecificLabel {
-  color: #000;
-  background-color: #ffff00;
-}
-
-.bdt .vehicleCard .vehicleLabel {
-  color: #fff;
-  background-color: #ffa500;
 }
 
 .bdt .vehicle_search select,
@@ -5634,21 +5792,6 @@ bdt .vehicle_search_results select,
   box-shadow: 0px 0px 7px -1px rgb(0 0 0 / 60%);
 }
 
-/*.bdt .vehicle_search_results select,
-.bdt .vehicle_search_results input {
-  width: 100%;
-  padding: 16px;
-  border: none;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
-  color: #999;
-  background-color: #eee;
-  font-size: 14px;
-  -webkit-appearance: none;
-  margin-bottom: 16px;
-}*/
-
 .bdt .vehicle_search_results .vehicleCategories,
 .bdt .vehicle_search_results .makes {
   width: 100%;
@@ -5713,12 +5856,6 @@ bdt .vehicle_search_results select,
 .bdt .vehicle_search_results .resultsTitle .searchFilter select option {
   color: #222222;
 }
-/*.bdt .vehicle_search_results .resultsTitle .searchFilter select {
-  padding: 5px 10px;
-  color: #000;
-  border: 1px solid #efefef;
-  background-color: #fff;
-}*/
 
 .bdt .vehicle_search_results .showingResultsXofY {
   font-size: 0.9em;

@@ -217,7 +217,7 @@ class Callbacks
         // Set status code
 
         // Remember to add the labels to the list of valid statuscodes AND the switch case: else nothing will be returned!
-        $validStatusCodes = array("Sold", "New", "Leasing", "Warehousesale", "Flexleasing", "Export", "Upcoming", "Rental", "Commission", "Wholesale", "Bus", "NewCar", "Demo", "Carlite Dealer Label", "Trailer", "NoTax");
+        $validStatusCodes = array("Sold", "New", "Leasing", "Warehousesale", "Flexleasing", "Export", "Upcoming", "Rental", "Commission", "Wholesale", "Bus", "NewCar", "Demo", "Carlite Dealer Label", "Trailer", "NoTax", "Classic", "Tractor");
 
         if(!in_array($setStatusCode, $validStatusCodes))
         {
@@ -241,6 +241,8 @@ class Callbacks
             case "Carlite Dealer Label" : $label = 427; break;
             case "Trailer" : $label = 471; break;
             case "NoTax" : $label = 359; break;
+            case "Classic" : $label = 433; break;
+			case "Tractor" : $label = 529; break;
         }
 
         $primaryPriceType = null;

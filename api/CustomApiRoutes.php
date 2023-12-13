@@ -293,7 +293,14 @@ use Biltorvet\Model\Vehicle;
         public function bdt_vehicle_search()
         {
             $currentPage = 1;
-            $limit = intval($this->biltorvetAPI->GetVehicleResultsPageLimit());
+			$limit = intval($this->biltorvetAPI->GetVehicleResultsPageLimit());
+			
+			$setUserChoosenLimit =  $this->_options_2['dynamic_scroll_pagination_cars_pr_page'];
+			if($setUserChoosenLimit !== 'Default' && $setUserChoosenLimit !== null)
+			{
+				$limit = $setUserChoosenLimit;
+			}
+			
             $start = ($currentPage -1) * $limit;
 
             $filterObject = new BDTFilterObject();
@@ -390,10 +397,19 @@ use Biltorvet\Model\Vehicle;
                                 $buttonCurrentPage = $currentPage;
 
                                 $newEnd = ($currentPage) * $limit;
+								
+								$dynamic_scroll_pagination = $this->_options_2['bdt_dynamic_scroll_pagination'];								
 
                                 if($buttonCurrentPage < $amountOfPages)
                                 {
-                                    echo '<button class="paging-button et_pb_button bdt_bgcolor" id="paging-button" data-current-page="' . $buttonCurrentPage . '" data-amount-of-pages="' . $amountOfPages . '" data-end="' . $newEnd .'" data-limit="' . $limit .'">Indlæs flere...</button>';
+                                    if($dynamic_scroll_pagination)
+									{
+										echo '<button class="paging-button-scroll et_pb_button bdt_bgcolor" id="paging-button" data-current-page="' . $buttonCurrentPage . '" data-amount-of-pages="' . $amountOfPages . '" data-end="' . $newEnd .'" data-limit="' . $limit .'">Indlæs flere...</button>';
+									}
+									else
+									{
+										echo '<button class="paging-button et_pb_button bdt_bgcolor" id="paging-button" data-current-page="' . $buttonCurrentPage . '" data-amount-of-pages="' . $amountOfPages . '" data-end="' . $newEnd .'" data-limit="' . $limit .'">Indlæs flere...</button>';
+									}
                                 }
                             ?>
                             <div class="lds-ring-paging d-done" style="display: none; opacity: 0;"><div></div><div></div><div></div><div></div></div>
@@ -520,6 +536,8 @@ use Biltorvet\Model\Vehicle;
             $filterObject->HideUpcomingVehicles = isset($this->_options_2['hide_upcoming_vehicles']) && $this->_options_2['hide_upcoming_vehicles'] === 'on' ? 'true' : null;
             $filterObject->HideWholesaleVehicles = isset($this->_options_2['hide_wholesale_vehicles']) && $this->_options_2['hide_wholesale_vehicles'] === 'on' ? 'true' : null;
             $filterObject->HideTrailerVehicles = isset($this->_options_2['hide_trailer_vehicles']) && $this->_options_2['hide_trailer_vehicles'] === 'on' ? 'true' : null;
+			$filterObject->HideClassicVehicles = isset($this->_options_2['hide_classic_vehicles']) && $this->_options_2['hide_classic_vehicles'] === 'on' ? 'true' : null;
+			$filterObject->HideTractorVehicles = isset($this->_options_2['hide_tractor_vehicles']) && $this->_options_2['hide_tractor_vehicles'] === 'on' ? 'true' : null;
             $filterObject->HideCommissionVehicles = isset($this->_options_2['hide_commission_vehicles']) && $this->_options_2['hide_commission_vehicles'] === 'on' ? 'true' : null;
             $filterObject->HideExportVehicles = isset($this->_options_2['hide_export_vehicles']) && $this->_options_2['hide_export_vehicles'] === 'on' ? 'true' : null;
             $filterObject->HideByTypeCar = isset($this->_options_2['hide_typecar_vehicles']) && $this->_options_2['hide_typecar_vehicles'] === 'on' ? 'true' : null;

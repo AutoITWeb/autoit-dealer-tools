@@ -681,46 +681,51 @@ class Vehicle
                 // DealerSpecificLabel
                 if($label->getKey() == 427)
                 {
-                    $vehicleLabels[1] = 'Carlite Forhandler Label';
+                    $vehicleLabels[1] = $label->getValue();
                 }
+				
+                if($label->getKey() == 443)
+                {
+                    $vehicleLabels[2] = 'Online køb';
+                }				
 
                 if($label->getKey() == 11)
                 {
-                    $vehicleLabels[2] = 'Nyhed';
+                    $vehicleLabels[3] = 'Nyhed';
                 }
 
                 if($label->getKey() == 5)
                 {
-                    $vehicleLabels[3] = 'Solgt';
+                    $vehicleLabels[4] = 'Solgt';
                 }
 
                 if($label->getKey() == 99999)
                 {
-                    $vehicleLabels[4] = 'Fabriksny';
+                    $vehicleLabels[5] = 'Fabriksny';
                 }
 
                 if($label->getKey() == 12)
                 {
-                    $vehicleLabels[5] = 'Leasing';
+                    $vehicleLabels[6] = 'Leasing';
                 }
 
                 if($label->getKey() == 9)
                 {
-                    $vehicleLabels[6] = 'Engros';
+                    $vehicleLabels[7] = 'Kun engros';
                 }
 
                 if($label->getKey() == 382)
                 {
-                    $vehicleLabels[7] = 'Eksport';
+                    $vehicleLabels[8] = 'Eksport';
                 }
 
                 if($label->getKey() == 26)
                 {
-                    $vehicleLabels[8] = 'Lagersalg';
+                    $vehicleLabels[9] = 'Lagersalg';
                 }
                 if($label->getKey() == 1)
                 {
-                    $vehicleLabels[9] = 'Demo';
+                    $vehicleLabels[10] = 'Demonstration';
                 }
 
                 else {

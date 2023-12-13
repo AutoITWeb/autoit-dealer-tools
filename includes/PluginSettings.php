@@ -364,7 +364,79 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt-settings-group-2', // Page
                 'bdt_settings_section_2' // Section
             );
+			
+            add_settings_field(
+                'carlite_onlinekoeb_label',
+                __( 'Carlite Online køb Label', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_carlite_onlinekoeb_label_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );		
 
+            add_settings_field(
+                'carlite_nyhed_label',
+                __( 'Carlite Nyhed Label', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_carlite_nyhed_label_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
+                'carlite_solgt_label',
+                __( 'Carlite Solgt Label', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_carlite_solgt_label_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
+                'carlite_fabriksny_label',
+                __( 'Carlite Fabriksny Label', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_carlite_fabriksny_label_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+			
+            add_settings_field(
+                'carlite_leasing_label',
+                __( 'Carlite Leasing Label', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_carlite_leasing_label_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
+                'carlite_kun_engros_label',
+                __( 'Carlite Kun engros Label', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_carlite_kun_engros_label_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
+                'carlite_eksport_label',
+                __( 'Carlite Eksport Label', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_carlite_eksport_label_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
+                'carlite_lagersalg_label',
+                __( 'Carlite Lagersalg Label', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_carlite_lagersalg_label_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
+                'carlite_demonstration_label',
+                __( 'Carlite Demonstration Label', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_carlite_demonstration_label_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+			
             add_settings_field(
                 'hide_vehicles_ad',
                 sprintf(__( 'Hide %s vehicles', 'biltorvet-dealer-tools' ), 'AutoDesktop'),
@@ -467,6 +539,22 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt-settings-group-2', // Page
                 'bdt_settings_section_2' // Section
             );
+			
+            add_settings_field(
+                'hide_classic_vehicles',
+                __( 'Skjul køretøjer med status koden Klassiker', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_hide_classic_vehicles_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+			
+            add_settings_field(
+                'hide_tractor_vehicles',
+                __( 'Skjul køretøjer med status koden Traktor', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_hide_tractor_vehicles_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );				
 
             add_settings_field(
                 'hide_typecar_vehicles',
@@ -523,6 +611,38 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt-settings-group-2', // Page
                 'bdt_settings_section_2' // Section
             );
+			
+            add_settings_field(
+                'bdt_hide_elbil_label',
+                __( 'Skjul Elbil label (bilkort)', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_hide_elbil_label_callback' ),
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+			
+            add_settings_field(
+                'bdt_hide_hybrid_label',
+                __( 'Skjul Hybrid label (bilkort)', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_hide_hybrid_label_callback' ),
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+			
+            add_settings_field(
+                'bdt_show_diesel_label',
+                __( 'Vis Diesel label (bilkort)', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_show_diesel_label_callback' ),
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+			
+            add_settings_field(
+                'bdt_show_benzin_label',
+                __( 'Vis Benzin label (bilkort)', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_show_benzin_label_callback' ),
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
 
             add_settings_field(
                 'bdt_hide_leasing_prices_card',
@@ -576,6 +696,22 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt_hide_secondary_price',
                 __( 'Skjul sekundær og tertiær pris', 'biltorvet-dealer-tools' ),
                 array( $this, 'bdt_hide_secondary_price_callback' ),
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+			
+            add_settings_field(
+                'bdt_dynamic_scroll_pagination',
+                __( 'Aktiver Scroll pagination på bilsøgning', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_dynamic_scroll_pagination_callback' ),
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
+            add_settings_field(
+                'bdt_dynamic_scroll_pagination_cars_pr_page',
+                __( 'Vælg antal biler pr. page pagination på bilsøgning', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_dynamic_scroll_pagination_cars_pr_page_callback' ),
                 'bdt-settings-group-2', // Page
                 'bdt_settings_section_2' // Section
             );
@@ -1080,6 +1216,78 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 isset( $this->options_2['carlite_dealer_label'] ) ? esc_attr( $this->options_2['carlite_dealer_label']) : ''
             );
         }
+		
+		public function bdt_carlite_onlinekoeb_label_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_2" name="bdt_options_2[carlite_onlinekoeb_label]" value="%s" size="20"/>',
+                isset( $this->options_2['carlite_onlinekoeb_label'] ) ? esc_attr( $this->options_2['carlite_onlinekoeb_label']) : ''
+            );
+        }
+
+		public function bdt_carlite_nyhed_label_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_2" name="bdt_options_2[carlite_nyhed_label]" value="%s" size="20"/>',
+                isset( $this->options_2['carlite_nyhed_label'] ) ? esc_attr( $this->options_2['carlite_nyhed_label']) : ''
+            );
+        }
+		
+		public function bdt_carlite_solgt_label_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_2" name="bdt_options_2[carlite_solgt_label]" value="%s" size="20"/>',
+                isset( $this->options_2['carlite_solgt_label'] ) ? esc_attr( $this->options_2['carlite_solgt_label']) : ''
+            );
+        }
+		
+		public function bdt_carlite_fabriksny_label_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_2" name="bdt_options_2[carlite_fabriksny_label]" value="%s" size="20"/>',
+                isset( $this->options_2['carlite_fabriksny_label'] ) ? esc_attr( $this->options_2['carlite_fabriksny_label']) : ''
+            );
+        }
+		
+		public function bdt_carlite_leasing_label_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_2" name="bdt_options_2[carlite_leasing_label]" value="%s" size="20"/>',
+                isset( $this->options_2['carlite_leasing_label'] ) ? esc_attr( $this->options_2['carlite_leasing_label']) : ''
+            );
+        }
+
+		public function bdt_carlite_kun_engros_label_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_2" name="bdt_options_2[carlite_kun_engros_label]" value="%s" size="20"/>',
+                isset( $this->options_2['carlite_kun_engros_label'] ) ? esc_attr( $this->options_2['carlite_kun_engros_label']) : ''
+            );
+        }
+
+		public function bdt_carlite_eksport_label_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_2" name="bdt_options_2[carlite_eksport_label]" value="%s" size="20"/>',
+                isset( $this->options_2['carlite_eksport_label'] ) ? esc_attr( $this->options_2['carlite_eksport_label']) : ''
+            );
+        }
+
+		public function bdt_carlite_lagersalg_label_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_2" name="bdt_options_2[carlite_lagersalg_label]" value="%s" size="20"/>',
+                isset( $this->options_2['carlite_lagersalg_label'] ) ? esc_attr( $this->options_2['carlite_lagersalg_label']) : ''
+            );
+        }
+
+		public function bdt_carlite_demonstration_label_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_2" name="bdt_options_2[carlite_demonstration_label]" value="%s" size="20"/>',
+                isset( $this->options_2['carlite_demonstration_label'] ) ? esc_attr( $this->options_2['carlite_demonstration_label']) : ''
+            );
+        }
 
         public function bdt_hide_financing_prices_card_callback()
         {
@@ -1192,6 +1400,22 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 isset( $this->options_2['hide_trailer_vehicles'] ) && $this->options_2['hide_trailer_vehicles'] === 'on' ? ' checked="checked"' : ''
             );
         }
+		
+        public function bdt_hide_classic_vehicles_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[hide_classic_vehicles]"%s />',
+                isset( $this->options_2['hide_classic_vehicles'] ) && $this->options_2['hide_classic_vehicles'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+		
+        public function bdt_hide_tractor_vehicles_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[hide_tractor_vehicles]"%s />',
+                isset( $this->options_2['hide_tractor_vehicles'] ) && $this->options_2['hide_tractor_vehicles'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
 
         public function bdt_hide_typecar_vehicles_callback()
         {
@@ -1248,6 +1472,38 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 isset( $this->options_2['show_all_labels'] ) && $this->options_2['show_all_labels'] === 'on' ? ' checked="checked"' : ''
             );
         }
+		
+        public function bdt_hide_elbil_label_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[hide_elbil_label]"%s />',
+                isset( $this->options_2['hide_elbil_label'] ) && $this->options_2['hide_elbil_label'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+		
+        public function bdt_hide_hybrid_label_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[hide_hybrid_label]"%s />',
+                isset( $this->options_2['hide_hybrid_label'] ) && $this->options_2['hide_hybrid_label'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+		
+        public function bdt_show_diesel_label_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[show_diesel_label]"%s />',
+                isset( $this->options_2['show_diesel_label'] ) && $this->options_2['show_diesel_label'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+		
+        public function bdt_show_benzin_label_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[show_benzin_label]"%s />',
+                isset( $this->options_2['show_benzin_label'] ) && $this->options_2['show_benzin_label'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
 
 
 
@@ -1286,6 +1542,33 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[bdt_hide_secondary_price]"%s />',
                 isset( $this->options_2['bdt_hide_secondary_price'] ) && $this->options_2['bdt_hide_secondary_price'] === 'on' ? ' checked="checked"' : ''
             );
+        }
+
+        public function bdt_dynamic_scroll_pagination_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[bdt_dynamic_scroll_pagination]"%s />',
+                isset( $this->options_2['bdt_dynamic_scroll_pagination'] ) && $this->options_2['bdt_dynamic_scroll_pagination'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+		
+		public function bdt_dynamic_scroll_pagination_cars_pr_page_callback()
+        {
+            $paginationCarsPrPage = array("3", "4", "6", "8", "9", "12", "15", "16", "18", "20", "21");
+
+            $HTML = '<select id="bdt_options_2" value="on" name="bdt_options_2[dynamic_scroll_pagination_cars_pr_page]"/>';
+            $HTML .= '<option value="Default">Default</option>';
+
+            foreach ($paginationCarsPrPage as $sizes) {
+                $selected = isset( $this->options_2['dynamic_scroll_pagination_cars_pr_page']) && $this->options_2['dynamic_scroll_pagination_cars_pr_page'] == $sizes;
+                $HTML .= '<option value="' . $sizes . '"';
+                $HTML .= $selected ? 'selected="selected"' : '';
+                $HTML .= '>' . $sizes . '</option>';
+            }
+
+            $HTML .= '</select>';
+
+            echo $HTML;
         }
 
         public function bdt_prioritized_price_callback()

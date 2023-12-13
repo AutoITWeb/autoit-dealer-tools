@@ -110,6 +110,22 @@ try{
         }
         $filterObject->HideTrailerVehicles = 'true';
     }
+    if(isset($this->_options_2['hide_classic_vehicle']) && $this->_options_2['hide_classic_vehicle'] === 'on')
+    {
+        if($filterObject === null)
+        {
+            $filterObject = new BDTFilterObject();
+        }
+        $filterObject->HideClassicVehicles = 'true';
+    }
+    if(isset($this->_options_2['hide_tractor_vehicle']) && $this->_options_2['hide_tractor_vehicle'] === 'on')
+    {
+        if($filterObject === null)
+        {
+            $filterObject = new BDTFilterObject();
+        }
+        $filterObject->HideTractorVehicles = 'true';
+    }
     if(isset($this->_options_2['hide_typecar_vehicles']) && $this->_options_2['hide_typecar_vehicles'] === 'on')
     {
         if($filterObject === null)

@@ -46,7 +46,8 @@ class Biltorvet
         // For external users of our plugin
         add_filter('wp_mail', array(&$this, 'bdt_external_user_lead_append'), 1);
 
-        add_action( 'upgrader_process_complete', 'bdt_plugin_updated' );
+        //jlk old add_action( 'upgrader_process_complete', 'bdt_plugin_updated' );
+		add_action( 'upgrader_process_complete', array( $this, 'bdt_plugin_updated' ) );
 
         $this->_options = get_option('bdt_options');
         $this->_options_2 = get_option('bdt_options_2');
@@ -94,7 +95,7 @@ class Biltorvet
         }
     }
 
-    function bdt_plugin_updated() {
+    public function bdt_plugin_updated() {
 
         flush_rewrite_rules();
     }

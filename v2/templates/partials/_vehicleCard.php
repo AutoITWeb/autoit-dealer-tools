@@ -33,6 +33,32 @@ $basePage = rtrim(get_permalink(get_option('bdt_options')['vehiclesearch_page_id
 // Sorted labels for use on the vehiclecards
 $vehicleLabels = Vehicle::sortVehicleLabels($vehicle->getLabels(), isset($options_two['show_all_labels']) ?? null);
 
+$vehiclePropellant = $vehicle->getPropellant();
+if ($vehiclePropellant == "EL" && !isset($options_two['hide_elbil_label']))
+{
+  array_unshift($vehicleLabels, "Elbil");
+}
+else if ($vehiclePropellant == "Hybrid (B/EL)" && !isset($options_two['hide_hybrid_label']))
+{
+  array_unshift($vehicleLabels, "Hybrid");
+}
+else if ($vehiclePropellant == "Hybrid (D/EL)" && !isset($options_two['hide_hybrid_label']))
+{
+  array_unshift($vehicleLabels, "Hybrid");
+}
+else if ($vehiclePropellant == "Diesel" && isset($options_two['show_diesel_label']) ? $options_two['show_diesel_label'] : null)
+{
+  array_unshift($vehicleLabels, "Diesel");
+}
+else if ($vehiclePropellant == "Benzin" && isset($options_two['show_benzin_label']) ? $options_two['show_benzin_label'] : null)
+{
+  array_unshift($vehicleLabels, "Benzin");
+}
+else 
+{
+	//do nothing
+}
+
 if(count($vehicleLabels) > 5) {
     $vehicleLabels = array_slice($vehicleLabels, 0, 5);
 }
@@ -61,10 +87,19 @@ else {
 }
 
 /*
- * Is the special carlite dealer label in use?
+ * Is the special carlite dealer label in use or the other special label fields?
  */
 
 $carliteDealerLabel = isset($options_two['carlite_dealer_label']) ? $options_two['carlite_dealer_label'] : null;
+$carliteOnlineKoebLabel = isset($options_two['carlite_onlinekoeb_label']) ? $options_two['carlite_onlinekoeb_label'] : null;
+$carliteNyhedLabel = isset($options_two['carlite_nyhed_label']) ? $options_two['carlite_nyhed_label'] : null;
+$carliteSolgtLabel = isset($options_two['carlite_solgt_label']) ? $options_two['carlite_solgt_label'] : null;
+$carliteFabriksnyLabel = isset($options_two['carlite_fabriksny_label']) ? $options_two['carlite_fabriksny_label'] : null;
+$carliteLeasingLabel = isset($options_two['carlite_leasing_label']) ? $options_two['carlite_leasing_label'] : null;
+$carliteKunEngrosLabel = isset($options_two['carlite_kun_engros_label']) ? $options_two['carlite_kun_engros_label'] : null;
+$carliteEksportLabel = isset($options_two['carlite_eksport_label']) ? $options_two['carlite_eksport_label'] : null;
+$carliteLagersalgLabel = isset($options_two['carlite_lagersalg_label']) ? $options_two['carlite_lagersalg_label'] : null;
+$carliteDemonstrationLabel = isset($options_two['carlite_demonstration_label']) ? $options_two['carlite_demonstration_label'] : null;
 
 $hasVideo = $vehicle->getHasVideo() === true ? ' hasVideo' : '';
 
@@ -89,6 +124,76 @@ $hasVideo = $vehicle->getHasVideo() === true ? ' hasVideo' : '';
                                 <?php elseif($label == 'Carlite Dealer Label' && $carliteDealerLabel == null) : ?>
 
                                     <?php unset($vehicleLabels[$label]); ?>
+									
+                                <?php elseif($label == 'Online køb' && $carliteOnlineKoebLabel != null) : ?>
+
+                                    <?php $OnlineKoebLabel = str_replace("Online køb", $carliteOnlineKoebLabel, $label); ?>
+                                    <?php unset($vehicleLabels[$label]); ?>
+
+                                    <p><span class="vehicleLabel <?= $label; ?>"><?= $OnlineKoebLabel; ?></span></p><br>
+
+                                <?php elseif($label == 'Nyhed' && $carliteNyhedLabel != null) : ?>
+
+                                    <?php $NyhedLabel = str_replace("Nyhed", $carliteNyhedLabel, $label); ?>
+                                    <?php unset($vehicleLabels[$label]); ?>
+
+                                    <p><span class="vehicleLabel <?= $label; ?>"><?= $NyhedLabel; ?></span></p><br>
+
+                                <?php elseif($label == 'Solgt' && $carliteSolgtLabel != null) : ?>
+
+                                    <?php $SolgtLabel = str_replace("Solgt", $carliteSolgtLabel, $label); ?>
+                                    <?php unset($vehicleLabels[$label]); ?>
+
+                                    <p><span class="vehicleLabel <?= $label; ?>"><?= $SolgtLabel; ?></span></p><br>
+
+                                <?php elseif($label == 'Fabriksny' && $carliteFabriksnyLabel != null) : ?>
+
+                                    <?php $FabriksnyLabel = str_replace("Fabriksny", $carliteFabriksnyLabel, $label); ?>
+                                    <?php unset($vehicleLabels[$label]); ?>
+
+                                    <p><span class="vehicleLabel <?= $label; ?>"><?= $FabriksnyLabel; ?></span></p><br>
+									
+                                <?php elseif($label == 'Leasing' && $carliteLeasingLabel != null) : ?>
+
+                                    <?php $LeasingLabel = str_replace("Leasing", $carliteLeasingLabel, $label); ?>
+                                    <?php unset($vehicleLabels[$label]); ?>
+
+                                    <p><span class="vehicleLabel <?= $label; ?>"><?= $LeasingLabel; ?></span></p><br>
+
+                                <?php elseif($label == 'Kun engros' && $carliteKunEngrosLabel != null) : ?>
+
+                                    <?php $KunEngrosLabel = str_replace("Kun engros", $carliteKunEngrosLabel, $label); ?>
+                                    <?php unset($vehicleLabels[$label]); ?>
+
+                                    <p><span class="vehicleLabel <?= $label; ?>"><?= $KunEngrosLabel; ?></span></p><br>
+
+                                <?php elseif($label == 'Eksport' && $carliteEksportLabel != null) : ?>
+
+                                    <?php $EksportLabel = str_replace("Eksport", $carliteEksportLabel, $label); ?>
+                                    <?php unset($vehicleLabels[$label]); ?>
+
+                                    <p><span class="vehicleLabel <?= $label; ?>"><?= $EksportLabel; ?></span></p><br>
+
+                                <?php elseif($label == 'Lagersalg' && $carliteLagersalgLabel != null) : ?>
+
+                                    <?php $LagersalgLabel = str_replace("Lagersalg", $carliteLagersalgLabel, $label); ?>
+                                    <?php unset($vehicleLabels[$label]); ?>
+
+                                    <p><span class="vehicleLabel <?= $label; ?>"><?= $LagersalgLabel; ?></span></p><br>
+
+                                <?php elseif($label == 'Demonstration' && $carliteDemonstrationLabel != null) : ?>
+
+                                    <?php $DemonstrationLabel = str_replace("Demonstration", $carliteDemonstrationLabel, $label); ?>
+                                    <?php unset($vehicleLabels[$label]); ?>
+
+                                    <p><span class="vehicleLabel <?= $label; ?>"><?= $DemonstrationLabel; ?></span></p><br>
+									
+                                <?php elseif($label == 'Demonstration' && $carliteDemonstrationLabel == null) : ?>
+
+                                    <?php $DemonstrationLabel = str_replace("Demonstration", "Demo", $label); ?>
+                                    <?php unset($vehicleLabels[$label]); ?>
+
+                                    <p><span class="vehicleLabel <?= $label; ?>"><?= $DemonstrationLabel; ?></span></p><br>									
 
                                 <?php else: ?>
 

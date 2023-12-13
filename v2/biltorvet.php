@@ -3,7 +3,7 @@
 Plugin Name: AutoIT Dealer Tools
 Plugin URI:  http://www.autoit.dk/hjemmesider
 Description: Tools providing connection to AutoDesktop, and other Biltorvet services.
-Version:     3.2.7
+Version:     3.2.8
 Requires PHP: 7.2
 Author:      Auto IT A/S
 Author URI:  http://www.autoit.dk
@@ -37,6 +37,8 @@ define('LABEL_ENGROS', 9);
 define('LABEL_NEWCAR', 99999);
 define('LABEL_DEMO', 1);
 define('LABEL_TRAILER', 471);
+define('LABEL_CLASSIC', 433);
+define('LABEL_TRACTOR', 529);
 
 // Special label for Thybo Biler
 define('LABEL_BUS', 416);
