@@ -198,6 +198,16 @@ try{
         }
         $filterObject->PriceTypes = array($this->_options_2['bdt_pricetypes']);
     }
+	//jlk
+    if(isset($this->_options_2['bdt_propellanttypes']) && $this->_options_2['bdt_propellanttypes'] != "-1")
+    {
+        if($filterObject === null)
+        {
+            $filterObject = new BDTFilterObject();
+        }
+        //$filterObject->PropellantTypes = array($this->_options_2['bdt_propellanttypes']);
+		$filterObject->Propellants = array($this->_options_2['bdt_propellanttypes']);
+    }
 
     $initialFilterOptions = $this->biltorvetAPI->GetFilterOptions($filterObject);
 } catch(Exception $e) {

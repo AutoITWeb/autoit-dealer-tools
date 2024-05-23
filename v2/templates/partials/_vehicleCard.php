@@ -34,17 +34,68 @@ $basePage = rtrim(get_permalink(get_option('bdt_options')['vehiclesearch_page_id
 $vehicleLabels = Vehicle::sortVehicleLabels($vehicle->getLabels(), isset($options_two['show_all_labels']) ?? null);
 
 $vehiclePropellant = $vehicle->getPropellant();
-if ($vehiclePropellant == "EL" && !isset($options_two['hide_elbil_label']))
+if ($vehiclePropellant == "El" && !isset($options_two['hide_elbil_label']))
 {
   array_unshift($vehicleLabels, "Elbil");
 }
-else if ($vehiclePropellant == "Hybrid (B/EL)" && !isset($options_two['hide_hybrid_label']))
+/* jlk else if ($vehiclePropellant == "Hybrid (B/EL)" && !isset($options_two['hide_hybrid_label']))
 {
   array_unshift($vehicleLabels, "Hybrid");
 }
 else if ($vehiclePropellant == "Hybrid (D/EL)" && !isset($options_two['hide_hybrid_label']))
 {
   array_unshift($vehicleLabels, "Hybrid");
+} */
+/* jlk fuld løsning
+else if ($vehiclePropellant == "Hybrid (Benzin / El)" && !isset($options_two['hide_hybrid_label']))
+{
+  array_unshift($vehicleLabels, "Hybrid (Benzin / El)");
+}
+else if ($vehiclePropellant == "Hybrid (Diesel / El)" && !isset($options_two['hide_hybrid_label']))
+{
+  array_unshift($vehicleLabels, "Hybrid (Diesel / El)");
+}
+else if ($vehiclePropellant == "Mild hybrid (Benzin / El)" && !isset($options_two['hide_hybrid_label']))
+{
+  array_unshift($vehicleLabels, "Mild hybrid (Benzin / El)");
+}
+else if ($vehiclePropellant == "Mild hybrid (Diesel / El)" && !isset($options_two['hide_hybrid_label']))
+{
+  array_unshift($vehicleLabels, "Mild hybrid (Diesel / El)");
+}
+else if ($vehiclePropellant == "Plug-in hybrid (Benzin / El)" && !isset($options_two['hide_hybrid_label']))
+{
+  array_unshift($vehicleLabels, "Plug-in hybrid (Benzin / El)");
+}
+else if ($vehiclePropellant == "Plug-in hybrid (Diesel / El)" && !isset($options_two['hide_hybrid_label']))
+{
+  array_unshift($vehicleLabels, "Plugin-in hybrid (Diesel / El)");
+}
+*/
+//jlk tilpasset
+else if ($vehiclePropellant == "Hybrid (Benzin / El)" && !isset($options_two['hide_hybrid_label']))
+{
+  array_unshift($vehicleLabels, "Hybrid");
+}
+else if ($vehiclePropellant == "Hybrid (Diesel / El)" && !isset($options_two['hide_hybrid_label']))
+{
+  array_unshift($vehicleLabels, "Hybrid");
+}
+else if ($vehiclePropellant == "Mild hybrid (Benzin / El)" && !isset($options_two['hide_hybrid_label']))
+{
+  array_unshift($vehicleLabels, "Mild hybrid");
+}
+else if ($vehiclePropellant == "Mild hybrid (Diesel / El)" && !isset($options_two['hide_hybrid_label']))
+{
+  array_unshift($vehicleLabels, "Mild hybrid");
+}
+else if ($vehiclePropellant == "Plug-in hybrid (Benzin / El)" && !isset($options_two['hide_hybrid_label']))
+{
+  array_unshift($vehicleLabels, "Plug-in hybrid");
+}
+else if ($vehiclePropellant == "Plug-in hybrid (Diesel / El)" && !isset($options_two['hide_hybrid_label']))
+{
+  array_unshift($vehicleLabels, "Plugin-in hybrid");
 }
 else if ($vehiclePropellant == "Diesel" && isset($options_two['show_diesel_label']) ? $options_two['show_diesel_label'] : null)
 {
@@ -102,6 +153,19 @@ $carliteLagersalgLabel = isset($options_two['carlite_lagersalg_label']) ? $optio
 $carliteDemonstrationLabel = isset($options_two['carlite_demonstration_label']) ? $options_two['carlite_demonstration_label'] : null;
 
 $hasVideo = $vehicle->getHasVideo() === true ? ' hasVideo' : '';
+
+//jlk
+$hybridTypes = [
+	"Hybrid (Benzin / El)", 
+	"Hybrid (Diesel / El)", 
+	"Mild hybrid (Benzin / El)", 
+	"Mild hybrid (Diesel / El)", 
+	"Plug-in hybrid (Benzin / El)", 
+	"Plug-in hybrid (Diesel / El)",
+	"Hybrid",
+	"Mild hybrid",
+	"Plug-in hybrid"
+];
 
 ?>
 
@@ -194,6 +258,10 @@ $hasVideo = $vehicle->getHasVideo() === true ? ' hasVideo' : '';
                                     <?php unset($vehicleLabels[$label]); ?>
 
                                     <p><span class="vehicleLabel <?= $label; ?>"><?= $DemonstrationLabel; ?></span></p><br>									
+
+                                <?php elseif (in_array($label, $hybridTypes)) : ?>
+
+                                <p><span class="vehicleLabel Hybrid"><?= $label; ?></span></p><br>
 
                                 <?php else: ?>
 

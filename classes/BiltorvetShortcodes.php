@@ -5,6 +5,8 @@ use Biltorvet\Factory\VehicleFactory;
 use Biltorvet\Model\Property;
 use Biltorvet\Helper\DataHelper;
 use Biltorvet\Model\Vehicle;
+//JLK
+use Biltorvet\Helper\WordpressHelper;
 
 if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
     
@@ -60,10 +62,67 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 			add_shortcode('bdt_get_status_sold', array($this, 'bdt_shortcode_status_sold'));
 			add_shortcode('bdt_get_status_onlinekoeb', array($this, 'bdt_shortcode_status_onlinekoeb'));
 			add_shortcode('bdt_car_tracking_using_datalayer', array($this, 'bdt_shortcode_car_tracking_using_datalayer'));
+			//JLK nye
+			add_shortcode('bdt_has_cashPrice', array($this, 'bdt_shortcode_has_cashPrice'));
+			add_shortcode('bdt_has_financingPrice', array($this, 'bdt_shortcode_has_financingPrice'));
+			add_shortcode('bdt_has_leasingPrice', array($this, 'bdt_shortcode_has_leasingPrice'));
+			add_shortcode('bdt_vehicle_price_type', array($this, 'bdt_shortcode_vehicleprice_type'));
+			add_shortcode('bdt_GenerateKontantprisTabContent', array($this, 'bdt_shortcode_GenerateKontantprisTabContent'));
 
             add_action('wp_head', array(&$this, 'bdt_insert_map_dependencies'), 1000);
         }
 
+		//JLK ny
+        public function bdt_shortcode_has_cashPrice()
+        {
+            if(!isset($this->currentVehicle) || $this->currentVehicle === null)
+            {
+                return __('Vehicle not found', 'biltorvet-dealer-tools');
+            }
+
+			$cashPrice = $this->currentVehicle->cashPrice;
+
+			if (isset($this->currentVehicle->cashPrice) && json_encode($this->currentVehicle->cashPrice) !== '{}') {
+				return true;
+			} else {
+				return false;
+			}
+        }
+		
+		//JLK ny
+        public function bdt_shortcode_has_financingPrice()
+        {
+            if(!isset($this->currentVehicle) || $this->currentVehicle === null)
+            {
+                return __('Vehicle not found', 'biltorvet-dealer-tools');
+            }
+
+			$financingPrice = $this->currentVehicle->financingPrice;
+
+			if (isset($this->currentVehicle->financingPrice) && json_encode($this->currentVehicle->financingPrice) !== '{}') {
+				return true;
+			} else {
+				return false;
+			}
+        }
+		
+		//JLK ny
+        public function bdt_shortcode_has_leasingPrice()
+        {
+            if(!isset($this->currentVehicle) || $this->currentVehicle === null)
+            {
+                return __('Vehicle not found', 'biltorvet-dealer-tools');
+            }
+
+			$leasingPrice = $this->currentVehicle->leasingPrice;
+			
+			if (isset($this->currentVehicle->leasingPrice) && json_encode($this->currentVehicle->leasingPrice) !== '{}') {
+				return true;
+			} else {
+				return false;
+			}
+        }
+		
         public function bdt_get_current_vehicle()
         {
             try{
@@ -388,10 +447,11 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 			$vehicleLabelsBTS = self::sortVehicleLabelsBTS($this->currentVehicle->labels, isset($options_two['show_all_labels']) ?? null);			
 
 			$vehiclePropellant = $this->currentVehicle->propellant;
-			if ($vehiclePropellant == "EL" && !isset($options_two['hide_elbil_label']))
+			if ($vehiclePropellant == "El" && !isset($options_two['hide_elbil_label']))
 			{
 			  array_unshift($vehicleLabelsBTS, "Elbil");
 			}
+			/* jlk old
 			else if ($vehiclePropellant == "Hybrid (B/EL)" && !isset($options_two['hide_hybrid_label']))
 			{
 			  array_unshift($vehicleLabelsBTS, "Hybrid");
@@ -400,6 +460,58 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 			{
 			  array_unshift($vehicleLabelsBTS, "Hybrid");
 			}
+			*/
+			/* jlk fuld løsning
+			else if ($vehiclePropellant == "Hybrid (Benzin / El)" && !isset($options_two['hide_hybrid_label']))
+			{
+			  array_unshift($vehicleLabelsBTS, "Hybrid (Benzin / El)");
+			}
+			else if ($vehiclePropellant == "Hybrid (Diesel / El)" && !isset($options_two['hide_hybrid_label']))
+			{
+			  array_unshift($vehicleLabelsBTS, "Hybrid (Diesel / El)");
+			}
+			else if ($vehiclePropellant == "Mild hybrid (Benzin / El)" && !isset($options_two['hide_hybrid_label']))
+			{
+			  array_unshift($vehicleLabelsBTS, "Mild hybrid (Benzin / El)");
+			}
+			else if ($vehiclePropellant == "Mild hybrid (Diesel / El)" && !isset($options_two['hide_hybrid_label']))
+			{
+			  array_unshift($vehicleLabelsBTS, "Mild hybrid (Diesel / El)");
+			}
+			else if ($vehiclePropellant == "Plug-in hybrid (Benzin / El)" && !isset($options_two['hide_hybrid_label']))
+			{
+			  array_unshift($vehicleLabelsBTS, "Plug-in hybrid (Benzin / El)");
+			}
+			else if ($vehiclePropellant == "Plugin-in hybrid (Diesel / El)" && !isset($options_two['hide_hybrid_label']))
+			{
+			  array_unshift($vehicleLabelsBTS, "Plugin-in hybrid (Diesel / El)");
+			}			
+			*/
+			//jlk tilpasset
+			else if ($vehiclePropellant == "Hybrid (Benzin / El)" && !isset($options_two['hide_hybrid_label']))
+			{
+			  array_unshift($vehicleLabelsBTS, "Hybrid");
+			}
+			else if ($vehiclePropellant == "Hybrid (Diesel / El)" && !isset($options_two['hide_hybrid_label']))
+			{
+			  array_unshift($vehicleLabelsBTS, "Hybrid");
+			}
+			else if ($vehiclePropellant == "Mild hybrid (Benzin / El)" && !isset($options_two['hide_hybrid_label']))
+			{
+			  array_unshift($vehicleLabelsBTS, "Mild hybrid");
+			}
+			else if ($vehiclePropellant == "Mild hybrid (Diesel / El)" && !isset($options_two['hide_hybrid_label']))
+			{
+			  array_unshift($vehicleLabelsBTS, "Mild hybrid");
+			}
+			else if ($vehiclePropellant == "Plug-in hybrid (Benzin / El)" && !isset($options_two['hide_hybrid_label']))
+			{
+			  array_unshift($vehicleLabelsBTS, "Plug-in hybrid");
+			}
+			else if ($vehiclePropellant == "Plugin-in hybrid (Diesel / El)" && !isset($options_two['hide_hybrid_label']))
+			{
+			  array_unshift($vehicleLabelsBTS, "Plugin-in hybrid");
+			}			
 			else if ($vehiclePropellant == "Diesel" && isset($options_two['show_diesel_label']) ? $options_two['show_diesel_label'] : null)
 			{
 			  array_unshift($vehicleLabelsBTS, "Diesel");
@@ -424,6 +536,19 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 $allowedLabels = explode(',', $atts['allowed']);
             }
             $labels = '';
+			
+			//jlk
+			$hybridTypes = [
+				"Hybrid (Benzin / El)", 
+				"Hybrid (Diesel / El)", 
+				"Mild hybrid (Benzin / El)", 
+				"Mild hybrid (Diesel / El)", 
+				"Plug-in hybrid (Benzin / El)", 
+				"Plug-in hybrid (Diesel / El)",
+				"Hybrid",
+				"Mild hybrid",
+				"Plug-in hybrid"
+			];			
 
             foreach($vehicleLabelsBTS as $label)
             {
@@ -510,7 +635,11 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 					$DemonstrationLabel = str_replace("Demonstration", "Demo", $label);
 					$labels .= '<span class="badge ' . $label. ' mr-2 mb-1">' . $DemonstrationLabel . '</span>';
 					
-				}				
+				}
+				else if (in_array($label, $hybridTypes)) {
+					$labels .= '<span class="badge Hybrid mr-2 mb-1">' . $label . '</span>';
+				}
+				
 				else 
 				{
 					$labels .= '<span class="badge ' . $label. ' mr-2 mb-1">' . $label . '</span>';
@@ -700,6 +829,15 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     }
                     $filterObject->PriceTypes = array($this->_options_2['bdt_pricetypes']);
                 }
+				//jlk
+                if(isset($this->_options_2['bdt_propellanttypes']) && $this->_options_2['bdt_propellanttypes'] != "-1")
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+					$filterObject->Propellants = array($this->_options_2['bdt_propellanttypes']);
+                }
                 return $this->biltorvetAPI->GetVehicleTotalCount($filterObject);
             } catch(Exception $e) {
                 return $e->getMessage();
@@ -718,6 +856,9 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 			
 			$statusSold = $this->bdt_shortcode_status_sold();
 			$statusOnlinekoeb = $this->bdt_shortcode_status_onlinekoeb();
+
+			//Use apiKey to check if customer is Jørgen Hansen Biler to handle TestDrive/Purchace differently from everyone else. This is a temp solution and should be refined if other customer need same solution in the future 
+			$apiKey = WordpressHelper::getApiKey();
 			
             if(!isset($atts['type']))
             {
@@ -798,13 +939,27 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 			
 			if($atts['type'] === 'TestDrive' || $atts['type'] === 'Purchase')
 			{
-				if(!$statusSold)
+				if ($apiKey === "780a56f2-25c4-4793-b895-8fa1bf427cbd")//Jørgen Hansen Biler
 				{
-					return (isset($style) ? $style : '') . '<a id="'. $id .'" href="'. $root . '?'. http_build_query(array('bdt_actiontype' => $atts['type'], 'bdt_vehicle_id' => $this->currentVehicle->documentId)) . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+					if(!$statusSold)
+					{
+						return (isset($style) ? $style : '') . '<a id="'. $id .'" href="'. $root . '?'. http_build_query(array('bdt_actiontype' => $atts['type'], 'bdt_vehicle_id' => $this->currentVehicle->documentId)) . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+					}
+					else
+					{
+						return (isset($style) ? $style : '') . '<button class="disable-grey button-priceTabs">Book en prøvetur</button>';
+					}
 				}
 				else
 				{
-					return (isset($style) ? $style : '') . '<a id="'. $id .'-disabled" href="#" class="bdt_cta disable-grey '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+					if(!$statusSold)
+					{
+						return (isset($style) ? $style : '') . '<a id="'. $id .'" href="'. $root . '?'. http_build_query(array('bdt_actiontype' => $atts['type'], 'bdt_vehicle_id' => $this->currentVehicle->documentId)) . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+					}
+					else
+					{
+						return (isset($style) ? $style : '') . '<a id="'. $id .'-disabled" href="#" class="bdt_cta disable-grey '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+					}
 				}
 			}
 
@@ -835,20 +990,84 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             }
 
             $priceController = new PriceController(VehicleFactory::create(json_decode(json_encode($this->currentVehicle), true)));
+			
+			//Use apiKey to check if customer is Kinnerup AutoKommision to handle price differently from everyone else
+			$apiKey = WordpressHelper::getApiKey();
 
-            $showPrice = '<span class="bdt_price_container">';
-            if ($priceController->GetPrimaryPrice('details')) {
-                $showPrice .='<span class="primary-price">' .$priceController->GetPrimaryPrice('details') .'</span>';
-            }
-            if ($priceController->GetSecondaryPrice('details')) {
-                $showPrice .= '<span class="secondary-price">'. $priceController->GetSecondaryPrice('details') .'</span>';
-            }
-            if ($priceController->GetTertiaryPrice('details')) {
-                $showPrice .= '<span class="tertiary-price">' . $priceController->GetTertiaryPrice('details') .'</span>';
-            }
-            $showPrice .= '</span>';
-
+            if ($apiKey === "7260fb0b-553e-48cd-8ac2-57c58eb88979")//kinnerup
+			{
+				$showPrice = '<span class="bdt_price_container">';
+				if ($priceController->GetPrimaryPrice('details')) {
+					$showPrice .= '<span class="primary-price">' . str_replace(" (inkl. lev. omkostninger)", "", $priceController->GetPrimaryPrice('details')) . '</span>';
+				}
+				if ($priceController->GetSecondaryPrice('details')) {
+					$showPrice .= '<span class="primary-price">' . str_replace(" (inkl. lev. omkostninger)", "", $priceController->GetSecondaryPrice('details')) . '</span>';
+				}
+				if ($priceController->GetTertiaryPrice('details')) {
+					$showPrice .= '<span class="primary-price">' . str_replace(" (inkl. lev. omkostninger)", "", $priceController->GetTertiaryPrice('details')) . '</span>';
+				}
+				$showPrice .= '</span>';
+			}
+			else //everyone else
+			{
+				$showPrice = '<span class="bdt_price_container">';
+				if ($priceController->GetPrimaryPrice('details')) {
+					$showPrice .='<span class="primary-price">' .$priceController->GetPrimaryPrice('details') .'</span>';
+				}
+				if ($priceController->GetSecondaryPrice('details')) {
+					$showPrice .= '<span class="secondary-price">'. $priceController->GetSecondaryPrice('details') .'</span>';
+				}
+				if ($priceController->GetTertiaryPrice('details')) {
+					$showPrice .= '<span class="tertiary-price">' . $priceController->GetTertiaryPrice('details') .'</span>';
+				}
+				$showPrice .= '</span>';
+			}				
             return $showPrice;
+        }
+
+		/* JLK ny function til tab price feature */
+		public function bdt_shortcode_vehicleprice_type( $atts )
+        {
+            if(!isset($this->currentVehicle) || $this->currentVehicle === null)
+            {
+                global $wp_query;
+                $wp_query->set_404();
+                status_header( 404 );
+                get_template_part( 404 );
+                exit();
+            }
+			
+            $priceController = new PriceController(VehicleFactory::create(json_decode(json_encode($this->currentVehicle), true)));	
+
+            $PriceTypeParameter = null;
+            if(isset($atts['pricetype']) && trim($atts['pricetype']) !== '')
+            {
+                $PriceTypeParameter = $atts['pricetype'];
+            }
+
+			if ($PriceTypeParameter == "kontant") {
+			   $showPriceType = '<span class="bdt_price_container">';
+				if ($priceController->GetPrimaryPrice('details')) {
+					$showPriceType .='<h3>Kontant</h3><span class="primary-price">' .$priceController->GetPrimaryPrice('details', 'cashPrice') .'</span>';
+				}
+				$showPriceType .= '</span>';
+			}
+			else if ($PriceTypeParameter == "finansiering") {
+			   $showPriceType = '<span class="bdt_price_container">';
+				if ($priceController->GetPrimaryPrice('details')) {
+					$showPriceType .='<h3>Finansiering</h3><span class="primary-price">' .$priceController->GetPrimaryPrice('details', 'financingPrice') .'</span>';
+				}
+				$showPriceType .= '</span>';
+			}
+			else if ($PriceTypeParameter == "leasing") {
+			   $showPriceType = '<span class="bdt_price_container">';
+				if ($priceController->GetPrimaryPrice('details')) {
+					$showPriceType .='<h3>Leasing</h3><span class="primary-price">' .$priceController->GetPrimaryPrice('details', 'leasingPrice') .'</span>';
+				}
+				$showPriceType .= '</span>';
+			}			
+
+            return $showPriceType;
         }
 
         public function bdt_shortcode_vehicleid($atts)
@@ -979,6 +1198,40 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             }
 
             return '<div class="bdt">'.TextUtils::GenerateSpecificationsTable($properties).'</div>';
+        }
+
+		//jlk
+        public function bdt_shortcode_GenerateKontantprisTabContent()
+        {
+            if(!isset($this->currentVehicle) || $this->currentVehicle === null)
+            {
+                return __('Vehicle not found', 'biltorvet-dealer-tools');
+            }
+			
+			//$number = 12345;
+			//print_r($this->currentVehicle);
+			$priceFormatted = $this->currentVehicle->cashPrice->priceFormatted;
+			$priceLabelDetailsPage = $this->currentVehicle->cashPrice->priceLabelDetailsPage;
+			$content = 
+			'<div class="price_tabs-container">
+				<!-- First Row -->
+				<div class="price_tabs-row">
+					<div class="price_tabs-col">
+						<!--<h3 class="price_tabs-h3-center">Kontant betaling</h3>-->
+						<h2 class="price_tabs-h2-center">Kontant betaling</h2>
+					</div>
+				</div>
+
+				<!-- Second Row -->
+				<div class="price_tabs-row">
+					<div class="price_tabs-col price_tabs-col-border-bottom">
+						<div class="price_tabs-text-left">' . $priceLabelDetailsPage . '</div>
+						<div class="price_tabs-text-right">' . $priceFormatted . '</div>
+					</div>
+				</div>
+			</div>';
+
+            return $content;
         }
 
         public function bdt_shortcode_equipment( $atts ) {

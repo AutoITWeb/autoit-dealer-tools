@@ -554,6 +554,12 @@ use Biltorvet\Model\Vehicle;
                 $filterObject->PriceTypes = array($this->_options_2['bdt_pricetypes']);
             }
 
+			//jlk
+            if(isset($this->_options_2['bdt_propellanttypes']) && $this->_options_2['bdt_propellanttypes'] !== '-1')
+            {
+                //$filterObject->PropellantTypes = array($this->_options_2['bdt_propellanttypes']);
+				$filterObject->Propellants = array($this->_options_2['bdt_propellanttypes']);
+            }
 
             return $filterObject;
         }

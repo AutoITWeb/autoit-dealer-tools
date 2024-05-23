@@ -62,6 +62,7 @@
             $filterObject->HideADVehicles = isset($this->_options_2['hide_ad_vehicles']) && $this->_options_2['hide_ad_vehicles'] === 'on' ? 'true' : null;
             $filterObject->HideBIVehicles = isset($this->_options_2['hide_bi_vehicles']) && $this->_options_2['hide_bi_vehicles'] === 'on' ? 'true' : null;
             $filterObject->PriceTypes = isset($this->_options_2['bdt_pricetypes']) && $this->_options_2['bdt_pricetypes'] !== '-1' ?  array($this->_options_2['bdt_pricetypes']) : null;
+			$filterObject->Propellants = isset($this->_options_2['bdt_propellanttypes']) && $this->_options_2['bdt_propellanttypes'] !== '-1' ?  array($this->_options_2['bdt_propellanttypes']) : null;
 
             try {
                 $filterObjectOptions = $this->biltorvetAPI->GetFilterOptions($filterObject);

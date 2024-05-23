@@ -676,6 +676,15 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt_settings_section_2' // Section
             );
 
+            //jlk
+			add_settings_field(
+                'bdt_propellanttypes',
+                __( 'Vis kun biler med følgende drivmiddeltype', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_propellanttypes_callback' ),
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+
             add_settings_field(
                 'no_price_label',
                 __( 'Sæt label tekst ved manglende kontantpris' ),
@@ -1517,6 +1526,27 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
             foreach ($priceTypeOptions as $key => $value) {
                 $selected = isset($this->options_2['bdt_pricetypes']) && $this->options_2['bdt_pricetypes'] == $value;
+                $HTML .= '<option value="' . $value . '"';
+                $HTML .= $selected ? 'selected="selected"' : '';
+                $HTML .= '>' . $key . '</option>';
+            }
+
+            $HTML .= '</select>';
+
+            echo $HTML;
+        }
+
+		//jlk
+        // Sets the filter "PropellantTypes"
+        public function bdt_propellanttypes_callback()
+        {
+            $propellantTypeOptions = ["El" => "El"];
+
+            $HTML = '<select id="bdt_options_2" value="on" name="bdt_options_2[bdt_propellanttypes]"/>';
+            $HTML .= '<option value="-1">Vælg drivmiddeltype</option>';
+
+            foreach ($propellantTypeOptions as $key => $value) {
+                $selected = isset($this->options_2['bdt_propellanttypes']) && $this->options_2['bdt_propellanttypes'] == $value;
                 $HTML .= '<option value="' . $value . '"';
                 $HTML .= $selected ? 'selected="selected"' : '';
                 $HTML .= '>' . $key . '</option>';

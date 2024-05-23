@@ -73,7 +73,7 @@ body .bdt select {
   margin-left: auto;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 600px) {
   .bdt .container {
     max-width: 540px;
   }
@@ -375,7 +375,7 @@ body .bdt select {
   margin-left: 91.66667%;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 600px) {
   .bdt .col-sm {
     flex-basis: 0;
     flex-grow: 1;
@@ -1707,7 +1707,7 @@ body .bdt select {
   display: inline-flex !important;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 600px) {
   .bdt .d-sm-none {
     display: none !important;
   }
@@ -2036,7 +2036,7 @@ body .bdt select {
   align-self: stretch !important;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 600px) {
   .bdt .flex-sm-row {
     flex-direction: row !important;
   }
@@ -2468,7 +2468,7 @@ body .bdt select {
   float: none !important;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 600px) {
   .bdt .float-sm-left {
     float: left !important;
   }
@@ -3113,7 +3113,7 @@ body .bdt select {
   margin-left: auto !important;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 600px) {
   .bdt .m-sm-0 {
     margin: 0 !important;
   }
@@ -4528,7 +4528,7 @@ body .bdt select {
   text-align: center !important;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 600px) {
   .bdt .text-sm-left {
     text-align: left !important;
   }
@@ -6323,9 +6323,9 @@ bdt .vehicle_search_results select,
 
 .select2-container {
   box-sizing: border-box;
-  display: inline-block;
+  display: block;
   vertical-align: middle;
-  width: 100% !important;
+  width: auto !important;
 }
 
 .select2-container ul {
@@ -6735,7 +6735,7 @@ bdt .vehicle_search_results select,
   -webkit-appearance: textfield;
 }
 .select2-container--default .select2-results > .select2-results__options {
-  max-height: 200px;
+  max-height: 152px;
   overflow-y: auto;
 }
 .select2-container--default .select2-results__option .select2-results__option {
@@ -7042,7 +7042,7 @@ bdt .vehicle_search_results select,
   border-top: none;
 }
 .select2-container--classic .select2-results > .select2-results__options {
-  max-height: 200px;
+  max-height: 152px;
   overflow-y: auto;
 }
 .select2-container--classic .select2-results__option--group {
