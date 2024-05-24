@@ -209,7 +209,7 @@ try{
 		$filterObject->Propellants = array($this->_options_2['bdt_propellanttypes']);
     }
 
-    $initialFilterOptions = $this->biltorvetAPI->GetFilterOptions($filterObject);
+    //jlk $initialFilterOptions = $this->biltorvetAPI->GetFilterOptions($filterObject);
 } catch(Exception $e) {
     die($e->getMessage());
 }

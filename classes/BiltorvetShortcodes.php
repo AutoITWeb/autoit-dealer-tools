@@ -447,11 +447,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 			$vehicleLabelsBTS = self::sortVehicleLabelsBTS($this->currentVehicle->labels, isset($options_two['show_all_labels']) ?? null);			
 
 			$vehiclePropellant = $this->currentVehicle->propellant;
-			if ($vehiclePropellant == "El" && !isset($options_two['hide_elbil_label']))
+			if (($vehiclePropellant == "EL" || $vehiclePropellant == "El") && !isset($options_two['hide_elbil_label']))
 			{
 			  array_unshift($vehicleLabelsBTS, "Elbil");
 			}
-			/* jlk old
 			else if ($vehiclePropellant == "Hybrid (B/EL)" && !isset($options_two['hide_hybrid_label']))
 			{
 			  array_unshift($vehicleLabelsBTS, "Hybrid");
@@ -460,7 +459,6 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 			{
 			  array_unshift($vehicleLabelsBTS, "Hybrid");
 			}
-			*/
 			/* jlk fuld løsning
 			else if ($vehiclePropellant == "Hybrid (Benzin / El)" && !isset($options_two['hide_hybrid_label']))
 			{

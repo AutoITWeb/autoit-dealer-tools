@@ -34,18 +34,18 @@ $basePage = rtrim(get_permalink(get_option('bdt_options')['vehiclesearch_page_id
 $vehicleLabels = Vehicle::sortVehicleLabels($vehicle->getLabels(), isset($options_two['show_all_labels']) ?? null);
 
 $vehiclePropellant = $vehicle->getPropellant();
-if ($vehiclePropellant == "El" && !isset($options_two['hide_elbil_label']))
+if (($vehiclePropellant == "EL" || $vehiclePropellant == "El") && !isset($options_two['hide_elbil_label']))
 {
   array_unshift($vehicleLabels, "Elbil");
 }
-/* jlk else if ($vehiclePropellant == "Hybrid (B/EL)" && !isset($options_two['hide_hybrid_label']))
+else if ($vehiclePropellant == "Hybrid (B/EL)" && !isset($options_two['hide_hybrid_label']))
 {
   array_unshift($vehicleLabels, "Hybrid");
 }
 else if ($vehiclePropellant == "Hybrid (D/EL)" && !isset($options_two['hide_hybrid_label']))
 {
   array_unshift($vehicleLabels, "Hybrid");
-} */
+}
 /* jlk fuld løsning
 else if ($vehiclePropellant == "Hybrid (Benzin / El)" && !isset($options_two['hide_hybrid_label']))
 {
