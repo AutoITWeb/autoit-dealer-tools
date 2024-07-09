@@ -40,7 +40,7 @@ function Biltorvet($) {
 
     // Select2 init
     $(document).ready(function(e) {
-
+    
         $('.multiple').select2(
             {
                 dropdownParent: $('.vehicle_search'),
@@ -108,7 +108,7 @@ function Biltorvet($) {
 
     this.Init = function() {
 
-
+        
 
         // There can be a situation, namely with AVADA themes, where there's another .slider bound to the jQuery object. IF that's the case, we'll switch to an alternative namespace.
         // This alternative namespace only exists if there's been a conflict, so it can't be always used by default.
@@ -782,6 +782,10 @@ function Biltorvet($) {
     {
         var vehicleSearchResultsLoading = $(document).find('.bdt .vehicle_search_results');
         var loadingAnimationPaging = vehicleSearchResultsLoading.find('.lds-ring-paging');
+
+        if (leasingAlternativeName) {
+          $('#select-orderby option:contains("Leasingpris")').text(leasingAlternativeName.innerText);
+        }
 
         loadingAnimationPaging.animate({opacity: 0}, 200, function(){ $(this).css('display', 'none').addClass('d-none'); });
     }
