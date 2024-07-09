@@ -16,6 +16,7 @@ function Biltorvet($) {
     var priceRangeSlider = null;
     var consumptionRangeSlider = null;
     var sliderAlternativeNamespace = false;
+    var leasingAlternativeName = document.getElementById("LeasingAlternativeName");
     var filter = {
         CompanyIds: null,
         Propellant: null,
@@ -894,7 +895,12 @@ function Biltorvet($) {
         var priceTypes = '';
         for(var i in response.priceTypes)
         {
-            priceTypes += '<option value="' + response.priceTypes[i].name + '">' + response.priceTypes[i].name + '</option>';
+            // Neltoft specific "hack"
+            if (leasingAlternativeName && response.priceTypes[i].name == 'Leasing') {
+                priceTypes += '<option value="' + response.priceTypes[i].name + '">' + leasingAlternativeName.innerText + '</option>';
+            } else {
+                priceTypes += '<option value="' + response.priceTypes[i].name + '">' + response.priceTypes[i].name + '</option>';
+            }
         }
         vehicleSearch.find('select[name=priceType]').find('option:not(:first-child)').remove().end().append(priceTypes);
         RemoveDuplicateValues('priceType', response.priceTypes);
