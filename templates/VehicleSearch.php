@@ -331,6 +331,9 @@
                 </div>
 
                 <div class="col-lg-4 col-sm-6 mb-1 mb-sm-3 multiple-select" <?= $showPriceTypes ?>>
+                    <?php if(isset($this->_options_2['bdt_price_label_leasing_searchfilter']) && $this->_options_2['bdt_price_label_leasing_searchfilter'] != null) {
+                        echo '<span id="LeasingAlternativeName" hidden>' . $this->_options_2['bdt_price_label_leasing_searchfilter'] . '</span>';
+                        }; ?>
                     <select class="pricetype multiple" multiple="multiple" name="priceType" id="priceType" data-contenttype="pristyper"></select>
                     <label class="selectDropDownLabel">
                         <span class="placeholder-text"><?php _e('- Select price type -', 'biltorvet-dealer-tools'); ?></span>
