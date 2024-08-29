@@ -3,9 +3,9 @@ Contributors: biltorvetas
 Donate link: http://biltorvet.as
 Tags: cars, biltorvet, autodesktop, biler, biltorvet web
 Requires at least: 4.9.7
-Tested up to: 5.1.1
-Stable tag: 5.1.1
-Requires PHP: 7.2
+Tested up to: 6.6.1
+Stable tag: 6.6.1
+Requires PHP: 7.4
 License: GPLv2 or later
 
 Biltorvet Dealer Tools makes it possible to show and search in the cars, that is created in the sales software AutoDesktop. AutoDesktop is also provided by Biltorvet A/S. 
@@ -32,6 +32,14 @@ Biltorvet Dealer Tools er fuld integreret med AutoDesktop, så din hjemmeside ka
 3. Plugin settings
 
 == Changelog ==
+
+= 3.3.1 =
+* Adds Ladeeffekt DC and Ladeeffect AC in specifications
+* Adds new shortcodes
+* Adds even more plugin settings
+* Fixes bug on frontpage search
+
+For a complete list of changes, see the [full changelog](https://github.com/AutoITWeb/autoit-dealer-tools/releases) on GitHub.
 
 = 1.1.0 =
 * Refactor major parts of the plugin

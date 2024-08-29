@@ -71,6 +71,30 @@ class PriceController
     /**
      * @var string
      */
+    private $customLeasingLabel;
+    /**
+     * @var string
+     */
+    private $customCashLabel;
+    /**
+     * @var string
+     */
+    private $customFinanceLabel;
+     /**
+     * @var string
+     */
+    private $customLeasingDetailsLabel;
+    /**
+     * @var string
+     */
+    private $customCashDetailsLabel;
+    /**
+     * @var string
+     */
+    private $customFinanceDetailsLabel;
+    /**
+     * @var string
+     */
     private $customNoCashPriceLabel;
 
     /**
@@ -107,6 +131,17 @@ class PriceController
 
         $this->hideLeasingDetails =
             WordpressHelper::getOption(3,'bdt_hide_leasing_prices_details') == 'on';
+
+        // ivp    
+        $this->customLeasingLabel = WordpressHelper::getOption(2,'bdt_price_label_leasing');
+        $this->customLeasingDetailsLabel = WordpressHelper::getOption(3,'bdt_price_label_leasing_details');
+
+        $this->customCashLabel = WordpressHelper::getOption(2,'bdt_price_label_cash');
+        $this->customCashDetailsLabel = WordpressHelper::getOption(3,'bdt_price_label_cash_details');
+
+        $this->customFinanceLabel = WordpressHelper::getOption(2,'bdt_price_label_finance');
+        $this->customFinanceDetailsLabel = WordpressHelper::getOption(3,'bdt_price_label_finance_details');
+        // ivp END
 
         // Set prioritized custom no-price label from options
         $getCustomNoPriceLabel =
@@ -235,10 +270,10 @@ class PriceController
      * @param  string $type
      * @return string
      */
-    public function GetSecondaryPrice(string $type, $hideSecondaryPrice = false)
+    public function GetSecondaryPrice(string $type, $hideSecondaryAndTertiaryPrice = false)
     {
         // Return empty string
-        if($hideSecondaryPrice === true)
+        if($hideSecondaryAndTertiaryPrice === true)
         {
             return '';
         }
@@ -303,8 +338,14 @@ class PriceController
         }
     }
 
-    public function GetTertiaryPrice(string $type)
-    {
+    public function GetTertiaryPrice(string $type, $hideSecondaryAndTertiaryPrice = false)
+    {        
+        // Return empty string
+        if($hideSecondaryAndTertiaryPrice === true)
+        {
+            return '';
+        }
+
         // This is what we'll eventually return
         $noTertiaryPriceToReturn = '';
         $priceCssClass = $type === 'card' ? 'bdt_price_small_cashprice_vehicle_card tertiary-price-card' : 'bdt_price_big tertiary-price-details';
@@ -487,8 +528,12 @@ class PriceController
      */
     public function ReturnCashPrice(string $priceCssClass, string $priceLabelCssClass, string $type) : string
     {
+       
+        $labelDetailsPage = $this->customCashDetailsLabel != null ? $this->customCashDetailsLabel : $this->price->getCashPriceLabelDetailsPage();
+        $labelVehicleCards = $this->customCashLabel != null ? $this->customCashLabel : $this->price->getCashPriceLabelVehicleCards();
+
         // We want to display a special price label on the details page
-        $selectedPriceLabel = $type === 'details' ? $this->price->getCashPriceLabelDetailsPage() : $this->price->getCashPriceLabelVehicleCards();
+        $selectedPriceLabel = $type === 'details' ? $labelDetailsPage : $labelVehicleCards;        
 
         $prioritizedCardPriceToReturn = $this->CreateHtmlMarkUp($priceCssClass, $this->price->getCashPriceFormatted(), $type);
         $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $selectedPriceLabel, $type);
@@ -504,8 +549,14 @@ class PriceController
      */
     public function ReturnFinancingPrice(string $priceCssClass, string $priceLabelCssClass, string $type) : string
     {
+        $labelDetailsPage = $this->customFinanceDetailsLabel != null ? $this->customFinanceDetailsLabel : $this->price->getFinancingPriceLabelDetailsPage();
+        $labelVehicleCards = $this->customFinanceLabel != null ? $this->customFinanceLabel : $this->price->getFinancingPriceLabelVehicleCards();
+
+        // We want to display a special price label on the details page
+        $selectedPriceLabel = $type === 'details' ? $labelDetailsPage : $labelVehicleCards;    
+        
         $prioritizedCardPriceToReturn = $this->CreateHtmlMarkUp($priceCssClass, $this->price->getfinancingPriceFormatted(), $type);
-        $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $this->price->getFinancingPriceLabelVehicleCards(), $type);
+        $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $selectedPriceLabel, $type);
 
         return $prioritizedCardPriceToReturn;
     }
@@ -518,8 +569,14 @@ class PriceController
      */
     public function ReturnLeasingPrice(string $priceCssClass, string $priceLabelCssClass, string $type) : string
     {
+        $labelDetailsPage = $this->customLeasingDetailsLabel != null ? $this->customLeasingDetailsLabel : $this->price->getLeasingPriceLabelDetailsPage();
+        $labelVehicleCards = $this->customLeasingLabel != null ? $this->customLeasingLabel : $this->price->getLeasingPriceLabelVehicleCards();
+
+        // We want to display a special price label on the details page
+        $selectedPriceLabel = $type === 'details' ? $labelDetailsPage : $labelVehicleCards;    
+        
         $prioritizedCardPriceToReturn = $this->CreateHtmlMarkUp($priceCssClass, $this->price->getLeasingPriceFormatted(), $type);
-        $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $this->price->getLeasingPriceLabelVehicleCards(), $type);
+        $prioritizedCardPriceToReturn .= $this->CreateHtmlMarkUp($priceLabelCssClass, $selectedPriceLabel, $type);
 
         return $prioritizedCardPriceToReturn;
     }

@@ -20,9 +20,10 @@ $bdt_root_url = rtrim(get_page_link($this->_options['vehiclesearch_page_id']),'/
 // All filter logic should be in JS.
 
 try{
-    $filterObject = null;
+    //$filterObject = null;
+    $filterObject = new BDTFilterObject();
 
-    if(isset($this->_options['hide_sold_vehicles']) && $this->_options['hide_sold_vehicles'] === 'on')
+    if(isset($this->_options_2['hide_sold_vehicles']) && $this->_options_2['hide_sold_vehicles'] === 'on')
     {
         if($filterObject === null)
         {
@@ -209,7 +210,7 @@ try{
 		$filterObject->Propellants = array($this->_options_2['bdt_propellanttypes']);
     }
 
-    //jlk $initialFilterOptions = $this->biltorvetAPI->GetFilterOptions($filterObject);
+    $initialFilterOptions = $this->biltorvetAPI->GetFilterOptions($filterObject);
 } catch(Exception $e) {
     die($e->getMessage());
 }
@@ -303,6 +304,9 @@ $customVehicleTypeIconColor = (isset($this->_options_5)) && (isset($this->_optio
             </div>
 
             <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3 multiple-select" <?= $showPriceTypes ?>>
+				<?php if(isset($this->_options_2['bdt_price_label_leasing_searchfilter']) && $this->_options_2['bdt_price_label_leasing_searchfilter'] != null) {
+                        echo '<span id="LeasingAlternativeName" hidden>' . $this->_options_2['bdt_price_label_leasing_searchfilter'] . '</span>';
+                        }; ?>
                 <select class="pricetype multiple" multiple="multiple" name="priceType" id="priceType" data-contenttype="pristyper"></select>
                 <label class="selectDropDownLabel">
                     <span class="placeholder-text"><?php _e('- Select price type -', 'biltorvet-dealer-tools'); ?></span>

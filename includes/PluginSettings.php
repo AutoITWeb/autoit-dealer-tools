@@ -331,6 +331,29 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt-settings-group-3', // Page
                 'bdt_settings_section_3' // Section
             );
+            //ivp "neltoft inspireret ny-udvikling" FA-10761
+            add_settings_field(
+                'bdt_price_label_leasing_details',
+                __( 'Label for leasingpris (Detaljeside)' ),
+                array( $this, 'bdt_price_label_leasing_details_callback' ), // Callback
+                'bdt-settings-group-3', // Page
+                'bdt_settings_section_3' // Section
+            );
+            add_settings_field(
+                'bdt_price_label_cash_details',
+                __( 'Label for kontantpris (Detaljeside)' ),
+                array( $this, 'bdt_price_label_cash_details_callback' ), // Callback
+                'bdt-settings-group-3', // Page
+                'bdt_settings_section_3' // Section
+            );
+            add_settings_field(
+                'bdt_price_label_finance_details',
+                __( 'Label for finansieringspris (Detaljeside)' ),
+                array( $this, 'bdt_price_label_finance_details_callback' ), // Callback
+                'bdt-settings-group-3', // Page
+                'bdt_settings_section_3' // Section
+            );
+            //ivp END
 
             add_settings_field(
                 'bdt_show_thumbnails_details',
@@ -668,6 +691,51 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt_settings_section_2' // Section
             );
 
+            //ivp "neltoft inspireret ny-udvikling" FA-10761
+            add_settings_field(
+                'bdt_price_label_leasing',
+                __( 'Label for leasingpris (bilkort)' ),
+                array( $this, 'bdt_price_label_leasing_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+            add_settings_field(
+                'bdt_price_label_leasing_searchfilter',
+                __( 'Label for leasingpris i søgefilter' ),
+                array( $this, 'bdt_price_label_leasing_searchfilter_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+            add_settings_field(
+                'bdt_price_label_cash',
+                __( 'Label for kontantpris (bilkort)' ),
+                array( $this, 'bdt_price_label_cash_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+            /*add_settings_field(
+                'bdt_price_label_cash',
+                __( 'Label for kontantpris i søgefilter' ),
+                array( $this, 'bdt_price_label_cash_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+            add_settings_field(
+                'bdt_price_label_finance',
+                __( 'Label for finansieringspris i søgefilter' ),
+                array( $this, 'bdt_price_label_finance_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );*/
+            add_settings_field(
+                'bdt_price_label_finance',
+                __( 'Label for finansieringspris (bilkort)' ),
+                array( $this, 'bdt_price_label_finance_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+            //ivp END
+
             add_settings_field(
                 'bdt_pricetypes',
                 __( 'Choose pricetype to show', 'biltorvet-dealer-tools' ),
@@ -702,9 +770,9 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
 
             add_settings_field(
-                'bdt_hide_secondary_price',
+                'bdt_hide_secondary_and_tertiary_price',
                 __( 'Skjul sekundær og tertiær pris', 'biltorvet-dealer-tools' ),
-                array( $this, 'bdt_hide_secondary_price_callback' ),
+                array( $this, 'bdt_hide_secondary_and_tertiary_price_callback' ),
                 'bdt-settings-group-2', // Page
                 'bdt_settings_section_2' // Section
             );
@@ -1535,6 +1603,36 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
             echo $HTML;
         }
+        //ivp FA-10761
+        public function bdt_price_label_leasing_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_2" name="bdt_options_2[bdt_price_label_leasing]" value="%s" size="30"/>',
+                isset( $this->options_2['bdt_price_label_leasing'] ) ? esc_attr( $this->options_2['bdt_price_label_leasing']) : ''
+            );
+        }
+        public function bdt_price_label_leasing_searchfilter_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_2" name="bdt_options_2[bdt_price_label_leasing_searchfilter]" value="%s" size="30"/>',
+                isset( $this->options_2['bdt_price_label_leasing_searchfilter'] ) ? esc_attr( $this->options_2['bdt_price_label_leasing_searchfilter']) : ''
+            );
+        }
+        public function bdt_price_label_cash_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_2" name="bdt_options_2[bdt_price_label_cash]" value="%s" size="30"/>',
+                isset( $this->options_2['bdt_price_label_cash'] ) ? esc_attr( $this->options_2['bdt_price_label_cash']) : ''
+            );
+        }
+        public function bdt_price_label_finance_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_2" name="bdt_options_2[bdt_price_label_finance]" value="%s" size="30"/>',
+                isset( $this->options_2['bdt_price_label_finance'] ) ? esc_attr( $this->options_2['bdt_price_label_finance']) : ''
+            );
+        }
+        // ivp END
 
 		//jlk
         // Sets the filter "PropellantTypes"
@@ -1565,12 +1663,12 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
         }
 
-        // Hides / shows the secondary price
-        public function bdt_hide_secondary_price_callback()
+        // Hides / shows the secondary and tertiary price
+        public function bdt_hide_secondary_and_tertiary_price_callback()
         {
             printf(
-                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[bdt_hide_secondary_price]"%s />',
-                isset( $this->options_2['bdt_hide_secondary_price'] ) && $this->options_2['bdt_hide_secondary_price'] === 'on' ? ' checked="checked"' : ''
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[bdt_hide_secondary_and_tertiary_price]"%s />',
+                isset( $this->options_2['bdt_hide_secondary_and_tertiary_price'] ) && $this->options_2['bdt_hide_secondary_and_tertiary_price'] === 'on' ? ' checked="checked"' : ''
             );
         }
 
@@ -1663,6 +1761,29 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 isset( $this->options_3['bdt_hide_financing_prices_details'] ) && $this->options_3['bdt_hide_financing_prices_details'] === 'on' ? ' checked="checked"' : ''
             );
         }
+        //ivp FA-10761
+        public function bdt_price_label_leasing_details_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_3" name="bdt_options_3[bdt_price_label_leasing_details]" value="%s" size="30"/>',
+                isset( $this->options_3['bdt_price_label_leasing_details'] ) ? esc_attr( $this->options_3['bdt_price_label_leasing_details']) : ''
+            );
+        }
+        public function bdt_price_label_cash_details_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_3" name="bdt_options_3[bdt_price_label_cash_details]" value="%s" size="30"/>',
+                isset( $this->options_3['bdt_price_label_cash_details'] ) ? esc_attr( $this->options_3['bdt_price_label_cash_details']) : ''
+            );
+        }
+        public function bdt_price_label_finance_details_callback()
+        {
+            printf(
+                '<input type="text" id="bdt_options_3" name="bdt_options_3[bdt_price_label_finance_details]" value="%s" size="30"/>',
+                isset( $this->options_3['bdt_price_label_finance_details'] ) ? esc_attr( $this->options_3['bdt_price_label_finance_details']) : ''
+            );
+        }
+        //ivp END
 
         public function bdt_show_thumbnails_details_callback()
         {

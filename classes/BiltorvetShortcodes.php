@@ -68,6 +68,8 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 			add_shortcode('bdt_has_leasingPrice', array($this, 'bdt_shortcode_has_leasingPrice'));
 			add_shortcode('bdt_vehicle_price_type', array($this, 'bdt_shortcode_vehicleprice_type'));
 			add_shortcode('bdt_GenerateKontantprisTabContent', array($this, 'bdt_shortcode_GenerateKontantprisTabContent'));
+			//jlk ny benyttes i ElbesparelsesWidget hvis man har mere end en afdeling.
+			add_shortcode('bdt_CompanyId', array($this, 'bdt_shortcode_CompanyId'));
 
             add_action('wp_head', array(&$this, 'bdt_insert_map_dependencies'), 1000);
         }
@@ -1152,6 +1154,15 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 return "";
             }
 
+			//jlk FA-10756 start shortcode property til at returnere maxChargingEffectKW + homeChargerMaxChargingEffectKW as onlynumbers (kun numre) benyttes i forbindelse med elbil besparelseswidget (rækkevidde)
+			if(($propertyName == 'maxChargingEffectKW' || $propertyName == 'homeChargerMaxChargingEffectKW') && isset($atts['onlynumber']) && $atts['onlynumber'] === 'true')
+			{
+				// Remove all non-numeric characters
+				$onlynumber = preg_replace('/\D/', '', $value);
+				return $onlynumber;
+			}
+			//jlk FA-10756 slut
+
             return isset($value) && trim($value) !== '' ? nl2br($value) : (isset($atts['nona']) ? $atts['nona'] : __('N/A', 'biltorvet-dealer-tools'));
         }
 
@@ -1231,6 +1242,19 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
             return $content;
         }
+		
+		//jlk ny benyttes i ElbesparelsesWidget hvis man har mere end en afdeling.
+        public function bdt_shortcode_CompanyId()
+        {
+            if(!isset($this->currentVehicle) || $this->currentVehicle === null)
+            {
+                return __('Vehicle not found', 'biltorvet-dealer-tools');
+            }
+			
+			$companyId = $this->currentVehicle->company->id;
+
+            return $companyId;
+        }		
 
         public function bdt_shortcode_equipment( $atts ) {
             if(!isset($this->currentVehicle) || $this->currentVehicle === null)
