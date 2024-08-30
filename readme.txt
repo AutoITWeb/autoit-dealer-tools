@@ -1,10 +1,10 @@
 ﻿=== Biltorvet Dealer Tools ===
 Contributors: biltorvetas
-Donate link: http://biltorvet.as
+Donate link: https://biltorvet.as
 Tags: cars, biltorvet, autodesktop, biler, biltorvet web
 Requires at least: 4.9.7
 Tested up to: 6.6.1
-Stable tag: 6.6.1
+Stable tag: 3.3.2
 Requires PHP: 7.4
 License: GPLv2 or later
 

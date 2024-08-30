@@ -36,7 +36,7 @@ class PrivatePluginUpdater
      */
     function __construct( $pluginFile, $gitHubUsername, $gitHubProjectName, $accessToken = '' )
     {
-        add_filter( "pre_set_site_transient_update_plugins", array( $this, "setTransitent" ) );
+        add_filter( "pre_set_site_transient_update_plugins", array( $this, "setTransient" ) );
         add_filter( "plugins_api", array( $this, "setPluginInfo" ), 10, 3 );
         add_filter( "upgrader_pre_install", array( $this, "preInstall" ), 10, 3 );
         add_filter( "upgrader_post_install", array( $this, "postInstall" ), 10, 3 );
@@ -100,12 +100,12 @@ class PrivatePluginUpdater
      * @param  object $transient
      * @return object
      */
-    public function setTransitent( $transient )
+    public function setTransient( $transient )
     {
-        if (!property_exists($transient, 'checked') || empty( $transient->checked  || !isset($transient->checked[$this->slug])) )
-        {
-            return $transient;
-        }
+		if ( ! property_exists( $transient, 'checked' ) || empty( $transient->checked ) || ! isset( $transient->checked[ $this->slug ] ) )
+		{
+			return $transient;
+		}
 
         // Get plugin & GitHub release information
         $this->initPluginData();
@@ -113,7 +113,8 @@ class PrivatePluginUpdater
         $doUpdate = false;
 
         if (isset($transient->checked[$this->slug])) {
-            $doUpdate = (bool)version_compare( $this->githubAPIResult->tag_name, $transient->checked[$this->slug] );
+			$doUpdate = (bool)version_compare($this->githubAPIResult->tag_name, $transient->checked[$this->slug], '>' );
+
         }
 
         if ( $doUpdate )
