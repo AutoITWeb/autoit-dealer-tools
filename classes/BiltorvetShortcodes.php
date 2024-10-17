@@ -991,10 +991,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
             $priceController = new PriceController(VehicleFactory::create(json_decode(json_encode($this->currentVehicle), true)));
 			
-			//Use apiKey to check if customer is Kinnerup AutoKommision to handle price differently from everyone else
+			//Use apiKey to check if customer is Kinnerup AutoKommision OR Mikroleje to handle price differently from everyone else
 			$apiKey = WordpressHelper::getApiKey();
 
-            if ($apiKey === "7260fb0b-553e-48cd-8ac2-57c58eb88979")//kinnerup
+            if ($apiKey === "7260fb0b-553e-48cd-8ac2-57c58eb88979" OR $apiKey === "d073aef5-6a13-4a9b-ad6f-7b3288f4de4d")//kinnerup OR Mikroleje
 			{
 				$showPrice = '<span class="bdt_price_container">';
 				if ($priceController->GetPrimaryPrice('details')) {
@@ -1021,7 +1021,37 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 					$showPrice .= '<span class="tertiary-price">' . $priceController->GetTertiaryPrice('details') .'</span>';
 				}
 				$showPrice .= '</span>';
-			}				
+			}	
+
+            $properties = $this->currentVehicle->properties;
+            $exclMomsPropIndex = -1;
+
+            for($i = 0; $i < count($properties); $i++)
+            {
+                if($properties[$i]->id === 'VAT')
+                {
+                    $exclMomsPropIndex = $i;
+                    break;
+                }
+            }
+
+            if($exclMomsPropIndex !== -1)
+            {
+                array_splice($properties, $exclMomsPropIndex, 1);
+            }
+
+            // Use apiKey to check if customer is NOT Neltoft gruppen OR Mikroleje
+            if ($apiKey !== "c36f9c6d-cf10-49b3-ad2d-b875b6610d7a" && $apiKey !== "d073aef5-6a13-4a9b-ad6f-7b3288f4de4d")
+            {
+                $showPrice .= '<div class="bdt_price_more-info">';
+                $showPrice .= '<input id="priceInfo" class="bdt_price_more-info_checkbox" type="checkbox">';
+                $showPrice .= '<label for="priceInfo" class="bdt_price_more-info_drop"><span class="bdt_price_more-info_icon"></span></label>';
+                $showPrice .= '<div class="bdt_price_more-info_content">';
+                $showPrice .= TextUtils::GenerateSpecificationsTable($properties, true);
+                $showPrice .= '</div>';
+                $showPrice .= '</div>';
+            }
+
             return $showPrice;
         }
 
@@ -1190,23 +1220,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             }
             $properties = $this->currentVehicle->properties;
 
-            $exclMomsPropIndex = -1;
-
-            for($i = 0; $i < count($properties); $i++)
-            {
-                if($properties[$i]->id === 'VAT')
-                {
-                    $exclMomsPropIndex = $i;
-                    break;
-                }
-            }
-
-            if($exclMomsPropIndex !== -1)
-            {
-                array_splice($properties, $exclMomsPropIndex, 1);
-            }
-
-            return '<div class="bdt">'.TextUtils::GenerateSpecificationsTable($properties).'</div>';
+            return '<div class="bdt">'.TextUtils::GenerateSpecificationsTable($properties, false).'</div>';
         }
 
 		//jlk

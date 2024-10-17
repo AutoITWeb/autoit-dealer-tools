@@ -153,7 +153,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             return $content;
         }
 
-        public static function GenerateSpecificationsTable($array)
+        public static function GenerateSpecificationsTable($array, $financesOnly)
         {
             $groups = array();
             $content = '';
@@ -186,7 +186,22 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 $groupPropertiesContent = '<h5>' . __($group, 'biltorvet-dealer-tools') . '</h5>';
                 $groupPropertiesContent .= '<div class="row">' . $groupPropertiesContentItems . '</div>';
 
-                $content .= '<div class="specificationsGroup">' . ($icon !== null ? '<div class="iconColumn">' . $icon . '</div>' : '' ) . '<div class="contentColumn">' . $groupPropertiesContent . '</div></div>';
+                if ($financesOnly === true) {
+                    if ($group === 'Finances') {
+                        $content .= '<div class="specificationsGroup group' . TextUtils::Sanitize($group) . '"><div class="contentColumn">' . $groupPropertiesContent . '</div></div>';
+                    } else  {
+                        $content .= '';
+                    }
+                } else if ($financesOnly === false) {
+                    if ($group === 'Finances') {
+                        $content .= '';
+                    } else  {
+                        $content .= '<div class="specificationsGroup group' . TextUtils::Sanitize($group) . '">' . ($icon !== null ? '<div class="iconColumn">' . $icon . '</div>' : '' ) . '<div class="contentColumn">' . $groupPropertiesContent . '</div></div>';
+                    }
+                } else {
+                    $content .= '<div class="specificationsGroup group' . TextUtils::Sanitize($group) . '">' . ($icon !== null ? '<div class="iconColumn">' . $icon . '</div>' : '' ) . '<div class="contentColumn">' . $groupPropertiesContent . '</div></div>';
+                }
+                
             }
 
             return $content;
