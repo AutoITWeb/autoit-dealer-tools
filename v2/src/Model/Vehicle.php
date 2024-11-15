@@ -754,7 +754,7 @@ class Vehicle
     // Vehicle properties shown on vehicle card
     public static function getVehicleParam(string $propertiesValue, Array $vehicleProperties, Vehicle $vehicle) : string
     {
-        $HTML = '<span class="vehicleParamValue">';
+        $HTML = '<span class="vehicleParamValue' . ($vehicle->getPropellant() === "El" ? ' electricIcon' : '') .'">';
 
         switch ($propertiesValue) {
             case '0':

@@ -176,7 +176,7 @@ $hybridTypes = [
                 <span class="vehicleThumb<?= $hasVideo; ?>">
                     <img src="<?= $vehicle->getVehicleCardImage() ?? $vehicle->getImages()[0] ?>" class="img-responsive" loading="lazy" alt="<?= $vehicle->getMakeName() .' '. $vehicle->getModel() .' '. $vehicle->getVariant() ?>"/>
                         <?php if ($vehicleLabels) : ?>
-
+                            <span class="labelContainer">
                             <?php foreach ($vehicleLabels as $label) : ?>
                                 <?php if($label == 'Carlite Forhandler Label' && $carliteDealerLabel != null) : ?>
 
@@ -268,9 +268,9 @@ $hybridTypes = [
                                     <p><span class="vehicleLabel <?= $label; ?>"><?= $label; ?></span></p><br>
 
                                 <?php endif; ?>
-
+                                
                             <?php endforeach; ?>
-
+                            </span>
                         <?php endif; ?>
                 </span>
                 <span class="vehicleDescription">
