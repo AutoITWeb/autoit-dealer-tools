@@ -5504,182 +5504,219 @@ a.bdt .badge-dark.focus {
 }
 
 /* label start */
-span.vehicleLabel.Demonstration, .badge.Demonstration {
+span.vehicleLabel.Demonstration,
+.badge.Demonstration {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.Udlejning, .badge.Udlejning {
+span.vehicleLabel.Udlejning,
+.badge.Udlejning {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.På.vej.ind, .badge.På.vej.ind {
+span.vehicleLabel.På.vej.ind,
+.badge.På.vej.ind {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.Solgt, .badge.Solgt {
+span.vehicleLabel.Solgt,
+.badge.Solgt {
   background-color: #dc3545;
   color: white;
 }
 
-span.vehicleLabel.Reserveret, .badge.Reserveret {
+span.vehicleLabel.Reserveret,
+.badge.Reserveret {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.Klargjort, .badge.Klargjort {
+span.vehicleLabel.Klargjort,
+.badge.Klargjort {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.Uklargjort, .badge.Uklargjort {
+span.vehicleLabel.Uklargjort,
+.badge.Uklargjort {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.Kun.engros, .badge.Kun.engros {
+span.vehicleLabel.Kun.engros,
+.badge.Kun.engros {
   background-color: #bde0eb;
   color: white;
 }
 
-span.vehicleLabel.I.fokus, .badge.I.fokus {
+span.vehicleLabel.I.fokus,
+.badge.I.fokus {
   background-color: #ff9900;
   color: white;
 }
 
-span.vehicleLabel.Nyhed, .badge.Nyhed {
+span.vehicleLabel.Nyhed,
+.badge.Nyhed {
   background-color: #28a745;
   color: white;
 }
 
-span.vehicleLabel.Leasing, .badge.Leasing {
+span.vehicleLabel.Leasing,
+.badge.Leasing {
   background-color: #17a2b8;
   color: white;
 }
 
-span.vehicleLabel.Afhentning, .badge.Afhentning {
+span.vehicleLabel.Afhentning,
+.badge.Afhentning {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.Lagersalg, .badge.Lagersalg {
+span.vehicleLabel.Lagersalg,
+.badge.Lagersalg {
   background-color: #6c757d;
   color: white;
 }
 
-span.vehicleLabel.Kommision, .badge.Kommision {
+span.vehicleLabel.Kommision,
+.badge.Kommision {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.Kampagne, .badge.Kampagne {
+span.vehicleLabel.Kampagne,
+.badge.Kampagne {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.Flexleasing, .badge.Flexleasing {
+span.vehicleLabel.Flexleasing,
+.badge.Flexleasing {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.Udlejning.Mekanisk\(værksted\), .badge.Udlejning.Mekanisk\(værksted\) {
+span.vehicleLabel.Udlejning.Mekanisk\(værksted\),
+.badge.Udlejning.Mekanisk\(værksted\) {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.Udlejning.Skadecenter, .badge.Udlejning.Skadecenter {
+span.vehicleLabel.Udlejning.Skadecenter,
+.badge.Udlejning.Skadecenter {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.Uden.afgift, .badge.Uden.afgift {
+span.vehicleLabel.Uden.afgift,
+.badge.Uden.afgift {
   background-color: #343a40;
   color: white;
 }
 
-span.vehicleLabel.Eksport, .badge.Eksport {
+span.vehicleLabel.Eksport,
+.badge.Eksport {
   background-color: #ffc107;
   color: white;
 }
 
-span.vehicleLabel.Carlite.Forhandler.Label, .badge.Carlite.Forhandler.Label, .bdt .vehicleCard .vehicleLabel.DealerSpecificLabel {
+span.vehicleLabel.Carlite.Forhandler.Label,
+.badge.Carlite.Forhandler.Label,
+.bdt .vehicleCard .vehicleLabel.DealerSpecificLabel {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.Online.køb, .badge.Online.køb {
+span.vehicleLabel.Online.køb,
+.badge.Online.køb {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.Onlinerabat.\33 000kr, .badge.Onlinerabat.\33 000kr {
+span.vehicleLabel.Onlinerabat.\33 000kr,
+.badge.Onlinerabat.\33 000kr {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.Onlinerabat, .badge.Onlinerabat {
+span.vehicleLabel.Onlinerabat,
+.badge.Onlinerabat {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.Skjul.fra.webshop, .badge.Skjul.fra.webshop {
+span.vehicleLabel.Skjul.fra.webshop,
+.badge.Skjul.fra.webshop {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.RentLog.\-.ekstern, .badge.RentLog.\-.ekstern {
+span.vehicleLabel.RentLog.\-.ekstern,
+.badge.RentLog.\-.ekstern {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.RentLog.\-.intern, .badge.RentLog.\-.intern {
+span.vehicleLabel.RentLog.\-.intern,
+.badge.RentLog.\-.intern {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.Trailer, .badge.Trailer {
+span.vehicleLabel.Trailer,
+.badge.Trailer {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.Klassiker, .badge.Klassiker {
+span.vehicleLabel.Klassiker,
+.badge.Klassiker {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.Traktor, .badge.Traktor {
+span.vehicleLabel.Traktor,
+.badge.Traktor {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.Fabriksny, .badge.Fabriksny {
+span.vehicleLabel.Fabriksny,
+.badge.Fabriksny {
   background-color: #663399;
   color: white;
 }
 
-span.vehicleLabel.Udelad.fra.Onlinesalg, .badge.Udelad.fra.Onlinesalg {
+span.vehicleLabel.Udelad.fra.Onlinesalg,
+.badge.Udelad.fra.Onlinesalg {
   background-color: orange;
   color: white;
 }
 
-span.vehicleLabel.Elbil, .badge.Elbil {
+span.vehicleLabel.Elbil,
+.badge.Elbil {
   background-color: #018939;
   color: white;
 }
 
-span.vehicleLabel.Hybrid, .badge.Hybrid {
+span.vehicleLabel.Hybrid,
+.badge.Hybrid {
   background-color: #018939;
   color: white;
 }
 
-span.vehicleLabel.Diesel, .badge.Diesel {
+span.vehicleLabel.Diesel,
+.badge.Diesel {
   background-color: #ffdf01;
   color: white;
 }
 
-span.vehicleLabel.Benzin, .badge.Benzin {
+span.vehicleLabel.Benzin,
+.badge.Benzin {
   background-color: #ffdf01;
   color: white;
 }
@@ -5688,7 +5725,8 @@ span.vehicleLabel.Benzin, .badge.Benzin {
   color: #aaa !important;
   cursor: not-allowed;
 }
-#TestDrive-disabled.disable-grey, #Purchase-disabled.disable-grey {
+#TestDrive-disabled.disable-grey,
+#Purchase-disabled.disable-grey {
   color: #aaa !important;
   cursor: not-allowed;
 }
@@ -6024,13 +6062,12 @@ bdt .vehicle_search_results select,
 
 .bdt_spec_label {
   font-size: 0.8em;
-  color: theme-colors("gray-dark");
   padding: 5px 0 0 0 !important;
   line-height: 1.4;
+  font-weight: bold;
 }
 
 .bdt_spec_value {
-  color: #000;
   padding: 0 0 10px 0 !important;
 }
 
@@ -7201,4 +7238,71 @@ bdt .vehicle_search_results select,
   justify-content: center;
   align-items: baseline;
   flex-direction: row-reverse;
+}
+/* Info ikon ved pris på bildetalje */
+.bdt_price_more-info_icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin-right: 10px;
+}
+.bdt_price_more-info_icon:before {
+  content: "i";
+  display: block;
+  border: 2px solid;
+  width: 18px;
+  height: 18px;
+  border-radius: 100%;
+  text-align: center;
+  line-height: 16px;
+  font-size: 16px;
+  font-family: serif;
+  font-weight: bold;
+  cursor: pointer;
+}
+/* END Info ikon */
+.bdt_price_more-info_drop {
+  cursor: pointer;
+  display: block;
+  text-align: right;
+  margin-top: -40px;
+  position: relative;
+  min-width: 40px;
+  float: right;
+}
+
+input[type="checkbox"].bdt_price_more-info_checkbox {
+  display: none;
+}
+
+input.bdt_price_more-info_checkbox
+  + .bdt_price_more-info_drop
+  + .bdt_price_more-info_content {
+  display: none;
+}
+input.bdt_price_more-info_checkbox:checked
+  + .bdt_price_more-info_drop
+  + .bdt_price_more-info_content {
+  display: block;
+}
+.bdt_price_more-info_content .specificationsGroup .contentColumn h5 {
+  display: none;
+}
+.bdt_price_more-info_content .specificationsGroup {
+  padding-bottom: 0;
+  line-height: 1.5em;
+}
+.bdt_price_more-info_content .specificationsGroup .contentColumn {
+  margin-left: 1em;
+}
+.bdt_price_more-info_content .bdt_spec_label,
+.bdt_price_more-info_content .bdt_spec_value {
+  display: inline-block;
+  padding: 0 !important;
+  line-height: 1.5em;
+  font-size: 11px;
+}
+.bdt_price_more-info_content .bdt_spec_label:after {
+  margin-right: 5px;
+  content: ":";
 }
