@@ -96,7 +96,8 @@ class ApiController
             "Placering",
             "Kørte kilometer",
             "Km/L",
-            "Drivemiddel"
+            "Drivmiddel",
+            "Rækkevidde (El)"
         );
 
         return $vehicleCardProps;

@@ -793,6 +793,10 @@ class Vehicle
                 $HTML .= '' . $vehicle->getPropellant() ?? '-' . '';
                 $HTML .= '</span><span class="vehicleParamLabel">Drivmiddel</span>';
                 break;
+            case '7':
+                $HTML .= '' . $vehicleProperties['ElectricReach']->getValueFormatted() != "" ? $vehicleProperties['ElectricReach']->getValueFormatted() : '-' . '';
+                $HTML .= '</span><span class="vehicleParamLabel">Rækkevidde</span>';
+                break;				
         }
 
         return $HTML;

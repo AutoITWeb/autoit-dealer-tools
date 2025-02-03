@@ -315,6 +315,15 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt-settings-group-1', // Page
                 'bdt_settings_section_1' // Section
             );
+			
+			//jlk
+            add_settings_field(
+                'bdt_leads_data_to_campaignRequest',
+                __( 'Send Lead CampaignRequest Data til AutoDesktop', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_leads_data_to_campaignRequest_callback' ),
+                'bdt-settings-group-1', // Page
+                'bdt_settings_section_1' // Section
+            );			
 
             add_settings_field(
                 'bdt_hide_leasing_prices_details',
@@ -666,6 +675,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt-settings-group-2', // Page
                 'bdt_settings_section_2' // Section
             );
+			
+            add_settings_field(
+                'bdt_hide_leasing_label',
+                __( 'Skjul Leasing label (bilkort)', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_hide_leasing_label_callback' ),
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );			
 
             add_settings_field(
                 'bdt_hide_leasing_prices_card',
@@ -1140,6 +1157,15 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 isset( $this->options['adt_email_receipt'] ) && $this->options['adt_email_receipt'] === 'on' ? ' checked="checked"' : ''
             );
         }
+		
+		//jlk
+        public function bdt_leads_data_to_campaignRequest_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options" value="on" name="bdt_options[leads_data_to_campaignRequest]"%s />',
+                isset( $this->options['leads_data_to_campaignRequest'] ) && $this->options['leads_data_to_campaignRequest'] === 'on' ? ' checked="checked"' : ''
+            );
+        }		
 
         // Refresh the rewrite rules when the detail template page had been changed
         public function bdt_update_option_cb()
@@ -1582,7 +1608,13 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
         }
 
-
+        public function bdt_hide_leasing_label_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[hide_leasing_label]"%s />',
+                isset( $this->options_2['hide_leasing_label'] ) && $this->options_2['hide_leasing_label'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
 
         // Sets the filter "PriceTypes"
         public function bdt_pricetypes_callback()

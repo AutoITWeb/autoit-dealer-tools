@@ -151,6 +151,7 @@ $carliteKunEngrosLabel = isset($options_two['carlite_kun_engros_label']) ? $opti
 $carliteEksportLabel = isset($options_two['carlite_eksport_label']) ? $options_two['carlite_eksport_label'] : null;
 $carliteLagersalgLabel = isset($options_two['carlite_lagersalg_label']) ? $options_two['carlite_lagersalg_label'] : null;
 $carliteDemonstrationLabel = isset($options_two['carlite_demonstration_label']) ? $options_two['carlite_demonstration_label'] : null;
+$skjulLeasingLabel = isset($options_two['hide_leasing_label']);
 
 $hasVideo = $vehicle->getHasVideo() === true ? ' hasVideo' : '';
 
@@ -262,6 +263,10 @@ $hybridTypes = [
                                 <?php elseif (in_array($label, $hybridTypes)) : ?>
 
                                 <p><span class="vehicleLabel Hybrid"><?= $label; ?></span></p><br>
+								
+                                <?php elseif($label == 'Leasing' && $skjulLeasingLabel) : ?>
+
+                                    <?php unset($vehicleLabels[$label]); ?>							
 
                                 <?php else: ?>
 

@@ -1,37 +1,53 @@
-﻿=== Biltorvet Dealer Tools ===
-Contributors: biltorvetas
-Donate link: https://biltorvet.as
-Tags: cars, biltorvet, autodesktop, biler, biltorvet web
+﻿=== AutoIT Dealer Tools ===
+Contributors: autoitas
+Donate link: https://www.autoit.dk/
+Tags: cars, autoit, autodesktop, biler, biltorvet web
 Requires at least: 4.9.7
-Tested up to: 6.6.1
-Stable tag: 3.3.2
+Tested up to: 6.6.7
+Stable tag: 3.3.3
 Requires PHP: 7.4
-License: GPLv2 or later
+License: Proprietary
+License URI: https://www.biltorvet.as/media/1385/betingelser-biltorvetas.pdf
 
-Biltorvet Dealer Tools makes it possible to show and search in the cars, that is created in the sales software AutoDesktop. AutoDesktop is also provided by Biltorvet A/S. 
+AutoIT Dealer Tools makes it possible to show and search for cars created in the AutoDesktop sales software. AutoDesktop is also provided by Auto IT A/S.
 
-Med Biltorvet Dealer Tools bliver det muligt at få vist sine biler fra AutoDesktop på sin hjemmeside. Dine besøgende får mulighed for at søge blandt jeres biler og se deltajer om dem.
+Med AutoIT Dealer Tools bliver det muligt at få vist sine biler fra AutoDesktop på sin hjemmeside. Dine besøgende får mulighed for at søge blandt jeres biler og se detaljer om dem.
 
 == Description ==
 
-Biltorvet Dealer Tools er fuld integreret med AutoDesktop, så din hjemmeside kan sende leads direkte til salgsprogrammet AutoDesktop.
-
+AutoIT Dealer Tools er fuldt integreret med AutoDesktop, så din hjemmeside kan sende leads direkte til salgsprogrammet AutoDesktop.
 
 == Installation ==
 
-1. Install the plugin through wordpress plugin repository
-2. Activate the plugin through the 'Plugins' screen in WordPress
-3. Use the Settings->Biltorvet to configure the plugin
-4. Enter the API-key provided by Biltorvet A/S and configure the settings.
-
+1. Install the plugin through the WordPress plugin repository.
+2. Activate the plugin through the 'Plugins' screen in WordPress.
+3. Use the **Settings -> AutoIT Dealer Tools** to configure the plugin.
+4. Enter the API key provided by Auto IT A/S and configure the settings.
 
 == Screenshots ==
 
-1. Car detailpage
+1. Car detail page
 2. Car search
 3. Plugin settings
 
 == Changelog ==
+
+= 3.3.3 =
+* Adds option to toggle Leasing label (On/Off)
+* Adds Rækkevidde (range) on Electric Cars (Car Detail Page)
+* Adds new shortcodes to toggle Rækkevidde (range) on cars (Car Detail Page)
+* Adds mandatory texts on financing
+* Adds default color (orange) on Nysynet label
+* Minor CSS changes
+* Adds preparation for better lead handling of mail forms
+* Minor plugin update adjustments
+
+For a complete list of changes, see the [full changelog](https://github.com/AutoITWeb/autoit-dealer-tools/releases) on GitHub.
+
+= 3.3.2 =
+* Plugin Update Adjustments
+
+For a complete list of changes, see the [full changelog](https://github.com/AutoITWeb/autoit-dealer-tools/releases) on GitHub.
 
 = 3.3.1 =
 * Adds Ladeeffekt DC and Ladeeffect AC in specifications

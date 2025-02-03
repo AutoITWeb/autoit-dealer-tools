@@ -70,10 +70,66 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 			add_shortcode('bdt_GenerateKontantprisTabContent', array($this, 'bdt_shortcode_GenerateKontantprisTabContent'));
 			//jlk ny benyttes i ElbesparelsesWidget hvis man har mere end en afdeling.
 			add_shortcode('bdt_CompanyId', array($this, 'bdt_shortcode_CompanyId'));
+			//jlk forbrug/rækkevidde ændringer
+			add_shortcode('bdt_forbrug_eller_raekkevidde_label', array($this, 'bdt_shortcode_forbrug_eller_raekkevidde_label'));
+			add_shortcode('bdt_forbrug_eller_raekkevidde_data', array($this, 'bdt_shortcode_forbrug_eller_raekkevidde_data'));
+			
 
             add_action('wp_head', array(&$this, 'bdt_insert_map_dependencies'), 1000);
         }
-
+		
+		//JLK ny forbrug/rækkevidde ændringer
+		public function bdt_shortcode_forbrug_eller_raekkevidde_label( $atts )
+		{
+			$vehiclePropellant = $this->currentVehicle->propellant;
+		
+			if ($vehiclePropellant == "EL" || $vehiclePropellant == "El") 
+			{
+				if(($atts['design']) === 'v1')
+				{
+					return ('<p>Rækkevidde</p>');
+				}
+				else if(($atts['design']) === 'v2')
+				{
+					return ('Rækkevidde');
+				}
+				else 
+				{
+					return ('Ukendt rækkevidde');
+				}
+			}
+			else
+			{
+				if(($atts['design']) === 'v1')
+				{
+					return ('<p>Forbrug</p>');
+				}
+				else if(($atts['design']) === 'v2')
+				{
+					return ('Forbrug');
+				}
+				else 
+				{
+					return ('Ukendt Forbrug');
+				}
+			}
+		}
+		
+		//JLK ny forbrug/rækkevidde ændringer
+		public function bdt_shortcode_forbrug_eller_raekkevidde_data()
+		{
+			$vehiclePropellant = $this->currentVehicle->propellant;
+		
+			if ($vehiclePropellant == "EL" || $vehiclePropellant == "El") 
+			{
+				return do_shortcode("[bdt_prop p='ElectricReach']");
+			}
+			else
+			{
+				return do_shortcode("[bdt_prop p='Kmx1l']");
+			}
+		}		
+		
 		//JLK ny
         public function bdt_shortcode_has_cashPrice()
         {
@@ -446,7 +502,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 			
 			$options_two = get_option('bdt_options_2');
 
-			$vehicleLabelsBTS = self::sortVehicleLabelsBTS($this->currentVehicle->labels, isset($options_two['show_all_labels']) ?? null);			
+			$vehicleLabelsBTS = self::sortVehicleLabelsBTS($this->currentVehicle->labels, isset($options_two['show_all_labels']) ?? null);
 
 			$vehiclePropellant = $this->currentVehicle->propellant;
 			if (($vehiclePropellant == "EL" || $vehiclePropellant == "El") && !isset($options_two['hide_elbil_label']))
@@ -570,6 +626,8 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 				$carliteEksportLabel = isset($options_two['carlite_eksport_label']) ? $options_two['carlite_eksport_label'] : null;
 				$carliteLagersalgLabel = isset($options_two['carlite_lagersalg_label']) ? $options_two['carlite_lagersalg_label'] : null;
 				$carliteDemonstrationLabel = isset($options_two['carlite_demonstration_label']) ? $options_two['carlite_demonstration_label'] : null;
+				$skjulLeasingLabel = isset($options_two['hide_leasing_label']) ? $options_two['hide_leasing_label'] : null;
+
 				if($label == 'Carlite Forhandler Label' && $carliteDealerLabel != null) 
 				{
 					$dealerSpecificLabel = str_replace("Carlite Forhandler Label", $carliteDealerLabel, $label);
@@ -638,6 +696,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 				}
 				else if (in_array($label, $hybridTypes)) {
 					$labels .= '<span class="badge Hybrid mr-2 mb-1">' . $label . '</span>';
+				}
+				else if($label == 'Leasing' && $skjulLeasingLabel) 
+				{
+					$labels .= '';		
 				}
 				
 				else 
@@ -933,7 +995,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             if(($atts['type']) === 'Contact')
             {
                 if($this->currentVehicle->company->phone != null) {
-                    return (isset($style) ? $style : '') . '<a id="'. $id .'" href="tel:' . $this->currentVehicle->company->phone . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+                    return (isset($style) ? $style : '') . '<a rel="nofollow" id="'. $id .'" href="tel:' . $this->currentVehicle->company->phone . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
                 }
             }
 			
@@ -943,7 +1005,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 				{
 					if(!$statusSold)
 					{
-						return (isset($style) ? $style : '') . '<a id="'. $id .'" href="'. $root . '?'. http_build_query(array('bdt_actiontype' => $atts['type'], 'bdt_vehicle_id' => $this->currentVehicle->documentId)) . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+						return (isset($style) ? $style : '') . '<a rel="nofollow" id="'. $id .'" href="'. $root . '?'. http_build_query(array('bdt_actiontype' => $atts['type'], 'bdt_vehicle_id' => $this->currentVehicle->documentId)) . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
 					}
 					else
 					{
@@ -954,16 +1016,16 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 				{
 					if(!$statusSold)
 					{
-						return (isset($style) ? $style : '') . '<a id="'. $id .'" href="'. $root . '?'. http_build_query(array('bdt_actiontype' => $atts['type'], 'bdt_vehicle_id' => $this->currentVehicle->documentId)) . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+						return (isset($style) ? $style : '') . '<a rel="nofollow" id="'. $id .'" href="'. $root . '?'. http_build_query(array('bdt_actiontype' => $atts['type'], 'bdt_vehicle_id' => $this->currentVehicle->documentId)) . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
 					}
 					else
 					{
-						return (isset($style) ? $style : '') . '<a id="'. $id .'-disabled" href="#" class="bdt_cta disable-grey '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+						return (isset($style) ? $style : '') . '<a rel="nofollow" id="'. $id .'-disabled" href="#" class="bdt_cta disable-grey '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
 					}
 				}
 			}
 
-            return (isset($style) ? $style : '') . '<a id="'. $id .'" href="'. $root . '?'. http_build_query(array('bdt_actiontype' => $atts['type'], 'bdt_vehicle_id' => $this->currentVehicle->documentId)) . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+            return (isset($style) ? $style : '') . '<a rel="nofollow" id="'. $id .'" href="'. $root . '?'. http_build_query(array('bdt_actiontype' => $atts['type'], 'bdt_vehicle_id' => $this->currentVehicle->documentId)) . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
         }
 
         /**
@@ -991,10 +1053,10 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
             $priceController = new PriceController(VehicleFactory::create(json_decode(json_encode($this->currentVehicle), true)));
 			
-			//Use apiKey to check if customer is Kinnerup AutoKommision to handle price differently from everyone else
+			//Use apiKey to check if customer is Kinnerup AutoKommision OR PeterPetersen OR Mikroleje to handle price differently from everyone else
 			$apiKey = WordpressHelper::getApiKey();
 
-            if ($apiKey === "7260fb0b-553e-48cd-8ac2-57c58eb88979")//kinnerup
+            if ($apiKey === "7260fb0b-553e-48cd-8ac2-57c58eb88979" || $apiKey === "b16cbf16-dfda-45e4-a073-87956c7a37a9" || $apiKey === "d073aef5-6a13-4a9b-ad6f-7b3288f4de4d")//kinnerup & peterpetersen & mikroleje
 			{
 				$showPrice = '<span class="bdt_price_container">';
 				if ($priceController->GetPrimaryPrice('details')) {
@@ -1021,7 +1083,37 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 					$showPrice .= '<span class="tertiary-price">' . $priceController->GetTertiaryPrice('details') .'</span>';
 				}
 				$showPrice .= '</span>';
-			}				
+			}	
+
+            $properties = $this->currentVehicle->properties;
+            $exclMomsPropIndex = -1;
+
+            for($i = 0; $i < count($properties); $i++)
+            {
+                if($properties[$i]->id === 'VAT')
+                {
+                    $exclMomsPropIndex = $i;
+                    break;
+                }
+            }
+
+            if($exclMomsPropIndex !== -1)
+            {
+                array_splice($properties, $exclMomsPropIndex, 1);
+            }
+
+            // Use apiKey to check if customer is NOT Neltoft gruppen OR Mikroleje
+            if ($apiKey !== "c36f9c6d-cf10-49b3-ad2d-b875b6610d7a" && $apiKey !== "d073aef5-6a13-4a9b-ad6f-7b3288f4de4d")
+            {
+                $showPrice .= '<div class="bdt_price_more-info">';
+                $showPrice .= '<input id="priceInfo" class="bdt_price_more-info_checkbox" type="checkbox">';
+                $showPrice .= '<label for="priceInfo" class="bdt_price_more-info_drop"><span class="bdt_price_more-info_icon"></span></label>';
+                $showPrice .= '<div class="bdt_price_more-info_content">';
+                $showPrice .= TextUtils::GenerateSpecificationsTable($properties, true);
+                $showPrice .= '</div>';
+                $showPrice .= '</div>';
+            }
+
             return $showPrice;
         }
 
@@ -1190,23 +1282,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             }
             $properties = $this->currentVehicle->properties;
 
-            $exclMomsPropIndex = -1;
-
-            for($i = 0; $i < count($properties); $i++)
-            {
-                if($properties[$i]->id === 'VAT')
-                {
-                    $exclMomsPropIndex = $i;
-                    break;
-                }
-            }
-
-            if($exclMomsPropIndex !== -1)
-            {
-                array_splice($properties, $exclMomsPropIndex, 1);
-            }
-
-            return '<div class="bdt">'.TextUtils::GenerateSpecificationsTable($properties).'</div>';
+            return '<div class="bdt">'.TextUtils::GenerateSpecificationsTable($properties, false).'</div>';
         }
 
 		//jlk

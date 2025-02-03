@@ -65,8 +65,30 @@ class Biltorvet
 
         add_action('call_get_vehicle_data', array($this, 'get_vehicle_data'), 10, 2);
         add_action('call_AutodesktopSendLead', array($this, 'bdt_send_adt_lead'), 10, 6);
-        add_action('call_create_lead', array($this, 'bdt_create_lead'), 10, 10);
+        
+		//jlk
+		// Get the option value from the database
+        // Get the serialized data from the database
+		$bdt_options = get_option('bdt_options', []);
 
+		// Ensure it's an array before accessing values
+		if (is_array($bdt_options) && isset($bdt_options['leads_data_to_campaignRequest'])) {
+			$leads_data_to_campaignRequest_enabled = $bdt_options['leads_data_to_campaignRequest'] === 'on';
+		} else {
+			$leads_data_to_campaignRequest_enabled = false; // Default value if not found
+		}
+		
+		if ( $leads_data_to_campaignRequest_enabled )
+		{
+			//v2
+			add_action('call_create_lead', array($this, 'bdt_create_lead_with_campaignRequest'), 10, 19);
+		} 
+		else 
+		{
+			//v1 (old)
+			add_action('call_create_lead', array($this, 'bdt_create_lead'), 10, 10);
+		}
+		
         if ($this->_options['api_key'] === null || trim($this->_options['api_key']) === '') {
             add_action('admin_notices', array(&$this, 'bdt_error_noapikey'));
         } else {
@@ -183,6 +205,52 @@ class Biltorvet
             // the user should still get a success message and the lead will be saved in Divi DB - But why would it ever fail? ;-)
         }
     }
+	
+    public function bdt_create_lead_with_campaignRequest($message, $email, $name, $phoneNumber, $address, $postalcode, $city, $companyId, $externalId, $query_source, $formularnavn, $source, $medium, $campaign, $content_field, $term, $userid, $adpersonalization, $aduserdata)
+    {
+        $getCompanies = $this->biltorvetAPI->GetCompanies();
+
+        // Get first name and last name
+        $nameArray = explode(' ', $name, 2);
+
+        $current_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+        $lead = array(
+            'firstName' => $nameArray[0],
+            'lastName' => !empty($nameArray[1]) ? $nameArray[1] : "Ukendt efternavn",
+            'email' => !empty($email) ? $email : null,
+            'phonenumber' => !empty($phoneNumber) ? $phoneNumber : null,
+            'description' => $message,
+            'subject' => null,
+            'leadType' => $formularnavn,
+            'url' => !empty($current_url) ? $current_url : "Ukendt url",
+            'source' => $source,
+            'medium' => $medium,
+            'campaign' => $campaign,
+            'contentfield' => $content_field,
+            'term' => $term,
+            'userId' => $userid,
+            'adPersonalization' => $adpersonalization,
+            'adUserData' => $aduserdata
+        );		
+
+        $sendLeadTo = $companyId != 0 ? $companyId : $getCompanies->companies[0]->id;
+
+        try {
+            $response = $this->biltorvetAPI->CreateSimpleLead($lead, $sendLeadTo);
+
+            if ( is_wp_error( $response ) || $response['response']['code'] !== 200 ) {
+
+                //error_log($response->get_error_message() . ' . Response code: ' .  $response['response']['code'] . ' Tried to send lead to ' . $sendLeadTo);
+            }
+
+        } catch (Exception $e) {
+            error_log($e->getMessage() . ' Tried to send lead to ' . $sendLeadTo);
+
+            // the api handles all exceptions (more or less....) Check the api log if something fails
+            // the user should still get a success message and the lead will be saved in Divi DB - But why would it ever fail? ;-)
+        }
+    }	
 
     public function bdt_parse_request($request)
     {
@@ -312,7 +380,7 @@ class Biltorvet
     public function bdt_register_styles()
     {
         wp_register_style( 'bticons', 'https://source.autoit.dk/fonts/biltorvet/v1.0.2/bticons.css', null, '1.0.2' );
-        wp_register_style( 'bdt_style', plugins_url('css/biltorvet.min.css',  dirname(__FILE__)), array('bticons'), '1.0.1' );
+        wp_register_style( 'bdt_style', plugins_url('css/biltorvet.min.css?v=171024',  dirname(__FILE__)), array('bticons'), '1.0.2' );
         //wp_register_style( 'bdt_style', plugins_url('css/biltorvet.css',  dirname(__FILE__)), array('bticons'), '1.0.1' );
         wp_register_style('bdt_embed_style', 'https://services.autoit.dk/Embed.css', null, '1.0.1');
         wp_register_style('animate', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css', null, '4.1.1');
