@@ -3,8 +3,9 @@
 Plugin Name: AutoIT Dealer Tools
 Plugin URI:  http://www.autoit.dk/hjemmesider
 Description: Tools providing connection to AutoDesktop, and other Biltorvet services.
-Version:     3.3.3
+Version:     3.3.4
 Requires PHP: 7.4
+Tested up to: 6.7.1
 Author:      Auto IT A/S
 Author URI:  https://www.autoit.dk
 License:     Proprietary

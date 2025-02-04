@@ -3,7 +3,7 @@ Contributors: autoitas
 Donate link: https://www.autoit.dk/
 Tags: cars, autoit, autodesktop, biler, biltorvet web
 Requires at least: 4.9.7
-Tested up to: 6.6.7
+Tested up to: 6.7.1
 Stable tag: 3.3.3
 Requires PHP: 7.4
 License: Proprietary
