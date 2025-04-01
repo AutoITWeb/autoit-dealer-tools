@@ -484,6 +484,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt-settings-group-2', // Page
                 'bdt_settings_section_2' // Section
             );
+			
+            add_settings_field(
+                'hide_internal_vehicles_bilinfo',
+                sprintf(__( 'Skjul %s (internal) køretøjer', 'biltorvet-dealer-tools' ), 'Bilinfo'),
+                array( $this, 'bdt_hide_internal_vehicles_bilinfo_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );			
 
             add_settings_field(
                 'hide_sold_vehicles',
@@ -563,7 +571,24 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt-settings-group-2', // Page
                 'bdt_settings_section_2' // Section
             );
-
+			
+			//jlk
+            add_settings_field(
+                'hide_only_wholesale_vehicles',
+                __( 'Hide only vehicles with status Wholesale', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_hide_only_wholesale_vehicles_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+			
+            add_settings_field(
+                'show_only_wholesale_vehicles',
+                __( 'Show only vehicles with status Wholesale', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_show_only_wholesale_vehicles_callback' ), // Callback
+                'bdt-settings-group-2', // Page
+                'bdt_settings_section_2' // Section
+            );
+			
             add_settings_field(
                 'hide_trailer_vehicles',
                 __( 'Hide vehicles with status Trailer', 'biltorvet-dealer-tools' ),
@@ -978,6 +1003,15 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 'bdt-settings-group-5', // Page
                 'bdt_settings_section_5' // Section
             );
+			
+			//jlk
+            add_settings_field(
+                'frontpagesearch_electricrange',
+                __( 'Activate electric range', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_frontpagesearch_electricrange_callback' ),
+                'bdt-settings-group-5', // Page
+                'bdt_settings_section_5' // Section
+            );			
 
             add_settings_field(
                 'frontpagesearch_icon_based_search',
@@ -1207,6 +1241,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 isset( $this->options_2['hide_bi_vehicles'] ) && $this->options_2['hide_bi_vehicles'] === 'on' ? ' checked="checked"' : ''
             );
         }
+		
+        public function bdt_hide_internal_vehicles_bilinfo_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[hide_internal_vehicles_bilinfo]"%s />',
+                isset( $this->options_2['hide_internal_vehicles_bilinfo'] ) && $this->options_2['hide_internal_vehicles_bilinfo'] === 'on' ? ' checked="checked"' : ''
+            );
+        }		
 
         public function fulltextsearch_or_quicksearch_callback()
         {
@@ -1495,6 +1537,23 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 isset( $this->options_2['hide_wholesale_vehicles'] ) && $this->options_2['hide_wholesale_vehicles'] === 'on' ? ' checked="checked"' : ''
             );
         }
+		
+		//jlk
+        public function bdt_hide_only_wholesale_vehicles_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[hide_only_wholesale_vehicles]"%s />',
+                isset( $this->options_2['hide_only_wholesale_vehicles'] ) && $this->options_2['hide_only_wholesale_vehicles'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_show_only_wholesale_vehicles_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_2" value="on" name="bdt_options_2[show_only_wholesale_vehicles]"%s />',
+                isset( $this->options_2['show_only_wholesale_vehicles'] ) && $this->options_2['show_only_wholesale_vehicles'] === 'on' ? ' checked="checked"' : ''
+            );
+        }		
 
         public function bdt_hide_trailer_vehicles_callback()
         {
@@ -2045,6 +2104,15 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                 isset( $this->options_5['frontpagesearch_fuelconsumption'] ) && $this->options_5['frontpagesearch_fuelconsumption'] === 'on' ? ' checked="checked"' : ''
             );
         }
+		
+		//jlk
+        public function bdt_frontpagesearch_electricrange_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_5" value="on" name="bdt_options_5[frontpagesearch_electricrange]"%s />',
+                isset( $this->options_5['frontpagesearch_electricrange'] ) && $this->options_5['frontpagesearch_electricrange'] === 'on' ? ' checked="checked"' : ''
+            );
+        }		
 
         public function bdt_frontpagesearch_icon_based_search_callback()
         {

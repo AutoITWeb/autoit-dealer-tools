@@ -3,8 +3,8 @@ Contributors: autoitas
 Donate link: https://www.autoit.dk/
 Tags: cars, autoit, autodesktop, biler, biltorvet web
 Requires at least: 4.9.7
-Tested up to: 6.7.1
-Stable tag: 3.3.3
+Tested up to: 6.7.2
+Stable tag: 3.3.5
 Requires PHP: 7.4
 License: Proprietary
 License URI: https://www.biltorvet.as/media/1385/betingelser-biltorvetas.pdf
@@ -31,6 +31,24 @@ AutoIT Dealer Tools er fuldt integreret med AutoDesktop, så din hjemmeside kan 
 3. Plugin settings
 
 == Changelog ==
+
+= 3.3.5 =
+* Add option to search on electric range using slider
+* Update LeafLet map integration
+* Adds limit parameter option on shortcode: [bdt_get_vehicles_by_status_code limit="3"]
+* Minor CSS changes
+* Minor plugin update adjustments
+
+For a complete list of changes, see the [full changelog](https://github.com/AutoITWeb/autoit-dealer-tools/releases) on GitHub.
+
+= 3.3.4 =
+* Adds option to search on electric range using slider
+* Update LeafLet map integration
+* Adds limit parameter option on shortcode: [bdt_get_vehicles_by_status_code limit="3"]
+* Minor CSS changes
+* Minor plugin update adjustments
+
+For a complete list of changes, see the [full changelog](https://github.com/AutoITWeb/autoit-dealer-tools/releases) on GitHub.
 
 = 3.3.3 =
 * Adds option to toggle Leasing label (On/Off)

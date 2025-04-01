@@ -180,7 +180,7 @@
             }
             $filterObject->HideBrandNewVehicles = 'true';
         }
-        if(isset($this->_options['hide_ad_vehicles']) && $this->_options['hide_ad_vehicles'] === 'on')
+        if(isset($this->_options_2['hide_ad_vehicles']) && $this->_options_2['hide_ad_vehicles'] === 'on')
         {
             if($filterObject === null)
             {
@@ -188,13 +188,22 @@
             }
             $filterObject->HideADVehicles = 'true';
         }
-        if(isset($this->_options['hide_bi_vehicles']) && $this->_options['hide_bi_vehicles'] === 'on')
+        if(isset($this->_options_2['hide_bi_vehicles']) && $this->_options_2['hide_bi_vehicles'] === 'on')
         {
             if($filterObject === null)
             {
                 $filterObject = new BDTFilterObject();
             }
             $filterObject->HideBIVehicles = 'true';
+        }
+		//jlk
+        if(isset($this->_options_2['hide_internal_vehicles_bilinfo']) && $this->_options_2['hide_internal_vehicles_bilinfo'] === 'on')
+        {
+            if($filterObject === null)
+            {
+                $filterObject = new BDTFilterObject();
+            }
+            $filterObject->HideInternalVehiclesBilInfo = 'true';
         }
         if(isset($this->_options_2['bdt_pricetypes']) && $this->_options_2['bdt_pricetypes'] != "-1")
         {
@@ -378,6 +387,20 @@
                         <span class="clearfix"></span>
                         <input class="bdtSlider" id="consumptionRange" type="text" />
                     </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-3">
+                    <div class="bdtSliderContainer">
+                        <label for="electricRange" class="float-left"><?php _e('ElectricRange', 'biltorvet-dealer-tools'); ?></label>
+                        <span class="float-right"><span class="bdtSliderMinVal"></span> - <span class="bdtSliderMaxVal"></span>km</span>
+                        <span class="clearfix"></span>
+                        <input class="bdtSlider" id="electricRange" type="text" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 mt-3 mt-sm-0 mb-3">
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-3">
                 </div>
                 <div class="col-xl-4 col-lg-12 col-sm-12 mt-xl-3 mt-lg-4 mt-sm-4 text-center text-xl-right text-sm-center">
                     <button type="button" data-labelpattern="<?php _e('Show %u vehicles', 'biltorvet-dealer-tools'); ?>" class="et_pb_button search bdt_bgcolor"><?php printf(__('Show %u vehicles', 'biltorvet-dealer-tools'), do_shortcode('[bdt_vehicletotalcount]')); ?></button>

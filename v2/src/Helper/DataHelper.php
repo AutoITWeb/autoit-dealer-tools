@@ -42,20 +42,27 @@ class DataHelper
      * @param  int       $labelId
      * @return Vehicle[]
      */
-    public static function filterVehiclesByLabel(array $vehicles, int $labelId) : array
-    {
-        $filteredVehicles = [];
+	public static function filterVehiclesByLabel(array $vehicles, int $labelId, int $limit = null): array
+	{
+		$filteredVehicles = [];
+		$count = 0; // Track how many vehicles we've added
 
-        foreach ($vehicles as $vehicle) {
-            foreach ($vehicle->getLabels() as $label) {
-                if ($label->getKey() === $labelId) {
-                    $filteredVehicles[] = $vehicle;
-                }
-            }
-        }
+		foreach ($vehicles as $vehicle) {
+			foreach ($vehicle->getLabels() as $label) {
+				if ($label->getKey() === $labelId) {
+					$filteredVehicles[] = $vehicle;
+					$count++;
 
-        return $filteredVehicles;
-    }
+					// Stop adding if the limit is reached
+					if ($limit !== null && $count >= $limit) {
+						return $filteredVehicles;
+					}
+				}
+			}
+		}
+
+		return $filteredVehicles;
+	}
 
     /**
      * @param  Vehicle[] $vehicles

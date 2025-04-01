@@ -78,6 +78,17 @@ class SearchFilter
      * @var int
      */
     public $ConsumptionMax;
+	
+	/* JLK */
+    /**
+     * @var int
+     */
+    public $ElectricRangeMin;
+
+    /**
+     * @var int
+     */
+    public $ElectricRangeMax;	
 
     /**
      * @var int
@@ -478,6 +489,43 @@ class SearchFilter
         $this->ConsumptionMax = $ConsumptionMax;
         return $this;
     }
+	
+	/* JLK */
+    /**
+     * @return int
+     */
+    public function getElectricRangeMin(): int
+    {
+        return $this->ElectricRangeMin;
+    }
+
+    /**
+     * @param  int $ElectricRangeMin
+     * @return SearchFilter
+     */
+    public function setElectricRangeMin(int $ElectricRangeMin): SearchFilter
+    {
+        $this->ElectricRangeMin = $ElectricRangeMin;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getElectricRangeMax(): int
+    {
+        return $this->ElectricRangeMax;
+    }
+
+    /**
+     * @param  int $ElectricRangeMax
+     * @return SearchFilter
+     */
+    public function setElectricRangeMax(int $ElectricRangeMax): SearchFilter
+    {
+        $this->ElectricRangeMax = $ElectricRangeMax;
+        return $this;
+    }	
 
     /**
      * @return int

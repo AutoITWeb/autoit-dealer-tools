@@ -216,6 +216,8 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
         }
 
+//jlk old
+/*
         public function bdt_insert_map_dependencies()
         {
             if(isset($this->_options_4['activate_map']) && $this->_options_4['activate_map'] === 'on') {
@@ -234,6 +236,54 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
             }
         }
+*/
+//jlk new
+public function bdt_insert_map_dependencies() {
+    if (isset($this->_options_4['activate_map']) && $this->_options_4['activate_map'] === 'on') {
+        // Enqueue Leaflet CSS
+        wp_enqueue_style(
+            'leaflet-css',
+            'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css',
+            array(),
+            '1.9.4'
+        );
+
+        // Enqueue Leaflet JavaScript
+        wp_enqueue_script(
+            'leaflet-js',
+            'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js',
+            array(),
+            '1.9.4',
+            true
+        );
+
+        // Enqueue Leaflet Providers JavaScript
+        wp_enqueue_script(
+            'leaflet-providers-js',
+            'https://unpkg.com/leaflet-providers@1.13.0/leaflet-providers.js',
+            array('leaflet-js'),
+            '1.13.0',
+            true
+        );
+
+        // Enqueue Leaflet Gesture Handling CSS
+        wp_enqueue_style(
+            'leaflet-gesture-handling-css',
+            'https://unpkg.com/leaflet-gesture-handling@1.2.2/dist/leaflet-gesture-handling.min.css',
+            array('leaflet-css'),
+            '1.2.2'
+        );
+
+        // Enqueue Leaflet Gesture Handling JavaScript
+        wp_enqueue_script(
+            'leaflet-gesture-handling-js',
+            'https://unpkg.com/leaflet-gesture-handling@1.2.2/dist/leaflet-gesture-handling.min.js',
+            array('leaflet-js'),
+            '1.2.2',
+            true
+        );
+    }
+}
 
         public function bdt_shortcode_amount_of_biltorvet_ads($atts)
         {
@@ -795,6 +845,23 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     }
                     $filterObject->HideWholesaleVehicles = 'true';
                 }
+				//JLK
+                if(isset($this->_options_2['hide_only_wholesale_vehicles']) && $this->_options_2['hide_only_wholesale_vehicles'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideOnlyWholesaleVehicles = 'true';
+                }
+                if(isset($this->_options_2['show_only_wholesale_vehicles']) && $this->_options_2['show_only_wholesale_vehicles'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->ShowOnlyWholesaleVehicles = 'true';
+                }				
                 if(isset($this->_options_2['hide_trailer_vehicles']) && $this->_options_2['hide_trailer_vehicles'] === 'on')
                 {
                     if($filterObject === null)
@@ -883,6 +950,15 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
                     }
                     $filterObject->HideBIVehicles = 'true';
                 }
+				//JLK
+                if(isset($this->_options_2['hide_internal_vehicles_bilinfo']) && $this->_options_2['hide_internal_vehicles_bilinfo'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideInternalVehiclesBilInfo = 'true';
+                }				
                 if(isset($this->_options_2['bdt_pricetypes']) && $this->_options_2['bdt_pricetypes'] != "-1")
                 {
                     if($filterObject === null)
@@ -1107,7 +1183,7 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             {
                 $showPrice .= '<div class="bdt_price_more-info">';
                 $showPrice .= '<input id="priceInfo" class="bdt_price_more-info_checkbox" type="checkbox">';
-                $showPrice .= '<label for="priceInfo" class="bdt_price_more-info_drop"><span class="bdt_price_more-info_icon"></span></label>';
+                $showPrice .= '<label for="priceInfo" class="bdt_price_more-info_drop bdt"><span class="bdt_price_more-info_icon d-print-none"></span></label>';
                 $showPrice .= '<div class="bdt_price_more-info_content">';
                 $showPrice .= TextUtils::GenerateSpecificationsTable($properties, true);
                 $showPrice .= '</div>';

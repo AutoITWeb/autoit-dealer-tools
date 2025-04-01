@@ -191,6 +191,15 @@ try{
         }
         $filterObject->HideBIVehicles = 'true';
     }
+	//jlk
+    if(isset($this->_options_2['hide_internal_vehicles_bilinfo']) && $this->_options_2['hide_internal_vehicles_bilinfo'] === 'on')
+    {
+        if($filterObject === null)
+        {
+            $filterObject = new BDTFilterObject();
+        }
+        $filterObject->HideInternalVehiclesBilInfo = 'true';
+    }	
     if(isset($this->_options_2['bdt_pricetypes']) && $this->_options_2['bdt_pricetypes'] != "-1")
     {
         if($filterObject === null)
@@ -237,6 +246,8 @@ $showProductTypes = (isset($this->_options_5)) && (isset($this->_options_5['fron
 $showPriceTypes = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_pricetype'])) && ($this->_options_5['frontpagesearch_pricetype'] === 'on') ? "" : "style='display: none;'";
 $showBodyTypes = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_bodytype'])) && ($this->_options_5['frontpagesearch_bodytype'] === 'on') ? "" : "style='display: none;'";
 $showPropellants = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_propellants'])) && ($this->_options_5['frontpagesearch_propellants'] === 'on') ? "" : "style='display: none;'";
+//jlk
+$showElectricRange = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_electricrange'])) ? "" : "style='display: none;'";
 
 // Custom Vehicle Types - variables only related to the frontpage search
 $showCustomVehicleTypesSection = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_activate_iconbased_search'])) && ($this->_options_5['frontpagesearch_activate_iconbased_search'] === 'on') ? "" : "display: none;";
@@ -351,6 +362,16 @@ $customVehicleTypeIconColor = (isset($this->_options_5)) && (isset($this->_optio
                     <input class="bdtSlider" id="consumptionRange" type="text" />
                 </div>
             </div>
+
+			<!--jlk-->			
+            <div class="col-sm-<?= $setCol ?> mt-3 mt-sm-0 mb-3" <?= $showElectricRange ?>>
+                <div class="bdtSliderContainer" >
+                    <label for="electricRange" class="float-left"><?php _e('ElectricRange', 'biltorvet-dealer-tools'); ?></label>
+                    <span class="float-right"><span class="bdtSliderMinVal"></span> - <span class="bdtSliderMaxVal"></span>km</span>
+                    <span class="clearfix"></span>
+                    <input class="bdtSlider" id="electricRange" type="text" />
+                </div>
+            </div>			
 
             <div class="col-sm-<?= $setCol ?> text-center text-sm-right">
                 <button type="button" data-labelpattern="<?php _e('Show %u vehicles', 'biltorvet-dealer-tools'); ?>" class="et_pb_button bdt_bgcolor" id="vehicle_search_frontpage_button" style="width: 100%;"><?php printf(__('Show %u vehicles', 'biltorvet-dealer-tools'), do_shortcode('[bdt_vehicletotalcount]')); ?></button>

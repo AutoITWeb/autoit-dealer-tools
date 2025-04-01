@@ -15,6 +15,8 @@ function Biltorvet($) {
     var emptyFilter = null;
     var priceRangeSlider = null;
     var consumptionRangeSlider = null;
+	//jlk
+	var electricRangeSlider = null;
     var sliderAlternativeNamespace = false;
     var leasingAlternativeName = document.getElementById("LeasingAlternativeName");
     var filter = {
@@ -32,6 +34,9 @@ function Biltorvet($) {
         PriceMax: null,
         ConsumptionMin: null,
         ConsumptionMax: null,
+		//jlk
+        ElectricRangeMin: null,
+        ElectricRangeMax: null,		
         Start: null, // will be overwritten by paging
         Limit: null, // will be overwritten by paging
         OrderBy: null, // OrderByEnum
@@ -142,6 +147,20 @@ function Biltorvet($) {
             };
             consumptionRangeSlider = sliderAlternativeNamespace ? $('#consumptionRange').bootstrapSlider(crsC) : $('#consumptionRange').slider(crsC);
         }
+		//jlk
+        if($('#electricRange').length > 0)
+        {
+            var crsC = {
+                id: $(this).attr('id'),
+                min: 0,
+                max:10,
+                range: true,
+                value: [0,10],
+                step:1,
+                tooltip: 'hide' // Bootstrap v4 tooltips not supported by this plugin.
+            };
+            electricRangeSlider = sliderAlternativeNamespace ? $('#electricRange').bootstrapSlider(crsC) : $('#electricRange').slider(crsC);
+        }		
 
         this.ReloadUserFilterSelection(true);
         this.VehicleSearch(true);
@@ -718,9 +737,13 @@ function Biltorvet($) {
         {
             consumptionRangeSlider.bootstrapSlider("disable");
             priceRangeSlider.bootstrapSlider("disable");
+			//jlk
+			electricRangeSlider.bootstrapSlider("disable");
         } else {
             consumptionRangeSlider.slider("disable");
             priceRangeSlider.slider("disable");
+			//jlk
+			electricRangeSlider.slider("disable");
         }
         vehicleSearch.find('select').prop('disabled', true);
 
@@ -966,6 +989,15 @@ function Biltorvet($) {
                 .setAttribute('max', response.priceMax)
                 .setValue([response.values.priceMin === null ? response.priceMin : response.values.priceMin, response.values.priceMax === null ? response.priceMax : response.values.priceMax], true, true);
         }
+		//jlk
+        if(electricRangeSlider !== null)
+        {
+            var crsI = sliderAlternativeNamespace ? electricRangeSlider.bootstrapSlider(response.electricRangeMin === response.electricRangeMax ? "disable" : "enable") : electricRangeSlider.slider(response.electricRangeMin === response.electricRangeMax ? "disable" : "enable");
+            crsI.data('slider')
+                .setAttribute('min', response.electricRangeMin)
+                .setAttribute('max', response.electricRangeMax)
+                .setValue([response.values.electricRangeMin === null ? response.electricRangeMin : response.values.electricRangeMin, response.values.electricRangeMax === null ? response.electricRangeMax : response.values.electricRangeMax], true, true);
+        }		
 
         // Custom Vehicle Types
         var cvtElements = document.getElementsByClassName("car-icon-container")
@@ -994,6 +1026,11 @@ function Biltorvet($) {
         consumptionMin = consumptionMin === -1 ? null : consumptionMin;
         var consumptionMax = consumptionRangeSlider.data('slider').getValue()[1];
         consumptionMax = consumptionMax === -1 ? null : consumptionMax;
+		//jlk
+        var electricRangeMin = electricRangeSlider.data('slider').getValue()[0];
+        electricRangeMin = electricRangeMin === -1 ? null : electricRangeMin;
+        var electricRangeMax = electricRangeSlider.data('slider').getValue()[1];
+        electricRangeMax = electricRangeMax === -1 ? null : electricRangeMax;		
         filter = {
             CompanyIds: RetrieveSelect2Values('#company') ?? null,
             FullTextSearch: vehicleSearch.find('input[name=fullTextSearch]').val() === '' ? null : [vehicleSearch.find('input[name=fullTextSearch]').val()],
@@ -1008,6 +1045,9 @@ function Biltorvet($) {
             PriceMax: priceRangeSlider !== null ? (priceRangeSlider.data('slider').getAttribute('max') !== priceMax ? priceMax : null) : null,
             ConsumptionMin: consumptionRangeSlider !== null ? (consumptionRangeSlider.data('slider').getAttribute('min') !== consumptionMin ? consumptionMin : null) : null,
             ConsumptionMax: consumptionRangeSlider !== null ? (consumptionRangeSlider.data('slider').getAttribute('max') !== consumptionMax ? consumptionMax : null) : null,
+			//jlk
+            ElectricRangeMin: electricRangeSlider !== null ? (electricRangeSlider.data('slider').getAttribute('min') !== electricRangeMin ? electricRangeMin : null) : null,
+            ElectricRangeMax: electricRangeSlider !== null ? (electricRangeSlider.data('slider').getAttribute('max') !== electricRangeMax ? electricRangeMax : null) : null,			
             Start: null,
             Limit: null,
             OrderBy: vehicleSearchResults.find('select[name=orderBy]').val() === '' ? null : vehicleSearchResults.find('select[name=orderBy]').val(),
@@ -1108,6 +1148,9 @@ jQuery(function($) {
         vehicleSearch.find('select[name=priceMinMax]').val('');
         vehicleSearch.find('select[name=consumptionMin]').val('');
         vehicleSearch.find('select[name=consumptionMax]').val('');
+		//jlk
+		vehicleSearch.find('select[name=electricRangeMin]').val('');
+        vehicleSearch.find('select[name=electricRangeMax]').val('');
 
         $('.multiple').each(function(i, element)
         {
@@ -1255,6 +1298,9 @@ jQuery(function($) {
             vehicleSearch.find('select[name=priceMinMax]').val('');
             vehicleSearch.find('select[name=consumptionMin]').val('');
             vehicleSearch.find('select[name=consumptionMax]').val('');
+			//jlk
+            vehicleSearch.find('select[name=electricRangeMin]').val('');
+            vehicleSearch.find('select[name=electricRangeMax]').val('');			
 
             bdt.ReloadUserFilterSelection(false);
         })

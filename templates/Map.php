@@ -7,103 +7,76 @@
  * @package 	AutoIT-Dealer-Tools
  * @version     1.0.0
  */
-if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
+if (!defined('ABSPATH')) exit; // Security check
+
+$zoomLevel = !empty($this->_options_4['bdt_zoom_level']) ? intval($this->_options_4['bdt_zoom_level']) : 17;
+$setTileLayer = !empty($this->_options_4['bdt_tile_layer']) ? esc_url($this->_options_4['bdt_tile_layer']) : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+$markerColor = !empty($this->_options_4['bdt_marker_color']) ? strtolower($this->_options_4['bdt_marker_color']) : 'red';
+$marker = !empty($this->_options_4['bdt_custom_marker']) ? esc_url($this->_options_4['bdt_custom_marker']) : plugin_dir_url(dirname(__FILE__)) . "includes/img/marker-icon-$markerColor.png";
+
+$options = get_option('bdt_options');
+$options_6 = get_option('bdt_options_6');
 
 $companiesFeed = null;
 $setView = "";
 
-$zoomLevel = isset($this->_options_4['bdt_zoom_level']) && $this->_options_4['bdt_zoom_level'] != '' ? $this->_options_4['bdt_zoom_level'] : 17;
-$setTileLayer = isset($this->_options_4['bdt_tile_layer']) && $this->_options_4['bdt_tile_layer']!= '' ? $this->_options_4['bdt_tile_layer'] : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-$markerColor = isset($this->_options_4['bdt_marker_color']) && $this->_options_4['bdt_marker_color'] != '' ? $this->_options_4['bdt_marker_color'] : 'Red';
-$marker = isset($this->_options_4['bdt_custom_marker']) && $this->_options_4['bdt_custom_marker']!= '' ? $this->_options_4['bdt_custom_marker'] : plugin_dir_url( dirname( __FILE__ ) ) . 'includes/img/marker-icon-' . strtolower($markerColor) . '.png';
-
-$options = get_option( 'bdt_options' );
-$options_6 = get_option( 'bdt_options_6' );
-
-// Globalmap not to be used on VehicleDetailsPage as it will only show the map data for the current vehicle
-if(isset($atts['detailspage']) && $atts['detailspage'] == 'true') {
-    $setView = $this->currentVehicle->company->coordinates->latitude . "," . $this->currentVehicle->company->coordinates->longitude;
-    $zoomLevel = isset($this->_options_4['bdt_zoom_level_detailspage']) && $this->_options_4['bdt_zoom_level_detailspage'] != '' ? $this->_options_4['bdt_zoom_level_detailspage'] : 17;
-
+if (!empty($atts['detailspage']) && $atts['detailspage'] == 'true') {
+    $vehicle = $this->currentVehicle->company->coordinates ?? null;
+    $setView = $vehicle ? "{$vehicle->latitude},{$vehicle->longitude}" : "56.2639,9.5018"; // Default Denmark coords
+    $zoomLevel = !empty($this->_options_4['bdt_zoom_level_detailspage']) ? intval($this->_options_4['bdt_zoom_level_detailspage']) : 17;
 } else {
-
     $companiesFeed = $this->biltorvetAPI->GetCompanies();
-    $setView = $companiesFeed->companies[0]->coordinates->latitude . "," . $companiesFeed->companies[0]->coordinates->longitude;
-
-    if($companiesFeed->totalResults >= 2) {
-        $setView = isset($this->_options_4['bdt_set_view']) && $this->_options_4['bdt_set_view'] != '' ? $this->_options_4['bdt_set_view'] : $setView;
+    if (!empty($companiesFeed->companies)) {
+        $setView = "{$companiesFeed->companies[0]->coordinates->latitude},{$companiesFeed->companies[0]->coordinates->longitude}";
     }
 }
 ?>
 
-<script>
-    const lazyInit = (element, fn) => {
-        const observer = new IntersectionObserver((entries) => {
-            if (entries.some(({isIntersecting}) => isIntersecting)) {
-                observer.disconnect();
-                fn();
-            }
-        });
-        observer.observe(element);
-    };
-</script>
-
-
-<div id="map"></div>
+<div id="map" style="height: 400px;"></div>
 
 <style>
     .leaflet-container a {
-        color: <?= $options['primary_color']; ?>;
+        color: <?= esc_attr($options['primary_color'] ?? '#007bff'); ?>;
     }
 </style>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const mapElement = document.querySelector("#map");
+        
+        if (!mapElement) return;
 
-    const mapElement = document.querySelector("#map");
-
-    lazyInit(mapElement, () => {
-        var map = L.map('map', {
-            center:[<?= $setView; ?>],
-            zoom: <?= $zoomLevel; ?>,
+        let map = L.map(mapElement, {
+            center: <?= json_encode(explode(',', $setView)); ?>,
+            zoom: <?= intval($zoomLevel); ?>,
             gestureHandling: true
         });
 
-        map.invalidateSize();
-
-        L.tileLayer(<?= "'" . $setTileLayer ."'"; ?>, {
+        L.tileLayer(<?= json_encode($setTileLayer); ?>, {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        var coloredIcon = new L.Icon({
-            iconUrl: '<?= $marker; ?>',
-            shadowUrl: '<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'includes/img/marker-shadow.png'; ?>',
+        let coloredIcon = new L.Icon({
+            iconUrl: <?= json_encode($marker); ?>,
+            shadowUrl: <?= json_encode(plugin_dir_url(dirname(__FILE__)) . 'includes/img/marker-shadow.png'); ?>,
             iconSize: [25, 41],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
             shadowSize: [41, 41]
         });
 
-    // Globalmap markers
-    <?php if(empty($atts)) : ?>
-    <?php foreach ($companiesFeed->companies as $company) : ?>
+        <?php if(empty($atts)) : ?>
+            <?php foreach ($companiesFeed->companies as $company) : ?>
+                <?php if (!empty($company->coordinates->latitude)) : ?>
+                    L.marker([<?= json_encode($company->coordinates->latitude); ?>, <?= json_encode($company->coordinates->longitude); ?>], {icon: coloredIcon}).addTo(map)
+                        .bindPopup("<b><?= esc_js($company->name); ?></b><br><?= esc_js($company->address); ?><br><?= esc_js($company->postNumber . ' ' . $company->city); ?>");
+                <?php endif; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
 
-    <?php if($company->coordinates->latitude != null) : ?>
-
-        L.marker([<?= $company->coordinates->latitude; ?>, <?= $company->coordinates->longitude; ?>], {icon: coloredIcon}).addTo(map)
-            .bindPopup(" <b><?= $company->name; ?></b> <br> <?= $company->address; ?> <br> <?= $company->postNumber; ?> <?= $company->city; ?> <br> <?= $company->phone != 0 ? '<a href=' . 'tel:+45' . $company->phone . '>' . '+45 ' . $company->phone . '</a>' : ""; ?> <?= isset($options_6['departments_google_directions_' . $company->id . '']) && !empty($options_6['departments_google_directions_' . $company->id . '']) ? '<br><a href=' . $options_6['departments_google_directions_' . $company->id . ''] . ' target=_blank>Rutevejledning</a>' : ''; ?> ")
-
-    <?php endif; ?>
-
-    <?php endforeach; ?>
-    <?php endif; ?>
-
-    // VehicleDetailsPage marker
-    <?php if(isset($atts['detailspage']) && $atts['detailspage'] == 'true') : ?>
-        L.marker([<?= $this->currentVehicle->company->coordinates->latitude; ?>, <?=  $this->currentVehicle->company->coordinates->longitude; ?>], {icon: coloredIcon}).addTo(map)
-            .bindPopup(" <b><?=  $this->currentVehicle->company->name; ?></b> <br> <?=  $this->currentVehicle->company->address; ?> <br> <?=  $this->currentVehicle->company->postNumber; ?> <?=  $this->currentVehicle->company->city; ?> <br> <?=  $this->currentVehicle->company->phone != 0 ? '<a href=' . 'tel:+45' .  $this->currentVehicle->company->phone . '>' . '+45 ' .  $this->currentVehicle->company->phone . '</a>' : ""; ?> <?= isset($options_6['departments_google_directions_' . $this->currentVehicle->company->id . '']) && !empty($options_6['departments_google_directions_' . $this->currentVehicle->company->id . '']) ? '<br><a href=' . $options_6['departments_google_directions_' . $this->currentVehicle->company->id . ''] . ' target=_blank>Rutevejledning</a>' : ''; ?> ")
-
-    <?php endif; ?>
-
+        <?php if(!empty($atts['detailspage']) && $atts['detailspage'] == 'true' && !empty($this->currentVehicle->company->coordinates->latitude)) : ?>
+            L.marker([<?= json_encode($this->currentVehicle->company->coordinates->latitude); ?>, <?= json_encode($this->currentVehicle->company->coordinates->longitude); ?>], {icon: coloredIcon}).addTo(map)
+                .bindPopup("<b><?= esc_js($this->currentVehicle->company->name); ?></b><br><?= esc_js($this->currentVehicle->company->address); ?>");
+        <?php endif; ?>
     });
 </script>
-

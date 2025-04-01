@@ -539,43 +539,53 @@ class Biltorvet
      *
      * @param string 	$args			Mail args.
      */
-    public function bdt_external_user_lead_append( $args )
-    {
-        $product = new ApiController();
+	public function bdt_external_user_lead_append( $args )
+	{
+		$product = new ApiController();
 
-        if(ProductHelper::hasAccess("External User", $product->getCompanyProducts()))
-        {
-            if(array_key_exists('headers', $args))
-            {
-                foreach($args['headers'] as $header)
-                {
-                    preg_match('/^Reply-To: ".*" <(.+)>$/', $header, $matches);
-                    if(count($matches) > 1)
-                    {
-                        $replyTo = $matches[1];
-                        break;
-                    }
-                }
-            }
+		if (ProductHelper::hasAccess("External User", $product->getCompanyProducts())) {
+			
+			// Ensure 'headers' exists and is an array
+			if (isset($args['headers'])) {
+				if (is_string($args['headers'])) {
+					// Convert a string into an array by splitting at new lines
+					$headers = explode("\n", $args['headers']);
+				} elseif (is_array($args['headers'])) {
+					$headers = $args['headers'];
+				} else {
+					$headers = []; // Default to an empty array if headers is invalid
+				}
 
-            $query = parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_QUERY);
-            parse_str( $query, $queryParams );
+				foreach ($headers as $header) {
+					preg_match('/^Reply-To: ".*" <(.+)>$/', $header, $matches);
+					if (count($matches) > 1) {
+						$replyTo = $matches[1];
+						break;
+					}
+				}
+			}
 
-            if(!isset($queryParams) || !isset($queryParams['bdt_vehicle_id']) || !isset($queryParams['bdt_actiontype']))
-            {
-                return $args;
-            }
+			$query = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_QUERY);
+			parse_str($query, $queryParams);
 
-            try{
-                $vehicle = $this->biltorvetAPI->GetVehicle($queryParams['bdt_vehicle_id']);
-            } catch(Exception $e) {
-                return $e->getMessage();
-            }
+			if (!isset($queryParams) || !isset($queryParams['bdt_vehicle_id']) || !isset($queryParams['bdt_actiontype'])) {
+				return $args;
+			}
 
-            // Append the vehicle info to the WP email.
-            $args['message'] .= "\r\n\r\n" .  sprintf( __('Selected vehicle: %s', 'biltorvet-dealer-tools'), 'En kunde har udvist interesse for bilen ' . $vehicle->makeName . ' ' . $vehicle->model . ' med ID ' . $vehicle->id);
+			try {
+				$vehicle = $this->biltorvetAPI->GetVehicle($queryParams['bdt_vehicle_id']);
+			} catch (Exception $e) {
+				return $e->getMessage();
+			}
 
-            return $args;
-        }
-    }
+			// Append the vehicle info to the WP email.
+			$args['message'] .= "\r\n\r\n" . sprintf(
+				__('Selected vehicle: %s', 'biltorvet-dealer-tools'),
+				'En kunde har udvist interesse for bilen ' . $vehicle->makeName . ' ' . $vehicle->model . ' med ID ' . $vehicle->id
+			);
+
+			return $args;
+		}
+	}
+
 }

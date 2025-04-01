@@ -13,6 +13,9 @@
         public $PriceMax;
         public $ConsumptionMin;
         public $ConsumptionMax;
+		//jlk
+        public $ElectricRangeMin;
+        public $ElectricRangeMax;		
         public $VehicleStates;
         public $FullTextSearch;
         public $PriceTypes;

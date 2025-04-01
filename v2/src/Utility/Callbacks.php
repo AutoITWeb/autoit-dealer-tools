@@ -96,13 +96,13 @@ class Callbacks
 
         if(isset($atts['orderby'])) {
 
-            $orderByValues = array("DateEdited", "DateCreated", "Mileage", "FirstRegistrationYear", "Consumption", "Make", "Price", "LeasingPrice");
+            $orderByValues = array("DateEdited", "DateCreated", "Mileage", "FirstRegistrationYear", "Consumption", "Make", "Price", "LeasingPrice", "ElectricRange");
 
             if(in_array($atts['orderby'], $orderByValues)) {
                 $searchFilter->setOrderBy($atts['orderby']);
                 $searchFilter->setAscending(false);
             } else {
-                $errors .= '<b>' . 'Error: ' . '</b>' . 'Incorrect orderby value - Must be one of the following: "DateEdited", "DateCreated", "Mileage", "FirstRegistrationYear", "Consumption", "Make", "Price" or "LeasingPrice".' . '<br>';
+                $errors .= '<b>' . 'Error: ' . '</b>' . 'Incorrect orderby value - Must be one of the following: "DateEdited", "DateCreated", "Mileage", "FirstRegistrationYear", "Consumption", "Make", "Price", "LeasingPrice" or "ElectricRange".' . '<br>';
             }
         }
         if(isset($atts['ascending'])) {
@@ -193,16 +193,26 @@ class Callbacks
                 $searchFilter->setLimit($atts['show']);
             }
         }
+		
+		$limit = null;
+        if(isset($atts['limit']))
+        {
+            $int_value = ctype_digit($atts['limit']) ? intval($atts['limit']) : null;
+            if ($int_value !== null)
+            {
+				$limit = $int_value; // Set the limit value
+            }
+        }		
 
         if(isset($atts['orderby'])) {
 
-            $orderByValues = array("DateEdited", "DateCreated", "Mileage", "FirstRegistrationYear", "Consumption", "Make", "Price", "LeasingPrice");
+            $orderByValues = array("DateEdited", "DateCreated", "Mileage", "FirstRegistrationYear", "Consumption", "Make", "Price", "LeasingPrice", "ElectricRange");
 
             if(in_array($atts['orderby'], $orderByValues)) {
                 $searchFilter->setOrderBy($atts['orderby']);
                 $searchFilter->setAscending(false);
             } else {
-                return '<b>' . 'Error: ' . '</b>' . 'Incorrect orderby value - Must be one of the following: "DateEdited", "DateCreated", "Mileage", "FirstRegistrationYear", "Consumption", "Make", "Price" or "LeasingPrice".' . '<br>';
+                return '<b>' . 'Error: ' . '</b>' . 'Incorrect orderby value - Must be one of the following: "DateEdited", "DateCreated", "Mileage", "FirstRegistrationYear", "Consumption", "Make", "Price", "LeasingPrice" or "ElectricRange".' . '<br>';
             }
         }
         if(isset($atts['ascending'])) {
@@ -255,15 +265,19 @@ class Callbacks
         }
 
         wp_enqueue_style("bdt_style");
-        return $this->templateController->load(
-            'vehicleCardWrapper.php',
-            [
-                'vehicles' => DataHelper::filterVehiclesByLabel($this->apiController->getVehicles($searchFilter), $label),
-                'basePage' => WordpressHelper::getOptions(1)['vehiclesearch_page_id'],
-            ],
-            $primaryPriceType,
-            true
-        );
+		return $this->templateController->load(
+			'vehicleCardWrapper.php',
+			[
+				'vehicles' => DataHelper::filterVehiclesByLabel(
+					$this->apiController->getVehicles($searchFilter),
+					$label,
+					$limit // Pass the limit value
+				),
+				'basePage' => WordpressHelper::getOptions(1)['vehiclesearch_page_id'],
+			],
+			$primaryPriceType,
+			true
+		);		
     }
 
     /**
@@ -320,13 +334,13 @@ class Callbacks
 
         if(isset($atts['orderby'])) {
 
-            $orderByValues = array("DateEdited", "DateCreated", "Mileage", "FirstRegistrationYear", "Consumption", "Make", "Price", "LeasingPrice");
+            $orderByValues = array("DateEdited", "DateCreated", "Mileage", "FirstRegistrationYear", "Consumption", "Make", "Price", "LeasingPrice", "ElectricRange");
 
             if(in_array($atts['orderby'], $orderByValues)) {
                 $searchFilter->setOrderBy($atts['orderby']);
                 $searchFilter->setAscending(false);
             } else {
-                return '<b>' . 'Error: ' . '</b>' . 'Incorrect orderby value - Must be one of the following: "DateEdited", "DateCreated", "Mileage", "FirstRegistrationYear", "Consumption", "Make", "Price" or "LeasingPrice".' . '<br>';
+                return '<b>' . 'Error: ' . '</b>' . 'Incorrect orderby value - Must be one of the following: "DateEdited", "DateCreated", "Mileage", "FirstRegistrationYear", "Consumption", "Make", "Price", "LeasingPrice" or "ElectricRange".' . '<br>';
             }
         }
         if(isset($atts['ascending'])) {

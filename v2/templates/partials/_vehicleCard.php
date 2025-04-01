@@ -168,6 +168,11 @@ $hybridTypes = [
 	"Plug-in hybrid"
 ];
 
+//jlk
+$vehicle_image_small = $vehicle->getVehicleCardImage() ?? $vehicle->getImages()[0];
+// Replace "class=S1600X1600" with "class=S640X640" in the image URL
+$vehicle_image_small = str_replace("class=S1600X1600", "class=S640X640", $vehicle_image_small);
+
 ?>
 
 <div class="col-sm-6 col-md-6 col-lg-4">
@@ -175,7 +180,7 @@ $hybridTypes = [
         <div class="vehicleCard animate__animated animate__fadeIn animate__slow">
             <a href="<?= $basePage . "/" . $vehicle->getUri() ?>">
                 <span class="vehicleThumb<?= $hasVideo; ?>">
-                    <img src="<?= $vehicle->getVehicleCardImage() ?? $vehicle->getImages()[0] ?>" class="img-responsive" loading="lazy" alt="<?= $vehicle->getMakeName() .' '. $vehicle->getModel() .' '. $vehicle->getVariant() ?>"/>
+                    <img src="<?= $vehicle_image_small ?>" class="img-responsive" loading="lazy" alt="<?= $vehicle->getMakeName() .' '. $vehicle->getModel() .' '. $vehicle->getVariant() ?>"/>
                         <?php if ($vehicleLabels) : ?>
                             <span class="labelContainer">
                             <?php foreach ($vehicleLabels as $label) : ?>

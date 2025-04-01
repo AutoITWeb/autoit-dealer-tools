@@ -276,6 +276,10 @@ msgstr "Vælg pristype"
 msgid "Consumption"
 msgstr "Brændstofforbrug"
 
+#: templates/VehicleSearch.php:384
+msgid "ElectricRange"
+msgstr "Rækkevidde på el"
+
 #: templates/VehicleSearch.php:127
 #, php-format
 msgid "Show %u vehicles"
@@ -576,6 +580,12 @@ msgstr "Skjul køretøjer med status koden 'Kommission"
 msgid "Hide vehicles with status Wholesale"
 msgstr "Skjul køretøjer med status koden Kun engros"
 
+msgid "Hide only vehicles with status Wholesale"
+msgstr "Skjul KUN køretøjer med status koden engros (BilInfo)"
+
+msgid "Show only vehicles with status Wholesale"
+msgstr "Vis KUN køretøjer med status koden engros (BilInfo)"
+
 msgid "Hide vehicles with status Trailer"
 msgstr "Skjul køretøjer med status koden Trailer"
 
@@ -665,6 +675,9 @@ msgstr "Aktivér pris-slider"
 
 msgid "Activate fuel consumption"
 msgstr "Aktivér km/l-slider"
+
+msgid "Activate electric range"
+msgstr "Aktivér rækkevidde på el slider"
 
 msgid "Departments"
 msgstr "Afdelinger"
