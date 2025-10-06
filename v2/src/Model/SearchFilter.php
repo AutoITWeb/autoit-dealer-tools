@@ -104,6 +104,16 @@ class SearchFilter
      * @var string
      */
     public $OrderBy;
+	
+    /**
+     * @var boolean
+     */
+    public $HideInternalVehiclesBilInfo; // Bool	
+	
+    /**
+     * @var boolean
+     */
+    public $HideOnlyWholesaleVehicles; // Bool	
 
     /**
      * @var boolean
@@ -580,6 +590,42 @@ class SearchFilter
         $this->OrderBy = $OrderBy;
         return $this;
     }
+	
+    /**
+     * @return bool
+     */
+    public function isHideInternalVehiclesBilInfo(): bool
+    {
+        return $this->HideInternalVehiclesBilInfo;
+    }
+
+    /**
+     * @param  bool $HideInternalVehiclesBilInfo
+     * @return SearchFilter
+     */
+    public function setHideInternalVehiclesBilInfo(bool $HideInternalVehiclesBilInfo): SearchFilter
+    {
+        $this->HideInternalVehiclesBilInfo = $HideInternalVehiclesBilInfo;
+        return $this;
+    }
+	
+    /**
+     * @return bool
+     */
+    public function isHideOnlyWholesaleVehicles(): bool
+    {
+        return $this->HideOnlyWholesaleVehicles;
+    }
+
+    /**
+     * @param  bool $HideOnlyWholesaleVehicles
+     * @return SearchFilter
+     */
+    public function setHideOnlyWholesaleVehicles(bool $HideOnlyWholesaleVehicles): SearchFilter
+    {
+        $this->HideOnlyWholesaleVehicles = $HideOnlyWholesaleVehicles;
+        return $this;
+    }	
 
     /**
      * @return bool

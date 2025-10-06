@@ -305,6 +305,12 @@ use Biltorvet\Model\Vehicle;
 
             $filterObject = new BDTFilterObject();
 
+            // Start session if not already started
+            if (session_status() == PHP_SESSION_NONE)
+            {
+                session_start();
+            }
+
             if(isset($_SESSION['bdt_filter']) && $_SESSION['bdt_filter'] !== '')
             {
                 $filterObject = new BDTFilterObject(json_decode($_SESSION['bdt_filter'], true));
@@ -468,6 +474,12 @@ use Biltorvet\Model\Vehicle;
         {
             $filterObject = new BDTFilterObject();
 
+            // Start session if not already started
+            if (session_status() == PHP_SESSION_NONE)
+            {
+                session_start();
+            }
+
             if(isset($_SESSION['bdt_filter']) && !empty($_SESSION['bdt_filter']))
             {
                 $filterObject = new BDTFilterObject(json_decode($_SESSION['bdt_filter'], true));
@@ -509,6 +521,8 @@ use Biltorvet\Model\Vehicle;
 
             $content = ob_get_contents();
             ob_end_clean();
+
+            session_write_close();
 
             return $content;
 

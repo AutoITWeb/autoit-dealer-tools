@@ -116,6 +116,34 @@ class PriceController
 
         $this->price = PriceFactory::create($vehicle);
 
+        $this->initializeSettings();
+    }
+
+    /**
+     * Check if vehicle is sold (has label with key 5)
+     * @return bool
+     */
+    private function isVehicleSold(): bool
+    {
+        $labels = $this->vehicle->getLabels();
+        if ($labels === null) {
+            return false;
+        }
+
+        foreach ($labels as $label) {
+            if ($label->getKey() == 5) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Initialize controller settings
+     */
+    private function initializeSettings(): void
+    {
         // Get settings
         $this->hideCashCards =
             WordpressHelper::getOption(2,'bdt_hide_cashprices_card') == 'on' ? true : false;
@@ -132,7 +160,7 @@ class PriceController
         $this->hideLeasingDetails =
             WordpressHelper::getOption(3,'bdt_hide_leasing_prices_details') == 'on';
 
-        // ivp    
+        // ivp
         $this->customLeasingLabel = WordpressHelper::getOption(2,'bdt_price_label_leasing');
         $this->customLeasingDetailsLabel = WordpressHelper::getOption(3,'bdt_price_label_leasing_details');
 
@@ -187,6 +215,15 @@ class PriceController
      */
     public function GetPrimaryPrice(string $type, string $primaryPriceTypeFromStatusCode = null)
     {
+        // If vehicle is sold, return only "-"
+        if ($this->isVehicleSold()) {
+            $priceCssClass = $type === 'card' ? 'price bdt_color primary-price-card' : 'bdt_price_big primary-price-details';
+            $priceLabelCssClass = $type === 'card' ? 'priceLabel primary-price-label-card' : 'bdt_price_mainlabel primary-price-label-details';
+            $soldPrice = $this->CreateHtmlMarkUp($priceCssClass, '-', $type);
+            $soldPrice .= $this->CreateHtmlMarkUp($priceLabelCssClass, '&nbsp;', $type);
+            return $soldPrice;
+        }
+
         // Set classes
         $priceCssClass = $type === 'card' ? 'price bdt_color primary-price-card' : 'bdt_price_big primary-price-details';
         $priceLabelCssClass = $type === 'card' ? 'priceLabel primary-price-label-card' : 'bdt_price_mainlabel primary-price-label-details';
@@ -272,6 +309,11 @@ class PriceController
      */
     public function GetSecondaryPrice(string $type, $hideSecondaryAndTertiaryPrice = false)
     {
+        // If vehicle is sold, return empty string
+        if ($this->isVehicleSold()) {
+            return '';
+        }
+
         // Return empty string
         if($hideSecondaryAndTertiaryPrice === true)
         {
@@ -339,7 +381,12 @@ class PriceController
     }
 
     public function GetTertiaryPrice(string $type, $hideSecondaryAndTertiaryPrice = false)
-    {        
+    {
+        // If vehicle is sold, return empty string
+        if ($this->isVehicleSold()) {
+            return '';
+        }
+
         // Return empty string
         if($hideSecondaryAndTertiaryPrice === true)
         {

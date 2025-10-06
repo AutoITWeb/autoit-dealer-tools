@@ -13,6 +13,8 @@
 use Biltorvet\Controller\PriceController;
 use Biltorvet\Model\Property;
 use Biltorvet\Model\Vehicle;
+//JLK
+use Biltorvet\Helper\WordpressHelper;
 
 if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
 
@@ -69,7 +71,7 @@ else if ($vehiclePropellant == "Plug-in hybrid (Benzin / El)" && !isset($options
 }
 else if ($vehiclePropellant == "Plug-in hybrid (Diesel / El)" && !isset($options_two['hide_hybrid_label']))
 {
-  array_unshift($vehicleLabels, "Plugin-in hybrid (Diesel / El)");
+  array_unshift($vehicleLabels, "Plug-in hybrid (Diesel / El)");
 }
 */
 //jlk tilpasset
@@ -95,7 +97,7 @@ else if ($vehiclePropellant == "Plug-in hybrid (Benzin / El)" && !isset($options
 }
 else if ($vehiclePropellant == "Plug-in hybrid (Diesel / El)" && !isset($options_two['hide_hybrid_label']))
 {
-  array_unshift($vehicleLabels, "Plugin-in hybrid");
+  array_unshift($vehicleLabels, "Plug-in hybrid");
 }
 else if ($vehiclePropellant == "Diesel" && isset($options_two['show_diesel_label']) ? $options_two['show_diesel_label'] : null)
 {
@@ -172,6 +174,9 @@ $hybridTypes = [
 $vehicle_image_small = $vehicle->getVehicleCardImage() ?? $vehicle->getImages()[0];
 // Replace "class=S1600X1600" with "class=S640X640" in the image URL
 $vehicle_image_small = str_replace("class=S1600X1600", "class=S640X640", $vehicle_image_small);
+
+//Use apiKey to check if customer is Jørgen Hansen Biler
+$apiKey = WordpressHelper::getApiKey();
 
 ?>
 
@@ -284,6 +289,14 @@ $vehicle_image_small = str_replace("class=S1600X1600", "class=S640X640", $vehicl
                         <?php endif; ?>
                 </span>
                 <span class="vehicleDescription">
+                    <?php 
+                    if ($apiKey === "780a56f2-25c4-4793-b895-8fa1bf427cbd")// Jørgen Hansen Biler 
+                    {
+                    ?>
+                        <span class="vehicleLocation">Lokation: <?= $vehicle->getCompany()->getCity() ?></span>
+                    <?php 
+                    }
+                    ?>
                     <span class="vehicleTitle">
                         <span class="make-model"><?= $vehicle->getMakeName() .' '. $vehicle->getModel() ?></span>
                         <span class="variant"><?= $vehicle->getVariant() ?></span>

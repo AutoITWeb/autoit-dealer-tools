@@ -2,6 +2,10 @@
  * The main vehicle search script
  *
  */
+
+// Global flag to track initialization status
+var biltorvetInitializationComplete = false;
+
 function Biltorvet($) {
 
     var vehicleSearch = $(document).find('.bdt .vehicle_search');
@@ -208,6 +212,9 @@ function Biltorvet($) {
      */
     this.ReloadUserFilterSelection = function(getFromSession)
     {
+        // Default getFromSession to false if undefined
+        getFromSession = getFromSession !== undefined ? getFromSession : false;
+        
         if(vehicleSearch.length > 0)
         {
             if(searchFilterOptionsXHR !== null)
@@ -228,7 +235,7 @@ function Biltorvet($) {
                 dataType: 'json',
                 data: {
                     'action': 'get_filter_options',
-                    'filter': getFromSession ? emptyFilter : filter // On page reload, we prefer to load the session stored filter on the serverside, instead of pushing the current selection
+                    'filter': getFromSession ? null : filter // On page reload, let server use session data by passing null
                 },
                 cache: false,
                 success: function(response){
@@ -338,6 +345,9 @@ function Biltorvet($) {
 
                     // Show filters when everything is done loading
                     bdt_hidden.classList.remove("hide-bdt");
+                    
+                    // Mark initialization as complete
+                    biltorvetInitializationComplete = true;
 
                     // Update query parameters (getting ready for QP searching)
                     const params = new URLSearchParams(window.location.search);
@@ -528,7 +538,7 @@ function Biltorvet($) {
         StartLoadingAnimation();
 
         // Fetch results, append to dom and then scrollTop
-        $.when(this.VehicleSearch()).then(function(){
+        $.when(this.VehicleSearch(false)).then(function(){
             $('html, body').animate({
                 scrollTop: $('.vehicle-row').offset().top - 150
             }, 500);
@@ -542,6 +552,8 @@ function Biltorvet($) {
      */
     this.VehicleSearch = function(getFromSession)
     {
+        // Default getFromSession to false if undefined
+        getFromSession = getFromSession !== undefined ? getFromSession : false;
        /*const filterParam = new URLSearchParams({
             filter: getFromSession ? emptyFilter : filter
         })
@@ -562,7 +574,7 @@ function Biltorvet($) {
             dataType: 'json',
             data: {
                 'action': 'vehicle_search',
-                'filter': getFromSession ? emptyFilter : filter
+                'filter': getFromSession ? null : filter // Use session data when reloading from session
             },
             cache: false,
             success: function(response){
@@ -640,6 +652,9 @@ function Biltorvet($) {
 
         // Load start spinner?
         StartLoadingAnimationPaging();
+        
+        // Ensure filter variable is up to date with current form state
+        GetUserFilterSettings();
 
         // Get all current elements with the animate class
         var currentVehicleCards = document.querySelectorAll(".animate__animated");
@@ -1062,6 +1077,10 @@ function Biltorvet($) {
         }
     }
 
+    this.IsInitializationComplete = function() {
+        return biltorvetInitializationComplete;
+    };
+
     // Fire the "Constructor"
     this.Init();
 }
@@ -1314,9 +1333,13 @@ jQuery(function($) {
 $(document).ready(function() {
   let button = $('.paging-button-scroll')[0];
   let observer = null;
+  let initCheckInterval = null;
 
   function handleButtonClick() {
-    bdt.PagingFetchMore();
+    // Only allow pagination if initialization is complete
+    if (typeof bdt !== 'undefined' && biltorvetInitializationComplete) {
+      bdt.PagingFetchMore();
+    }
   }
 
   function handleIntersection(entries) {
@@ -1337,17 +1360,31 @@ $(document).ready(function() {
       }
       button = newButton;
       if (button) {
-        observer = new IntersectionObserver(handleIntersection, {
-          threshold: 0.5,
-        });
-        observer.observe(button);
+        // Only start observing if initialization is complete
+        if (biltorvetInitializationComplete) {
+          observer = new IntersectionObserver(handleIntersection, {
+            threshold: 0.5,
+          });
+          observer.observe(button);
+        }
       }
     }
   }
 
-  updateObserverTarget();
-  $(window).on('scroll', updateObserverTarget);
-  $(button).on('click', handleButtonClick);
+  function waitForInitialization() {
+    // Check every 100ms if initialization is complete
+    initCheckInterval = setInterval(function() {
+      if (biltorvetInitializationComplete) {
+        clearInterval(initCheckInterval);
+        updateObserverTarget();
+        $(window).on('scroll', updateObserverTarget);
+        $(button).on('click', handleButtonClick);
+      }
+    }, 100);
+  }
+
+  // Start checking for initialization completion
+  waitForInitialization();
 });
 
 

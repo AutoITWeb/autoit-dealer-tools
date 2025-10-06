@@ -82,8 +82,6 @@ abstract class AbstractVariables implements VariablesInterface
             throw new InvalidArgumentException('Expected name to be a string.');
         }
 
-        // Don't overwrite existing environment variables if we're immutable
-        // Ruby's dotenv does this with `ENV[key] ||= value`.
         if ($this->isImmutable() && $this->get($name) !== null && $this->loaded->get($name)->isEmpty()) {
             return;
         }
@@ -117,7 +115,6 @@ abstract class AbstractVariables implements VariablesInterface
             throw new InvalidArgumentException('Expected name to be a string.');
         }
 
-        // Don't clear anything if we're immutable.
         if ($this->isImmutable()) {
             return;
         }
@@ -159,6 +156,7 @@ abstract class AbstractVariables implements VariablesInterface
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return $this->has($offset);
@@ -167,6 +165,7 @@ abstract class AbstractVariables implements VariablesInterface
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->get($offset);
@@ -175,6 +174,7 @@ abstract class AbstractVariables implements VariablesInterface
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         $this->set($offset, $value);
@@ -183,6 +183,7 @@ abstract class AbstractVariables implements VariablesInterface
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         $this->clear($offset);

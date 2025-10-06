@@ -588,9 +588,9 @@ public function bdt_insert_map_dependencies() {
 			{
 			  array_unshift($vehicleLabelsBTS, "Plug-in hybrid (Benzin / El)");
 			}
-			else if ($vehiclePropellant == "Plugin-in hybrid (Diesel / El)" && !isset($options_two['hide_hybrid_label']))
+			else if ($vehiclePropellant == "Plug-in hybrid (Diesel / El)" && !isset($options_two['hide_hybrid_label']))
 			{
-			  array_unshift($vehicleLabelsBTS, "Plugin-in hybrid (Diesel / El)");
+			  array_unshift($vehicleLabelsBTS, "Plug-in hybrid (Diesel / El)");
 			}			
 			*/
 			//jlk tilpasset
@@ -614,9 +614,9 @@ public function bdt_insert_map_dependencies() {
 			{
 			  array_unshift($vehicleLabelsBTS, "Plug-in hybrid");
 			}
-			else if ($vehiclePropellant == "Plugin-in hybrid (Diesel / El)" && !isset($options_two['hide_hybrid_label']))
+			else if ($vehiclePropellant == "Plug-in hybrid (Diesel / El)" && !isset($options_two['hide_hybrid_label']))
 			{
-			  array_unshift($vehicleLabelsBTS, "Plugin-in hybrid");
+			  array_unshift($vehicleLabelsBTS, "Plug-in hybrid");
 			}			
 			else if ($vehiclePropellant == "Diesel" && isset($options_two['show_diesel_label']) ? $options_two['show_diesel_label'] : null)
 			{
@@ -998,6 +998,21 @@ public function bdt_insert_map_dependencies() {
 			//Use apiKey to check if customer is Jørgen Hansen Biler to handle TestDrive/Purchace differently from everyone else. This is a temp solution and should be refined if other customer need same solution in the future 
 			$apiKey = WordpressHelper::getApiKey();
 			
+			//jlk test start midlertidig løsning
+			$vehicleRental = false;
+			//print_r($this->currentVehicle->labels);
+			// Use apiKey to check if customer is Leonhard Biler
+			if ($apiKey === "cca3fe21-fa7c-449a-8dfa-a67f6af1e4d5")
+			{
+				foreach($this->currentVehicle->labels as $label)
+				{
+					if($label->key == 2)
+					{
+						$vehicleRental = true;
+					}
+				}
+			}			
+			
             if(!isset($atts['type']))
             {
                 return __('Shortcode\'s CTA type has not been set.', 'biltorvet-dealer-tools');
@@ -1081,7 +1096,7 @@ public function bdt_insert_map_dependencies() {
 				{
 					if(!$statusSold)
 					{
-						return (isset($style) ? $style : '') . '<a rel="nofollow" id="'. $id .'" href="'. $root . '?'. http_build_query(array('bdt_actiontype' => $atts['type'], 'bdt_vehicle_id' => $this->currentVehicle->documentId)) . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+						return (isset($style) ? $style : '') . '<a rel="nofollow" id="'. $id .'" href="#" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
 					}
 					else
 					{
@@ -1090,9 +1105,10 @@ public function bdt_insert_map_dependencies() {
 				}
 				else
 				{
-					if(!$statusSold)
+					//jlk test
+					if(!$statusSold && !$vehicleRental)
 					{
-						return (isset($style) ? $style : '') . '<a rel="nofollow" id="'. $id .'" href="'. $root . '?'. http_build_query(array('bdt_actiontype' => $atts['type'], 'bdt_vehicle_id' => $this->currentVehicle->documentId)) . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+						return (isset($style) ? $style : '') . '<a rel="nofollow" id="'. $id .'" href="#" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
 					}
 					else
 					{
@@ -1101,7 +1117,7 @@ public function bdt_insert_map_dependencies() {
 				}
 			}
 
-            return (isset($style) ? $style : '') . '<a rel="nofollow" id="'. $id .'" href="'. $root . '?'. http_build_query(array('bdt_actiontype' => $atts['type'], 'bdt_vehicle_id' => $this->currentVehicle->documentId)) . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+            return (isset($style) ? $style : '') . '<a rel="nofollow" id="'. $id .'" href="#" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
         }
 
         /**
@@ -1178,8 +1194,33 @@ public function bdt_insert_map_dependencies() {
                 array_splice($properties, $exclMomsPropIndex, 1);
             }
 
+			//jlk test start midlertidig løsning
+			$vehicleRental = false;
+			$vehicleSold = false;
+			//print_r($this->currentVehicle->labels);
+			// Use apiKey to check if customer is Leonhard Biler
+			if ($apiKey === "cca3fe21-fa7c-449a-8dfa-a67f6af1e4d5")
+			{
+				foreach($this->currentVehicle->labels as $label)
+				{
+					if($label->key == 2)
+					{
+						$vehicleRental = true;
+					}
+				}
+			}
+			// Check if vehicle is sold (label key 5)
+			foreach($this->currentVehicle->labels as $label)
+			{
+				if($label->key == 5)
+				{
+					$vehicleSold = true;
+					break;
+				}
+			}
+			//jlk test slut
             // Use apiKey to check if customer is NOT Neltoft gruppen OR Mikroleje
-            if ($apiKey !== "c36f9c6d-cf10-49b3-ad2d-b875b6610d7a" && $apiKey !== "d073aef5-6a13-4a9b-ad6f-7b3288f4de4d")
+            if ($apiKey !== "c36f9c6d-cf10-49b3-ad2d-b875b6610d7a" && $apiKey !== "d073aef5-6a13-4a9b-ad6f-7b3288f4de4d" && $vehicleRental !== true && $vehicleSold !== true)
             {
                 $showPrice .= '<div class="bdt_price_more-info">';
                 $showPrice .= '<input id="priceInfo" class="bdt_price_more-info_checkbox" type="checkbox">';
@@ -1428,12 +1469,21 @@ public function bdt_insert_map_dependencies() {
 
         public function bdt_shortcode_recommendedvehicles( $atts ) {
             $atts = shortcode_atts( array(
-                'show' => 3
+                'show' => 3,
+                'hideinternalvehiclesbilinfo' => false,
+				'hideonlywholesalevehicles' => false,
+				'showonlywholesalevehicles' => false
             ), $atts, 'bdt_recommendedvehicles' );
 
             $vehicleId = $this->ResolveVehicleId();
+			
+			//jlk
+			$hideInternalVehiclesBilinfo = esc_attr($atts['hideinternalvehiclesbilinfo']);
+			$hideOnlyWholesaleVehicles = esc_attr($atts['hideonlywholesalevehicles']);
+			$showOnlyWholesaleVehicles = esc_attr($atts['showonlywholesalevehicles']);
+			
             try{
-                $vehicleFeed = $this->biltorvetAPI->GetRecommendedVehicles($vehicleId === -1 ? null : $vehicleId, intval($atts['show']));
+                $vehicleFeed = $this->biltorvetAPI->GetRecommendedVehicles($vehicleId === -1 ? null : $vehicleId, intval($atts['show']), $hideInternalVehiclesBilinfo, $hideOnlyWholesaleVehicles, $showOnlyWholesaleVehicles);
             } catch(Exception $e) {
                 return $e->getMessage();
             }
@@ -1482,14 +1532,19 @@ public function bdt_insert_map_dependencies() {
         {
             $atts = shortcode_atts( array(
                 'show' => 3,
-                'type' => null
+                'type' => null,
+                'hideinternalvehiclesbilinfo' => false,
+				'hideonlywholesalevehicles' => false
             ), $atts, 'bdt_featuredvehicles');
 
             $amount = esc_attr($atts['show']);
             $vehicleType = esc_attr($atts['type']);
-
+			//jlk
+			$hideInternalVehiclesBilinfo = esc_attr($atts['hideinternalvehiclesbilinfo']);
+			$hideOnlyWholesaleVehicles = esc_attr($atts['hideonlywholesalevehicles']);
+			
             try{
-                $vehicleFeed = $this->biltorvetAPI->GetFeaturedVehicles($amount, $vehicleType);
+				$vehicleFeed = $this->biltorvetAPI->GetFeaturedVehicles($amount, $vehicleType, $hideInternalVehiclesBilinfo, $hideOnlyWholesaleVehicles);
             } catch(Exception $e) {
                 return $e->getMessage();
             }
@@ -1833,11 +1888,10 @@ public function bdt_insert_map_dependencies() {
 			}
 
 			?>
-				
                 <script>
                     jQuery( document ).ready(function() {
 						window.dataLayer.push({
-								event: 'car details',
+								event: 'show_vehicle',
 								eventCategory: 'car details showings',
 								eventAction: "car-details show",
 								content_type: 'vehicle',
@@ -1854,9 +1908,14 @@ public function bdt_insert_map_dependencies() {
 								body_style: '<?php echo($vehicleProperties['BodyType']->getValue()); ?>',
 								fuel_type: '<?php echo($this->currentVehicle->propellant); ?>',
 								drivetrain: 'n/a',
-								price: <?php echo($this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'Price', true)); ?>,
+								price: <?php $price = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'Price', true); echo is_numeric($price) ? $price : "'n/a'"; ?>,
+								leasingpricepermonth: <?php $leasingprice = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'LeasingMonthlyPayment', true); echo is_numeric($leasingprice) ? $leasingprice : "'n/a'"; ?>,
+								financingpricepermonth: <?php $financingprice = $this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'FinancingMonthlyPrice', true); echo is_numeric($financingprice) ? $financingprice : "'n/a'"; ?>,
 								currency: 'DKK',
-								preferred_price_range: 'n/a'
+								preferred_price_range: 'n/a',
+								companyid: '<?php echo($this->currentVehicle->company->id); ?>',
+								created: '<?php echo($this->currentVehicle->created); ?>',
+								updated: '<?php echo($this->currentVehicle->updated); ?>'
 							});
                     });
                 </script>

@@ -3,8 +3,8 @@ Contributors: autoitas
 Donate link: https://www.autoit.dk/
 Tags: cars, autoit, autodesktop, biler, biltorvet web
 Requires at least: 4.9.7
-Tested up to: 6.7.2
-Stable tag: 3.3.5
+Tested up to: 6.8.3
+Stable tag: 3.3.6
 Requires PHP: 7.4
 License: Proprietary
 License URI: https://www.biltorvet.as/media/1385/betingelser-biltorvetas.pdf
@@ -31,6 +31,20 @@ AutoIT Dealer Tools er fuldt integreret med AutoDesktop, så din hjemmeside kan 
 3. Plugin settings
 
 == Changelog ==
+
+= 3.3.6 =
+* Update LeafLet map integration
+* Adds BilInfo shortcode parameter options (hideinternalvehiclesbilinfo, hideonlywholesalevehicles, showonlywholesalevehicles) on shortcodes: [bdt_get_vehicles], [bdt_featuredvehicles] and [bdt_shortcode_recommendedvehicles]
+* Fix wrong handling of Plug-in hybrid (Diesel / El) propellant type
+* Adds better search handling when using Company filtering
+* Adds PHP 8.3.25 support
+* Adds better Cookie Concent URL handling on Vehicle Detail Page (Modal Popups)
+* Now Hide Price and Price Info on SOLD vehicles
+* Adds more data to dataLayer tracking when using shortcode: [bdt_car_tracking_using_datalayer] on the Vehicle Detail Page
+* Minor CSS changes
+* Minor plugin update adjustments
+
+For a complete list of changes, see the [full changelog](https://github.com/AutoITWeb/autoit-dealer-tools/releases) on GitHub.
 
 = 3.3.5 =
 * Add option to search on electric range using slider

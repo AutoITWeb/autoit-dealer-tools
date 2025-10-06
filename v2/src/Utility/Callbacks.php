@@ -72,6 +72,15 @@ class Callbacks
 
             $searchFilter->setVehicleStates($vehicleStates);
         }
+		//jlk
+        if(isset($atts["hideinternalvehiclesbilinfo"]) && $atts["hideinternalvehiclesbilinfo"] == 'true') {
+            $searchFilter->setHideInternalVehiclesBilInfo(true);
+        }
+		
+        if(isset($atts["hideonlywholesalevehicles"]) && $atts["hideonlywholesalevehicles"] == 'true') {
+            $searchFilter->setHideOnlyWholesaleVehicles(true);
+        }
+		
         if(isset($atts["hidesoldvehicles"]) && $atts["hidesoldvehicles"] == 'true') {
             $searchFilter->setHideSoldVehicles(true);
         }
@@ -183,6 +192,15 @@ class Callbacks
             else {
                 return '<b>"' . $atts['state'] . '"</b>' . ' is not a valid state - Please set a valid state.' . '<br><br>' . 'Check the documentation for valid status codes.';
             }
+        }
+		
+		//jlk
+        if(isset($atts["hideinternalvehiclesbilinfo"]) && $atts["hideinternalvehiclesbilinfo"] == 'true') {
+            $searchFilter->setHideInternalVehiclesBilInfo(true);
+        }
+		
+        if(isset($atts["hideonlywholesalevehicles"]) && $atts["hideonlywholesalevehicles"] == 'true') {
+            $searchFilter->setHideOnlyWholesaleVehicles(true);
         }
 
         if(isset($atts['show']))
@@ -322,6 +340,15 @@ class Callbacks
                 $primaryPriceType = $atts['primarypricetype'];
             }
         }
+		
+		//jlk
+        if(isset($atts["hideinternalvehiclesbilinfo"]) && $atts["hideinternalvehiclesbilinfo"] == 'true') {
+            $searchFilter->setHideInternalVehiclesBilInfo(true);
+        }
+		
+        if(isset($atts["hideonlywholesalevehicles"]) && $atts["hideonlywholesalevehicles"] == 'true') {
+            $searchFilter->setHideOnlyWholesaleVehicles(true);
+        }	
 
         if(isset($atts['show']))
         {
