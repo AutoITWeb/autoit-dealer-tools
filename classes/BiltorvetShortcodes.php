@@ -1770,6 +1770,10 @@ public function bdt_insert_map_dependencies() {
                                         break;
                                     }
                                 }
+                                if($sold)
+                                {
+                                    return "<!-- BDT: Santander widget not loaded: vehicle is sold -->";
+                                }
                                 if(!isset($price))
                                 {
                                     return "<!-- BDT: Santander widget not loaded: price not set -->";
