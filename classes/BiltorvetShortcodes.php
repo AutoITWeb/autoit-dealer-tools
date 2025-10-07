@@ -1412,7 +1412,8 @@ public function bdt_insert_map_dependencies() {
 			
 			//$number = 12345;
 			//print_r($this->currentVehicle);
-			$priceFormatted = $this->currentVehicle->cashPrice->priceFormatted;
+			$statusSold = $this->bdt_shortcode_status_sold();
+			$priceFormatted = $statusSold ? '-' : $this->currentVehicle->cashPrice->priceFormatted;
 			$priceLabelDetailsPage = $this->currentVehicle->cashPrice->priceLabelDetailsPage;
 			$content = 
 			'<div class="price_tabs-container">
