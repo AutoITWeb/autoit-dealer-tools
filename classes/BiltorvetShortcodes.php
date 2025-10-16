@@ -78,57 +78,81 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             add_action('wp_head', array(&$this, 'bdt_insert_map_dependencies'), 1000);
         }
 		
-		//JLK ny forbrug/rækkevidde ændringer
-		public function bdt_shortcode_forbrug_eller_raekkevidde_label( $atts )
-		{
-			$vehiclePropellant = $this->currentVehicle->propellant;
+	//JLK ny forbrug/rækkevidde ændringer
+	public function bdt_shortcode_forbrug_eller_raekkevidde_label( $atts )
+	{
+		$vehiclePropellant = $this->currentVehicle->propellant;
 		
-			if ($vehiclePropellant == "EL" || $vehiclePropellant == "El") 
+		$DrivmiddelforbrugKMprL = do_shortcode("[bdt_prop p='Kmx1l']");
+		$DrivmiddelforbrugKMprLWltp = do_shortcode("[bdt_prop p='Kmx1lWltp']");
+	
+		if ($vehiclePropellant == "EL" || $vehiclePropellant == "El") 
+		{
+			if(($atts['design']) === 'v1')
 			{
-				if(($atts['design']) === 'v1')
-				{
-					return ('<p>Rækkevidde</p>');
-				}
-				else if(($atts['design']) === 'v2')
-				{
-					return ('Rækkevidde');
-				}
-				else 
-				{
-					return ('Ukendt rækkevidde');
-				}
+				return ('<p>Rækkevidde</p>');
 			}
-			else
+			else if(($atts['design']) === 'v2')
 			{
-				if(($atts['design']) === 'v1')
-				{
-					return ('<p>Forbrug</p>');
-				}
-				else if(($atts['design']) === 'v2')
-				{
-					return ('Forbrug');
-				}
-				else 
-				{
-					return ('Ukendt Forbrug');
-				}
+				return ('Rækkevidde');
+			}
+			else 
+			{
+				return ('Ukendt rækkevidde');
 			}
 		}
-		
-		//JLK ny forbrug/rækkevidde ændringer
-		public function bdt_shortcode_forbrug_eller_raekkevidde_data()
+		else
 		{
-			$vehiclePropellant = $this->currentVehicle->propellant;
-		
-			if ($vehiclePropellant == "EL" || $vehiclePropellant == "El") 
+			// Determine the label suffix based on WLTP and NEDC values
+			$labelSuffix = '';
+			if ($DrivmiddelforbrugKMprLWltp !== "Ikke angivet")
 			{
-				return do_shortcode("[bdt_prop p='ElectricReach']");
+				$labelSuffix = ' (WLTP)';
+			}
+			else if ($DrivmiddelforbrugKMprL !== "Ikke angivet")
+			{
+				$labelSuffix = ' (NEDC)';
+			}
+
+			if(($atts['design']) === 'v1')
+			{
+				return ('<p>Forbrug' . $labelSuffix . '</p>');
+			}
+			else if(($atts['design']) === 'v2')
+			{
+				return ('Forbrug' . $labelSuffix);
+			}
+			else 
+			{
+				return ('Ukendt Forbrug');
+			}
+		}
+	}
+		
+	//JLK ny forbrug/rækkevidde ændringer
+	public function bdt_shortcode_forbrug_eller_raekkevidde_data()
+	{
+		$vehiclePropellant = $this->currentVehicle->propellant;
+	
+		if ($vehiclePropellant == "EL" || $vehiclePropellant == "El") 
+		{
+			return do_shortcode("[bdt_prop p='ElectricReach']");
+		}
+		else
+		{
+			// Check if WLTP data is available, otherwise use NEDC
+			$DrivmiddelforbrugKMprLWltp = do_shortcode("[bdt_prop p='Kmx1lWltp']");
+			
+			if ($DrivmiddelforbrugKMprLWltp !== "Ikke angivet")
+			{
+				return $DrivmiddelforbrugKMprLWltp;
 			}
 			else
 			{
 				return do_shortcode("[bdt_prop p='Kmx1l']");
 			}
-		}		
+		}
+	}
 		
 		//JLK ny
         public function bdt_shortcode_has_cashPrice()

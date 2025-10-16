@@ -786,8 +786,18 @@ class Vehicle
                 $HTML .= '</span><span class="vehicleParamLabel">KM</span>';
                 break;
             case '5':
-                $HTML .= '' . $vehicleProperties['Kmx1l']->getValueFormatted() != "" ? $vehicleProperties['Kmx1l']->getValueFormatted() : '-' . '';
-                $HTML .= '</span><span class="vehicleParamLabel">Km/L</span>';
+                // Check if WLTP data is available, otherwise use NEDC
+                $kmLabel = 'Km/L';
+                if (isset($vehicleProperties['Kmx1lWltp']) && $vehicleProperties['Kmx1lWltp']->getValueFormatted() != "" && $vehicleProperties['Kmx1lWltp']->getValueFormatted() != "Ikke angivet") {
+                    $HTML .= '' . $vehicleProperties['Kmx1lWltp']->getValueFormatted() . '';
+                    $kmLabel = 'Km/L (WLTP)';
+                } else if (isset($vehicleProperties['Kmx1l']) && $vehicleProperties['Kmx1l']->getValueFormatted() != "" && $vehicleProperties['Kmx1l']->getValueFormatted() != "Ikke angivet") {
+                    $HTML .= '' . $vehicleProperties['Kmx1l']->getValueFormatted() . '';
+                    $kmLabel = 'Km/L (NEDC)';
+                } else {
+                    $HTML .= '-';
+                }
+                $HTML .= '</span><span class="vehicleParamLabel">' . $kmLabel . '</span>';
                 break;
             case '6':
                 $HTML .= '' . $vehicle->getPropellant() ?? '-' . '';
