@@ -370,6 +370,13 @@
                     </label>
                 </div>
 
+                <div class="col-lg-4 col-sm-6 mb-1 mb-sm-3 multiple-select">
+                    <select class="geartype multiple" multiple="multiple" name="geartype" id="geartype" data-contenttype="geartype"></select>
+                    <label class="selectDropDownLabel">
+                        <span class="placeholder-text"><?php _e('- Select geartype -', 'biltorvet-dealer-tools'); ?></span>
+                    </label>
+                </div>
+
             </div>
             <div class="row">
                 <div class="col-lg-4 col-sm-6 mt-3 mt-sm-0 mb-3">

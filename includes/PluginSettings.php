@@ -989,6 +989,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             );
 
             add_settings_field(
+                'frontpagesearch_geartypes',
+                __( 'Activate gear types', 'biltorvet-dealer-tools' ),
+                array( $this, 'bdt_frontpagesearch_geartypes_callback' ),
+                'bdt-settings-group-5', // Page
+                'bdt_settings_section_5' // Section
+            );
+
+            add_settings_field(
                 'frontpagesearch_pricerange',
                 __( 'Activate price range', 'biltorvet-dealer-tools' ),
                 array( $this, 'bdt_frontpagesearch_pricerange_callback' ),
@@ -2086,6 +2094,14 @@ if (!defined( 'ABSPATH' )) exit; // Exit if accessed directly
             printf(
                 '<input type="checkbox" id="bdt_options_5" value="on" name="bdt_options_5[frontpagesearch_propellants]"%s />',
                 isset( $this->options_5['frontpagesearch_propellants'] ) && $this->options_5['frontpagesearch_propellants'] === 'on' ? ' checked="checked"' : ''
+            );
+        }
+
+        public function bdt_frontpagesearch_geartypes_callback()
+        {
+            printf(
+                '<input type="checkbox" id="bdt_options_5" value="on" name="bdt_options_5[frontpagesearch_geartypes]"%s />',
+                isset( $this->options_5['frontpagesearch_geartypes'] ) && $this->options_5['frontpagesearch_geartypes'] === 'on' ? ' checked="checked"' : ''
             );
         }
 

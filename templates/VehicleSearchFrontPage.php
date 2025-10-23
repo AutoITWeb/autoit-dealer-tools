@@ -246,6 +246,7 @@ $showProductTypes = (isset($this->_options_5)) && (isset($this->_options_5['fron
 $showPriceTypes = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_pricetype'])) && ($this->_options_5['frontpagesearch_pricetype'] === 'on') ? "" : "style='display: none;'";
 $showBodyTypes = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_bodytype'])) && ($this->_options_5['frontpagesearch_bodytype'] === 'on') ? "" : "style='display: none;'";
 $showPropellants = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_propellants'])) && ($this->_options_5['frontpagesearch_propellants'] === 'on') ? "" : "style='display: none;'";
+$showGearTypes = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_geartypes'])) && ($this->_options_5['frontpagesearch_geartypes'] === 'on') ? "" : "style='display: none;'";
 //jlk
 $showElectricRange = (isset($this->_options_5)) && (isset($this->_options_5['frontpagesearch_electricrange'])) ? "" : "style='display: none;'";
 
@@ -342,6 +343,13 @@ $customVehicleTypeIconColor = (isset($this->_options_5)) && (isset($this->_optio
                 <select class="propellant multiple" multiple="multiple" name="propellant" id="propellant" data-contenttype="drivmiddeltyper"></select>
                 <label class="selectDropDownLabel">
                     <span class="placeholder-text"><?php _e('- Select propellant -', 'biltorvet-dealer-tools'); ?></span>
+                </label>
+            </div>
+
+            <div class="col-sm-<?= $setCol ?> mb-1 mb-sm-3 multiple-select" <?= $showGearTypes ?>>
+                <select class="geartype multiple" multiple="multiple" name="geartype" id="geartype" data-contenttype="geartype"></select>
+                <label class="selectDropDownLabel">
+                    <span class="placeholder-text"><?php _e('- Select geartype -', 'biltorvet-dealer-tools'); ?></span>
                 </label>
             </div>
 

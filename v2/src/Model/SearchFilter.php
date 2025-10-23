@@ -226,6 +226,11 @@ class SearchFilter
     public $BrandNew; // Bool
 
     /**
+     * @var array
+     */
+    public $GearTypes; // Array
+
+    /**
      * @var int
      */
     public $TotalResults;
@@ -1020,6 +1025,24 @@ class SearchFilter
     public function setBrandNew(bool $BrandNew): SearchFilter
     {
         $this->BrandNew = $BrandNew;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getGearTypes(): ?array
+    {
+        return $this->GearTypes;
+    }
+
+    /**
+     * @param  array $GearTypes
+     * @return SearchFilter
+     */
+    public function setGearTypes(?array $GearTypes): SearchFilter
+    {
+        $this->GearTypes = $GearTypes;
         return $this;
     }
 

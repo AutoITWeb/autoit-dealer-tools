@@ -49,7 +49,7 @@ function Biltorvet($) {
 
     // Select2 init
     $(document).ready(function(e) {
-    
+
         $('.multiple').select2(
             {
                 dropdownParent: $('.vehicle_search'),
@@ -214,7 +214,7 @@ function Biltorvet($) {
     {
         // Default getFromSession to false if undefined
         getFromSession = getFromSession !== undefined ? getFromSession : false;
-        
+
         if(vehicleSearch.length > 0)
         {
             if(searchFilterOptionsXHR !== null)
@@ -313,6 +313,14 @@ function Biltorvet($) {
                         }
                         else {
                             ReinitSelect2Placeholders('#priceType');
+                        }
+                        if(response.values.gearTypes && response.values.gearTypes[0])
+                        {
+                            $('#geartype').val(response.values.gearTypes);
+                            HandleSelect2SelectionChange($('#geartype'));
+                        }
+                        else {
+                            ReinitSelect2Placeholders('#geartype');
                         }
                         if(response.values.customVehicleTypes && response.values.customVehicleTypes[0])
                         {
@@ -988,6 +996,11 @@ function Biltorvet($) {
             vehicleSearch.find('select[name=propellant]').removeAttr('disabled');
         }
 
+        // Geartype - static options (always available)
+        var geartypes = '<option value="Automatic">Automatisk</option><option value="Manual">Manuel</option>';
+        vehicleSearch.find('select[name=geartype]').find('option').remove().end().append(geartypes);
+        vehicleSearch.find('select[name=geartype]').removeAttr('disabled');
+
         if(consumptionRangeSlider !== null)
         {
             var crsI = sliderAlternativeNamespace ? consumptionRangeSlider.bootstrapSlider(response.consumptionMin === response.consumptionMax ? "disable" : "enable") : consumptionRangeSlider.slider(response.consumptionMin === response.consumptionMax ? "disable" : "enable");
@@ -1033,19 +1046,20 @@ function Biltorvet($) {
     {
         // Don't send min/max values if the selected values equal min and max.
         // This allows to return results which have no values set on these fields.
-        var priceMin = priceRangeSlider.data('slider').getValue()[0];
+        var priceMin = priceRangeSlider !== null ? priceRangeSlider.data('slider').getValue()[0] : null;
         priceMin = priceMin === -1 ? null : priceMin;
-        var priceMax = priceRangeSlider.data('slider').getValue()[1];
+        var priceMax = priceRangeSlider !== null ? priceRangeSlider.data('slider').getValue()[1] : null;
         priceMax = priceMax === -1 ? null : priceMax;
-        var consumptionMin = consumptionRangeSlider.data('slider').getValue()[0];
+        var consumptionMin = consumptionRangeSlider !== null ? consumptionRangeSlider.data('slider').getValue()[0] : null;
         consumptionMin = consumptionMin === -1 ? null : consumptionMin;
-        var consumptionMax = consumptionRangeSlider.data('slider').getValue()[1];
+        var consumptionMax = consumptionRangeSlider !== null ? consumptionRangeSlider.data('slider').getValue()[1] : null;
         consumptionMax = consumptionMax === -1 ? null : consumptionMax;
 		//jlk
-        var electricRangeMin = electricRangeSlider.data('slider').getValue()[0];
+        var electricRangeMin = electricRangeSlider !== null ? electricRangeSlider.data('slider').getValue()[0] : null;
         electricRangeMin = electricRangeMin === -1 ? null : electricRangeMin;
-        var electricRangeMax = electricRangeSlider.data('slider').getValue()[1];
-        electricRangeMax = electricRangeMax === -1 ? null : electricRangeMax;		
+        var electricRangeMax = electricRangeSlider !== null ? electricRangeSlider.data('slider').getValue()[1] : null;
+        electricRangeMax = electricRangeMax === -1 ? null : electricRangeMax;
+
         filter = {
             CompanyIds: RetrieveSelect2Values('#company') ?? null,
             FullTextSearch: vehicleSearch.find('input[name=fullTextSearch]').val() === '' ? null : [vehicleSearch.find('input[name=fullTextSearch]').val()],
@@ -1056,13 +1070,14 @@ function Biltorvet($) {
             ProductTypes: RetrieveSelect2Values('#productType') ?? null,
             VehicleStates: RetrieveSelect2Values('#vehicleState') ?? null,
             PriceTypes: RetrieveSelect2Values('#priceType') ?? null,
+            GearTypes: RetrieveSelect2Values('#geartype') ?? null,
             PriceMin: priceRangeSlider !== null ? (priceRangeSlider.data('slider').getAttribute('min') !== priceMin ? priceMin : null) : null,
             PriceMax: priceRangeSlider !== null ? (priceRangeSlider.data('slider').getAttribute('max') !== priceMax ? priceMax : null) : null,
             ConsumptionMin: consumptionRangeSlider !== null ? (consumptionRangeSlider.data('slider').getAttribute('min') !== consumptionMin ? consumptionMin : null) : null,
             ConsumptionMax: consumptionRangeSlider !== null ? (consumptionRangeSlider.data('slider').getAttribute('max') !== consumptionMax ? consumptionMax : null) : null,
 			//jlk
             ElectricRangeMin: electricRangeSlider !== null ? (electricRangeSlider.data('slider').getAttribute('min') !== electricRangeMin ? electricRangeMin : null) : null,
-            ElectricRangeMax: electricRangeSlider !== null ? (electricRangeSlider.data('slider').getAttribute('max') !== electricRangeMax ? electricRangeMax : null) : null,			
+            ElectricRangeMax: electricRangeSlider !== null ? (electricRangeSlider.data('slider').getAttribute('max') !== electricRangeMax ? electricRangeMax : null) : null,
             Start: null,
             Limit: null,
             OrderBy: vehicleSearchResults.find('select[name=orderBy]').val() === '' ? null : vehicleSearchResults.find('select[name=orderBy]').val(),

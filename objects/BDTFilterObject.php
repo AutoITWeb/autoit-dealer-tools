@@ -53,6 +53,7 @@ class BDTFilterObject {
     public $HideOnlyWholesaleVehicles; // Bool
     public $ShowOnlyWholesaleVehicles; // Bool
     public $HideInternalVehiclesBilInfo; // Bool
+    public $GearTypes; // Array - Filter by transmission type (values: "Automatic", "Manual")
 
     /**
      * Constructor optionally initializes from an array
