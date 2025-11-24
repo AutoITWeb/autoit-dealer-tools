@@ -1006,22 +1006,22 @@ public function bdt_insert_map_dependencies() {
             }
         }
 
-        public function bdt_shortcode_detail_cta( $atts, $content = null )
-        {
-            if(!isset($this->currentVehicle) || $this->currentVehicle === null)
-            {
-                return __('Vehicle not found', 'biltorvet-dealer-tools');
-            }
+		public function bdt_shortcode_detail_cta( $atts, $content = null )
+		{
+			if(!isset($this->currentVehicle) || $this->currentVehicle === null)
+			{
+				return __('Vehicle not found', 'biltorvet-dealer-tools');
+			}
 
-            global $ActivityType;
-            $root = dirname(plugin_dir_url( __FILE__ ));
-			
+			global $ActivityType;
+			$root = dirname(plugin_dir_url( __FILE__ ));
+					
 			$statusSold = $this->bdt_shortcode_status_sold();
 			$statusOnlinekoeb = $this->bdt_shortcode_status_onlinekoeb();
 
 			//Use apiKey to check if customer is Jørgen Hansen Biler to handle TestDrive/Purchace differently from everyone else. This is a temp solution and should be refined if other customer need same solution in the future 
 			$apiKey = WordpressHelper::getApiKey();
-			
+					
 			//jlk test start midlertidig løsning
 			$vehicleRental = false;
 			//print_r($this->currentVehicle->labels);
@@ -1036,25 +1036,25 @@ public function bdt_insert_map_dependencies() {
 					}
 				}
 			}			
-			
-            if(!isset($atts['type']))
-            {
-                return __('Shortcode\'s CTA type has not been set.', 'biltorvet-dealer-tools');
-            }
+					
+			if(!isset($atts['type']))
+			{
+				return __('Shortcode\'s CTA type has not been set.', 'biltorvet-dealer-tools');
+			}
 
-            if(!in_array($atts['type'], $ActivityType))
-            {
-                return sprintf( __('Unrecognized CTA type. Allowed types: %s', 'biltorvet-dealer-tools'), implode(', ', $ActivityType));
-            }
-            $customColor = null;
-            if(isset($atts['color']))
-            {
-                $customColor = TextUtils::SanitizeHTMLColor($atts['color']);
-            }
+			if(!in_array($atts['type'], $ActivityType))
+			{
+				return sprintf( __('Unrecognized CTA type. Allowed types: %s', 'biltorvet-dealer-tools'), implode(', ', $ActivityType));
+			}
+			$customColor = null;
+			if(isset($atts['color']))
+			{
+				$customColor = TextUtils::SanitizeHTMLColor($atts['color']);
+			}
 
-            if($content == null)
-            {
-                switch($atts['type']):
+			if($content == null)
+			{
+				switch($atts['type']):
 					case 'TestDrive':
 						if(!$statusSold)
 						{
@@ -1064,10 +1064,10 @@ public function bdt_insert_map_dependencies() {
 						{
 							$content = '<span class="bticon bticon-TestDrive disable-grey"></span><br>' . __('Testdrive', 'biltorvet-dealer-tools');
 						}
-                    break;					
-                    case 'Email':
-                        $content = '<span class="bticon bticon-WriteUs"></span><br>' . __('Write us', 'biltorvet-dealer-tools');
-                    break;
+					break;					
+					case 'Email':
+						$content = '<span class="bticon bticon-WriteUs"></span><br>' . __('Write us', 'biltorvet-dealer-tools');
+					break;
 					case 'Purchase':
 						if(!$statusSold)
 						{					
@@ -1077,49 +1077,64 @@ public function bdt_insert_map_dependencies() {
 						{
 							$content = '<span class="bticon bticon-BuyCar disable-grey"></span><br>' . __('Buy this car', 'biltorvet-dealer-tools');
 						}
-                    break;					
+					break;					
 					case 'Contact':
-                        if($this->currentVehicle->company->phone != null) {
-                            $content = '<span class="bticon bticon-CallUs"></span><br>' . $this->currentVehicle->company->phone;
-                        }
-                        else {
-                            $content = '<span class="bticon bticon-CallUs"></span><br>' . __('Call us', 'biltorvet-dealer-tools');
-                        }
-                    break;
-                    case 'PhoneCall':
-                        $content = '<span class="bticon bticon-CallBack"></span><br>' . __('Let us call you back', 'biltorvet-dealer-tools');
-                    break;
-                endswitch;
-            }
-            $id = TextUtils::Sanitize($atts['type']);
-            $root = get_home_url();
-            $bdt_contact_page_id = null;
-            if(isset($this->_options['contact_page_id']))
-            {
-                $bdt_contact_page_id = $this->_options['contact_page_id'];
-            }
-            if(($atts['type'] === 'TestDrive' || $atts['type'] === 'Purchase') && isset($this->_options['booking_page_id']))
-            {
-                $bdt_contact_page_id = $this->_options['booking_page_id'];
-            }
-            if(isset($bdt_contact_page_id))
-            {
-                $root = get_permalink($bdt_contact_page_id);
-            }
+						if($this->currentVehicle->company->phone != null) {
+							$content = '<span class="bticon bticon-CallUs"></span><br>' . $this->currentVehicle->company->phone;
+						}
+						else {
+							$content = '<span class="bticon bticon-CallUs"></span><br>' . __('Call us', 'biltorvet-dealer-tools');
+						}
+					break;
+					case 'PhoneCall':
+						$content = '<span class="bticon bticon-CallBack"></span><br>' . __('Let us call you back', 'biltorvet-dealer-tools');
+					break;
+				endswitch;
+			}
 
-            if(($atts['type']) === 'Contact')
-            {
-                if($this->currentVehicle->company->phone != null) {
-                    return (isset($style) ? $style : '') . '<a rel="nofollow" id="'. $id .'" href="tel:' . $this->currentVehicle->company->phone . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
-                }
-            }
-			
+			$id = TextUtils::Sanitize($atts['type']);
+			$root = get_home_url();
+			$bdt_contact_page_id = null;
+			if(isset($this->_options['contact_page_id']))
+			{
+				$bdt_contact_page_id = $this->_options['contact_page_id'];
+			}
+			if(($atts['type'] === 'TestDrive' || $atts['type'] === 'Purchase') && isset($this->_options['booking_page_id']))
+			{
+				$bdt_contact_page_id = $this->_options['booking_page_id'];
+			}
+			if(isset($bdt_contact_page_id))
+			{
+				$root = get_permalink($bdt_contact_page_id);
+			}
+
+			// IP check logic (variable renamed to $notnewIps)
+			$newIPsRange = ['77.221.253.104', '10.80.10.47', '::1'];
+			$currentIP = $_SERVER['SERVER_ADDR'] ?? '';
+			$notnewIps = !in_array($currentIP, $newIPsRange);
+
+			// Treat specific apiKeys the same as $notnewIps
+			$specialApiKeys = ["57e18d12-6feb-44c0-bc65-af0664da2c0c", "1f10c9d0-5bae-4dc5-980d-1cc4e0012b8f", "22ba6945-c404-4178-88a4-d776f50dbf52", "09e68688-866c-42d9-bdbe-b21b24933f53", "cfd1c128-bcac-43e4-8f52-69c2e4006a55", "8f287944-9715-43f3-b36c-a94470247732", "86a0a335-76dd-4f4b-a8b1-93107e54663c"];
+			if (in_array($apiKey, $specialApiKeys)) {
+				$notnewIps = true;
+			}
+
+			if(($atts['type']) === 'Contact')
+			{
+				if($this->currentVehicle->company->phone != null) {
+					return (isset($style) ? $style : '') . '<a rel="nofollow" id="'. $id .'" href="tel:' . $this->currentVehicle->company->phone . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+				}
+			}
+					
 			if($atts['type'] === 'TestDrive' || $atts['type'] === 'Purchase')
 			{
 				if ($apiKey === "780a56f2-25c4-4793-b895-8fa1bf427cbd")//Jørgen Hansen Biler
 				{
 					if(!$statusSold)
 					{
+						if ($notnewIps) {
+							return (isset($style) ? $style : '') . '<a rel="nofollow" id="'. $id .'" href="'. $root . '?'. http_build_query(array('bdt_actiontype' => $atts['type'], 'bdt_vehicle_id' => $this->currentVehicle->documentId)) . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+						}
 						return (isset($style) ? $style : '') . '<a rel="nofollow" id="'. $id .'" href="#" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
 					}
 					else
@@ -1132,6 +1147,9 @@ public function bdt_insert_map_dependencies() {
 					//jlk test
 					if(!$statusSold && !$vehicleRental)
 					{
+						if ($notnewIps) {
+							return (isset($style) ? $style : '') . '<a rel="nofollow" id="'. $id .'" href="'. $root . '?'. http_build_query(array('bdt_actiontype' => $atts['type'], 'bdt_vehicle_id' => $this->currentVehicle->documentId)) . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+						}
 						return (isset($style) ? $style : '') . '<a rel="nofollow" id="'. $id .'" href="#" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
 					}
 					else
@@ -1141,8 +1159,14 @@ public function bdt_insert_map_dependencies() {
 				}
 			}
 
-            return (isset($style) ? $style : '') . '<a rel="nofollow" id="'. $id .'" href="#" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
-        }
+			// Final fall-back CTA for all other types
+			if ($notnewIps) {
+				return (isset($style) ? $style : '') . '<a rel="nofollow" id="'. $id .'" href="'. $root . '?'. http_build_query(array('bdt_actiontype' => $atts['type'], 'bdt_vehicle_id' => $this->currentVehicle->documentId)) . '" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+			}
+
+			return (isset($style) ? $style : '') . '<a rel="nofollow" id="'. $id .'" href="#" class="bdt_cta '.(isset($customColor) && $customColor !== null ? 'donottint ' : '') . (isset($atts['class']) ? ' ' . esc_attr($atts['class']) : '') .'">' . $content . '</a>';
+		}
+
 
         /**
          * Automaticaly show kontant or leasing + kontant price.
@@ -1169,37 +1193,20 @@ public function bdt_insert_map_dependencies() {
 
             $priceController = new PriceController(VehicleFactory::create(json_decode(json_encode($this->currentVehicle), true)));
 			
-			//Use apiKey to check if customer is Kinnerup AutoKommision OR PeterPetersen OR Mikroleje to handle price differently from everyone else
+			//Use apiKey to check if customer is special and want to handle price differently from everyone else
 			$apiKey = WordpressHelper::getApiKey();
 
-            if ($apiKey === "7260fb0b-553e-48cd-8ac2-57c58eb88979" || $apiKey === "b16cbf16-dfda-45e4-a073-87956c7a37a9" || $apiKey === "d073aef5-6a13-4a9b-ad6f-7b3288f4de4d")//kinnerup & peterpetersen & mikroleje
-			{
-				$showPrice = '<span class="bdt_price_container">';
-				if ($priceController->GetPrimaryPrice('details')) {
-					$showPrice .= '<span class="primary-price">' . str_replace(" (inkl. lev. omkostninger)", "", $priceController->GetPrimaryPrice('details')) . '</span>';
-				}
-				if ($priceController->GetSecondaryPrice('details')) {
-					$showPrice .= '<span class="primary-price">' . str_replace(" (inkl. lev. omkostninger)", "", $priceController->GetSecondaryPrice('details')) . '</span>';
-				}
-				if ($priceController->GetTertiaryPrice('details')) {
-					$showPrice .= '<span class="primary-price">' . str_replace(" (inkl. lev. omkostninger)", "", $priceController->GetTertiaryPrice('details')) . '</span>';
-				}
-				$showPrice .= '</span>';
+			$showPrice = '<span class="bdt_price_container">';
+			if ($priceController->GetPrimaryPrice('details')) {
+				$showPrice .='<span class="primary-price">' .$priceController->GetPrimaryPrice('details') .'</span>';
 			}
-			else //everyone else
-			{
-				$showPrice = '<span class="bdt_price_container">';
-				if ($priceController->GetPrimaryPrice('details')) {
-					$showPrice .='<span class="primary-price">' .$priceController->GetPrimaryPrice('details') .'</span>';
-				}
-				if ($priceController->GetSecondaryPrice('details')) {
-					$showPrice .= '<span class="secondary-price">'. $priceController->GetSecondaryPrice('details') .'</span>';
-				}
-				if ($priceController->GetTertiaryPrice('details')) {
-					$showPrice .= '<span class="tertiary-price">' . $priceController->GetTertiaryPrice('details') .'</span>';
-				}
-				$showPrice .= '</span>';
-			}	
+			if ($priceController->GetSecondaryPrice('details')) {
+				$showPrice .= '<span class="secondary-price">'. $priceController->GetSecondaryPrice('details') .'</span>';
+			}
+			if ($priceController->GetTertiaryPrice('details')) {
+				$showPrice .= '<span class="tertiary-price">' . $priceController->GetTertiaryPrice('details') .'</span>';
+			}
+			$showPrice .= '</span>';
 
             $properties = $this->currentVehicle->properties;
             $exclMomsPropIndex = -1;

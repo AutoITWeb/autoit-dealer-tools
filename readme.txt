@@ -4,7 +4,7 @@ Donate link: https://www.autoit.dk/
 Tags: cars, autoit, autodesktop, biler, biltorvet web
 Requires at least: 4.9.7
 Tested up to: 6.8.3
-Stable tag: 3.3.8
+Stable tag: 3.3.9
 Requires PHP: 7.4
 License: Proprietary
 License URI: https://www.biltorvet.as/media/1385/betingelser-biltorvetas.pdf
@@ -31,6 +31,13 @@ AutoIT Dealer Tools er fuldt integreret med AutoDesktop, så din hjemmeside kan 
 3. Plugin settings
 
 == Changelog ==
+
+= 3.3.9 =
+* Remove (inkl. lev. omkostninger) from all price labels
+* Minor CSS changes
+* Minor plugin update adjustments
+
+For a complete list of changes, see the [full changelog](https://github.com/AutoITWeb/autoit-dealer-tools/releases) on GitHub.
 
 = 3.3.8 =
 * Adds geartype search option to search and frontpage search
