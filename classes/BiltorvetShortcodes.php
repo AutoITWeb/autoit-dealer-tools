@@ -677,7 +677,9 @@ public function bdt_insert_map_dependencies() {
 				"Plug-in hybrid (Diesel / El)",
 				"Hybrid",
 				"Mild hybrid",
-				"Plug-in hybrid"
+				"Plug-in hybrid",
+				"Hybrid (B/EL)",
+				"Hybrid (D/EL)"
 			];			
 
             foreach($vehicleLabelsBTS as $label)
@@ -1792,6 +1794,23 @@ public function bdt_insert_map_dependencies() {
 
                                 $firstRegistrationDate = $getFirstRegistrationDate != null && $this->currentVehicle->brandNew == false ? $getFirstRegistrationDate : strval(date("Y-m-d"));
 
+                                // Determine if vehicle is electric or hybrid
+                                $vehiclePropellant = $this->currentVehicle->propellant;
+                                $hybridTypes = [
+                                    "Hybrid (Benzin / El)",
+                                    "Hybrid (Diesel / El)",
+                                    "Mild hybrid (Benzin / El)",
+                                    "Mild hybrid (Diesel / El)",
+                                    "Plug-in hybrid (Benzin / El)",
+                                    "Plug-in hybrid (Diesel / El)",
+                                    "Hybrid",
+                                    "Mild hybrid",
+                                    "Plug-in hybrid",
+									"Hybrid (B/EL)",
+									"Hybrid (D/EL)"
+                                ];
+                                $isElectricOrHybrid = ($vehiclePropellant == "EL" || $vehiclePropellant == "El" || in_array($vehiclePropellant, $hybridTypes)) ? "true" : "false";
+
                                 $sold = false;
                                 foreach($this->currentVehicle->labels as $label)
                                 {
@@ -1842,6 +1861,7 @@ public function bdt_insert_map_dependencies() {
                                     'data-btsettings-variant="' . $variant . '" ' .
                                     'data-btsettings-mileage="' . $mileage . '" ' .
                                     'data-btsettings-firstRegistrationDate="' . $firstRegistrationDate . '" ' .
+                                    'data-btsettings-IsElectricOrHybrid="' . $isElectricOrHybrid . '" ' .
                                     ($this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'FinancingRunTime', true) !== null ? 'data-btsettings-paymentTerms="' . intval($this->biltorvetAPI->GetPropertyValue($this->currentVehicle, 'FinancingRunTime', true)) . '" ' : '') .
                                     ($sold ? 'data-btsettings-isVehicleSold="true" ' : '') .
                                     (isset($atts['brandingid']) ? 'data-btsettings-brandingId="' . intval($atts['brandingid']) . '" ' : '') .

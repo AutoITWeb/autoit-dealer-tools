@@ -638,7 +638,7 @@ function Biltorvet($) {
             cache: false,
             success: function(response){
 
-                $('#vehicle_search_results').html(response);
+                $('#vehicle_search_results').replaceWith(response);
             },
             complete: function()
             {
@@ -1080,8 +1080,8 @@ function Biltorvet($) {
             ElectricRangeMax: electricRangeSlider !== null ? (electricRangeSlider.data('slider').getAttribute('max') !== electricRangeMax ? electricRangeMax : null) : null,
             Start: null,
             Limit: null,
-            OrderBy: vehicleSearchResults.find('select[name=orderBy]').val() === '' ? null : vehicleSearchResults.find('select[name=orderBy]').val(),
-            Ascending: vehicleSearchResults.find('select[name=ascDesc]').val() === 'asc' ? true : false,
+            OrderBy: $('#select-orderby').val() ===  null ? null : $('#select-orderby').val(),
+            Ascending: $('#select-asc-desc').val() === 'asc' ? true : false,
         }
 
         var cvt = GetCustomVehicleType();

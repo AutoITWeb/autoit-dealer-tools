@@ -32,6 +32,14 @@ AutoIT Dealer Tools er fuldt integreret med AutoDesktop, så din hjemmeside kan 
 
 == Changelog ==
 
+= 3.4.0 =
+* Fix sort options handling (if changed) on search results pages with site pagination
+* Add Santander Widget handling for lower interest rates on electric and hybrid vehicles
+* Minor CSS changes
+* Minor plugin update adjustments
+
+For a complete list of changes, see the [full changelog](https://github.com/AutoITWeb/autoit-dealer-tools/releases) on GitHub.
+
 = 3.3.9 =
 * Remove (inkl. lev. omkostninger) from all price labels
 * Minor CSS changes

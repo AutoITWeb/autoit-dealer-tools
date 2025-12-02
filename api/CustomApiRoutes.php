@@ -522,6 +522,8 @@ use Biltorvet\Model\Vehicle;
             $content = ob_get_contents();
             ob_end_clean();
 
+            // Save filter in session to ensure sort parameters persist across pagination
+            $_SESSION['bdt_filter'] = json_encode($filterObject);
             session_write_close();
 
             return $content;
