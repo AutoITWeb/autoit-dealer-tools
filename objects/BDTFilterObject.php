@@ -42,6 +42,7 @@ class BDTFilterObject {
     public $HideByTypeMotorcycle; // Bool
     public $HideByTypeTruck; // Bool
     public $HideByTypeBus; // Bool
+    public $HideByTypeMachine; // Bool
     public $HideBrandNewVehicles; // Bool
     public $HideADVehicles; // Bool
     public $HideBIVehicles; // Bool

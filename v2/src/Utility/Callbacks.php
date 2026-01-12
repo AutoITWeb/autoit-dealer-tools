@@ -203,24 +203,25 @@ class Callbacks
             $searchFilter->setHideOnlyWholesaleVehicles(true);
         }
 
-        if(isset($atts['show']))
-        {
-            $int_value = ctype_digit($atts['show']) ? intval($atts['show']) : null;
-            if ($int_value !== null)
-            {
-                $searchFilter->setLimit($atts['show']);
+        // The search API has no setLabels()/setStatusCodes(), so label filtering
+        // happens in PHP via DataHelper::filterVehiclesByLabel() after the fetch.
+        // Fetch a generous slice so the post-filter has enough rows to pick from;
+        // `show` controls the rendered card count via $limit below, not the API page size.
+        $searchFilter->setLimit(200);
+
+        $limit = null;
+        if (isset($atts['show'])) {
+            $int_value = ctype_digit((string)$atts['show']) ? intval($atts['show']) : null;
+            if ($int_value !== null) {
+                $limit = $int_value;
             }
         }
-		
-		$limit = null;
-        if(isset($atts['limit']))
-        {
-            $int_value = ctype_digit($atts['limit']) ? intval($atts['limit']) : null;
-            if ($int_value !== null)
-            {
-				$limit = $int_value; // Set the limit value
+        if (isset($atts['limit'])) {
+            $int_value = ctype_digit((string)$atts['limit']) ? intval($atts['limit']) : null;
+            if ($int_value !== null) {
+                $limit = $int_value;
             }
-        }		
+        }
 
         if(isset($atts['orderby'])) {
 
@@ -282,6 +283,12 @@ class Callbacks
             }
         }
 
+        // Carousel parameters
+        $isCarousel = isset($atts['carousel']) && filter_var($atts['carousel'], FILTER_VALIDATE_BOOLEAN);
+        $autoplayInterval = isset($atts['autoplay']) ? intval($atts['autoplay']) : 0;
+        $showNav = isset($atts['shownav']) ? filter_var($atts['shownav'], FILTER_VALIDATE_BOOLEAN) : true;
+        $arrowPosition = isset($atts['arrowposition']) ? esc_attr($atts['arrowposition']) : 'sides';
+
         wp_enqueue_style("bdt_style");
 		return $this->templateController->load(
 			'vehicleCardWrapper.php',
@@ -292,6 +299,10 @@ class Callbacks
 					$limit // Pass the limit value
 				),
 				'basePage' => WordpressHelper::getOptions(1)['vehiclesearch_page_id'],
+				'isCarousel' => $isCarousel,
+				'autoplayInterval' => $autoplayInterval,
+				'showNav' => $showNav,
+				'arrowPosition' => $arrowPosition,
 			],
 			$primaryPriceType,
 			true
@@ -317,7 +328,7 @@ class Callbacks
 
         $setType = ucfirst($atts['type']);
 
-        $validTypes = array("Car", "Van", "Motorcycle", "Truck");
+        $validTypes = array("Car", "Van", "Motorcycle", "Truck", "Machine");
 
         // Error: Invalid type set
         if(!in_array($setType, $validTypes)){
@@ -330,6 +341,7 @@ class Callbacks
             case 'Van': $typeId = 2; break;
             case 'Motorcycle': $typeId = 7; break;
             case 'Truck' : $typeId = 4; break;
+            case 'Machine' : $typeId = 19; break;
         }
 
         $primaryPriceType = null;

@@ -364,6 +364,9 @@ class Biltorvet
         wp_register_script( 'bt_slideshow', 'https://gallery.autoit.dk/latest/gallery.js', true );
         //wp_register_script( 'search_script', plugins_url('scripts/search.js',  dirname(__FILE__) ) , array('jquery'), '1.0.0', true );
 
+        // BDT Carousel for featured vehicles
+        wp_register_script( 'bdt-carousel-script', plugins_url('scripts/bdt-carousel.js',  dirname(__FILE__) ), array(), '1.0.0', true );
+
         // Good old widget connector - prim. needed for our exchangepricewidget
         wp_enqueue_script( 'bdt_widgetconnector', 'https://services.autoit.dk/Embed.js', null, '1.0.0', true); // Prod
         //wp_enqueue_script( 'bdt_widgetconnector', 'https://servicesdev.autoit.dk/embed.js', null, '1.0.0', true); // Dev
@@ -384,6 +387,9 @@ class Biltorvet
         //wp_register_style( 'bdt_style', plugins_url('css/biltorvet.css',  dirname(__FILE__)), array('bticons'), '1.0.1' );
         wp_register_style('bdt_embed_style', 'https://services.autoit.dk/Embed.css', null, '1.0.1');
         wp_register_style('animate', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css', null, '4.1.1');
+
+        // BDT Carousel for featured vehicles
+        wp_register_style( 'bdt-carousel-style', plugins_url('css/bdt-carousel.css',  dirname(__FILE__)), array(), '1.0.0' );
 
         if(isset($this->_options['primary_color']) && trim($this->_options['primary_color']) !== '')
         {
@@ -575,7 +581,7 @@ class Biltorvet
 			try {
 				$vehicle = $this->biltorvetAPI->GetVehicle($queryParams['bdt_vehicle_id']);
 			} catch (Exception $e) {
-				return $e->getMessage();
+				return $args;
 			}
 
 			// Append the vehicle info to the WP email.
@@ -586,6 +592,8 @@ class Biltorvet
 
 			return $args;
 		}
+
+		return $args;
 	}
 
 }

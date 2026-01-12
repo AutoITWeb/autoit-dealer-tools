@@ -208,6 +208,11 @@ class SearchFilter
     /**
      * @var boolean
      */
+    public $HideByTypeMachine; // Bool
+
+    /**
+     * @var boolean
+     */
     public $HideADVehicles; // Bool
 
     /**
@@ -953,6 +958,24 @@ class SearchFilter
     public function setHideByTypeBus(bool $HideByTypeBus): SearchFilter
     {
         $this->HideByTypeBus = $HideByTypeBus;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHideByTypeMachine(): bool
+    {
+        return $this->HideByTypeMachine;
+    }
+
+    /**
+     * @param  bool $HideByTypeMachine
+     * @return SearchFilter
+     */
+    public function setHideByTypeMachine(bool $HideByTypeMachine): SearchFilter
+    {
+        $this->HideByTypeMachine = $HideByTypeMachine;
         return $this;
     }
 

@@ -608,6 +608,9 @@ msgstr "Skjul køretøjstypen Lastbil"
 msgid "Hide vehicles with type Bus"
 msgstr "Skjul køretøjstypen Bus"
 
+msgid "Skjul køretøjstypen Maskine"
+msgstr "Skjul køretøjstypen Maskine"
+
 msgid "Hide brandnew vehicles"
 msgstr "Skjul fabriksnye køretøjer"
 

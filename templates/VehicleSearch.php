@@ -172,6 +172,14 @@
             }
             $filterObject->HideByTypeBus = 'true';
         }
+        if(isset($this->_options_2['hide_typemachine_vehicles']) && $this->_options_2['hide_typemachine_vehicles'] === 'on')
+        {
+            if($filterObject === null)
+            {
+                $filterObject = new BDTFilterObject();
+            }
+            $filterObject->HideByTypeMachine = 'true';
+        }
         if(isset($this->_options_2['hide_brandnew_vehicles']) && $this->_options_2['hide_brandnew_vehicles'] === 'on')
         {
             if($filterObject === null)

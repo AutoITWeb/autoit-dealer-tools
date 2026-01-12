@@ -1,0 +1,432 @@
+/* BDT Featured Vehicles Carousel Styles */
+
+.bdt-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+.bdt-carousel-wrapper * {
+    box-sizing: border-box;
+}
+
+.bdt-carousel-container {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+}
+
+.bdt-carousel-track-container {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    margin: 0 40px;
+}
+
+/* Remove side margins when arrows are on bottom */
+.bdt-carousel-arrows-bottom .bdt-carousel-track-container {
+    margin: 0;
+}
+
+/* Also remove margins when navigation is hidden */
+.bdt-carousel-wrapper[data-show-nav="false"] .bdt-carousel-track-container {
+    margin: 0;
+}
+
+/* Hide all navigation when showNav is false (safety fallback) */
+.bdt-carousel-wrapper[data-show-nav="false"] .bdt-carousel-btn,
+.bdt-carousel-wrapper[data-show-nav="false"] .bdt-carousel-dots,
+.bdt-carousel-wrapper[data-show-nav="false"] .bdt-carousel-bottom-nav {
+    display: none !important;
+}
+
+.bdt-carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    gap: 20px;
+    padding: 20px 0;
+    align-items: stretch;
+}
+
+.bdt-carousel-slide {
+    min-width: calc(100% - 0px);
+    max-width: calc(100% - 0px);
+    flex-shrink: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+}
+
+/* Responsive breakpoints */
+@media (min-width: 768px) {
+    .bdt-carousel-slide {
+        min-width: calc(50% - 10px);
+        max-width: calc(50% - 10px);
+    }
+}
+
+@media (min-width: 992px) {
+    .bdt-carousel-slide {
+        min-width: calc(33.333% - 13.333px);
+        max-width: calc(33.333% - 13.333px);
+    }
+}
+
+@media (min-width: 1200px) {
+    .bdt-carousel-slide {
+        min-width: calc(33.333% - 13.333px);
+        max-width: calc(33.333% - 13.333px);
+    }
+}
+
+/* Mobile adjustments */
+@media (max-width: 767px) {
+    .bdt-carousel-track-container {
+        margin: 0 35px;
+    }
+
+    .bdt-carousel-wrapper {
+        padding: 0 5px;
+    }
+
+    .bdt-carousel-arrows-bottom .bdt-carousel-track-container {
+        margin: 0;
+    }
+
+    .bdt-carousel-wrapper[data-show-nav="false"] .bdt-carousel-track-container {
+        margin: 0;
+    }
+
+    .bdt-carousel-bottom-nav {
+        gap: 15px;
+    }
+}
+
+/* Navigation buttons */
+.bdt-carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 0;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+}
+
+/* Chevron glyph drawn as a rotated-square border so it centers reliably
+   regardless of webfont. The button's text node (‹/›) stays in the DOM
+   as the screen-reader fallback for aria-label, hidden via font-size: 0. */
+.bdt-carousel-btn::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    border: solid #fff;
+    border-width: 2px 2px 0 0;
+}
+
+.bdt-carousel-prev::before {
+    transform: rotate(-135deg);
+    margin-left: 3px;
+}
+
+.bdt-carousel-next::before {
+    transform: rotate(45deg);
+    margin-right: 3px;
+}
+
+.bdt-carousel-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.bdt-carousel-btn:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.bdt-carousel-prev {
+    left: 0;
+}
+
+.bdt-carousel-next {
+    right: 0;
+}
+
+/* Mobile and tablet button adjustments */
+@media (max-width: 767px) {
+    .bdt-carousel-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    .bdt-carousel-btn::before {
+        width: 9px;
+        height: 9px;
+    }
+
+    .bdt-carousel-prev {
+        left: 0;
+    }
+
+    .bdt-carousel-next {
+        right: 0;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .bdt-carousel-btn {
+        width: 42px;
+        height: 42px;
+    }
+}
+
+/* Dots navigation */
+.bdt-carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 10px 0;
+}
+
+.bdt-carousel-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ccc;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.bdt-carousel-dot:hover {
+    background-color: #999;
+}
+
+.bdt-carousel-dot.active {
+    background-color: #333;
+    transform: scale(1.2);
+}
+
+/* Bottom navigation layout */
+.bdt-carousel-bottom-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    padding: 10px 0;
+}
+
+.bdt-carousel-bottom-nav .bdt-carousel-dots {
+    margin: 0;
+    padding: 0;
+    flex: 0 1 auto;
+}
+
+.bdt-carousel-bottom-nav .bdt-carousel-btn {
+    position: static;
+    transform: none;
+}
+
+.bdt-carousel-bottom-nav .bdt-carousel-btn:hover {
+    transform: scale(1.1);
+}
+
+.bdt-carousel-bottom-nav .bdt-carousel-btn:active {
+    transform: scale(0.95);
+}
+
+/* Touch device improvements */
+.bdt-carousel-track-container {
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+}
+
+.bdt-carousel-slide {
+    scroll-snap-align: start;
+}
+
+/* Ensure vehicle cards display properly in carousel - match grid layout */
+
+/* Override Bootstrap column classes in carousel */
+.bdt-carousel-slide > div[class*="col-"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 auto !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100%;
+}
+
+/* Ensure vehicleCard maintains full height and fits container */
+.bdt-carousel-slide .vehicleCard {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+}
+
+.bdt-carousel-slide .vehicleCard a {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    text-decoration: none;
+    width: 100%;
+}
+
+/* Make sure all card content is fully visible - fixed aspect ratio images */
+.bdt-carousel-slide .vehicleThumb {
+    width: 100%;
+    position: relative;
+    padding-bottom: 68%;
+    height: 0;
+    overflow: hidden;
+}
+
+.bdt-carousel-slide .vehicleThumb img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+}
+
+.bdt-carousel-slide .vehicleDescription {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 0;
+}
+
+/* Ensure all rows and spans display properly */
+.bdt-carousel-slide .vehicleDescription .row {
+    display: flex;
+    width: 100%;
+    margin-left: -5px;
+    margin-right: -5px;
+    flex-wrap: wrap;
+}
+
+.bdt-carousel-slide .vehicleDescription .row > span {
+    padding-left: 5px;
+    padding-right: 5px;
+    box-sizing: border-box;
+}
+
+/* Remove any height restrictions */
+.bdt-carousel-wrapper .vehicleCard,
+.bdt-carousel-slide {
+    min-height: auto !important;
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 767px) {
+    .bdt-carousel-slide .vehicleDescription {
+        padding: 10px;
+    }
+
+    .bdt-carousel-slide .vehicleTitle,
+    .bdt-carousel-slide .vehicleTitle .make-model,
+    .bdt-carousel-slide .vehicleTitle .variant {
+        font-size: 0.95em;
+        display: block;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .bdt-carousel-slide .vehicleDescription .row > span {
+        font-size: 0.85em;
+    }
+
+    .bdt-carousel-slide .vehiclePrice,
+    .bdt-carousel-slide .vehicleLocation {
+        font-size: 0.9em;
+    }
+}
+
+/* Tablet specific adjustments */
+@media (min-width: 768px) and (max-width: 991px) {
+    .bdt-carousel-slide .vehicleDescription {
+        padding: 12px;
+    }
+}
+
+/* Ensure labels are visible and styled correctly - match traditional layout */
+.bdt-carousel-slide .labelContainer {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    z-index: 5;
+    width: 100%;
+}
+
+.bdt-carousel-slide .labelContainer p {
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+}
+
+.bdt-carousel-slide .labelContainer p br {
+    display: block;
+    content: "";
+    margin-top: 5px;
+}
+
+/* More specific selector to override default .bdt .vehicleCard .vehicleLabel */
+.bdt-carousel-slide .bdt .vehicleCard .vehicleLabel {
+    color: #fff;
+    padding: 6px 8px !important;
+    position: absolute;
+    left: 0;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    display: inline-block;
+}
+
+/* Ensure BDT container doesn't add extra padding */
+.bdt-carousel-slide .bdt {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Cloned slides should look identical to originals */
+.bdt-carousel-clone {
+    pointer-events: auto;
+}
+
+/* Ensure all slides including clones have same width */
+.bdt-carousel-track > * {
+    flex-shrink: 0;
+}

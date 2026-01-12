@@ -145,7 +145,7 @@ if(!empty($initialFilterOptions->customVehicleTypes))
         <span class="cvt-checkmark" style="display: none;" name="cvt-checkmark-4"></span>
     </div>
     <div class="car-icon-container" data-custom-vehicle-type="5" <?= $customVehicleTypeElectricAndHybrid ?>>
-        <a href="" id="cvt-electricandhybrid" >
+        <a href="/" id="cvt-electricandhybrid" >
             <svg style="fill: <?= $customVehicleTypeIconColor; ?>;"
                  viewBox="0 0 236 160"
                  class="car"

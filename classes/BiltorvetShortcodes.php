@@ -406,9 +406,28 @@ public function bdt_insert_map_dependencies() {
 
            $firstRegDateFormatted = $getFirstRegistrationDate !== null ? "'$getFirstRegistrationDate'" : "'$currenteDateMinusOneMonth'";
 
-           $dealerId = isset($atts['dealer-id']) ? $atts['dealer-id'] : 1615285056784;
+           $dealerId = isset($atts['dealer-id']) ? $atts['dealer-id'] : 1615285056784; //default id
+           $greendealerId = isset($atts['green-dealer-id']) ? $atts['green-dealer-id'] : 1615285056784; //the default id can't calculate green loans but only normal - it need to be replaced using the green-dealer-id parameter with a specific green loan id from jyske added to the jyffi shortcode to do that
 
-           $jyffiWidget = '<div data-btcontentid="C61662EE-238C-46D7-943B-0CCE15D20181" data-btsettings-price="' . $price . '" data-btsettings-first-registration-date="' . $firstRegDateFormatted . '" data-btsettings-dealer-id="' . $dealerId . '" class="btEmbeddedWidget"></div>';
+           // Determine if vehicle is electric or hybrid
+           $vehiclePropellant = $this->currentVehicle->propellant;
+           //Special hybridTypes if Jyske
+           $PluginHybridTypes = [
+               "Plug-in hybrid (Benzin / El)",
+               "Plug-in hybrid (Diesel / El)",
+               "Plug-in hybrid",
+               "Hybrid (B/EL)",
+               "Hybrid (D/EL)"
+           ];
+
+           $isElectric = ($vehiclePropellant == "EL" || $vehiclePropellant == "El") ? "true" : "false";
+           $isPluginHybrid = in_array($vehiclePropellant, $PluginHybridTypes) ? "true" : "false";   
+
+           $vehicle = VehicleFactory::create(json_decode(json_encode($this->currentVehicle), true));
+           $vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
+           $C02 = $vehicleProperties['CO2']->getValue();
+
+           $jyffiWidget = '<div data-btcontentid="C61662EE-238C-46D7-943B-0CCE15D20181" data-btsettings-price="' . $price . '" data-btsettings-first-registration-date="' . $firstRegDateFormatted . '" data-btsettings-dealer-id="' . $dealerId . '" data-btsettings-green-dealer-id="' . $greendealerId . '" data-btsettings-is-electric="' . $isElectric . '" data-btsettings-is-plugin-hybrid="' . $isPluginHybrid . '" data-btsettings-carbon-dioxide-emission="' . $C02 . '" class="btEmbeddedWidget"></div>';
 
            return $jyffiWidget;
         }
@@ -951,6 +970,14 @@ public function bdt_insert_map_dependencies() {
                         $filterObject = new BDTFilterObject();
                     }
                     $filterObject->HideByTypeBus = 'true';
+                }
+                if(isset($this->_options_2['hide_typemachine_vehicles']) && $this->_options_2['hide_typemachine_vehicles'] === 'on')
+                {
+                    if($filterObject === null)
+                    {
+                        $filterObject = new BDTFilterObject();
+                    }
+                    $filterObject->HideByTypeMachine = 'true';
                 }
                 if(isset($this->_options_2['hide_brandnew_vehicles']) && $this->_options_2['hide_brandnew_vehicles'] === 'on')
                 {
@@ -1506,15 +1533,23 @@ public function bdt_insert_map_dependencies() {
                 'show' => 3,
                 'hideinternalvehiclesbilinfo' => false,
 				'hideonlywholesalevehicles' => false,
-				'showonlywholesalevehicles' => false
+				'showonlywholesalevehicles' => false,
+                'carousel' => 'false',
+                'autoplay' => '0',
+                'shownav' => 'true',
+                'arrowposition' => 'sides'
             ), $atts, 'bdt_recommendedvehicles' );
 
             $vehicleId = $this->ResolveVehicleId();
-			
+
 			//jlk
 			$hideInternalVehiclesBilinfo = esc_attr($atts['hideinternalvehiclesbilinfo']);
 			$hideOnlyWholesaleVehicles = esc_attr($atts['hideonlywholesalevehicles']);
 			$showOnlyWholesaleVehicles = esc_attr($atts['showonlywholesalevehicles']);
+            $isCarousel = filter_var($atts['carousel'], FILTER_VALIDATE_BOOLEAN);
+            $autoplayInterval = intval($atts['autoplay']);
+            $showNav = filter_var($atts['shownav'], FILTER_VALIDATE_BOOLEAN);
+            $arrowPosition = esc_attr($atts['arrowposition']); // 'sides' or 'bottom'
 			
             try{
                 $vehicleFeed = $this->biltorvetAPI->GetRecommendedVehicles($vehicleId === -1 ? null : $vehicleId, intval($atts['show']), $hideInternalVehiclesBilinfo, $hideOnlyWholesaleVehicles, $showOnlyWholesaleVehicles);
@@ -1522,41 +1557,105 @@ public function bdt_insert_map_dependencies() {
                 return $e->getMessage();
             }
 
+            wp_enqueue_style("bdt_style");
+
+            if(!isset($this->_options) && !isset($this->_options['vehiclesearch_page_id'])) {
+                return '<!-- Cannot load Biltorvet recommended vehicles: no root page (Vehicle search) has been set! -->';
+            }
+
+            $bdt_root_url = rtrim(get_permalink($this->_options['vehiclesearch_page_id']),'/');
+
             ob_start();
-            ?>
-            <div class="bdt">
-                <div class="vehicle_search_results">
-                    <div class="row">
-                        <?php
 
-                        $bdt_root_url = rtrim(get_permalink($this->_options['vehiclesearch_page_id']),'/');
+            if($isCarousel) {
+                // Enqueue carousel styles and scripts
+                wp_enqueue_style('bdt-carousel-style');
+                wp_enqueue_script('bdt-carousel-script');
+                $carouselId = 'bdt-carousel-' . uniqid();
 
-                        $iVehicle = 1;
-                            foreach($vehicleFeed->vehicles as $oVehicle)
-                            {
-                                // @TODO: Refactor.
-                                // For new we convert the old vehicle object to the new, so it works with the new templates
-                                // PLUGIN_ROOT refers to the v2 root.
+                // Add inline script to initialize this specific carousel
+                $inline_script = "
+                    if(typeof initBDTCarousel === 'function') {
+                        initBDTCarousel('{$carouselId}', {$autoplayInterval});
+                    }
+                ";
+                wp_add_inline_script('bdt-carousel-script', $inline_script);
+                ?>
+                <div class="bdt bdt-carousel-wrapper bdt-carousel-arrows-<?php echo $arrowPosition; ?>" id="<?php echo $carouselId; ?>" data-show-nav="<?php echo $showNav ? 'true' : 'false'; ?>">
+                    <div class="bdt-carousel-container">
+                        <?php if ($showNav && $arrowPosition === 'sides'): ?>
+                            <button class="bdt-carousel-btn bdt-carousel-prev" aria-label="Previous">‹</button>
+                        <?php endif; ?>
+                        <div class="bdt-carousel-track-container">
+                            <div class="bdt-carousel-track">
+                                <?php
+                                    foreach($vehicleFeed->vehicles as $oVehicle)
+                                    {
+                                        /** @var Vehicle $vehicle */
+                                        $vehicle = VehicleFactory::create(json_decode(json_encode($oVehicle), true));
+                                        $vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
+                                        $priceController = new PriceController($vehicle);
+                                        $basePage = $bdt_root_url;
 
-                                /** @var Vehicle $vehicle */
-                                $vehicle = VehicleFactory::create(json_decode(json_encode($oVehicle), true));
-                                $vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
-                                $priceController = new PriceController($vehicle);
-                                $basePage = $bdt_root_url;
-                                require PLUGIN_ROOT . 'templates/partials/_vehicleCard.php';
-
-                                if($iVehicle % 3 === 0)
+                                        echo '<div class="bdt-carousel-slide">';
+                                        require PLUGIN_ROOT . 'templates/partials/_vehicleCard.php';
+                                        echo '</div>';
+                                    }
+                                ?>
+                            </div>
+                        </div>
+                        <?php if ($showNav && $arrowPosition === 'sides'): ?>
+                            <button class="bdt-carousel-btn bdt-carousel-next" aria-label="Next">›</button>
+                        <?php endif; ?>
+                    </div>
+                    <?php if ($showNav && $arrowPosition === 'bottom'): ?>
+                        <div class="bdt-carousel-bottom-nav">
+                            <button class="bdt-carousel-btn bdt-carousel-prev" aria-label="Previous">‹</button>
+                            <div class="bdt-carousel-dots"></div>
+                            <button class="bdt-carousel-btn bdt-carousel-next" aria-label="Next">›</button>
+                        </div>
+                    <?php else: ?>
+                        <?php if ($showNav): ?>
+                            <div class="bdt-carousel-dots"></div>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                </div>
+                <?php
+            } else {
+                // Regular grid view
+                ?>
+                <div class="bdt">
+                    <div class="vehicle_search_results">
+                        <div class="row">
+                            <?php
+                            $iVehicle = 1;
+                                foreach($vehicleFeed->vehicles as $oVehicle)
                                 {
+                                    // @TODO: Refactor.
+                                    // For new we convert the old vehicle object to the new, so it works with the new templates
+                                    // PLUGIN_ROOT refers to the v2 root.
 
-                                ?></div><div class="row"><?php
+                                    /** @var Vehicle $vehicle */
+                                    $vehicle = VehicleFactory::create(json_decode(json_encode($oVehicle), true));
+                                    $vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
+                                    $priceController = new PriceController($vehicle);
+                                    $basePage = $bdt_root_url;
+                                    require PLUGIN_ROOT . 'templates/partials/_vehicleCard.php';
+
+                                    if($iVehicle % 3 === 0)
+                                    {
+
+                                    ?></div><div class="row"><?php
+                                    }
+                                    $iVehicle++;
                                 }
-                                $iVehicle++;
-                            }
-                        ?>
+                            ?>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <?php
+                <?php
+            }
+
             $content = ob_get_contents();
             ob_end_clean();
             return $content;
@@ -1568,7 +1667,11 @@ public function bdt_insert_map_dependencies() {
                 'show' => 3,
                 'type' => null,
                 'hideinternalvehiclesbilinfo' => false,
-				'hideonlywholesalevehicles' => false
+				'hideonlywholesalevehicles' => false,
+                'carousel' => 'false',
+                'autoplay' => '0',
+                'shownav' => 'true',
+                'arrowposition' => 'sides'
             ), $atts, 'bdt_featuredvehicles');
 
             $amount = esc_attr($atts['show']);
@@ -1576,6 +1679,10 @@ public function bdt_insert_map_dependencies() {
 			//jlk
 			$hideInternalVehiclesBilinfo = esc_attr($atts['hideinternalvehiclesbilinfo']);
 			$hideOnlyWholesaleVehicles = esc_attr($atts['hideonlywholesalevehicles']);
+            $isCarousel = filter_var($atts['carousel'], FILTER_VALIDATE_BOOLEAN);
+            $autoplayInterval = intval($atts['autoplay']);
+            $showNav = filter_var($atts['shownav'], FILTER_VALIDATE_BOOLEAN);
+            $arrowPosition = esc_attr($atts['arrowposition']); // 'sides' or 'bottom'
 			
             try{
 				$vehicleFeed = $this->biltorvetAPI->GetFeaturedVehicles($amount, $vehicleType, $hideInternalVehiclesBilinfo, $hideOnlyWholesaleVehicles);
@@ -1591,37 +1698,97 @@ public function bdt_insert_map_dependencies() {
             $bdt_root_url = rtrim(get_permalink($this->_options['vehiclesearch_page_id']),'/');
 
             ob_start();
-            ?>
-            <div class="bdt">
-                <div class="vehicle_search_results">
-                    <div class="row justify-content-center">
-                        <?php
-                            $iVehicle = 1;
-                            foreach($vehicleFeed->vehicles as $oVehicle)
-                            {
-                                $link = $bdt_root_url . '/' . $oVehicle->uri;
 
-                                // @TODO: Refactor.
-                                // For new we convert the old vehicle object to the new, so it works with the new templates
-                                // PLUGIN_ROOT refers to the v2 root.
+            if($isCarousel) {
+                // Enqueue carousel styles and scripts
+                wp_enqueue_style('bdt-carousel-style');
+                wp_enqueue_script('bdt-carousel-script');
+                $carouselId = 'bdt-carousel-' . uniqid();
 
-                                /** @var Vehicle $vehicle */
-                                $vehicle = VehicleFactory::create(json_decode(json_encode($oVehicle), true));
-                                $vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
-                                $basePage = $bdt_root_url;
-                                require PLUGIN_ROOT . 'templates/partials/_vehicleCard.php';
+                // Add inline script to initialize this specific carousel
+                $inline_script = "
+                    if(typeof initBDTCarousel === 'function') {
+                        initBDTCarousel('{$carouselId}', {$autoplayInterval});
+                    }
+                ";
+                wp_add_inline_script('bdt-carousel-script', $inline_script);
+                ?>
+                <div class="bdt bdt-carousel-wrapper bdt-carousel-arrows-<?php echo $arrowPosition; ?>" id="<?php echo $carouselId; ?>" data-show-nav="<?php echo $showNav ? 'true' : 'false'; ?>">
+                    <div class="bdt-carousel-container">
+                        <?php if ($showNav && $arrowPosition === 'sides'): ?>
+                            <button class="bdt-carousel-btn bdt-carousel-prev" aria-label="Previous">‹</button>
+                        <?php endif; ?>
+                        <div class="bdt-carousel-track-container">
+                            <div class="bdt-carousel-track">
+                                <?php
+                                    foreach($vehicleFeed->vehicles as $oVehicle)
+                                    {
+                                        $link = $bdt_root_url . '/' . $oVehicle->uri;
 
-                                if($iVehicle % 3 === 0)
+                                        /** @var Vehicle $vehicle */
+                                        $vehicle = VehicleFactory::create(json_decode(json_encode($oVehicle), true));
+                                        $vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
+                                        $basePage = $bdt_root_url;
+
+                                        echo '<div class="bdt-carousel-slide">';
+                                        require PLUGIN_ROOT . 'templates/partials/_vehicleCard.php';
+                                        echo '</div>';
+                                    }
+                                ?>
+                            </div>
+                        </div>
+                        <?php if ($showNav && $arrowPosition === 'sides'): ?>
+                            <button class="bdt-carousel-btn bdt-carousel-next" aria-label="Next">›</button>
+                        <?php endif; ?>
+                    </div>
+                    <?php if ($showNav && $arrowPosition === 'bottom'): ?>
+                        <div class="bdt-carousel-bottom-nav">
+                            <button class="bdt-carousel-btn bdt-carousel-prev" aria-label="Previous">‹</button>
+                            <div class="bdt-carousel-dots"></div>
+                            <button class="bdt-carousel-btn bdt-carousel-next" aria-label="Next">›</button>
+                        </div>
+                    <?php else: ?>
+                        <?php if ($showNav): ?>
+                            <div class="bdt-carousel-dots"></div>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                </div>
+                <?php
+            } else {
+                // Regular grid view
+                ?>
+                <div class="bdt">
+                    <div class="vehicle_search_results">
+                        <div class="row justify-content-center">
+                            <?php
+                                $iVehicle = 1;
+                                foreach($vehicleFeed->vehicles as $oVehicle)
                                 {
-                                    ?></div><div class="row"><?php
+                                    $link = $bdt_root_url . '/' . $oVehicle->uri;
+
+                                    // @TODO: Refactor.
+                                    // For new we convert the old vehicle object to the new, so it works with the new templates
+                                    // PLUGIN_ROOT refers to the v2 root.
+
+                                    /** @var Vehicle $vehicle */
+                                    $vehicle = VehicleFactory::create(json_decode(json_encode($oVehicle), true));
+                                    $vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
+                                    $basePage = $bdt_root_url;
+                                    require PLUGIN_ROOT . 'templates/partials/_vehicleCard.php';
+
+                                    if($iVehicle % 3 === 0)
+                                    {
+                                        ?></div><div class="row"><?php
+                                    }
+                                    $iVehicle++;
                                 }
-                                $iVehicle++;
-                            }
-                        ?>
+                            ?>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <?php
+                <?php
+            }
+
             $content = ob_get_contents();
             ob_end_clean();
             return $content;
