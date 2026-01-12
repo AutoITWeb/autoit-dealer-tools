@@ -3,8 +3,8 @@ Contributors: autoitas
 Donate link: https://www.autoit.dk/
 Tags: cars, autoit, autodesktop, biler, biltorvet web
 Requires at least: 4.9.7
-Tested up to: 6.8.3
-Stable tag: 3.3.9
+Tested up to: 6.9
+Stable tag: 3.4.1
 Requires PHP: 7.4
 License: Proprietary
 License URI: https://www.biltorvet.as/media/1385/betingelser-biltorvetas.pdf
@@ -31,6 +31,14 @@ AutoIT Dealer Tools er fuldt integreret med AutoDesktop, så din hjemmeside kan 
 3. Plugin settings
 
 == Changelog ==
+
+= 3.4.1 =
+* Added Jyske Finans Green Loan Handling (Each customer must have a uniq ID from Jyske to use this feature)
+* Fix internal broken/link SEO issue on cvt-electricandhybrid search icon
+* Minor CSS changes
+* Minor plugin update adjustments
+
+For a complete list of changes, see the [full changelog](https://github.com/AutoITWeb/autoit-dealer-tools/releases) on GitHub.
 
 = 3.4.0 =
 * Fix sort options handling (if changed) on search results pages with site pagination

@@ -406,9 +406,28 @@ public function bdt_insert_map_dependencies() {
 
            $firstRegDateFormatted = $getFirstRegistrationDate !== null ? "'$getFirstRegistrationDate'" : "'$currenteDateMinusOneMonth'";
 
-           $dealerId = isset($atts['dealer-id']) ? $atts['dealer-id'] : 1615285056784;
+           $dealerId = isset($atts['dealer-id']) ? $atts['dealer-id'] : 1615285056784; //default id
+           $greendealerId = isset($atts['green-dealer-id']) ? $atts['green-dealer-id'] : 1615285056784; //the default id can't calculate green loans but only normal - it need to be replaced using the green-dealer-id parameter with a specific green loan id from jyske added to the jyffi shortcode to do that
 
-           $jyffiWidget = '<div data-btcontentid="C61662EE-238C-46D7-943B-0CCE15D20181" data-btsettings-price="' . $price . '" data-btsettings-first-registration-date="' . $firstRegDateFormatted . '" data-btsettings-dealer-id="' . $dealerId . '" class="btEmbeddedWidget"></div>';
+           // Determine if vehicle is electric or hybrid
+           $vehiclePropellant = $this->currentVehicle->propellant;
+           //Special hybridTypes if Jyske
+           $PluginHybridTypes = [
+               "Plug-in hybrid (Benzin / El)",
+               "Plug-in hybrid (Diesel / El)",
+               "Plug-in hybrid",
+               "Hybrid (B/EL)",
+               "Hybrid (D/EL)"
+           ];
+
+           $isElectric = ($vehiclePropellant == "EL" || $vehiclePropellant == "El") ? "true" : "false";
+           $isPluginHybrid = in_array($vehiclePropellant, $PluginHybridTypes) ? "true" : "false";   
+
+           $vehicle = VehicleFactory::create(json_decode(json_encode($this->currentVehicle), true));
+           $vehicleProperties = DataHelper::getVehiclePropertiesAssoc($vehicle->getProperties());
+           $C02 = $vehicleProperties['CO2']->getValue();
+
+           $jyffiWidget = '<div data-btcontentid="C61662EE-238C-46D7-943B-0CCE15D20181" data-btsettings-price="' . $price . '" data-btsettings-first-registration-date="' . $firstRegDateFormatted . '" data-btsettings-dealer-id="' . $dealerId . '" data-btsettings-green-dealer-id="' . $greendealerId . '" data-btsettings-is-electric="' . $isElectric . '" data-btsettings-is-plugin-hybrid="' . $isPluginHybrid . '" data-btsettings-carbon-dioxide-emission="' . $C02 . '" class="btEmbeddedWidget"></div>';
 
            return $jyffiWidget;
         }
